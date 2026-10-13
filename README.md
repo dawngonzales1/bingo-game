@@ -128,7 +128,7 @@ Progress is saved on the phone only.
 - More rooms and cities.
 - More side games that rotate in and out.
 - A team leaderboard.
-- Painted art.
+- Optional art redos (all rooms, landmarks, icons and 72 album cards are now painted).
 
 ## Step 2: team play
 
