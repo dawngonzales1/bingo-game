@@ -885,6 +885,52 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .rtag { background: linear-gradient(180deg, #8f5cf0, #5b25b8) padding-box, linear-gradient(90deg, #b8780a, #ffe58f, #e9a81c) border-box; border: 2.5px solid transparent; box-shadow: 0 0 0 2px var(--ol); color: #ffe58f; }
 #play .autob[aria-pressed="true"], .autob[aria-pressed="true"] { background: linear-gradient(180deg, #ffe58f, #f7b924 60%, #e9940f); color: var(--ink); text-shadow: none; }
 .rgrow .b3.green { background: linear-gradient(180deg, var(--gold1), var(--gold2) 60%, #f0a40f); color: var(--ink); }
+/* ===== popups, premium pass: plum glass with a gold frame (side games, settings, shop, kitchen, team) ===== */
+.veil { background: radial-gradient(ellipse at center, rgba(40,10,64,.55), rgba(15,3,25,.82)); }
+.panel { --ink: #fbefff; --mist: #cdb6ee; color: #fbefff; border: 4px solid transparent; border-radius: 28px;
+  background: radial-gradient(ellipse at 50% -10%, rgba(200,160,255,.38), transparent 55%), radial-gradient(circle at 15% 20%, rgba(255,229,143,.12) 0 1px, transparent 1.5px) 0 0 / 22px 22px, linear-gradient(180deg, #52208a, #2a0c46) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 35%, #ffe58f 60%, #b8780a) border-box;
+  box-shadow: 0 0 0 2.5px var(--ol), 0 10px 0 2.5px var(--ol), 0 24px 44px rgba(10,2,20,.6); }
+.panel h3 { color: #ffe58f; font-size: 25px; letter-spacing: .01em; text-shadow: 0 2px 0 var(--ol), 2px 0 0 var(--ol), -2px 0 0 var(--ol), 0 -2px 0 var(--ol), 0 4px 6px rgba(10,2,20,.5); }
+.panel p, .panel li { color: #f1e4ff; font-size: 14.5px; }
+.panel b { color: #fff; }
+.panel .b3.gold, .panel .b3.cream, .panel .b3.green, .panel .b3.gold *, .panel .b3.cream * { color: #3d1a4f; }
+.panel .b3.green { background: linear-gradient(180deg, var(--gold1), var(--gold2) 60%, #f0a40f); }
+.panel .b3.plum { color: #fff; }
+.panel .x { background: radial-gradient(circle at 40% 30%, #b98cff, #6a32d0 60%, #3d1680); color: #fff; box-shadow: 0 0 0 2.5px #e9a81c, 0 0 0 4.5px var(--ol), 0 4px 8px rgba(10,2,20,.45); border: 0; }
+.panel .opt, .panel .oven, .panel .recipe, .panel .sitem, .panel .pack, .panel .bed, .panel .res-stats div { background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04)); border: 1.5px solid rgba(255,214,92,.38); color: #fbefff; }
+.panel .sitem.vault { background: linear-gradient(180deg, rgba(200,160,255,.22), rgba(255,255,255,.05)); }
+.panel .oven.ready, .panel .bed.on { background: linear-gradient(180deg, rgba(255,214,92,.28), rgba(255,214,92,.08)); border-color: #ffd45c; }
+.panel .sw { background: rgba(10,2,20,.45); border: 2.5px solid #e9a81c; }
+.panel .sw::after { border: 0; background: radial-gradient(circle at 40% 30%, #fff, #e8dcf5); box-shadow: 0 2px 3px rgba(0,0,0,.4); }
+.panel .sw[aria-pressed="true"] { background: linear-gradient(180deg, #ffe58f, #f7b924); }
+.panel .seg { background: rgba(10,2,20,.4); box-shadow: inset 0 0 0 1.5px rgba(255,214,92,.35); }
+.panel .seg button { color: #cdb6ee; }
+.panel .seg button[aria-pressed="true"] { background: linear-gradient(180deg, #ffe58f, #f7b924); color: #3d1a4f; }
+.panel .pill2 { background: linear-gradient(180deg, #5a2590, #2e0e4c); border: 0; box-shadow: 0 0 0 2px #e9a81c, 0 0 0 3.5px var(--ol); color: #fff; }
+.panel .chip { background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,214,92,.4); color: #fbefff; }
+.panel .chip.short { background: rgba(255,120,150,.18); border-color: #ff9cc4; }
+.panel .odds td { border-top-color: rgba(255,255,255,.12); color: #f1e4ff; }
+.panel .board75 span { background: rgba(255,255,255,.08); color: rgba(255,255,255,.35); }
+.panel .board75 span.on { color: #3d1a4f; }
+.panel .tabs button { background: linear-gradient(180deg, #6a32d0, #3d1680); border: 0; box-shadow: 0 0 0 2px #e9a81c, 0 0 0 3.5px var(--ol); color: #e6d4ff; }
+.panel .tabs button[aria-pressed="true"] { background: linear-gradient(180deg, #ffe58f, #f7b924); color: #3d1a4f; text-shadow: none; }
+.panel .cf, .panel .cf * { --ink: #3d1a4f; }
+.panel .cf { color: #3d1a4f; }
+.panel .dropcv canvas { border: 0; box-shadow: 0 0 0 3px #e9a81c, 0 0 0 5px var(--ol), 0 8px 18px rgba(10,2,20,.5); }
+.panel .mmboard { box-shadow: 0 0 0 3px #e9a81c, 0 0 0 5px var(--ol), 0 8px 18px rgba(10,2,20,.5); border: 0; }
+.panel .gtile { box-shadow: 0 0 0 2.5px #e9a81c, 0 0 0 4.5px var(--ol), 0 6px 0 4.5px var(--ol), 0 12px 18px rgba(10,2,20,.4); border: 0; }
+/* Macaron Match, premium: velvet board, glossy 3D macarons */
+.panel .mmboard { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.05), transparent 70%), repeating-conic-gradient(#3a1462 0 25%, #4a1c7a 0 50%) 0 0 / calc(var(--s) * 2) calc(var(--s) * 2); }
+.mac::before { width: 80%; height: 70%; border: 0; border-radius: 46% / 50%;
+  background: radial-gradient(ellipse 60% 30% at 35% 18%, rgba(255,255,255,.85), rgba(255,255,255,0) 70%),
+    linear-gradient(180deg, transparent 0 41%, #fff3dc 41%, #ffe6bf 50%, #fff3dc 59%, transparent 59%),
+    radial-gradient(ellipse 120% 70% at 50% 22%, color-mix(in srgb, var(--c) 55%, #fff), var(--c) 55%, color-mix(in srgb, var(--c) 62%, #2a0d3d) 100%) top / 100% 46% no-repeat,
+    radial-gradient(ellipse 120% 70% at 50% 25%, var(--c), color-mix(in srgb, var(--c) 60%, #2a0d3d) 100%) bottom / 100% 46% no-repeat;
+  box-shadow: 0 0 0 2px rgba(30,8,45,.85), 0 4px 0 rgba(30,8,45,.6), 0 7px 8px rgba(10,2,20,.45); }
+.mac.sel::before { outline: 0; box-shadow: 0 0 0 2px rgba(30,8,45,.85), 0 0 0 5px #ffd45c, 0 0 16px 6px rgba(255,214,92,.8); }
+.panel .mmstat b { color: #ffe58f; }
+.panel .b3.cream { background: linear-gradient(180deg, #7b44d8, #4a1c88); box-shadow: 0 0 0 2px #e9a81c, 0 0 0 3.5px var(--ol), 0 4px 0 3.5px var(--ol); border: 0; }
+.panel .b3.cream, .panel .b3.cream * { color: #fff; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2301,18 +2347,25 @@ function petalDrop() {
         balls = balls.filter(function (b) { return !b.done; });
       }
       function draw() {
-        var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#8a5cf0'); g.addColorStop(1, '#4f1fa3');
+        var g = ctx.createRadialGradient(W / 2, H * .25, 10, W / 2, H * .5, H * .8); g.addColorStop(0, '#7a3fd6'); g.addColorStop(.6, '#4a1a84'); g.addColorStop(1, '#260a45');
         ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-        ctx.fillStyle = 'rgba(255,255,255,.12)'; ctx.fillRect(0, 0, W, 54);
+        for (var st = 0; st < 26; st++) { var sx = (st * 97) % W, sy = 60 + (st * 53) % (H - 140); ctx.fillStyle = 'rgba(255,229,143,' + (.15 + (st % 4) * .08) + ')'; ctx.beginPath(); ctx.arc(sx, sy, 1 + st % 2, 0, 7); ctx.fill(); }
+        var tg = ctx.createLinearGradient(0, 0, 0, 54); tg.addColorStop(0, 'rgba(255,229,143,.35)'); tg.addColorStop(1, 'rgba(255,229,143,0)'); ctx.fillStyle = tg; ctx.fillRect(0, 0, W, 54);
         ctx.fillStyle = '#fff'; ctx.font = '600 13px Fredoka, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(S.drops ? 'Tap here to drop a ball' : 'No drop balls left', W / 2, 32);
-        pegs.forEach(function (p) { ctx.fillStyle = '#3d1a4f'; ctx.beginPath(); ctx.arc(p.x, p.y + 1.5, 5.5, 0, 7); ctx.fill(); ctx.fillStyle = '#ffe58f'; ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, 7); ctx.fill(); });
+        pegs.forEach(function (p) {
+          ctx.fillStyle = 'rgba(20,5,30,.55)'; ctx.beginPath(); ctx.arc(p.x + 1, p.y + 2.5, 5.5, 0, 7); ctx.fill();
+          var pg = ctx.createRadialGradient(p.x - 1.8, p.y - 1.8, .5, p.x, p.y, 5.5); pg.addColorStop(0, '#fffbe0'); pg.addColorStop(.45, '#ffd45c'); pg.addColorStop(1, '#b8780a');
+          ctx.fillStyle = pg; ctx.beginPath(); ctx.arc(p.x, p.y, 5.2, 0, 7); ctx.fill();
+        });
         DROP_CUPS.forEach(function (c, i) {
-          var x = i * binW; ctx.fillStyle = c.c; ctx.fillRect(x + 2, cupTop + 8, binW - 4, H - cupTop - 10);
-          ctx.strokeStyle = '#3d1a4f'; ctx.lineWidth = 2.5; ctx.strokeRect(x + 2, cupTop + 8, binW - 4, H - cupTop - 10);
+          var x = i * binW, cg = ctx.createLinearGradient(0, cupTop + 8, 0, H); cg.addColorStop(0, '#fff'); cg.addColorStop(.18, c.c); cg.addColorStop(1, c.c);
+          ctx.fillStyle = cg; ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x + 3, cupTop + 8, binW - 6, H - cupTop - 11, [4, 4, 8, 8]); else ctx.rect(x + 3, cupTop + 8, binW - 6, H - cupTop - 11); ctx.fill();
+          ctx.strokeStyle = '#3d1a4f'; ctx.lineWidth = 2.5; ctx.stroke();
+          ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.fillRect(x + 6, cupTop + 12, 3, H - cupTop - 22);
           ctx.fillStyle = '#3d1a4f'; ctx.font = '700 15px Fredoka, system-ui, sans-serif'; ctx.fillText(c.t === 'ing' ? '1' : c.t === 'gcard' ? '★' : c.n, x + binW / 2, cupTop + 32);
           ctx.font = '600 9.5px Fredoka, system-ui, sans-serif'; ctx.fillText({ tickets: 'tickets', seeds: 'seeds', coins: 'coins', ing: 'ingred.', gcard: 'gold' }[c.t], x + binW / 2, cupTop + 46);
         });
-        ctx.fillStyle = '#3d1a4f'; for (var k = 1; k < DROP_CUPS.length; k++) ctx.fillRect(k * binW - 2, cupTop, 4, H - cupTop);
+        for (var k = 1; k < DROP_CUPS.length; k++) { ctx.fillStyle = '#3d1a4f'; ctx.fillRect(k * binW - 2.5, cupTop - 4, 5, H - cupTop + 4); ctx.fillStyle = '#ffd45c'; ctx.beginPath(); ctx.arc(k * binW, cupTop - 4, 4, 0, 7); ctx.fill(); }
         balls.forEach(function (b) { var bg = ctx.createRadialGradient(b.x - 3, b.y - 3, 1, b.x, b.y, 9); bg.addColorStop(0, '#fff'); bg.addColorStop(.4, '#ffb3cf'); bg.addColorStop(1, '#d9608f'); ctx.fillStyle = '#3d1a4f'; ctx.beginPath(); ctx.arc(b.x, b.y, 9, 0, 7); ctx.fill(); ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(b.x, b.y, 7.5, 0, 7); ctx.fill(); });
       }
       (function loop() { if (!cv.isConnected) return; step(); draw(); requestAnimationFrame(loop); })();
