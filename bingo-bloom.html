@@ -651,6 +651,7 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
   <symbol id="i-blossom0" viewBox="-20 -20 40 40"><g fill="#efe2c8" stroke="#3d1a4f" stroke-width="2.4" stroke-opacity=".55"><circle cx="0" cy="-9" r="8"/><circle cx="8.6" cy="-2.8" r="8"/><circle cx="5.3" cy="7.3" r="8"/><circle cx="-5.3" cy="7.3" r="8"/><circle cx="-8.6" cy="-2.8" r="8"/></g><circle r="5.5" fill="#fff7e8" stroke="#3d1a4f" stroke-opacity=".55" stroke-width="2"/></symbol>
   <symbol id="t-alert" viewBox="0 0 40 40"><use href="#i-bulb"/></symbol>
   <symbol id="t-coins" viewBox="0 0 40 40"><use href="#i-coin"/></symbol>
+  <symbol id="i-album" viewBox="0 0 40 40"><image href="art/icon-album.webp" x="0" y="0" width="40" height="40"/></symbol>
   <symbol id="t-card" viewBox="0 0 40 40"><use href="#i-card"/></symbol>
   <symbol id="t-ing" viewBox="0 0 40 40"><use href="#i-basket"/></symbol>
   <symbol id="t-petal" viewBox="0 0 40 40"><use href="#i-petal"/></symbol>
@@ -1094,7 +1095,7 @@ function lobby() {
     '</div>' +
     '<div class="hud hud-left">' +
       rb('bGift', 'i-gift', 'pk', giftReady ? 'Collect' : nextGiftText(), giftReady) +
-      rb('bAlbum', 'i-card', 'gd', 'Album ' + ownedAll() + '/72') +
+      rb('bAlbum', 'i-album', 'gd', 'Album ' + ownedAll() + '/72') +
       rb('bKitchen', 'i-chef', 'pk', ovenReady ? 'Ready!' : 'Kitchen', ovenReady) +
     '</div>' +
     '<div class="hud hud-right">' +
