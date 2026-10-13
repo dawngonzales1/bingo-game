@@ -20,37 +20,84 @@ Bingo Bloom uses ideas common to many bingo games (balls, 5×5 cards, bingos lef
 
 ## Practice version (now)
 
-- **Title screen:** the logo, then **Tap to play**. On Android phones it tries to go full screen and sideways.
-- **Map:** a little Paris with 5 landmarks:
-  - Rose Patisserie
-  - Cafe du Parc
-  - Stone Bridge
-  - Grand Carousel
-  - Silk Boutique
+### Three kinds of points
+| | What it's for | How you get it |
+|---|---|---|
+| Tickets | Playing bingo (5 per card, times the bet) | Kitchen, daily gift (50), level-ups (20), treasure squares, side games, Team Garden |
+| Coins | Power-ups and card packs in the Shop | Bingos, treasure squares, set and album rewards, side games |
+| Petals | Growing Paris landmarks (1 to 3 blossoms each) | Bingos, treasure squares |
 
-  Tap one to build it or make it grow with petals (4, 7 and 10 petals per blossom). Growing all 15 blossoms gives 1,000 coins.
-- **Top bar:** level and XP, coins, petals, and Paris progress.
-- **Side buttons:** daily gift (150 coins and a Bloom Alert), album, pantry, how to play, settings.
-- **PLAY:**
-  1. Open the Rooms panel and pick a room. Paris Patisserie is open; Midnight Garden, Gold Coast and Candy Carnival are coming soon.
-  2. Pick 1, 2 or 4 cards and a bet of ×1, ×2, ×3 or ×5. A higher bet costs more and wins more coins and petals.
-- **Playing:**
-  - 40 balls per round.
-  - With 4 cards, 2 are big and 2 are small on the side. Tap a small card or **Swap** to switch, and a small card glows "BINGO!" when it has a win waiting.
-  - The side panel holds the ball, the last 4 balls, a big "Bingos left" counter, balls, coins and petals.
-  - **Boost** gives 2 free marks on each card when its meter is full.
-  - **Bloom Alert** (the flower bud) makes called numbers glow. Win more from treasure squares, bingos (30% chance), level-ups and the daily gift.
-  - **Auto** marks numbers for you; you still tap BINGO!
-- **Treasure squares:** coins, petals, album cards, ingredients or a Bloom Alert.
-- **Album:** 8 sets of 9 cards (72 in total), with 2 gold cards per set. A finished set gives 250 coins, and the whole album gives 3,000. The album has a 60-day timer, the same length as the main album in Cordelle.
-- Progress is saved on the phone only.
+### Lobby (a Paris map you build)
+- **Top:** level, tickets, coins, petals, Paris progress, settings.
+- **Left:** daily gift, album, Kitchen.
+- **Right:** Shop, side games, Team Garden.
+- **PLAY:** pick a room, the number of cards (1, 2 or 4), a bet (×1 to ×5), and power-ups (Head Start, Double Coins, Double Petals).
+
+### A round of bingo
+- 45 balls. Speeds: Relaxed (5 s), Classic (4 s, the default), Quick (3 s).
+- **A row of called numbers across the top**, drawn as little flowers, newest first. Tap it to see every called number.
+- **With 4 cards:** 2 are big; tap a small card or Swap to bring the others up.
+- **Power-ups during a round:**
+  - **Boost:** fills as you mark numbers.
+  - **Bloom Alert:** called numbers glow for the whole round.
+  - **Wild Petal:** mark any square.
+  - **+5 Balls:** five more balls.
+- **Auto** marks numbers for you; you still tap BINGO!
+- **Treasure squares:** coins, tickets, petals, album cards, ingredients, drop balls or a Bloom Alert.
+- **Each bingo gives:** coins, petals, an album card, 2 ingredients, 2 drop balls and 1 seed (sometimes a Bloom Alert).
+
+### Kitchen
+2 ovens. Bake treats with ingredients to earn tickets:
+
+| Treat | Ingredients | Bakes in | Gives |
+|---|---|---|---|
+| Sugar Macarons | 2 sugar, 1 cream | 1 min | 20 tickets |
+| Vanilla Eclair | 1 flour, 1 cream, 1 vanilla | 1.5 min | 25 tickets |
+| Berry Tart | 2 berries, 1 flour, 1 butter | 2 min | 35 tickets |
+| Royal Gateau | 1 of each ingredient | 5 min | 80 tickets, a Scratch Card and a Head Start |
+
+### Shop (bought with coins)
+- **Power-ups:**
+  - Head Start: 150
+  - Wild Petal: 100
+  - +5 Balls: 200
+  - Double Coins: 120
+  - Double Petals: 120
+  - Bloom Alert: 80
+- **Card packs,** with odds shown:
+  - Bronze: 3 cards, 5% gold, 250 coins
+  - Silver: 5 cards, 12% gold, 600 coins
+  - Gold: 8 cards, 25% gold, at least 1 gold card guaranteed, 1,200 coins
+
+### Side games
+- **Petal Drop:** drop balls down a pegboard into prize cups (tickets, coins, an ingredient or seeds).
+- **Daily Wheel:** one free spin a day, with the odds of every prize shown.
+- **Scratch Cards:** find 3 of the same picture to win it. About half of all cards win.
+- **Macaron Match:** swap macarons to match 3. 20 moves, 3 free plays a day, and stars win tickets and seeds.
+
+### Team Garden
+- Seeds from bingos and the side games grow a weekly garden with 5 goals (25, 75, 150, 300 and 500 seeds).
+- Each goal gives a prize. The last goal gives a Gold Pack.
+- In this practice version only your own seeds count. In Step 2 your whole Cordelle team fills it together, and everyone gets the prizes.
+
+### Fair Play promise
+- More balls and plenty of bingos to go around.
+- After 3 rounds without a bingo, your next round starts with a free Head Start.
+- All odds are shown.
+- The game never gets stingier.
+- No real-money prizes.
+
+### Album
+8 sets of 9 cards (72 in total), with 2 gold cards per set. A finished set gives 250 coins and the whole album gives 3,000. It has a 60-day timer, like Cordelle's main album.
+
+Progress is saved on the phone only.
 
 ## Ideas saved for later
 
-- A cooking-dish collection: use pantry ingredients to bake treats for rewards.
-- A team leaderboard and a bonus game.
 - More rooms and cities.
-- Painted art from an artist or art packs. The game is built so the pictures can be swapped.
+- More side games that rotate in and out.
+- A team leaderboard.
+- Painted art.
 
 ## Step 2: team play
 
@@ -65,6 +112,7 @@ Bingo Bloom uses ideas common to many bingo games (balls, 5×5 cards, bingos lef
 | Album cards, keyed `S1|3` (set and card number) | `album` (count of copies; extras = count - 1) | Card list and My extras |
 | Ingredients | `ing` | Ingredients |
 | Finished sets, album and city | `setsDone`, `albumDone`, `cityDone`, `events` (`setComplete`, `albumComplete`, `cityComplete`, `build`) | Album completions and team events |
+| Seeds for the Team Garden | `garden` (week, seeds, claimed prizes) | Team events and team goals |
 | Rounds played | `events` (`round`) | Weekly recap |
 
 Cordelle's Bingo Frenzy tracking stays as it is. Data from Bingo Bloom will be kept separate.
