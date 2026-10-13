@@ -343,7 +343,11 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .mac { position: absolute; left: 0; top: 0; width: var(--s); height: var(--s); transition: transform .2s ease-in; display: grid; place-items: center; cursor: pointer; }
 .mac::before { content: ''; width: 78%; height: 66%; border-radius: 44%; border: 2.5px solid var(--ol); background: linear-gradient(180deg, var(--c) 0 38%, #fff7e6 38% 58%, var(--c) 58%); box-shadow: inset 0 3px 0 rgba(255,255,255,.55), 0 2px 0 var(--ol); box-sizing: border-box; }
 .mac.sel::before { outline: 3px solid var(--gold2); outline-offset: 2px; }
-.mac.pop { transition: transform .2s, opacity .2s; opacity: 0; }
+.mac { transition: transform .4s cubic-bezier(.35,0,.55,1.25); }
+.mac.hit::before { transform: scale(1.18); box-shadow: 0 0 0 3px #fff, 0 0 16px 4px var(--gold2); transition: transform .2s, box-shadow .2s; }
+.mac.pop { opacity: 0; transition: opacity .3s; }
+.mac.pop::before { transform: scale(1.7) rotate(25deg); transition: transform .3s; }
+.mmpts { position: absolute; z-index: 5; transform: translate(-50%, -50%); font-size: 18px; white-space: nowrap; pointer-events: none; animation: floatUp .9s ease-out forwards; }
 .mmstat { display: flex; gap: 16px; font-weight: 600; }
 .mmstat b { font-size: 22px; }
 .gprog { display: grid; gap: 4px; }
@@ -445,7 +449,8 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .ready b { font-size: 30px; line-height: 1; }
 .ready span { color: #fff; font-weight: 600; font-size: 14px; }
 .lucky { display: none; position: absolute; z-index: 3; top: 0; right: 0; padding: 0 2.4cqw 0 3cqw; border-radius: 0 0 0 3cqw; background: linear-gradient(180deg, #ff9cc4, #e9578a); border: 2px solid var(--ol); border-top: 0; border-right: 0; font-size: 6.5cqw; line-height: 1.35; font-weight: 700; }
-.bcard.is-lucky .lucky { display: block; animation: popIn .4s; }
+.bcard.is-lucky .lucky { display: none; }
+.bcard.is-lucky .cell.free { background: linear-gradient(180deg, #ffc2d9, #e9578a); color: #fff; font-size: 7cqw; text-shadow: 0 1px 0 var(--ol); animation: pulse 1.2s ease-in-out infinite; }
 .bcard.is-lucky { box-shadow: 0 5px 0 var(--ol), 0 0 0 3px #ff9cc4; }
 .ballwrap { position: relative; width: max-content; margin: 0 auto; flex: none; }
 .ballwrap .ball { margin: 0; }
@@ -581,6 +586,7 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
   <symbol id="i-bfly" viewBox="0 0 40 40"><path d="M20 20C14 8 4 6 4 13s6 9 16 7zM20 20c6-12 16-14 16-7s-6 9-16 7z" fill="#b996ff" stroke="#3d1a4f" stroke-width="2.4" stroke-linejoin="round"/><path d="M20 20c-5 3-11 8-8 12s7-4 8-12zM20 20c5 3 11 8 8 12s-7-4-8-12z" fill="#ff8fb1" stroke="#3d1a4f" stroke-width="2.4" stroke-linejoin="round"/><path d="M20 12v18" stroke="#3d1a4f" stroke-width="3" stroke-linecap="round"/><path d="M20 12l-3-5M20 12l3-5" stroke="#3d1a4f" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13" r="2" fill="#fff" opacity=".8"/><circle cx="31" cy="13" r="2" fill="#fff" opacity=".8"/></symbol>
   <symbol id="t-ticket" viewBox="0 0 40 40"><use href="#i-ticket"/></symbol>
   <symbol id="t-drop" viewBox="0 0 40 40"><use href="#i-drop"/></symbol>
+  <symbol id="t-seed" viewBox="0 0 40 40"><use href="#i-seed"/></symbol>
   <symbol id="fbloom" viewBox="0 0 40 40"><g fill="currentColor" stroke="#3d1a4f" stroke-width="2"><circle cx="20" cy="9.5" r="8"/><circle cx="30" cy="16.8" r="8"/><circle cx="26.2" cy="28.5" r="8"/><circle cx="13.8" cy="28.5" r="8"/><circle cx="10" cy="16.8" r="8"/></g><circle cx="20" cy="20" r="10.5" fill="#fffdf7" stroke="#3d1a4f" stroke-width="2"/></symbol>
   <symbol id="bloom" viewBox="-50 -50 100 100">
     <g fill="url(#gPetal)" stroke="#3d1a4f" stroke-width="4">
@@ -666,10 +672,10 @@ var LINES = (function () {
 /* ---------- saved progress (this phone only, for now) ---------- */
 var KEY = 'bingoBloom.v1';
 function fresh() {
-  return { v: 3, bonus: {}, tickets: 100, coins: 300, petals: 0, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0 },
+  return { v: 3, bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, stats: { rounds: 0, bingos: 0 }, events: [],
-    settings: { sound: true, voice: false, speed: 'classic', auto: false } };
+    settings: { sound: true, voice: false, speed: 'classic', auto: false, autoAlert: true } };
 }
 function merge(saved) {
   var s = fresh();
@@ -1211,10 +1217,12 @@ function settings() {
   panel('<h3>Settings</h3>' +
     '<div class="opt"><span>Sounds</span><button class="sw" id="swSound" aria-pressed="' + st.sound + '" aria-label="Sounds"></button></div>' +
     '<div class="opt"><span>Caller voice <small style="color:var(--mist)">reads each ball out loud</small></span><button class="sw" id="swVoice" aria-pressed="' + st.voice + '" aria-label="Caller voice"></button></div>' +
+    '<div class="opt"><span>Turn on Bloom Alert by itself <small style="color:var(--mist)">uses one at the start of each round</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
     '<div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 cream" id="bReset" style="padding:8px">Start over (clear my progress)</button>', 'small', function (v) {
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
+      $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
       $('#swVoice', v).onclick = function () { st.voice = !st.voice; this.setAttribute('aria-pressed', st.voice); save(); say('B 7'); };
       v.querySelectorAll('#spd button').forEach(function (b) { b.onclick = function () { st.speed = b.dataset.s; save(); v.querySelectorAll('#spd button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
       $('#bHow', v).onclick = howTo; $('#bFair', v).onclick = fairPlay;
@@ -1228,8 +1236,8 @@ function settings() {
 
 /* ---------- a round ---------- */
 var R = null, wake = null;
-function speedMs() { return { relaxed: 5000, classic: 4000, fast: 3000 }[S.settings.speed] || 4000; }
-var TREASURES = ['coins', 'card', 'ing', 'petal', 'alert', 'ticket', 'drop'];
+function speedMs() { var b = { relaxed: 6500, classic: 5000, fast: 3800 }[S.settings.speed] || 5000; return b + (R && R.mode === 'blackout' ? 1000 : 0) + (R && R.cards.length === 4 ? 500 : 0); }
+var TREASURES = ['coins', 'card', 'ing', 'petal', 'alert', 'ticket', 'drop', 'seed', 'seed'];
 function makeCard() {
   var cols = [];
   for (var c = 0; c < 5; c++) cols.push(shuffle(range(c * 15 + 1, c * 15 + 15)).slice(0, 5));
@@ -1272,13 +1280,13 @@ function startRound(arm, room) {
   var n = 5, P = R.players, T = R.total;
   (function tick() {
     if (!R || !ready.isConnected) { ready.remove(); return; }
-    if (n === 0) { ready.remove(); $('#sLeft').textContent = R.left; R.active = true; callNext(); return; }
+    if (n === 0) { ready.remove(); $('#sLeft').textContent = R.left; R.active = true; autoAlertOn(); callNext(); return; }
     var f = (6 - n) / 5;
     $('#sLeft').textContent = Math.max(1, Math.round(T * f)); var pl = $('#sPlayers'); if (pl) pl.textContent = Math.round(P * f) + ' players';
     ready.innerHTML = '<div><b class="outl">Get ready!</b><span>Starts in ' + n + ' · players joining…</span>' + (n === 5 ? '' : '') + '</div>';
     tone(660 + (5 - n) * 70, 0, .2, 'sine', .06); n--; setTimeout(tick, 1000);
   })();
-  setTimeout(function () { if (R && R.els[R.lucky]) { R.els[R.lucky].classList.add('is-lucky'); toast('Lucky Bloom: card ' + (R.lucky + 1) + ' wins double on a bingo!'); SFX.boost(); } }, 1600);
+  setTimeout(function () { if (R && R.els[R.lucky]) { R.els[R.lucky].classList.add('is-lucky'); var fc = R.els[R.lucky].querySelector('.cell.free'); if (fc) fc.textContent = '×2'; toast('Lucky Bloom: card ' + (R.lucky + 1) + ' wins double on a bingo!'); SFX.boost(); } }, 1600);
 }
 function renderPlay() {
   show('<div class="screen" id="play"><div class="side">' +
@@ -1355,6 +1363,11 @@ function hintUi() {
     var k = R.cards[ci]; if (k.won) return;
     k.cells.forEach(function (c, i) { if (!c.d && R.called[c.n]) { var el = e.querySelector('[data-i="' + i + '"]'); if (el) el.classList.add('hint'); } });
   });
+}
+function autoAlertOn() {
+  var btn = $('#bAlert');
+  if (S.freeAlertRounds > 0) { S.freeAlertRounds--; R.alert = true; save(); if (btn) btn.classList.add('on'); toast('Free Bloom Alert this round! Called numbers will glow. (' + S.freeAlertRounds + ' free rounds left)', 3200); return; }
+  if (S.settings.autoAlert && S.alerts > 0) { S.alerts--; R.alert = true; save(); if (btn) btn.classList.add('on'); var na = $('#nAlert'); if (na) na.textContent = S.alerts; toast('Bloom Alert on: called numbers will glow.'); }
 }
 function useAlert() {
   if (!R || !R.active) { toast('Wait for the first ball, then turn on Bloom Alert.'); return; }
@@ -1435,6 +1448,7 @@ function daub(ci, i, cell, fromBoost) {
 function collect(c, cell) {
   if (c.t === 'ticket') { S.tickets += 5; R.earned.tickets += 5; floatText(cell, '+5 tickets'); SFX.coin(); }
   if (c.t === 'drop') { S.drops++; R.earned.drops++; floatText(cell, '+1 drop ball'); SFX.coin(); }
+  if (c.t === 'seed') { addSeeds(2); R.earned.seeds += 2; floatText(cell, '+2 seeds'); SFX.coin(); }
   if (c.t === 'coins') { var cc = 10 * R.bet * R.dc; S.coins += cc; R.earned.coins += cc; floatText(cell, '+' + cc + ' coins'); SFX.coin(); }
   if (c.t === 'alert') { S.alerts++; R.earned.alerts++; floatText(cell, 'Bloom Alert!'); SFX.coin(); var na = $('#nAlert'); if (na) na.textContent = S.alerts; }
   if (c.t === 'petal') { var pp = 2 * R.dp; S.petals += pp; R.earned.petals += pp; floatText(cell, '+' + pp + ' petals'); SFX.coin(); }
@@ -1795,7 +1809,7 @@ function games() {
     tile('drop', 'Petal Drop', '<svg viewBox="0 0 40 40"><use href="#i-drop"/></svg>', S.drops + ' drop balls', S.drops > 0) +
     tile('wheel', 'Daily Wheel', '<svg viewBox="0 0 40 40"><use href="#i-games"/></svg>', S.wheelDay !== today() ? 'Free spin ready!' : (S.spins > 0 ? S.spins + ' bonus spin' + (S.spins > 1 ? 's' : '') : 'Next free spin in ' + hoursLeftToday()), wheelReady) +
     tile('scratch', 'Scratch Cards', '<svg viewBox="0 0 40 40"><use href="#i-card"/></svg>', S.scratch + ' card' + (S.scratch === 1 ? '' : 's'), S.scratch > 0) +
-    tile('match', 'Macaron Match', '<svg viewBox="0 0 48 40" style="color:#ff8fb1"><use href="#m-S1"/></svg>', S.mmPlays + ' free play' + (S.mmPlays === 1 ? '' : 's') + ' today', S.mmPlays > 0) +
+    tile('match', 'Macaron Match', '<svg viewBox="0 0 48 40" style="color:#ff8fb1"><use href="#m-S1"/></svg>', S.mm ? 'Saved game · tap to finish' : S.mmPlays + ' free game' + (S.mmPlays === 1 ? '' : 's') + ' today', S.mmPlays > 0 || !!S.mm) +
     '</div><p class="note">Win drop balls in bingo, scratch cards from the wheel and the kitchen, and seeds for your Team Garden.</p>', '', function (v) {
       v.querySelectorAll('[data-g]').forEach(function (b) { b.onclick = function () { SFX.tap(); ({ drop: petalDrop, wheel: wheel, scratch: scratchCard, match: macaronMatch })[b.dataset.g](); }; });
     });
@@ -1824,13 +1838,15 @@ function petalDrop() {
       function step() {
         balls.forEach(function (b) {
           b.vy = Math.min(7, b.vy + .22); b.x += b.vx; b.y += b.vy;
+          b.ly = b.ly === undefined ? b.y : b.ly; b.still = Math.abs(b.y - b.ly) < .4 ? (b.still || 0) + 1 : 0; b.ly = b.y;
+          if (b.still > 12) { b.vx = (Math.random() < .5 ? -1 : 1) * (1.5 + Math.random()); b.vy = -1; b.still = 0; }
           if (b.x < 8) { b.x = 8; b.vx = Math.abs(b.vx) * .6; } if (b.x > W - 8) { b.x = W - 8; b.vx = -Math.abs(b.vx) * .6; }
           pegs.forEach(function (p, pi) {
             var dx = b.x - p.x, dy = b.y - p.y, dist = Math.sqrt(dx * dx + dy * dy), min = 13;
             if (dist < min && dist > 0) {
               var nx = dx / dist, ny = dy / dist; b.x = p.x + nx * min; b.y = p.y + ny * min;
               var dot = b.vx * nx + b.vy * ny; if (dot < 0) { b.vx -= 1.55 * dot * nx; b.vy -= 1.55 * dot * ny; }
-              b.vx += (Math.random() - .5) * .5; if (b.hit !== pi) { b.hit = pi; tone(1200 + rand(600), 0, .05, 'sine', .03); }
+              b.vx += (Math.random() - .5) * .5; if (Math.abs(nx) < .2) b.vx += (Math.random() < .5 ? -1 : 1) * .9; if (b.hit !== pi) { b.hit = pi; tone(1200 + rand(600), 0, .05, 'sine', .03); }
             }
           });
           if (b.y > cupTop) for (var k = 1; k < DROP_CUPS.length; k++) { var wx = k * binW; if (Math.abs(b.x - wx) < 8) { b.x = wx + (b.x < wx ? -8 : 8); b.vx = -b.vx * .5; } }
@@ -1954,20 +1970,27 @@ function scratchCard() {
 var MM_COLORS = ['#ff8fb1', '#b996ff', '#7fe0a8', '#ffd45c', '#7fbfff'], MM_STARS = [800, 1600, 2600], MM_N = 7;
 function macaronMatch() {
   if (S.mmDay !== today()) { S.mmDay = today(); S.mmPlays = 3; }
-  if (S.mmPlays < 1) {
+  if (S.mmPlays < 1 && !S.mm) {
     panel('<h3>Macaron Match</h3><p>You have used your 3 free plays today. Come back tomorrow, or play again now for 5 tickets.</p><div class="res-btns"><button class="b3 gold" id="mmPay">Play · 5 tickets</button><button class="b3 cream" data-games>‹ Side games</button></div>', 'small', function (v) {
       backToGames(v);
       $('#mmPay', v).onclick = function () { if (S.tickets < 5) { toast('Not enough tickets'); return; } S.tickets -= 5; S.mmPlays = 1; save(); macaronMatch(); };
     });
     return;
   }
-  S.mmPlays--; save();
-  var G = { b: [], sel: null, busy: false, score: 0, moves: 20, nid: 0, over: false, el: {} };
+  var G = { b: [], sel: null, busy: false, score: 0, moves: 20, nid: 0, over: false, el: {} }, resumed = !!S.mm;
   var size = Math.floor(Math.max(200, Math.min(320, innerHeight - 70)) / MM_N);
-  function piece() { return { id: ++G.nid, c: rand(MM_COLORS.length) }; }
-  for (var y = 0; y < MM_N; y++) { G.b.push([]); for (var x = 0; x < MM_N; x++) { var p; do { p = piece(); } while ((x > 1 && G.b[y][x - 1].c === p.c && G.b[y][x - 2].c === p.c) || (y > 1 && G.b[y - 1][x].c === p.c && G.b[y - 2][x].c === p.c)); G.b[y].push(p); } }
+  function piece(c) { return { id: ++G.nid, c: c === undefined ? rand(MM_COLORS.length) : c }; }
+  if (resumed) { G.score = S.mm.score; G.moves = S.mm.moves; G.b = S.mm.b.map(function (row) { return row.map(function (c) { return piece(c); }); }); }
+  else {
+    S.mmPlays--;
+    for (var y = 0; y < MM_N; y++) { G.b.push([]); for (var x = 0; x < MM_N; x++) { var p; do { p = piece(); } while ((x > 1 && G.b[y][x - 1].c === p.c && G.b[y][x - 2].c === p.c) || (y > 1 && G.b[y - 1][x].c === p.c && G.b[y - 2][x].c === p.c)); G.b[y].push(p); } }
+  }
+  function keep() { S.mm = G.over ? null : { score: G.score, moves: G.moves, b: G.b.map(function (row) { return row.map(function (p) { return p.c; }); }) }; save(); }
+  keep();
   panel('<div class="dropwrap"><div class="mmboard" id="mmB" style="width:' + size * MM_N + 'px;height:' + size * MM_N + 'px;--s:' + size + 'px"></div><div class="dropside"><h3>Macaron Match</h3>' +
-    '<p>Swipe or tap two side-by-side macarons to swap them. Line up 3 or more of the same color.</p>' +
+    '<p>Swipe a macaron, or tap two side by side, to swap them. Line up 3 or more of one color and they pop.</p>' +
+    '<p class="note"><b>Win extra moves:</b> match 4 = +1 move, match 5 = +2 moves, a chain of 3 pops in one swap = +1 move.<br>You get 3 free games a day. Leaving saves your game, so you can come back and finish it.</p>' +
+    (resumed ? '<p class="note"><b>Welcome back! Your saved game is ready.</b></p>' : '') +
     '<div class="mmstat"><span>Moves <b id="mmMoves">20</b></span><span>Score <b id="mmScore">0</b></span></div><div class="pbar"><i id="mmBar" style="width:0"></i></div>' +
     '<small class="note">★ 800 = 10 tickets · ★★ 1,600 = 25 tickets + 1 seed · ★★★ 2,600 = 50 tickets + 4 seeds + an album card (50% gold)</small><div id="mmMsg"></div><button class="b3 cream" data-games>‹ Side games</button></div></div>', '', function (v) {
       backToGames(v);
@@ -1981,7 +2004,7 @@ function macaronMatch() {
           el.style.transform = 'translate(' + x * size + 'px,' + y * size + 'px)'; el.dataset.x = x; el.dataset.y = y; el.classList.toggle('sel', !!(G.sel && G.sel[0] === x && G.sel[1] === y));
           delete p.fy;
         }
-        Object.keys(G.el).forEach(function (id) { if (!seen[id]) { var e = G.el[id]; e.classList.add('pop'); delete G.el[id]; setTimeout(function () { e.remove(); }, 220); } });
+        Object.keys(G.el).forEach(function (id) { if (!seen[id]) { var e = G.el[id]; e.classList.add('pop'); delete G.el[id]; setTimeout(function () { e.remove(); }, 340); } });
         $('#mmMoves', v).textContent = G.moves; $('#mmScore', v).textContent = G.score.toLocaleString(); $('#mmBar', v).style.width = Math.min(100, G.score / MM_STARS[2] * 100) + '%';
       }
       function matches() {
@@ -1996,28 +2019,36 @@ function macaronMatch() {
         G.busy = true; G.sel = null; sw(a, b); render(); await wait(170);
         var m = matches();
         if (!m.length) { sw(a, b); render(); SFX.no(); await wait(170); G.busy = false; return; }
-        G.moves--; var combo = 1;
+        G.moves--; var combo = 1, bonus = 0;
         while (m.length) {
-          G.score += m.length * 20 * combo; m.forEach(function (c) { G.b[c[1]][c[0]] = null; });
-          tone(PENTA[Math.min(PENTA.length - 1, combo)] , 0, .3, 'sine', .12); render(); await wait(200);
+          var pts = m.length * 20 * combo; G.score += pts;
+          m.forEach(function (c) { var e = G.el[G.b[c[1]][c[0]].id]; if (e) e.classList.add('hit'); });
+          var cx = 0, cy = 0; m.forEach(function (c) { cx += c[0]; cy += c[1]; }); cx = (cx / m.length + .5) * size; cy = (cy / m.length + .5) * size;
+          var fl = document.createElement('b'); fl.className = 'mmpts outl'; fl.textContent = '+' + pts + (combo > 1 ? ' combo ×' + combo : ''); fl.style.left = cx + 'px'; fl.style.top = cy + 'px'; board.appendChild(fl); setTimeout(function () { fl.remove(); }, 900);
+          if (combo === 1 && m.length >= 5) bonus += 2; else if (combo === 1 && m.length === 4) bonus += 1;
+          if (combo === 3) bonus += 1;
+          tone(PENTA[Math.min(PENTA.length - 1, combo)], 0, .3, 'sine', .12); await wait(380);
+          m.forEach(function (c) { G.b[c[1]][c[0]] = null; });
+          render(); await wait(320);
           for (var x = 0; x < MM_N; x++) {
             var col = []; for (var y = MM_N - 1; y >= 0; y--) if (G.b[y][x]) col.push(G.b[y][x]);
             var miss = MM_N - col.length;
             for (var yy = MM_N - 1, i = 0; yy >= 0; yy--, i++) { if (i < col.length) G.b[yy][x] = col[i]; else { var p = piece(); p.fy = -(i - col.length + 1); G.b[yy][x] = p; } }
             void miss;
           }
-          render(); await wait(260); m = matches(); combo++;
+          render(); await wait(420); m = matches(); combo++;
         }
-        G.busy = false;
+        if (bonus) { G.moves += bonus; $('#mmMoves', v).textContent = G.moves; $('#mmMsg', v).innerHTML = '<p><b>+' + bonus + ' move' + (bonus > 1 ? 's' : '') + '!</b> Great match.</p>'; SFX.boost(); setTimeout(function () { if (!G.over) $('#mmMsg', v).innerHTML = ''; }, 2200); }
+        G.busy = false; keep();
         if (G.moves <= 0) finish();
       }
       function finish() {
-        G.over = true; var stars = MM_STARS.filter(function (s) { return G.score >= s; }).length;
+        G.over = true; keep(); var stars = MM_STARS.filter(function (s) { return G.score >= s; }).length;
         var tix = [0, 10, 25, 50][stars], seeds = [0, 0, 1, 4][stars];
         if (tix) S.tickets += tix; if (seeds) addSeeds(seeds); addXp(5 + stars * 5); var mmCard = stars === 3 ? grant({ t: 'card', n: 1, gold: .5 }) : ''; save();
         if (stars) { SFX.set(); sparkle(innerWidth / 3, innerHeight / 2, 90); }
         $('#mmMsg', v).innerHTML = '<p><b>' + (stars ? '★'.repeat(stars) + ' Well done!' : 'Out of moves!') + '</b> ' + (tix ? '+' + tix + ' tickets' + (seeds ? ' and +' + seeds + ' seeds' : '') + (mmCard ? '. Album card: ' + mmCard.replace(/^\+/, '') : '') : 'Reach 800 points to win tickets.') + '</p>' +
-          '<button class="b3 gold" id="mmAgain" style="padding:6px 12px">' + (S.mmPlays > 0 ? 'Play again (' + S.mmPlays + ' free left)' : 'Play again') + '</button>';
+          '<button class="b3 gold" id="mmAgain" style="padding:6px 12px">' + (S.mmPlays > 0 ? 'New game (' + S.mmPlays + ' free left today)' : 'New game') + '</button>';
         $('#mmAgain', v).onclick = macaronMatch;
       }
       var start = null;
