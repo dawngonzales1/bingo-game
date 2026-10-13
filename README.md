@@ -27,13 +27,19 @@ Bingo Bloom uses ideas common to many bingo games (balls, 5×5 cards, bingos lef
 | Coins | Power-ups and card packs in the Shop | Bingos, treasure squares, set and album rewards, side games |
 | Petals | Growing Paris landmarks (1 to 3 blossoms each) | Bingos, treasure squares |
 
-### Lobby (a Paris map you build)
-- **Top:** level, tickets, coins, petals, Paris progress, settings.
-- **Left:** daily gift, album, Kitchen.
-- **Right:** Shop, side games, Team Garden.
-- **ROOMS (bottom right):** opens the Bingo Rooms screen, with City and Featured tabs.
+### Title screen
+A softly moving painting of the Paris room with falling petals, a gold Bingo Bloom logo with a "by Cordelle" ribbon, and a shining PLAY button.
+
+### Lobby: the room path
+- The lobby is a walk through all the rooms. Each room's painting blends into the next, and a cobblestone path winds past a round picture of every room. Swipe sideways to walk along it.
+- **Tap a room** to go inside. A bouncing petal marks the room you played last, and "More rooms, coming soon" waits at the end of the path.
+- **Top:** level, tickets, coins, petals, **Build Paris** (with your blossom count) and settings.
+- **Left:** daily gift, album, Kitchen. **Right:** Shop, side games, Team Garden.
 - **Inside a room:** its own painted screen. Choose the number of cards (1, 2 or 4), a bet (×1 to ×5) and power-ups (Head Start, Double Coins, Double Petals), then press the big **PLAY** button.
 - **After a round:** Play again (or leaving a round) brings you back to the same room.
+
+### Build Paris
+Tap **Build Paris** at the top of the lobby to open the Paris map. Tap a landmark to grow it from 1 to 3 blossoms with petals. **‹ Rooms** goes back to the path.
 
 ### A round of bingo
 - 45 balls. Speeds: Relaxed (5 s), Classic (4 s, the default), Quick (3 s).
