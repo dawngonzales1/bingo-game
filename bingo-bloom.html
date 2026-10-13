@@ -706,6 +706,144 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .trail .t2 { stroke: #fbe9bd; stroke-width: 32; }
 .trail .t3 { stroke: #eccb84; stroke-width: 22; stroke-dasharray: 24 7; stroke-linecap: butt; }
 .stop.last .med { box-shadow: 0 0 0 4px var(--ol), 0 8px 0 4px var(--ol), 0 0 30px 10px rgba(255,214,92,.8), inset 0 0 0 3px rgba(255,255,255,.6); }
+/* ===== round, v3: top ball rail, power-up dock, jewel cards ===== */
+#play { --tb: clamp(46px, 17vh, 74px); --pu: clamp(38px, 11.5vh, 58px); grid-template-columns: auto minmax(0, 1fr); grid-template-rows: var(--tb) minmax(0, 1fr); gap: 8px; }
+.ptop { grid-column: 1 / -1; display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto; align-items: center; gap: 8px; min-width: 0; }
+.ptop .mini-btn { width: calc(var(--tb) * .62); height: calc(var(--tb) * .62); }
+.ptop .ballwrap { margin: 0 4px; z-index: 3; }
+#play .ptop .ball { --s: calc(var(--tb) + 6px); border: 0; margin: 0;
+  background: radial-gradient(circle at 32% 24%, rgba(255,255,255,.95) 0 7%, rgba(255,255,255,0) 22%), radial-gradient(circle at 50% 115%, rgba(20,5,30,.45), transparent 55%), radial-gradient(circle at 42% 36%, color-mix(in srgb, var(--bc, #f5a01a) 55%, #fff), var(--bc, #f5a01a) 50%, color-mix(in srgb, var(--bc, #f5a01a) 55%, #1a0526) 100%);
+  box-shadow: 0 0 0 3px var(--ol), 0 0 0 7px rgba(255,214,92,.6), 0 0 22px 6px rgba(255,214,92,.55), 0 6px 10px rgba(20,5,30,.5); }
+#play .ptop .ball .in { width: 60%; height: 60%; }
+#play .ptop .ball .in b { font-size: calc(var(--s) * .3); }
+#play .ptop .ball .in small { font-size: calc(var(--s) * .13); color: var(--bc); }
+.ptop .stripwrap { height: calc(var(--tb) - 4px); }
+#play .strip.tube { height: 100%; border-radius: 999px; padding: 0 10px; gap: 5px;
+  background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.04) 42%, rgba(0,0,0,.22) 100%), linear-gradient(180deg, #4a1c78, #2c0f4a) padding-box, linear-gradient(90deg, #b8780a, #ffe58f 30%, #e9a81c 70%, #fff3b8) border-box;
+  border: 3px solid transparent; box-shadow: 0 0 0 2px var(--ol), 0 4px 0 2px var(--ol), inset 0 3px 6px rgba(0,0,0,.4); }
+#play .strip.tube .lbl { color: #e6d4ff; font-size: 10px; }
+#play .strip.tube .lbl b { color: #ffe58f; font-size: 14px; }
+.tube.plus5 { animation: tubeFlash .9s; }
+@keyframes tubeFlash { 30% { box-shadow: 0 0 0 2px var(--ol), 0 0 24px 8px rgba(255,214,92,.9); } }
+.b3d { --s: calc(var(--tb) - 16px); flex: none; width: var(--s); height: var(--s); border-radius: 50%; display: grid; place-items: center; transform: rotate(var(--r));
+  background: radial-gradient(circle at 32% 24%, rgba(255,255,255,.95) 0 8%, rgba(255,255,255,0) 24%), radial-gradient(circle at 50% 118%, rgba(20,5,30,.5), transparent 55%), radial-gradient(circle at 42% 36%, color-mix(in srgb, var(--c) 55%, #fff), var(--c) 50%, color-mix(in srgb, var(--c) 55%, #1a0526) 100%);
+  box-shadow: 0 0 0 2px rgba(30,8,45,.8), 0 3px 4px rgba(0,0,0,.45); }
+.b3d i { width: 58%; height: 58%; border-radius: 50%; display: grid; place-items: center; align-content: center; background: radial-gradient(circle at 45% 35%, #fff, #efe6d3); box-shadow: inset 0 -1px 2px rgba(61,26,79,.3); font-style: normal; font-weight: 700; font-size: calc(var(--s) * .27); line-height: .9; color: var(--ink); }
+.b3d i small { font-size: calc(var(--s) * .14); color: var(--c); }
+.b3d.new { animation: rollIn .6s cubic-bezier(.2,.9,.3,1.15); }
+@keyframes rollIn { from { transform: translateX(-120%) rotate(-280deg) scale(.6); opacity: 0; } }
+#play .bleft { align-self: stretch; margin: 3px 0; padding: 2px 12px; border-radius: 16px; }
+#play .bleft b { font-size: calc(var(--tb) * .42); }
+/* left rail */
+.rail { grid-row: 2; display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 6px; min-height: 0; padding: 8px; border-radius: 22px; box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(118,56,182,.94), rgba(56,20,90,.96)) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; border: 3px solid transparent;
+  box-shadow: 0 0 0 2px var(--ol), 0 6px 0 2px var(--ol), 0 14px 26px rgba(30,8,45,.4); }
+.rail .auto { color: #fff4c9; }
+.dock { display: grid; grid-template-columns: repeat(3, var(--pu)); gap: 4px 8px; }
+#play .pu { all: unset; cursor: pointer; display: grid; justify-items: center; gap: 1px; position: relative; }
+#play .pu .orb { position: relative; width: var(--pu); height: var(--pu); border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 40% 30%, #fff 0 10%, rgba(255,255,255,0) 30%), radial-gradient(circle, #f6edff, #cdb2f2 70%, #9c79d6);
+  box-shadow: 0 0 0 3px var(--gold2), 0 0 0 5px var(--ol), 0 4px 0 5px var(--ol), inset 0 -3px 6px rgba(61,26,79,.3); transition: transform .12s; }
+#play .pu .orb svg { width: 78%; height: 78%; filter: drop-shadow(0 2px 2px rgba(30,8,45,.35)); }
+#play .pu .orb b { position: absolute; top: -6px; right: -7px; min-width: 20px; height: 20px; padding: 0 4px; box-sizing: border-box; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(180deg, #ff6f9d, #d63a6a); color: #fff; font-size: 11.5px; border: 2px solid #fff; box-shadow: 0 0 0 1.5px var(--ol); }
+#play .pu .pl { margin-top: 5px; font-size: 10.5px; font-weight: 700; color: #fff4c9; white-space: nowrap; text-shadow: 0 1px 0 var(--ol); }
+#play .pu:active .orb { transform: scale(.9); }
+#play .pu.on .orb { box-shadow: 0 0 0 3px #fff3b8, 0 0 0 5px var(--ol), 0 0 18px 6px rgba(255,214,92,.9); animation: pulse 1s ease-in-out infinite; }
+#play .boostb .orb { background: conic-gradient(from -90deg, #ffd45c calc(var(--p, 0) * 1%), rgba(30,8,45,.55) 0); }
+#play .boostb .orb .fillr { position: absolute; inset: 5px; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #fff 0 10%, rgba(255,255,255,0) 30%), radial-gradient(circle, #ffe0ef, #ff9cc4 70%, #d9608f); }
+#play .boostb .orb svg { position: relative; }
+#play .boostb:disabled { cursor: default; }
+#play .boostb:disabled .orb svg { opacity: .55; filter: grayscale(.5); }
+#play .boostb.full .orb { box-shadow: 0 0 0 3px #fff3b8, 0 0 0 5px var(--ol), 0 0 20px 8px rgba(255,214,92,.95); animation: pulse .8s ease-in-out infinite; }
+#play .autob { font-size: 10.5px; padding: 3px 10px; border-radius: 10px; }
+/* cards with pop */
+#play .bcard { background: radial-gradient(circle at 20% 15%, rgba(255,214,92,.18) 0 1.2px, transparent 2px) 0 0 / 7cqw 7cqw, linear-gradient(180deg, #5d2a96, #34124f) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 35%, #ffe58f 60%, #b8780a) border-box;
+  border: 4px solid transparent; border-radius: 4.5cqw; box-shadow: 0 0 0 2px var(--ol), 0 7px 0 2px var(--ol), 0 0 28px 4px rgba(255,214,92,.35), 0 16px 26px rgba(20,5,30,.45); }
+#play .bcard .hdr { background: none; border-bottom: 0; padding: 2.2cqw 2.6cqw .6cqw; }
+#play .bcard .hdr span { --hc: #ff4f8b; }
+#play .bcard .hdr span:nth-child(2) { --hc: #9150f0; }
+#play .bcard .hdr span:nth-child(3) { --hc: #f5a01a; }
+#play .bcard .hdr span:nth-child(4) { --hc: #2fb35e; }
+#play .bcard .hdr span:nth-child(5) { --hc: #3a80ea; }
+#play .grid { gap: 1.8cqw; padding: 1.6cqw 2.6cqw 2.8cqw; }
+#play .cell { border-radius: 2.8cqw; font-size: 8.8cqw; color: #3d1a4f; background: linear-gradient(180deg, #fffef9 0%, #fdf4e0 55%, #f1dcb0 100%);
+  box-shadow: inset 0 .7cqw 0 #fff, inset 0 -1.1cqw 0 rgba(176,122,18,.3), 0 .9cqw 0 rgba(20,5,30,.55); }
+#play .cell.d { background: linear-gradient(180deg, #fbefff, #e7d0ff); }
+#play .cell.free { background: radial-gradient(circle at 35% 30%, #fff8d6, #ffd45c 50%, #e9a81c); }
+#play .cell.hint { box-shadow: 0 0 0 .8cqw #ffd45c, 0 0 3cqw 1cqw rgba(255,214,92,.95), 0 .9cqw 0 rgba(20,5,30,.55); }
+#play .bcard::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 4; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%) no-repeat; background-size: 250% 100%; background-position: 160% 0; animation: cardShine 7s ease-in-out infinite; }
+@keyframes cardShine { 0%, 80% { background-position: 160% 0; } 100% { background-position: -60% 0; } }
+.burst { position: absolute; inset: -12%; border-radius: 50%; border: 3px solid #ffd45c; box-shadow: 0 0 10px #ffd45c; pointer-events: none; animation: burst .55s ease-out forwards; z-index: 2; }
+@keyframes burst { from { transform: scale(.3); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
+.cell.zap { animation: zap .5s ease-out; }
+@keyframes zap { 0% { filter: brightness(2.2); transform: scale(1.25); } 100% { filter: none; transform: none; } }
+#cards.wildmode .cell:not(.d) { animation: wiggle .9s ease-in-out infinite; box-shadow: 0 0 0 .8cqw #ff9cc4, 0 .9cqw 0 rgba(20,5,30,.55); }
+@keyframes wiggle { 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+.bigs.wave .bcard .grid { animation: waveGlow 1s ease-out; }
+@keyframes waveGlow { 0% { filter: brightness(1); } 40% { filter: brightness(1.35) drop-shadow(0 0 10px #ffd45c); } 100% { filter: none; } }
+.bcard.x2on { box-shadow: 0 0 0 2px var(--ol), 0 7px 0 2px var(--ol), 0 0 30px 8px rgba(255,214,92,.85); }
+.stamp { position: absolute; z-index: 5; top: 2cqw; left: 2.5cqw; font-size: 11cqw; font-weight: 700; color: #ffe58f; transform: rotate(-14deg); animation: stamp .45s cubic-bezier(.2,.9,.3,1.4); pointer-events: none; }
+@keyframes stamp { from { transform: rotate(-14deg) scale(4); opacity: 0; } }
+/* power-up show */
+.pfx { position: fixed; inset: 0; z-index: 65; display: grid; place-items: center; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(110,40,170,.55), rgba(25,8,45,.25) 60%, transparent); animation: fade .2s; overflow: hidden; }
+.pfx.out { opacity: 0; transition: opacity .3s; }
+.prays { position: absolute; left: 50%; top: 50%; width: 160vmax; height: 160vmax; margin: -80vmax 0 0 -80vmax; background: repeating-conic-gradient(rgba(255,229,143,.28) 0 9deg, transparent 9deg 18deg); animation: spinRays 6s linear infinite; -webkit-mask-image: radial-gradient(circle, #000 10%, transparent 55%); mask-image: radial-gradient(circle, #000 10%, transparent 55%); }
+.pbox { position: relative; display: grid; justify-items: center; gap: 2px; text-align: center; animation: popIn .45s cubic-bezier(.2,.9,.3,1.5); }
+.porb { width: clamp(80px, 30vh, 130px); height: clamp(80px, 30vh, 130px); display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #fff, #ffe7a8 45%, #f7b924); box-shadow: 0 0 0 4px var(--ol), 0 0 40px 14px rgba(255,214,92,.8); animation: spinIn .6s cubic-bezier(.2,.9,.3,1.3); }
+.porb svg { width: 74%; height: 74%; }
+@keyframes spinIn { from { transform: rotate(-200deg) scale(.2); } }
+.pbox b { font-size: clamp(26px, 11vh, 48px); color: #ffe58f; line-height: 1.1; }
+.pbox small { color: #fff; font-weight: 700; font-size: clamp(13px, 4.5vh, 18px); text-shadow: 0 2px 0 var(--ol); }
+.flyer { position: fixed; z-index: 66; width: 44px; height: 44px; margin: -22px 0 0 -22px; transition: transform .5s cubic-bezier(.4,0,.2,1); pointer-events: none; filter: drop-shadow(0 0 8px #ffd45c); }
+.flyer svg { width: 100%; height: 100%; }
+@media (max-height: 300px) {
+  #play { --tb: 44px; --pu: 36px; gap: 5px; }
+  #play .pu .pl { font-size: 9px; margin-top: 4px; }
+  #play .pu .orb b { min-width: 17px; height: 17px; font-size: 10px; top: -5px; right: -6px; }
+  .rail { padding: 5px 6px; gap: 3px; border-radius: 16px; }
+  .dock { gap: 2px 7px; }
+  #play .bleft small { font-size: 9.5px; }
+  #play .bleft b { font-size: 20px; }
+}
+/* room path: whole paintings in gold frames */
+.stop { --mh: clamp(78px, 31vh, 150px); --mw: calc(var(--mh) * 1360 / 768); }
+.stop .med { --m: 0; top: calc(var(--mh) / -2); width: var(--mw); height: var(--mh); border-radius: 14px; background-size: 100% 100%; background-position: center !important;
+  border: 5px solid transparent; background-origin: border-box; box-shadow: 0 0 0 2px var(--ol), 0 8px 0 2px var(--ol), 0 16px 24px rgba(30,8,45,.5); outline: 4px solid var(--gold2); outline-offset: -4px; }
+.stop .stag { top: calc(var(--mh) / -2 - 12px); }
+.stop .sname { top: calc(var(--mh) / 2 + 4px); }
+.stop .sfoot { top: calc(var(--mh) / 2 + clamp(30px, 9vh, 38px)); }
+.stop .pin { top: calc(var(--mh) / -2 - 52px); }
+.stop.last .med { box-shadow: 0 0 0 2px var(--ol), 0 8px 0 2px var(--ol), 0 0 30px 10px rgba(255,214,92,.85); }
+.stop.soon .med { background: radial-gradient(circle at 40% 30%, #fff, #e2d3f7); }
+/* ===== lobby: one painted city with 4 rooms, featured rooms along the bottom ===== */
+#worldWrap { position: absolute; inset: 0; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; background: var(--plum3); }
+#worldWrap::-webkit-scrollbar { display: none; }
+.citysec { --side: clamp(64px, 10vw, 84px); position: relative; padding: 0 var(--side) var(--fh, 84px); overflow: hidden; }
+.citysec::before { content: ''; position: absolute; inset: -20px; background: url(art/lobby-paris-map.webp) center / cover; filter: blur(14px) brightness(.8) saturate(1.1); }
+#worldWrap #mapSvg { position: relative; display: block; width: 100%; height: auto; margin: 0; border-radius: 0 0 22px 22px; box-shadow: 0 0 0 3px var(--gold2), 0 0 0 5px var(--ol), 0 12px 30px rgba(20,5,30,.5); }
+#worldWrap .lm { cursor: pointer; }
+.cityban { position: relative; display: grid; justify-items: center; margin: 10px auto 0; width: max-content; max-width: 90%; padding: 4px 40px 6px; text-align: center; background: linear-gradient(90deg, transparent, rgba(40,12,64,.85) 18%, rgba(40,12,64,.85) 82%, transparent); }
+.cityban b { font-size: clamp(22px, 8vh, 36px); letter-spacing: .08em; line-height: 1.05; }
+.cityban small { color: #ffe58f; font-weight: 600; font-size: 12px; }
+.nextsec { position: relative; height: max(220px, 60vh); display: grid; place-items: center; background: radial-gradient(ellipse at 30% 40%, #fff 0 18%, transparent 40%), radial-gradient(ellipse at 70% 60%, #fff 0 20%, transparent 42%), radial-gradient(ellipse at 50% 20%, #f3e9ff 0 25%, transparent 50%), linear-gradient(180deg, #cdb6ef, #f2e9ff 40%, #e2d2fb); }
+.nextsec .cityban { margin: 0; }
+.hud-feat { left: calc(clamp(64px, 10vw, 84px) + 4px); right: calc(clamp(64px, 10vw, 84px) + 4px); bottom: calc(6px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: safe center; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 6px 4px 8px; }
+.hud-feat::-webkit-scrollbar { display: none; }
+.fhd { flex: none; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 12px; letter-spacing: .1em; }
+.ftile { --fh: clamp(46px, 19vh, 80px); flex: none; position: relative; height: var(--fh); aspect-ratio: 16 / 9; border-radius: 12px; background-size: 100% 100%; border: 3px solid var(--gold2); box-shadow: 0 0 0 2px var(--ol), 0 4px 0 2px var(--ol), 0 8px 14px rgba(20,5,30,.4); overflow: hidden; }
+.ftile:active { transform: translateY(2px); }
+.ftag { position: absolute; top: 0; left: 0; padding: 1px 6px 2px; border-radius: 0 0 8px 0; background: linear-gradient(180deg, var(--green1), var(--green2)); color: #fff; font-size: 9px; font-weight: 700; text-shadow: 0 1px 0 var(--ol); white-space: nowrap; }
+.fnm { position: absolute; left: 0; right: 0; bottom: 0; padding: 1px 4px 2px; background: rgba(40,12,64,.82); color: #fff; font-size: 10.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rgrow b { display: flex; align-items: center; gap: 2px; }
+.rgrow b svg { width: 22px; height: 22px; }
+.rgrow .b3 { padding: 3px 10px; font-size: 15px; justify-self: start; }
+.rgrow small { color: #ffe58f; font-size: 11.5px; }
+@media (max-height: 300px) { .rgrow b svg { width: 17px; height: 17px; } .rgrow .b3 { font-size: 13px; padding: 2px 8px; } .rgrow small { display: none; } }
+#play .bcard { grid-template-columns: minmax(0, 1fr); }
+#play .grid, #play .bcard .hdr { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+#play .cell.free { font-size: 6.2cqw; }
+#play .minis .bcard { width: var(--mw, 92px); min-width: 0; }
+#play #cards { padding-right: 4px; box-sizing: border-box; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -721,8 +859,12 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
     <pattern id="cob" width="30" height="18" patternUnits="userSpaceOnUse"><rect width="30" height="18" fill="#f6e5c0"/><rect x="1" y="1.5" width="13" height="6.5" rx="3" fill="#efd8aa"/><rect x="16" y="10.5" width="13" height="6.5" rx="3" fill="#efd8aa"/><rect x="-14" y="10.5" width="13" height="6.5" rx="3" fill="#efd8aa"/></pattern>
     <pattern id="grassP" width="26" height="26" patternUnits="userSpaceOnUse"><rect width="26" height="26" fill="#86cf5e"/><path d="M5 9l2-4 2 4M17 21l2-4 2 4" stroke="#6fb84a" stroke-width="1.6" fill="none"/></pattern>
     <linearGradient id="gTicket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc2d6"/><stop offset="1" stop-color="#ff6f9d"/></linearGradient>
+    <radialGradient id="gOrbP" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#c9a2ff"/><stop offset=".55" stop-color="#7b3fe0"/><stop offset="1" stop-color="#3d1680"/></radialGradient>
+    <linearGradient id="gBolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffbd0"/><stop offset=".45" stop-color="#ffd23f"/><stop offset="1" stop-color="#e98f0c"/></linearGradient>
     <radialGradient id="gDrop" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#ffb3cf"/><stop offset="1" stop-color="#d9608f"/></radialGradient>
   </defs>
+  <symbol id="i-instant" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="url(#gOrbP)" stroke="#3d1a4f" stroke-width="2.5"/><ellipse cx="13.5" cy="11.5" rx="6" ry="3.2" fill="#fff" opacity=".4" transform="rotate(-35 13.5 11.5)"/><path d="M23 5 10.5 22.5h7.5L14.5 35 30 16.5h-8.2z" fill="url(#gBolt)" stroke="#3d1a4f" stroke-width="2" stroke-linejoin="round"/><path d="M21 9.5 14.8 19" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".8"/></symbol>
+  <symbol id="i-allx2" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="url(#gHeart)" stroke="#3d1a4f" stroke-width="2.5"/><circle cx="20" cy="20" r="13" fill="none" stroke="#fff3c4" stroke-width="1.6" opacity=".9"/><ellipse cx="13" cy="11.5" rx="5.5" ry="3" fill="#fff" opacity=".5" transform="rotate(-35 13 11.5)"/><text x="20" y="26" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="700" font-size="16" fill="#fff" stroke="#3d1a4f" stroke-width="3.2" paint-order="stroke" stroke-linejoin="round">×2</text><path d="M32 4l1.2 3 3 1.2-3 1.2L32 12.4l-1.2-3-3-1.2 3-1.2z" fill="#fff"/></symbol>
   <symbol id="i-ticket" viewBox="0 0 40 40"><image href="art/icon-ticket.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-seed" viewBox="0 0 40 40"><image href="art/icon-seed.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-drop" viewBox="0 0 40 40"><image href="art/icon-drop-ball.webp" x="1" y="1" width="38" height="38"/></symbol>
@@ -830,7 +972,7 @@ var LINES = (function () {
 /* ---------- saved progress (this phone only, for now) ---------- */
 var KEY = 'bingoBloom.v1';
 function fresh() {
-  return { v: 3, bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0 },
+  return { v: 3, bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'classic', auto: false, autoAlert: true } };
@@ -864,6 +1006,9 @@ function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = rand(i + 
 function range(a, b) { var r = []; for (var i = a; i <= b; i++) r.push(i); return r; }
 function letter(n) { return COLS[Math.floor((n - 1) / 15)]; }
 function ballColor(n) { return BALL_COLORS[Math.floor((n - 1) / 15)]; }
+var BALL_DEEP = ['#ff4f8b', '#9150f0', '#f5a01a', '#2fb35e', '#3a80ea'];
+function ballDeep(n) { return BALL_DEEP[Math.floor((n - 1) / 15)]; }
+function ball3d(n, cls) { return '<span class="b3d' + (cls ? ' ' + cls : '') + '" style="--c:' + ballDeep(n) + ';--r:' + (rand(25) - 12) + 'deg"><i><small>' + letter(n) + '</small>' + n + '</i></span>'; }
 function today() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
 function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 function setById(id) { return SETS.filter(function (s) { return s.id === id; })[0]; }
@@ -883,7 +1028,9 @@ function addXp(n) {
   S.xp += n;
   while (S.xp >= xpNeed()) { S.xp -= xpNeed(); S.level++; S.coins += 100; S.tickets += 20; S.alerts++; toast('Level ' + S.level + '! +20 tickets, +100 coins and a Bloom Alert'); SFX.set(); }
 }
-function cityStars() { return LANDMARKS.reduce(function (a, l) { return a + (S.build[l.id] || 0); }, 0); }
+var CITY_ROOMS = ['patisserie', 'cafe', 'carousel', 'boutique'], ROOM_REWARD = 100, CITY_TICKETS = 500;
+function cityStars() { return CITY_ROOMS.reduce(function (a, id) { return a + Math.min(3, S.build[id] || 0); }, 0); }
+function roomByLm(id) { return ROOMS.filter(function (r) { return r.lm === id; })[0]; }
 
 /* ---------- sound: made from scratch with the phone's synthesizer ---------- */
 var AC = null;
@@ -1122,7 +1269,7 @@ function ribbon(lm, i) {
     var on = k < lvl, x = (k - 1) * 28, y = -30 - (k === 1 ? 6 : 0);
     var sz = k === 1 ? 30 : 26; s += '<svg x="' + (x - sz / 2) + '" y="' + (y - sz / 2) + '" width="' + sz + '" height="' + sz + '" viewBox="0 0 40 40"><use href="#' + (on ? 'i-blossom' : 'i-blossom0') + '"/></svg>';
   }
-  if (lvl < 3 && S.petals >= STAR_COST[lvl]) s += '<g class="bounce"><circle cx="' + (W / 2 + 4) + '" cy="-30" r="17" fill="url(#gBuild)"' + OL + '/><svg x="' + (W / 2 - 10) + '" y="-44" width="28" height="28" viewBox="0 0 40 40"><use href="#i-hammer"/></svg></g>';
+  if (false) s += '<g class="bounce"><circle cx="' + (W / 2 + 4) + '" cy="-30" r="17" fill="url(#gBuild)"' + OL + '/><svg x="' + (W / 2 - 10) + '" y="-44" width="28" height="28" viewBox="0 0 40 40"><use href="#i-hammer"/></svg></g>';
   return s + '</g>';
 }
 var MAP_W = 1344, MAP_H = 768, LM_S = .72;
@@ -1133,8 +1280,9 @@ var LM_IMG = { patisserie: ['art/landmark-patisserie.webp', 230, 608 / 621], bri
 function lmPicture(id, lvl, cx, baseY) {
   var im = LM_IMG[id], w = im[1], h = w * im[2], x = cx - w / 2, y = baseY - h;
   var s = '<ellipse cx="' + cx + '" cy="' + (baseY - 6) + '" rx="' + w * .46 + '" ry="' + w * .14 + '" fill="#5a3a20" opacity=".18"/>';
-  s += '<image href="' + im[0] + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"' + (lvl ? '' : ' style="filter:grayscale(1) brightness(1.15);opacity:.45"') + '/>';
-  if (!lvl) s += sign(cx, baseY + 4);
+  var ghost = !lvl && CITY_ROOMS.indexOf(id) < 0;
+  s += '<image href="' + im[0] + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"' + (ghost ? ' style="filter:grayscale(1) brightness(1.15);opacity:.45"' : '') + '/>';
+  if (ghost) s += sign(cx, baseY + 4);
   if (lvl >= 3) s += spark(cx - w * .45, y + h * .25, 10, 0) + spark(cx + w * .42, y + h * .1, 8, .5) + spark(cx + w * .1, y - 6, 7, .9);
   return s;
 }
@@ -1209,11 +1357,14 @@ function topBar(extra) {
 }
 function lobby() {
   stopRound();
-  var giftReady = S.lastGift !== today(), stars = cityStars(), keepScroll = $('#pathWrap') ? $('#pathWrap').scrollLeft : null;
+  var giftReady = S.lastGift !== today(), stars = cityStars(), keep = $('#worldWrap') ? $('#worldWrap').scrollTop : 0;
   var ovenReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); });
   var gamesHot = S.wheelDay !== today() || S.drops > 0 || S.scratch > 0;
-  show('<div class="screen" id="lobby"><div id="pathWrap"><div id="pathIn"></div></div>' +
-    topBar('<button class="city" id="bCity"><b><span>Build Paris ›</span><span><svg viewBox="0 0 40 40" style="width:16px;height:16px;vertical-align:-3px"><use href="#i-blossom"/></svg> ' + stars + '/15</span></b><div class="pbar"><i style="width:' + (stars / 15 * 100) + '%"></i></div></button>' +
+  var feat = ROOMS.filter(function (r) { return r.mode !== 'multi'; });
+  show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec">' + mapSvg() +
+      '<div class="cityban"><b class="outl">PARIS</b><small>' + stars + '/12 blossoms · finish all 4 rooms for a big prize</small></div></div>' +
+      '<div class="nextsec"><div class="cityban soon"><b class="outl">NEXT CITY</b><small>Finish Paris to travel on · coming soon</small></div></div></div>' +
+    topBar('<div class="city"><b><span>Paris</span><span><svg viewBox="0 0 40 40" style="width:16px;height:16px;vertical-align:-3px"><use href="#i-blossom"/></svg> ' + stars + '/12</span></b><div class="pbar"><i style="width:' + (stars / 12 * 100) + '%"></i></div></div>' +
       '<div class="spacer"></div><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       rb('bGift', 'i-gift', 'pk', giftReady ? 'Collect' : nextGiftText(), giftReady) +
@@ -1225,12 +1376,17 @@ function lobby() {
       rb('bGames', 'i-games', 'pl', 'Games', gamesHot) +
       rb('bTeam', 'i-team', '', 'Team', gardenReady()) +
     '</div>' +
+    '<div class="hud hud-feat"><span class="fhd outl">Featured</span>' + feat.map(function (r) {
+      return '<button class="ftile" data-r="' + ROOMS.indexOf(r) + '" style="background-image:url(' + r.img + ')"><span class="ftag">' + MODE_INFO[r.mode].tag + '</span><span class="fnm">' + esc(r.name) + '</span></button>';
+    }).join('') + '</div>' +
   '</div>');
-  drawPath(keepScroll);
-  var pw = $('#pathWrap');
-  pw.addEventListener('click', function (e) { var g = e.target.closest('.stop[data-r]'); if (g && !dragMoved) { SFX.tap(); roomScreen(ROOMS[+g.dataset.r]); } else if (e.target.closest('.stop.soon') && !dragMoved) toast('More rooms are on the way. Keep playing to unlock them!'); });
-  enableDrag(pw);
-  $('#bCity').onclick = function () { SFX.tap(); city(); };
+  $('#worldWrap').scrollTop = keep;
+  $('#worldWrap').addEventListener('click', function (e) {
+    var g = e.target.closest('.lm'); if (!g) return;
+    var lm = LANDMARKS[+g.dataset.lm], r = roomByLm(lm.id); SFX.tap();
+    if (r) roomScreen(r); else toast(lm.name + ' opens when all 4 Paris rooms have 3 blossoms.', 3200);
+  });
+  app.querySelectorAll('.ftile').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
   $('#bGift').onclick = function (e) {
     if (!giftReady) { toast('Your next gift is ready in ' + nextGiftText() + '.'); return; }
     S.coins += DAILY_GIFT; S.tickets += 50; S.alerts++; S.lastGift = today(); save(); SFX.coin(); sparkle(e.clientX, e.clientY, 50); lobby(); toast('+50 tickets, +' + DAILY_GIFT + ' coins and a Bloom Alert. Come back tomorrow!', 3200);
@@ -1242,61 +1398,8 @@ function lobby() {
   $('#bTeam').onclick = teamGarden;
   $('#bSet').onclick = settings;
 }
-/* the room path: each room's painting is one stretch of the walk, blended into the next */
-var PATH_Y = [0.66, 0.44];
-function drawPath(keep) {
-  var w = $('#pathWrap'), inn = $('#pathIn'); if (!w || !inn) return;
-  var H = w.clientHeight, zw = Math.round(H * 1360 / 768), step = Math.round(zw * 0.8), pad = Math.max(96, Math.round(w.clientWidth * 0.14));
-  var n = ROOMS.length + 1, W = pad * 2 + step * (n - 1) + Math.round(zw * 0.35), pts = [];
-  for (var i = 0; i < n; i++) pts.push([pad + Math.round(zw * 0.18) + i * step, Math.round(H * PATH_Y[i % 2])]);
-  var d = 'M0 ' + Math.round(H * 0.8) + ' C' + pts[0][0] * 0.5 + ' ' + Math.round(H * 0.8) + ' ' + pts[0][0] * 0.5 + ' ' + pts[0][1] + ' ' + pts[0][0] + ' ' + pts[0][1];
-  for (i = 1; i < n; i++) { var mx = (pts[i - 1][0] + pts[i][0]) / 2; d += ' C' + mx + ' ' + pts[i - 1][1] + ' ' + mx + ' ' + pts[i][1] + ' ' + pts[i][0] + ' ' + pts[i][1]; }
-  d += ' C' + (pts[n - 1][0] + 80) + ' ' + pts[n - 1][1] + ' ' + (W - 60) + ' ' + Math.round(H * 0.8) + ' ' + W + ' ' + Math.round(H * 0.8);
-  var html = ROOMS.map(function (r, k) {
-    return '<div class="zone" style="left:' + (k ? pad - Math.round(zw * 0.32) + k * step : 0) + 'px;width:' + (k ? zw : pad + zw) + 'px;background-image:url(' + r.img + ');background-position:' + r.pos + ' center' + (k ? '' : ';-webkit-mask-image:none;mask-image:none') + '"></div>';
-  }).join('') +
-    '<div class="zone soonz" style="left:' + (pad - Math.round(zw * 0.32) + ROOMS.length * step) + 'px;width:' + (W - (pad - Math.round(zw * 0.32) + ROOMS.length * step)) + 'px"></div>' +
-    '<svg class="trail" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><path d="' + d + '" class="t1"/><path d="' + d + '" class="t2"/><path d="' + d + '" class="t3"/></svg>' +
-    ROOMS.map(function (r, k) {
-      var mi = MODE_INFO[r.mode], last = (S.lastRoom || ROOMS[0].id) === r.id;
-      return '<button class="stop' + (last ? ' last' : '') + '" data-r="' + k + '" style="left:' + pts[k][0] + 'px;top:' + pts[k][1] + 'px">' +
-        (last ? '<span class="pin">' + icon('i-petal') + '</span>' : '') +
-        '<span class="med" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span>' +
-        '<span class="stag">' + mi.tag + '</span>' +
-        '<span class="sname outl">' + esc(r.name) + '</span>' +
-        '<span class="sfoot">' + (r.mode === 'multi' ? 'City room' : 'Bonus ' + bonusPct(r.id) + '%') + '</span></button>';
-    }).join('') +
-    '<div class="stop soon" style="left:' + pts[n - 1][0] + 'px;top:' + pts[n - 1][1] + 'px"><span class="med">' + icon('i-lock') + '</span><span class="sname outl">More rooms</span><span class="sfoot">Coming soon</span></div>';
-  inn.style.width = W + 'px'; inn.innerHTML = html;
-  if (keep !== null && keep !== undefined) w.scrollLeft = keep;
-  else { var li = Math.max(0, ROOMS.findIndex(function (r) { return r.id === S.lastRoom; })); w.scrollLeft = Math.max(0, pts[li][0] - w.clientWidth / 2); }
-}
-function city() {
-  stopRound();
-  var stars = cityStars();
-  show('<div class="screen" id="cityScr"><div id="mapWrap">' + mapSvg() + '</div>' +
-    '<div class="hud hud-top"><button class="b3 cream rback" id="bBack">‹ Rooms</button>' +
-      '<div class="cur" title="Petals build the city">' + icon('i-petal') + '<span id="petals">' + S.petals + '</span></div>' +
-      '<div class="city"><b><span>Paris</span><span><svg viewBox="0 0 40 40" style="width:16px;height:16px;vertical-align:-3px"><use href="#i-blossom"/></svg> ' + stars + '/15</span></b><div class="pbar"><i style="width:' + (stars / 15 * 100) + '%"></i></div></div>' +
-      '<div class="spacer"></div><span class="chint">Tap a landmark to build it with petals</span></div>' +
-  '</div>');
-  fitMap(null);
-  var mw = $('#mapWrap');
-  mw.addEventListener('click', function (e) { var g = e.target.closest('.lm'); if (g && !dragMoved) buildSheet(+g.dataset.lm); });
-  enableDrag(mw);
-  $('#bBack').onclick = function () { SFX.tap(); lobby(); };
-}
-function fitMap(keep) {
-  var w = $('#mapWrap'), svg = $('#mapSvg'); if (!w || !svg) return;
-  var H = w.clientHeight, W = Math.max(w.clientWidth - 160, Math.round(H * MAP_W / MAP_H));
-  svg.style.width = W + 'px'; svg.style.height = H + 'px';
-  if (keep !== null && keep !== undefined) w.scrollLeft = keep;
-  else { // show the next landmark to build
-    var next = LANDMARKS.filter(function (l) { return (S.build[l.id] || 0) < 3; })[0];
-    if (next) w.scrollLeft = Math.max(0, 76 + PLOT[next.id][0] / MAP_W * W - w.clientWidth / 2);
-  }
-}
-addEventListener('resize', function () { if ($('#mapWrap')) fitMap($('#mapWrap').scrollLeft); if ($('#pathWrap')) drawPath($('#pathWrap').scrollLeft); if (R && $('#cards')) fitCards(); });
+function fitMap() { /* the map always shows the whole painting, as wide as the screen */ }
+addEventListener('resize', function () {  if (R && $('#cards')) fitCards(); });
 var dragMoved = false;
 function enableDrag(el) { // mouse drag on computers; phones scroll by touch
   var down = false, sx = 0, sl = 0;
@@ -1315,7 +1418,7 @@ function panel(inner, cls, onReady) {
   document.body.appendChild(veil); if (onReady) onReady(veil); return veil;
 }
 
-function buildSheet(i) {
+function buildSheet(i, after) {
   var lm = LANDMARKS[i], lvl = S.build[lm.id] || 0;
   var preview = LM_IMG[lm.id] ? '<img src="' + LM_IMG[lm.id][0] + '" alt="" style="width:min(220px,40vh);height:auto;display:block;margin:0 auto;filter:drop-shadow(0 8px 10px rgba(61,26,79,.3))">' : '<svg viewBox="-150 -200 300 300" style="width:min(220px,40vh);height:min(220px,40vh);display:block;margin:0 auto">' +
     (lm.id === 'bridge' ? '<g transform="translate(-100 -40)">' : lm.id === 'carousel' ? '<g transform="translate(0 30)">' : '<g transform="translate(0 -60)">') + landmarkArt(lm.id, Math.min(3, lvl + 1)) + '</g></svg>';
@@ -1333,14 +1436,20 @@ function buildSheet(i) {
         S.petals -= cost; S.build[lm.id] = lvl + 1; addXp(15);
         logEvent({ t: 'build', landmark: lm.id, stars: lvl + 1 });
         var msg = lm.name + ' now has ' + (lvl + 1) + ' blossom' + (lvl ? 's' : '') + '!';
-        if (!S.cityDone && cityStars() === 15) { S.cityDone = true; S.coins += CITY_REWARD; logEvent({ t: 'cityComplete', city: 'paris' }); msg = 'Paris is complete! +' + CITY_REWARD + ' coins'; }
-        save(); SFX.build(); city(); toast(msg, 3200); sparkle(innerWidth / 2, innerHeight / 2, 110);
+        var cityNow = false;
+        if (lvl + 1 === 3 && CITY_ROOMS.indexOf(lm.id) >= 0) { S.tickets += ROOM_REWARD; msg = lm.name + ' is complete! +' + ROOM_REWARD + ' tickets'; }
+        if (!S.cityDone && cityStars() === 12) { S.cityDone = true; cityNow = true; S.coins += CITY_REWARD; S.tickets += CITY_TICKETS; S.build.bridge = 3; logEvent({ t: 'cityComplete', city: 'paris' }); }
+        save(); SFX.build(); (after || lobby)(); toast(msg, 3200);
+        if (cityNow) setTimeout(function () { pupFx('i-blossom', 'Paris complete!', '+' + CITY_TICKETS + ' tickets, +' + CITY_REWARD + ' coins and a Gold Pack'); setTimeout(function () { openPack(PACKS[PACKS.length - 1], true); }, 1400); }, 600); sparkle(innerWidth / 2, innerHeight / 2, 110);
       };
     });
 }
 
 var ROOMS = [
-  { id: 'paris', name: 'Paris Patisserie', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '30%' },
+  { id: 'patisserie', lm: 'patisserie', name: 'Rose Patisserie', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '30%' },
+  { id: 'cafe', lm: 'cafe', name: 'Cafe du Parc', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '60%' },
+  { id: 'carousel', lm: 'carousel', name: 'Grand Carousel', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '45%' },
+  { id: 'boutique', lm: 'boutique', name: 'Silk Boutique', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '80%' },
   { id: 'garden', name: 'Midnight Garden', open: true, mode: 'blackout', art: posterGarden, img: 'art/room-midnight-garden.webp', pos: '22%' },
   { id: 'meadow', name: 'Butterfly Meadow', open: true, mode: 'butterfly', art: posterMeadow, img: 'art/room-butterfly-meadow.webp', pos: '70%' },
   { id: 'carnival', name: 'Candy Carnival', open: true, mode: 'recipe', art: posterCandy, img: 'art/room-candy-carnival.webp', pos: '22%' },
@@ -1357,6 +1466,11 @@ function roomTop(back, title) {
   return '<div class="rtop"><button class="b3 cream rback" id="bBack">‹ ' + back + '</button><h2 class="outl">' + title + '</h2><span class="spacer"></span>' +
     '<div class="cur">' + icon('i-ticket') + '<span>' + S.tickets.toLocaleString() + '</span></div><div class="cur">' + icon('i-coin') + '<span>' + S.coins.toLocaleString() + '</span></div></div>';
 }
+function roomGrow(room) {
+  var lvl = Math.min(3, S.build[room.lm] || 0);
+  return '<div class="rbonus rgrow"><b>' + [0, 1, 2].map(function (k) { return '<svg viewBox="0 0 40 40"><use href="#' + (k < lvl ? 'i-blossom' : 'i-blossom0') + '"/></svg>'; }).join('') + ' ' + (lvl >= 3 ? 'Room complete!' : lvl + '/3 blossoms') + '</b>' +
+    (lvl < 3 ? '<button class="b3 green" id="bGrow">Grow · ' + icon('i-petal', 'ic" style="width:20px;height:20px;vertical-align:-5px') + ' ' + STAR_COST[lvl] + '</button><small>3 blossoms: +' + ROOM_REWARD + ' tickets</small>' : '') + '</div>';
+}
 function roomScreen(room) {
   stopRound();
   room = room || ROOMS[0];
@@ -1367,7 +1481,7 @@ function roomScreen(room) {
       '<span class="rtag">' + (featured ? 'FEATURED · ' : 'CITY · ') + mi.tag + '</span>' +
       '<p class="rhow">' + mi.how + '.</p>' +
       '<p class="rhow rpu">Tap a power-up to use it this round.</p>' +
-      (featured ? '<div class="rbonus"><b>Garden Path bonus ' + bonusPct(room.id) + '%</b><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div>' : '') +
+      (featured ? '<div class="rbonus"><b>Garden Path bonus ' + bonusPct(room.id) + '%</b><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div>' : roomGrow(room)) +
       (fair ? '<p class="rhow"><b>Fair Play:</b> no bingo in 3 rounds, so this round starts with a free Head Start.</p>' : '') +
     '</div>' +
     '<div class="rset">' +
@@ -1384,6 +1498,7 @@ function roomScreen(room) {
     $('#bGo small').innerHTML = ok ? icon('i-ticket', 'ic" style="width:18px;height:18px;vertical-align:-4px') + ' ' + cost + ' · ' + S.cards + ' card' + (S.cards > 1 ? 's' : '') : '100 free practice tickets';
   }
   $('#bBack').onclick = function () { SFX.tap(); lobby(); };
+  if ($('#bGrow')) $('#bGrow').onclick = function () { SFX.tap(); buildSheet(LANDMARKS.map(function (l) { return l.id; }).indexOf(room.lm), function () { roomScreen(room); }); };
   app.querySelectorAll('.pick').forEach(function (b) { b.onclick = function () { S.cards = +b.dataset.n; save(); SFX.tap(); app.querySelectorAll('.pick').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); upd(); }; });
   app.querySelectorAll('#bet button').forEach(function (b) { b.onclick = function () { S.bet = +b.dataset.b; save(); SFX.tap(); app.querySelectorAll('#bet button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); upd(); }; });
   app.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function () { arm[b.dataset.arm] = !arm[b.dataset.arm]; b.setAttribute('aria-pressed', !!arm[b.dataset.arm]); SFX.tap(); }; });
@@ -1495,19 +1610,23 @@ function startRound(arm, room) {
   setTimeout(function () { if (R && R.els[R.lucky]) { R.els[R.lucky].classList.add('is-lucky'); var fc = R.els[R.lucky].querySelector('.cell.free'); if (fc) fc.textContent = '×2'; toast('Lucky Bloom: card ' + (R.lucky + 1) + ' wins double on a bingo!'); SFX.boost(); } }, 1600);
 }
 function renderPlay() {
-  show('<div class="screen" id="play"><div class="side">' +
-    '<div class="row"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button>' +
-      '<span class="auto">Auto<button class="sw" id="swAuto" aria-pressed="' + !!S.settings.auto + '" aria-label="Auto daub"></button></span>' +
-      '<button class="mini-btn" id="bPause" aria-label="Pause">' + LINE_ICON.pause + '</button></div>' +
-    '<div class="ballwrap"><div class="ball" id="ball"><div class="in"><small>READY</small><b>·</b></div></div><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength="100"/></svg></div>' +
-    '<div class="bleft" id="sLeftW"><span><small>Bingos left</small><small id="sPlayers">0 players</small></span><b id="sLeft">0</b></div>' +
-    '<div class="stats3"><span class="stat">Balls<b id="sBalls">0/' + R.seq.length + '</b></span><span class="stat">Coins<b id="sCoins">0</b></span><span class="stat">Petals<b id="sPetals">0</b></span></div>' +
-    '<div class="boost"><div class="meter"><i id="meter"></i></div><div class="brow"><button class="b3 plum" id="bBoost" disabled>Boost</button><button class="autob" id="bAutoB" aria-pressed="' + (S.settings.autoBoost !== false) + '" aria-label="Use Boost automatically">AUTO</button></div>' +
-      '<div class="pups"><button class="pu" id="bAlert" aria-label="Bloom Alert">' + icon('i-bulb') + '<b id="nAlert">' + S.alerts + '</b></button>' +
-      '<button class="pu" id="bWild" aria-label="Wild Petal">' + icon('i-wild') + '<b id="nWild">' + S.items.wild + '</b></button>' +
-      '<button class="pu" id="bBalls" aria-label="5 more balls">' + icon('i-plus5') + '<b id="nBalls">' + S.items.balls5 + '</b></button></div></div>' +
-    '</div><div class="right"><div class="stripwrap"><button class="strip" id="strip" aria-label="Called numbers. Tap to see them all."><span class="lbl">Called<br><b id="nCalled">0/' + R.seq.length + '</b></span></button><span class="goal" id="goal" hidden></span></div>' +
-    '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap">⇄ Swap</button></div></div></div></div>');
+  show('<div class="screen" id="play">' +
+    '<div class="ptop"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button><button class="mini-btn" id="bPause" aria-label="Pause">' + LINE_ICON.pause + '</button>' +
+      '<div class="ballwrap"><div class="ball" id="ball"><div class="in"><small>READY</small><b>·</b></div></div><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength="100"/></svg></div>' +
+      '<div class="stripwrap"><button class="strip tube" id="strip" aria-label="Called numbers. Tap to see them all."><span class="lbl">Balls<br><b id="nCalled">0/' + R.seq.length + '</b></span></button><span class="goal" id="goal" hidden></span></div>' +
+      '<div class="bleft" id="sLeftW"><span><small>Bingos left</small><small id="sPlayers">0 players</small></span><b id="sLeft">0</b></div></div>' +
+    '<div class="rail"><div class="rtopr"><span class="auto">Auto<button class="sw" id="swAuto" aria-pressed="' + !!S.settings.auto + '" aria-label="Auto daub"></button></span></div>' +
+      '<div class="dock">' +
+        '<button class="pu" id="bWild" aria-label="Wild"><span class="orb">' + icon('i-wild') + '<b id="nWild">' + S.items.wild + '</b></span><span class="pl">Wild</span></button>' +
+        '<button class="pu" id="bInstant" aria-label="Instant"><span class="orb">' + icon('i-instant') + '<b id="nInstant">' + (S.items.instant || 0) + '</b></span><span class="pl">Instant</span></button>' +
+        '<button class="pu" id="bAllx2" aria-label="All ×2"><span class="orb">' + icon('i-allx2') + '<b id="nAllx2">' + (S.items.allx2 || 0) + '</b></span><span class="pl">All ×2</span></button>' +
+        '<button class="pu" id="bBalls" aria-label="+5 Balls"><span class="orb">' + icon('i-plus5') + '<b id="nBalls">' + S.items.balls5 + '</b></span><span class="pl">+5 Balls</span></button>' +
+        '<button class="pu" id="bAlert" aria-label="Alert"><span class="orb">' + icon('i-bulb') + '<b id="nAlert">' + S.alerts + '</b></span><span class="pl">Alert</span></button>' +
+        '<button class="pu boostb" id="bBoost" disabled aria-label="Bloom Boost"><span class="orb"><span class="fillr"></span>' + icon('i-blossom') + '</span><span class="pl">Boost</span></button>' +
+      '</div>' +
+      '<button class="autob" id="bAutoB" aria-pressed="' + (S.settings.autoBoost !== false) + '" aria-label="Use Boost automatically">Auto Boost</button>' +
+      '<span hidden><b id="sBalls"></b><b id="sCoins"></b><b id="sPetals"></b><i id="meter"></i></span></div>' +
+    '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap">⇄ Swap</button></div></div></div>');
   R.els = R.cards.map(function (k, ci) { var t = document.createElement('div'); t.innerHTML = cardHtml(k, ci); return t.firstChild; });
   placeCards();
   $('#cards').addEventListener('click', onCardTap);
@@ -1516,12 +1635,14 @@ function renderPlay() {
   $('#bPause').onclick = togglePause;
   $('#bSwap').onclick = swapCards;
   $('#bAlert').onclick = useAlert;
+  $('#bInstant').onclick = useInstant;
+  $('#bAllx2').onclick = useAllx2;
   $('#strip').onclick = calledBoard;
   $('#bWild').onclick = function () {
     if (!R || !R.active) { toast('Wait for the first ball.'); return; }
     if (R.wild) { R.wild = false; this.classList.remove('on'); return; }
     if (S.items.wild < 1) { toast('No Wild Petals left. Buy them in the Shop with coins.'); return; }
-    R.wild = true; this.classList.add('on'); SFX.tap(); toast('Wild Petal: tap any square to mark it.');
+    R.wild = true; this.classList.add('on'); $('#cards').classList.add('wildmode'); pupFx('i-wild', 'Wild Petal!', 'Tap any square to mark it');
   };
   $('#bBalls').onclick = function () {
     if (!R || R.ended || !R.active) { toast('Use +5 Balls while the round is running.'); return; }
@@ -1530,7 +1651,8 @@ function renderPlay() {
     var rest = shuffle(range(1, 75).filter(function (n) { return R.seq.indexOf(n) < 0; }));
     R.seq = R.seq.concat(rest.slice(0, 5));
     $('#nBalls').textContent = S.items.balls5; $('#sBalls').textContent = R.idx + '/' + R.seq.length; $('#nCalled').textContent = R.idx + '/' + R.seq.length; SFX.boost();
-    toast('+5 balls added to this round!');
+    pupFx('i-plus5', '+5 Balls!', 'Five more balls this round');
+    var tb = $('#strip'); if (tb) { tb.classList.remove('plus5'); void tb.offsetWidth; tb.classList.add('plus5'); }
     if (R.lastBall) { clearTimeout(R.timer); R.lastBall = false; if (!R.paused) R.timer = setTimeout(callNext, 1200); }
   };
   $('#swAuto').onclick = function () {
@@ -1579,8 +1701,8 @@ function useAlert() {
   if (!R || !R.active) { toast('Wait for the first ball, then turn on Bloom Alert.'); return; }
   if (R.alert) { toast('Bloom Alert is already on for this round.'); return; }
   if (S.alerts < 1) { toast('No Bloom Alerts left. Win more from treasure squares, bingos, level-ups and the daily gift.', 3600); return; }
-  S.alerts--; save(); R.alert = true; this.classList.add('on'); $('#nAlert').textContent = S.alerts; SFX.boost(); hintUi();
-  toast('Bloom Alert is on: called numbers on your cards will glow.');
+  S.alerts--; save(); R.alert = true; this.classList.add('on'); $('#nAlert').textContent = S.alerts; hintUi();
+  pupFx('i-bulb', 'Bloom Alert!', 'Called numbers on your cards glow'); wave();
 }
 function autoDaub(n) {
   if (!R || !R.active) return;
@@ -1592,7 +1714,10 @@ function autoDaub(n) {
 function fitCards() {
   var area = $('.bigs'); if (!area || !R) return;
   var n = Math.min(2, R.cards.length), gap = 10, W = area.clientWidth, H = area.clientHeight;
-  area.style.setProperty('--cw', Math.floor(Math.min((W - gap * (n - 1)) / n, (H - 10) / 1.2)) + 'px');
+  var cw = Math.floor(Math.min((W - gap * (n - 1)) / n, (H - 14) / 1.2));
+  area.style.setProperty('--cw', cw + 'px');
+  var one = area.querySelector('.bcard'); // the jewel frame makes cards taller; shrink until they fit
+  if (one && one.offsetHeight > H - 14) area.style.setProperty('--cw', Math.floor(cw * (H - 14) / one.offsetHeight) + 'px');
   var c = $('#cards'); if (c) c.style.setProperty('--mw', Math.floor(Math.max(54, Math.min(96, (c.clientHeight - 54) / 2 / 1.2))) + 'px');
 }
 function cardHtml(k, ci) {
@@ -1610,8 +1735,9 @@ function callNext() {
   var b = $('#ball'); b.style.setProperty('--bc', ballColor(n)); b.innerHTML = '<div class="in"><small>' + letter(n) + '</small><b>' + n + '</b></div>';
   b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
   var ring = $('.ring circle'); if (ring) { ring.style.animation = 'none'; void ring.getBoundingClientRect(); ring.style.animation = 'ringDown ' + (R.idx < R.seq.length ? speedMs() : 7000) + 'ms linear forwards'; }
+  b.style.setProperty('--bc', ballDeep(n));
   var st = $('#strip');
-  if (st) { var f = document.createElement('span'); f.className = 'fl new'; f.style.color = ballColor(n); f.innerHTML = '<svg viewBox="0 0 40 40"><use href="#fbloom"/></svg><b>' + n + '</b>'; st.insertBefore(f, st.children[1] || null); while (st.children.length > 46) st.lastChild.remove(); $('#nCalled').textContent = R.idx + '/' + R.seq.length; }
+  if (st) { var prev = R.recent[1]; if (prev) { var t = document.createElement('span'); t.innerHTML = ball3d(prev, 'new'); st.insertBefore(t.firstChild, st.children[1] || null); } while (st.children.length > 46) st.lastChild.remove(); $('#nCalled').textContent = R.idx + '/' + R.seq.length; }
   $('#sBalls').textContent = R.idx + '/' + R.seq.length;
   SFX.ball(); say(letter(n) + ' ' + n);
   hintUi(); bfTick();
@@ -1636,7 +1762,7 @@ function onCardTap(e) {
   var cell = e.target.closest('.cell[data-i]'); if (!cell || !R || !R.active || R.paused) return;
   var ci = +cell.closest('.bcard').dataset.c, k = R.cards[ci], c = k.cells[+cell.dataset.i];
   if (k.won || c.d) return;
-  if (R.wild) { R.wild = false; S.items.wild--; save(); $('#bWild').classList.remove('on'); $('#nWild').textContent = S.items.wild; daub(ci, +cell.dataset.i, cell); return; }
+  if (R.wild) { R.wild = false; S.items.wild--; save(); $('#bWild').classList.remove('on'); $('#cards').classList.remove('wildmode'); $('#nWild').textContent = S.items.wild; flyTo($('#bWild'), cell, 'i-wild', function () { if (R && !c.d) { daub(ci, +cell.dataset.i, cell); cell.classList.add('zap'); } }); return; }
   if (!R.called[c.n]) { cell.classList.remove('no'); void cell.offsetWidth; cell.classList.add('no'); SFX.no(); return; }
   daub(ci, +cell.dataset.i, cell);
 }
@@ -1644,7 +1770,8 @@ function daub(ci, i, cell, fromBoost) {
   var c = R.cards[ci].cells[i]; c.d = true;
   cell.classList.add('d'); cell.classList.remove('hint');
   var tr = cell.querySelector('.tr'); if (tr) tr.remove();
-  cell.insertAdjacentHTML('afterbegin', '<svg class="bl" viewBox="0 0 100 100" aria-hidden="true"><use href="#bloom"/></svg>');
+  cell.insertAdjacentHTML('afterbegin', '<svg class="bl" viewBox="0 0 100 100" aria-hidden="true"><use href="#bloom"/></svg><i class="burst"></i>');
+  setTimeout(function () { var bu = cell.querySelector('.burst'); if (bu) bu.remove(); }, 700);
   SFX.daub(); addXp(2);
   if (c.t) collect(c, cell);
   modeDaub(ci, i, cell);
@@ -1663,20 +1790,67 @@ function collect(c, cell) {
   c.t = null; statsUi(); save();
 }
 function meterUi() {
-  $('#meter').style.width = (R.meter / R.boostAt * 100) + '%'; $('#bBoost').disabled = R.meter < R.boostAt || !R.active;
+  var bb = $('#bBoost'); bb.style.setProperty('--p', Math.round(R.meter / R.boostAt * 100)); bb.disabled = R.meter < R.boostAt || !R.active; bb.classList.toggle('full', R.meter >= R.boostAt);
   if (R.meter >= R.boostAt && R.active && S.settings.autoBoost !== false && !R.autoT) R.autoT = setTimeout(function () { if (R) { R.autoT = null; useBoost(); } }, 700);
 }
 function statsUi() { var w = $('#sCoins'); if (w) w.textContent = R.earned.coins; var p = $('#sPetals'); if (p) p.textContent = R.earned.petals; }
 function useBoost(e) {
   if (!R || !R.active || R.meter < R.boostAt) return;
-  R.meter = 0; SFX.boost(); var bb = $('#bBoost').getBoundingClientRect(); sparkle(e && e.clientX ? e.clientX : bb.left + bb.width / 2, e && e.clientY ? e.clientY : bb.top, 30);
+  R.meter = 0; meterUi();
+  pupFx('i-blossom', 'Bloom Boost!', '2 free marks on every card');
+  setTimeout(function () {
+    if (!R || R.ended) return;
+    R.cards.forEach(function (k, ci) {
+      if (k.won) return;
+      var open = k.cells.map(function (c, i) { return i; }).filter(function (i) { return !k.cells[i].d; });
+      shuffle(open).slice(0, 2).forEach(function (i, j) { setTimeout(function () { if (!R || R.ended || k.cells[i].d) return; var el = $('.bcard[data-c="' + ci + '"] .cell[data-i="' + i + '"]'); if (el) { daub(ci, i, el, true); el.classList.add('zap'); } }, j * 180); });
+    });
+  }, 650);
+}
+/* power-ups used during a round, each with its own show */
+function pupFx(ic, title, sub) {
+  var o = document.createElement('div'); o.className = 'pfx';
+  o.innerHTML = '<div class="prays"></div><div class="pbox"><span class="porb">' + icon(ic) + '</span><b class="outl">' + title + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</div>';
+  document.body.appendChild(o); SFX.boost(); setTimeout(function () { SFX.coin(); }, 180);
+  sparkle(innerWidth / 2, innerHeight / 2, 70);
+  setTimeout(function () { o.classList.add('out'); }, 900); setTimeout(function () { o.remove(); }, 1200);
+}
+function wave() { var b = $('.bigs'); if (!b) return; b.classList.remove('wave'); void b.offsetWidth; b.classList.add('wave'); }
+function flyTo(from, to, ic, done) {
+  if (!from || !to) { done(); return; }
+  var a = from.getBoundingClientRect(), z = to.getBoundingClientRect(), f = document.createElement('div');
+  f.className = 'flyer'; f.innerHTML = icon(ic); f.style.left = (a.left + a.width / 2) + 'px'; f.style.top = (a.top + a.height / 2) + 'px'; document.body.appendChild(f);
+  requestAnimationFrame(function () { f.style.transform = 'translate(' + (z.left + z.width / 2 - a.left - a.width / 2) + 'px,' + (z.top + z.height / 2 - a.top - a.height / 2) + 'px) scale(1.3) rotate(360deg)'; });
+  setTimeout(function () { f.remove(); sparkle(z.left + z.width / 2, z.top + z.height / 2, 24); done(); }, 520);
+}
+function useInstant() {
+  if (!R || !R.active) { toast('Wait for the first ball.'); return; }
+  if ((S.items.instant || 0) < 1) { toast('No Instant Bingos left. Buy them in the Shop with coins.'); return; }
+  var best = null;
   R.cards.forEach(function (k, ci) {
     if (k.won) return;
-    var open = k.cells.map(function (c, i) { return i; }).filter(function (i) { return !k.cells[i].d; });
-    shuffle(open).slice(0, 2).forEach(function (i) { daub(ci, i, $('.bcard[data-c="' + ci + '"] .cell[data-i="' + i + '"]'), true); });
+    if (R.mode === 'blackout') { var open = range(0, 24).filter(function (i) { return !k.cells[i].d; }); if (!best || open.length < best.cells.length) best = { ci: ci, cells: open }; return; }
+    LINES.forEach(function (L, j) { if (k.lines[j]) return; var miss = L.filter(function (i) { return !k.cells[i].d; }); if (miss.length && (!best || miss.length < best.cells.length)) best = { ci: ci, cells: miss }; });
   });
-  R.meter = 0; meterUi();
-  toast('Bloom Boost: 2 free marks on each card');
+  if (!best) { toast('No line left to finish.'); return; }
+  if (R.mode === 'blackout') best.cells = shuffle(best.cells).slice(0, 6);
+  S.items.instant--; save(); $('#nInstant').textContent = S.items.instant;
+  if (R.els.length > 2 && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
+  pupFx('i-instant', R.mode === 'blackout' ? 'Instant Bloom!' : 'Instant Bingo!', R.mode === 'blackout' ? '6 squares marked' : 'Your closest line is complete');
+  setTimeout(function () {
+    best.cells.forEach(function (i, j) {
+      setTimeout(function () { if (!R || R.ended) return; var k = R.cards[best.ci]; if (k.cells[i].d) return; var el = R.els[best.ci].querySelector('[data-i="' + i + '"]'); if (el) { daub(best.ci, i, el, true); el.classList.add('zap'); } }, j * 160);
+    });
+  }, 700);
+}
+function useAllx2() {
+  if (!R || !R.active) { toast('Wait for the first ball.'); return; }
+  if (R.allx2) { toast('All ×2 is already on for this round.'); return; }
+  if ((S.items.allx2 || 0) < 1) { toast('No All ×2 left. Buy them in the Shop with coins.'); return; }
+  S.items.allx2--; save(); $('#nAllx2').textContent = S.items.allx2;
+  R.allx2 = true; R.dc *= 2; R.dp *= 2; $('#bAllx2').classList.add('on');
+  pupFx('i-allx2', 'All ×2!', 'Every coin and petal prize is doubled');
+  setTimeout(function () { R && R.els.forEach(function (e) { e.classList.add('x2on'); var st = document.createElement('span'); st.className = 'stamp outl'; st.textContent = '×2'; e.appendChild(st); }); }, 600);
 }
 var MULTI_MAX = 4, BLOOM_NAMES = ['', 'Bingo!', 'Double Bloom!', 'Triple Bloom!', 'Full Bouquet!'];
 function checkBingo(ci) {
@@ -1854,7 +2028,9 @@ var POWERUPS = [
   { id: 'balls5', name: '+5 Balls', icon: 'i-plus5', price: 200, desc: 'Five more balls in a round.' },
   { id: 'dcoins', name: 'Double Coins', icon: 'i-x2', price: 120, desc: 'Doubles the coins you win in one round.' },
   { id: 'dpetals', name: 'Double Petals', icon: 'i-x2p', price: 120, desc: 'Doubles the petals you win in one round.' },
-  { id: 'alert', name: 'Bloom Alert', icon: 'i-bulb', price: 80, desc: 'Called numbers on your cards glow for the whole round.' }
+  { id: 'alert', name: 'Bloom Alert', icon: 'i-bulb', price: 80, desc: 'Called numbers on your cards glow for the whole round.' },
+  { id: 'instant', name: 'Instant Bingo', icon: 'i-instant', price: 350, desc: 'Finishes your closest line for an instant bingo.' },
+  { id: 'allx2', name: 'All ×2', icon: 'i-allx2', price: 250, desc: 'Doubles every coin and petal prize for the rest of the round.' }
 ];
 function pupById(id) { return POWERUPS.filter(function (p) { return p.id === id; })[0]; }
 function owned(id) { return id === 'alert' ? S.alerts : (S.items[id] || 0); }
