@@ -846,6 +846,41 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #play #cards { padding-right: 4px; box-sizing: border-box; }
 .cur.gem { font: inherit; font-weight: 700; color: #fff; cursor: pointer; }
 .sitem.vault { background: linear-gradient(180deg, #fbf5ff, #efe1ff); border-color: #cdb2f2; }
+/* ===== lobby HUD, premium pass: painted icons stand free, glossy gold-rimmed pills ===== */
+#lobby .round { width: 70px; padding-bottom: 12px; }
+#lobby .round .c { width: 58px; height: 58px; background: none; border: 0; box-shadow: none; border-radius: 0; }
+#lobby .round .c svg { width: 100%; height: 100%; filter: drop-shadow(0 3px 0 rgba(40,12,64,.55)) drop-shadow(0 6px 8px rgba(20,5,30,.35)); transition: transform .12s; }
+#lobby .round:active .c { transform: none; box-shadow: none; }
+#lobby .round:active .c svg { transform: scale(.9); }
+#lobby .round .lb { background: none; padding: 0; font-size: 12.5px; letter-spacing: .02em; color: #fff;
+  text-shadow: 0 1.5px 0 var(--ol), 1.5px 0 0 var(--ol), -1.5px 0 0 var(--ol), 0 -1.5px 0 var(--ol), 1px 1px 0 var(--ol), -1px 1px 0 var(--ol), 1px -1px 0 var(--ol), -1px -1px 0 var(--ol), 0 3px 3px rgba(20,5,30,.5); }
+#lobby .round .dot { top: 2px; right: 2px; }
+#lobby #bSet { width: 46px; padding: 0; }
+#lobby #bSet .c { width: 42px; height: 42px; border-radius: 50%; background: radial-gradient(circle at 40% 28%, #b98cff, #6a32d0 60%, #3d1680); box-shadow: 0 0 0 2px #e9a81c, 0 0 0 4px var(--ol), 0 3px 6px rgba(20,5,30,.4); }
+#lobby #bSet .c svg { width: 70%; height: 70%; filter: none; }
+.hud-top .cur { height: 30px; border: 0; padding: 0 12px 0 0; background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 50%), linear-gradient(180deg, #5a2590, #2e0e4c);
+  box-shadow: 0 0 0 2px #e9a81c, 0 0 0 3.5px var(--ol), 0 4px 8px rgba(20,5,30,.4), inset 0 -3px 0 rgba(0,0,0,.25); }
+.hud-top .cur .ic { width: 40px; height: 40px; margin: -6px 4px -6px -12px; filter: drop-shadow(0 2px 2px rgba(20,5,30,.45)); }
+.hud-top .cur .plus { margin: 0 -10px 0 8px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 700 18px/1 var(--ui); color: #fff; background: radial-gradient(circle at 40% 30%, #a6f07a, #3fb43a 70%); box-shadow: 0 0 0 2px var(--ol), inset 0 2px 0 rgba(255,255,255,.5); text-shadow: 0 1px 0 var(--ol); }
+.hud-top { gap: 18px; }
+.lvl .badge { background: radial-gradient(circle at 38% 28%, #c9a2ff, #6a32d0 55%, #3d1680); border: 0; box-shadow: 0 0 0 3px #e9a81c, 0 0 0 5px var(--ol), 0 4px 8px rgba(20,5,30,.4); }
+.lvl .xp { border: 0; height: 14px; background: linear-gradient(180deg, #2e0e4c, #4a1c78); box-shadow: 0 0 0 2px #e9a81c, 0 0 0 3.5px var(--ol); margin-left: -8px; }
+.lvl .xp span { font-size: 10px; }
+.ftile { border: 0; background-size: cover; border-radius: 14px; box-shadow: 0 0 0 3px #e9a81c, 0 0 0 5px var(--ol), 0 5px 0 5px var(--ol), 0 10px 16px rgba(20,5,30,.45); }
+.ftile::before { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 2px rgba(255,243,184,.7), inset 0 -40px 30px -14px rgba(30,8,45,.85); }
+.ftile .fnm { background: none; text-align: center; font-size: 12.5px; bottom: 3px; overflow: visible; }
+.hud-feat { gap: 14px; padding: 8px 6px 10px; }
+@media (max-height: 360px) {
+  #lobby .round { width: 58px; padding-bottom: 10px; }
+  #lobby .round .c { width: 44px; height: 44px; }
+  #lobby .round .lb { font-size: 10.5px; }
+  #lobby #bSet .c { width: 34px; height: 34px; }
+  .hud-top { gap: 14px; }
+  .hud-top .cur { height: 26px; }
+  .hud-top .cur .ic { width: 34px; height: 34px; }
+  .hud-top .cur .plus { width: 19px; height: 19px; font-size: 15px; }
+  .ftile .fnm { font-size: 10.5px; }
+}
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1354,10 +1389,10 @@ function rb(id, ic, cls, label, dot) { return '<button class="round" id="' + id 
 function topBar(extra) {
   return '<div class="hud hud-top">' +
     '<div class="lvl"><div class="badge outl">' + S.level + '<small>LV</small></div><div class="xp"><i style="width:' + Math.round(S.xp / xpNeed() * 100) + '%"></i><span>' + S.xp + '/' + xpNeed() + '</span></div></div>' +
-    '<div class="cur" title="Tickets play bingo">' + icon('i-ticket') + '<span id="tickets">' + S.tickets.toLocaleString() + '</span></div>' +
+    '<div class="cur" title="Tickets play bingo">' + icon('i-ticket') + '<span id="tickets">' + S.tickets.toLocaleString() + '</span><button class="plus" id="bTixPlus" aria-label="Get tickets">+</button></div>' +
     '<div class="cur" title="Coins buy power-ups and card packs">' + icon('i-coin') + '<span id="coins">' + S.coins.toLocaleString() + '</span></div>' +
     '<div class="cur" title="Petals build the city">' + icon('i-petal') + '<span id="petals">' + S.petals + '</span></div>' +
-    '<button class="cur gem" id="bGems" title="Amethysts: rare gems for the Amethyst Vault">' + icon('i-gem') + '<span id="gems">' + S.gems + '</span></button>' +
+    '<button class="cur gem" id="bGems" title="Amethysts: rare gems for the Amethyst Vault">' + icon('i-gem') + '<span id="gems">' + S.gems + '</span><span class="plus">+</span></button>' +
     (extra || '') + '</div>';
 }
 function lobby() {
@@ -1369,8 +1404,7 @@ function lobby() {
   show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec">' + mapSvg() +
       '<div class="cityban"><b class="outl">PARIS</b><small>' + stars + '/12 blossoms · finish all 4 rooms for a big prize</small></div></div>' +
       '<div class="nextsec"><div class="cityban soon"><b class="outl">NEXT CITY</b><small>Finish Paris to travel on · coming soon</small></div></div></div>' +
-    topBar('<div class="city"><b><span>Paris</span><span><svg viewBox="0 0 40 40" style="width:16px;height:16px;vertical-align:-3px"><use href="#i-blossom"/></svg> ' + stars + '/12</span></b><div class="pbar"><i style="width:' + (stars / 12 * 100) + '%"></i></div></div>' +
-      '<div class="spacer"></div><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
+    topBar('<div class="spacer"></div><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       rb('bGift', 'i-gift', 'pk', giftReady ? 'Collect' : nextGiftText(), giftReady) +
       rb('bAlbum', 'i-album', 'gd', 'Album ' + ownedAll() + '/72') +
@@ -1381,8 +1415,8 @@ function lobby() {
       rb('bGames', 'i-games', 'pl', 'Games', gamesHot) +
       rb('bTeam', 'i-team', '', 'Team', gardenReady()) +
     '</div>' +
-    '<div class="hud hud-feat"><span class="fhd outl">Featured</span>' + feat.map(function (r) {
-      return '<button class="ftile" data-r="' + ROOMS.indexOf(r) + '" style="background-image:url(' + r.img + ')"><span class="ftag">' + MODE_INFO[r.mode].tag + '</span><span class="fnm">' + esc(r.name) + '</span></button>';
+    '<div class="hud hud-feat">' + feat.map(function (r) {
+      return '<button class="ftile" data-r="' + ROOMS.indexOf(r) + '" style="background-image:url(' + r.img + ')"><span class="fnm outl">' + esc(r.name) + '</span></button>';
     }).join('') + '</div>' +
   '</div>');
   $('#worldWrap').scrollTop = keep;
@@ -1403,6 +1437,7 @@ function lobby() {
   $('#bTeam').onclick = teamGarden;
   $('#bSet').onclick = settings;
   $('#bGems').onclick = function () { SFX.tap(); shop('gems'); };
+  $('#bTixPlus').onclick = function () { SFX.tap(); kitchen(); };
 }
 function fitMap() { /* the map always shows the whole painting, as wide as the screen */ }
 addEventListener('resize', function () {  if (R && $('#cards')) fitCards(); });
