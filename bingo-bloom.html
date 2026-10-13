@@ -1012,7 +1012,7 @@ var MAP_W = 1344, MAP_H = 768, LM_S = .72;
 // plot centers on art/lobby-paris-map.webp, and each landmark's footprint (center offset and depth below center, in drawing units)
 var PLOT = { patisserie: [175, 300], cafe: [455, 640], bridge: [770, 250], carousel: [880, 440], boutique: [1235, 482] };
 // painted landmark pictures (art/landmark-*.webp): [file, width in map units, height/width]
-var LM_IMG = { patisserie: ['art/landmark-patisserie.webp', 230, 608 / 621], bridge: ['art/landmark-bridge.webp', 250, 512 / 640], carousel: ['art/landmark-carousel.webp', 205, 640 / 526], boutique: ['art/landmark-boutique.webp', 185, 640 / 504] };
+var LM_IMG = { patisserie: ['art/landmark-patisserie.webp', 230, 608 / 621], bridge: ['art/landmark-bridge.webp', 250, 512 / 640], carousel: ['art/landmark-carousel.webp', 205, 640 / 526], boutique: ['art/landmark-boutique.webp', 185, 640 / 504], cafe: ['art/landmark-cafe.webp', 215, 640 / 588] };
 function lmPicture(id, lvl, cx, baseY) {
   var im = LM_IMG[id], w = im[1], h = w * im[2], x = cx - w / 2, y = baseY - h;
   var s = '<ellipse cx="' + cx + '" cy="' + (baseY - 6) + '" rx="' + w * .46 + '" ry="' + w * .14 + '" fill="#5a3a20" opacity=".18"/>';
