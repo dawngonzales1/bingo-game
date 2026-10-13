@@ -30,26 +30,29 @@ Bingo Bloom uses ideas common to many bingo games (balls, 5×5 cards, bingos lef
 ### Title screen
 A softly moving painting of the Paris room with falling petals, a gold Bingo Bloom logo with a "by Cordelle" ribbon, and a shining PLAY button.
 
-### Lobby: the room path
-- The lobby is a walk through all the rooms. Each room's painting blends into the next, and a cobblestone path winds past a round picture of every room. Swipe sideways to walk along it.
-- **Tap a room** to go inside. A bouncing petal marks the room you played last, and "More rooms, coming soon" waits at the end of the path.
-- **Top:** level, tickets, coins, petals, **Build Paris** (with your blossom count) and settings.
-- **Left:** daily gift, album, Kitchen. **Right:** Shop, side games, Team Garden.
-- **Inside a room:** its own painted screen. Choose the number of cards (1, 2 or 4), a bet (×1 to ×5) and power-ups (Head Start, Double Coins, Double Petals), then press the big **PLAY** button.
+### Lobby: the Paris map
+- The lobby is the whole painted Paris map, as wide as the screen. Scroll down past the PARIS banner to the clouds, where the next city will be.
+- **Paris has 4 city rooms**, one in each building: Rose Patisserie, Cafe du Parc, Grand Carousel and Silk Boutique. Tap a building to go inside.
+- **Grow each room** to 3 blossoms with petals (the Grow button is inside the room):
+  - finishing a room gives **100 tickets**;
+  - finishing all 4 rooms gives **500 tickets, 1,000 coins and a Gold Pack**, and opens the Stone Bridge.
+- **Featured rooms** sit in a row of picture tiles along the bottom: Midnight Garden, Butterfly Meadow, Candy Carnival, Gold Coast and Lantern Market.
+- **Top:** level, tickets, coins, petals, Paris progress (out of 12 blossoms) and settings. **Left:** daily gift, album, Kitchen. **Right:** Shop, side games, Team Garden.
+- **Inside a room:** choose the number of cards (1, 2 or 4), a bet (×1 to ×5) and power-ups (Head Start, Double Coins, Double Petals), then press the big **PLAY** button.
 - **After a round:** Play again (or leaving a round) brings you back to the same room.
-
-### Build Paris
-Tap **Build Paris** at the top of the lobby to open the Paris map. Tap a landmark to grow it from 1 to 3 blossoms with petals. **‹ Rooms** goes back to the path.
 
 ### A round of bingo
 - 45 balls. Speeds: Relaxed (5 s), Classic (4 s, the default), Quick (3 s).
 - **A row of called numbers across the top**, drawn as little flowers, newest first. Tap it to see every called number.
 - **With 4 cards:** 2 are big; tap a small card or Swap to bring the others up.
-- **Power-ups during a round:**
-  - **Boost:** fills as you mark numbers.
-  - **Bloom Alert:** called numbers glow for the whole round.
-  - **Wild Petal:** mark any square.
+- **The screen:** the ball being called sits at the top left, and called balls roll into a glass tube across the top. Bingos left is at the top right.
+- **Power-up dock on the left** (big round buttons, each with its own effect when used):
+  - **Wild Petal:** mark any square; a petal flies to it.
+  - **Instant Bingo (new):** finishes your closest line right away (6 squares in Blackout).
+  - **All ×2 (new):** doubles every coin and petal prize for the rest of the round; a ×2 stamp lands on each card.
   - **+5 Balls:** five more balls.
+  - **Bloom Alert:** called numbers glow for the whole round.
+  - **Boost:** its ring fills as you mark numbers; when full it marks 2 squares on every card.
 - **Auto** marks numbers for you; you still tap BINGO!
 - **Treasure squares:** coins, tickets, petals, album cards, ingredients, drop balls or a Bloom Alert.
 - **Each bingo gives:** coins, petals, an album card, 2 ingredients, 2 drop balls and 1 seed (sometimes a Bloom Alert).
@@ -57,7 +60,7 @@ Tap **Build Paris** at the top of the lobby to open the Paris map. Tap a landmar
 ### Rooms
 | Room | Kind | How it plays |
 |---|---|---|
-| Paris Patisserie | City room | Multi-bingo: every new line wins, up to 4 per card (Bingo, Double Bloom, Triple Bloom, Full Bouquet). Bingo is called automatically. |
+| Rose Patisserie, Cafe du Parc, Grand Carousel, Silk Boutique | City rooms | Multi-bingo: every new line wins, up to 4 per card (Bingo, Double Bloom, Triple Bloom, Full Bouquet). Bingo is called automatically. |
 | Midnight Garden | Featured | Blackout: cover all 24 squares. 65 balls. |
 | Butterfly Meadow | Featured | Butterflies land on squares. Mark them before they fly away (3 balls) for tickets. Lines with a caught butterfly pay double. |
 | Candy Carnival | Featured | Ingredients hide under squares. Bingo lines put them in a mixing bowl, and finished recipes bake into tickets (the ingredients also go to the pantry). |
@@ -103,6 +106,8 @@ Tap **Build Paris** at the top of the lobby to open the Paris map. Tap a landmar
   - Double Coins: 120
   - Double Petals: 120
   - Bloom Alert: 80
+  - Instant Bingo: 350
+  - All ×2: 250
 - **Card packs,** with odds shown:
   - Bronze: 3 cards, 5% gold, 250 coins
   - Silver: 5 cards, 12% gold, 600 coins
