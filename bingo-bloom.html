@@ -1011,6 +1011,16 @@ function ribbon(lm, i) {
 var MAP_W = 1344, MAP_H = 768, LM_S = .72;
 // plot centers on art/lobby-paris-map.webp, and each landmark's footprint (center offset and depth below center, in drawing units)
 var PLOT = { patisserie: [175, 300], cafe: [455, 640], bridge: [770, 205], carousel: [880, 440], boutique: [1235, 482] };
+// painted landmark pictures (art/landmark-*.webp): [file, width in map units, height/width]
+var LM_IMG = { patisserie: ['art/landmark-patisserie.webp', 230, 614 / 627] };
+function lmPicture(id, lvl, cx, baseY) {
+  var im = LM_IMG[id], w = im[1], h = w * im[2], x = cx - w / 2, y = baseY - h;
+  var s = '<ellipse cx="' + cx + '" cy="' + (baseY - 6) + '" rx="' + w * .46 + '" ry="' + w * .14 + '" fill="#5a3a20" opacity=".18"/>';
+  s += '<image href="' + im[0] + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"' + (lvl ? '' : ' style="filter:grayscale(1) brightness(1.15);opacity:.45"') + '/>';
+  if (!lvl) s += sign(cx, baseY + 4);
+  if (lvl >= 3) s += spark(cx - w * .45, y + h * .25, 10, 0) + spark(cx + w * .42, y + h * .1, 8, .5) + spark(cx + w * .1, y - 6, 7, .9);
+  return s;
+}
 var FOOTC = { patisserie: [10, 50, 50], cafe: [0, 50, 50], bridge: [78, 61, 61], carousel: [0, 0, 44], boutique: [0, 45, 45] };
 function mapSvg() {
   var s = '<svg id="mapSvg" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The city of Paris that you build">';
@@ -1018,7 +1028,8 @@ function mapSvg() {
   LANDMARKS.slice().sort(function (a, b) { return PLOT[a.id][1] - PLOT[b.id][1]; }).forEach(function (lm) {
     var p = PLOT[lm.id], f = FOOTC[lm.id], i = LANDMARKS.indexOf(lm);
     s += '<g class="lm" data-lm="' + i + '"><ellipse cx="' + p[0] + '" cy="' + p[1] + '" rx="95" ry="60" fill="transparent"/>' +
-      '<g transform="translate(' + (p[0] - LM_S * f[0]) + ' ' + (p[1] - LM_S * f[1]) + ') scale(' + LM_S + ')">' + landmarkArt(lm.id, S.build[lm.id] || 0) + '</g></g>';
+      (LM_IMG[lm.id] ? lmPicture(lm.id, S.build[lm.id] || 0, p[0], p[1] + LM_S * f[2] + 6) :
+      '<g transform="translate(' + (p[0] - LM_S * f[0]) + ' ' + (p[1] - LM_S * f[1]) + ') scale(' + LM_S + ')">' + landmarkArt(lm.id, S.build[lm.id] || 0) + '</g>') + '</g>';
   });
   LANDMARKS.forEach(function (lm, i) { s += '<g class="lm" data-lm="' + i + '">' + ribbon(lm, i) + '</g>'; });
   return s + '</svg>';
@@ -1140,7 +1151,7 @@ function panel(inner, cls, onReady) {
 
 function buildSheet(i) {
   var lm = LANDMARKS[i], lvl = S.build[lm.id] || 0;
-  var preview = '<svg viewBox="-150 -200 300 300" style="width:min(220px,40vh);height:min(220px,40vh);display:block;margin:0 auto">' +
+  var preview = LM_IMG[lm.id] ? '<img src="' + LM_IMG[lm.id][0] + '" alt="" style="width:min(220px,40vh);height:auto;display:block;margin:0 auto;filter:drop-shadow(0 8px 10px rgba(61,26,79,.3))">' : '<svg viewBox="-150 -200 300 300" style="width:min(220px,40vh);height:min(220px,40vh);display:block;margin:0 auto">' +
     (lm.id === 'bridge' ? '<g transform="translate(-100 -40)">' : lm.id === 'carousel' ? '<g transform="translate(0 30)">' : '<g transform="translate(0 -60)">') + landmarkArt(lm.id, Math.min(3, lvl + 1)) + '</g></svg>';
   var cost = STAR_COST[lvl], stars = [0, 1, 2].map(function (k) { return '<svg viewBox="0 0 40 40" style="width:34px;height:34px"><use href="#' + (k < lvl ? 'i-blossom' : 'i-blossom0') + '"/></svg>'; }).join('');
   panel('<div style="display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center">' + preview +
