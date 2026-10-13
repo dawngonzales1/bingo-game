@@ -678,3 +678,45 @@ Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gol
 ```
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a golden crescent moon, made of shiny gold with sparkles, extra special, on a soft round gold glow.
 ```
+
+## New: Paris city rooms (16:9, no reference image)
+
+**106. Cafe du Parc (city room)** (save as `room-cafe.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a cozy Paris sidewalk cafe in a park in the morning, a cream and teal cafe front, round bistro tables with striped umbrellas, coffee cups and croissants, chestnut trees with soft pink blossoms, soft blurred background, calm open space in the center.
+```
+
+**107. Grand Carousel (city room)** (save as `room-carousel.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a magical Paris park carousel at sunset, a vintage merry-go-round with a plum and cream striped roof, gold poles and pastel horses, twinkling string lights, soft blurred background, calm open space in the center.
+```
+
+**108. Silk Boutique (city room)** (save as `room-boutique.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. an elegant Paris fashion street, boutique windows with silk dresses, hat boxes and perfume bottles, blue mansard rooftops and gold balconies, soft blurred background, calm open space in the center.
+```
+
+
+## New: icons (square, remove the background after)
+
+**109. Instant Bingo** (save as `icon-instant-bingo.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glossy purple orb with a bright golden lightning bolt across it, single object, plain cream background, soft shadow underneath.
+```
+
+**110. All ×2** (save as `icon-all-x2.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a round shiny gold medallion badge with a plum gem in the center and sparkles, blank, no numbers, single object, plain cream background, soft shadow underneath.
+```
+
+**111. Amethyst** (save as `icon-amethyst.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a faceted glossy amethyst gemstone, deep plum purple with pink highlights and a tiny gold sparkle, single object, plain cream background, soft shadow underneath.
+```
+

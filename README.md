@@ -20,12 +20,13 @@ Bingo Bloom uses ideas common to many bingo games (balls, 5×5 cards, bingos lef
 
 ## Practice version (now)
 
-### Three kinds of points
+### Four kinds of points
 | | What it's for | How you get it |
 |---|---|---|
 | Tickets | Playing bingo (5 per card, times the bet) | Kitchen, daily gift (50), level-ups (20), treasure squares, side games, Team Garden |
 | Coins | Power-ups and card packs in the Shop | Bingos, treasure squares, set and album rewards, side games |
 | Petals | Growing Paris landmarks (1 to 3 blossoms each) | Bingos, treasure squares |
+| Amethysts | The Amethyst Vault (Gold Packs, Instant Bingos, All ×2, tickets, Bloom Alerts, Wild Petals). Tap the gem in the top bar. | Level-ups (2), finished rooms (5), album sets (5), finished cities (50), the whole album (100). New players start with 20. |
 
 ### Title screen
 A softly moving painting of the Paris room with falling petals, a gold Bingo Bloom logo with a "by Cordelle" ribbon, and a shining PLAY button.

@@ -844,6 +844,8 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #play .cell.free { font-size: 6.2cqw; }
 #play .minis .bcard { width: var(--mw, 92px); min-width: 0; }
 #play #cards { padding-right: 4px; box-sizing: border-box; }
+.cur.gem { font: inherit; font-weight: 700; color: #fff; cursor: pointer; }
+.sitem.vault { background: linear-gradient(180deg, #fbf5ff, #efe1ff); border-color: #cdb2f2; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -859,10 +861,12 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
     <pattern id="cob" width="30" height="18" patternUnits="userSpaceOnUse"><rect width="30" height="18" fill="#f6e5c0"/><rect x="1" y="1.5" width="13" height="6.5" rx="3" fill="#efd8aa"/><rect x="16" y="10.5" width="13" height="6.5" rx="3" fill="#efd8aa"/><rect x="-14" y="10.5" width="13" height="6.5" rx="3" fill="#efd8aa"/></pattern>
     <pattern id="grassP" width="26" height="26" patternUnits="userSpaceOnUse"><rect width="26" height="26" fill="#86cf5e"/><path d="M5 9l2-4 2 4M17 21l2-4 2 4" stroke="#6fb84a" stroke-width="1.6" fill="none"/></pattern>
     <linearGradient id="gTicket" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc2d6"/><stop offset="1" stop-color="#ff6f9d"/></linearGradient>
+    <linearGradient id="gGem" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6c8ff"/><stop offset=".45" stop-color="#9b5cf0"/><stop offset="1" stop-color="#4f1fa3"/></linearGradient>
     <radialGradient id="gOrbP" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#c9a2ff"/><stop offset=".55" stop-color="#7b3fe0"/><stop offset="1" stop-color="#3d1680"/></radialGradient>
     <linearGradient id="gBolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffbd0"/><stop offset=".45" stop-color="#ffd23f"/><stop offset="1" stop-color="#e98f0c"/></linearGradient>
     <radialGradient id="gDrop" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#ffb3cf"/><stop offset="1" stop-color="#d9608f"/></radialGradient>
   </defs>
+  <symbol id="i-gem" viewBox="0 0 40 40"><path d="M11 6h18l8 10-17 20L3 16z" fill="url(#gGem)" stroke="#3d1a4f" stroke-width="2.4" stroke-linejoin="round"/><path d="M3 16h34M11 6l4 10 5 20 5-20 4-10M15 16l5-10 5 10" fill="none" stroke="#3d1a4f" stroke-width="1.3" stroke-linejoin="round" opacity=".55"/><path d="M12 8.5l2.6 6H6.6z" fill="#fff" opacity=".55"/><path d="M33 3l1 2.5 2.5 1-2.5 1L33 10l-1-2.5-2.5-1 2.5-1z" fill="#ffd45c"/></symbol>
   <symbol id="i-instant" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="url(#gOrbP)" stroke="#3d1a4f" stroke-width="2.5"/><ellipse cx="13.5" cy="11.5" rx="6" ry="3.2" fill="#fff" opacity=".4" transform="rotate(-35 13.5 11.5)"/><path d="M23 5 10.5 22.5h7.5L14.5 35 30 16.5h-8.2z" fill="url(#gBolt)" stroke="#3d1a4f" stroke-width="2" stroke-linejoin="round"/><path d="M21 9.5 14.8 19" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".8"/></symbol>
   <symbol id="i-allx2" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="url(#gHeart)" stroke="#3d1a4f" stroke-width="2.5"/><circle cx="20" cy="20" r="13" fill="none" stroke="#fff3c4" stroke-width="1.6" opacity=".9"/><ellipse cx="13" cy="11.5" rx="5.5" ry="3" fill="#fff" opacity=".5" transform="rotate(-35 13 11.5)"/><text x="20" y="26" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="700" font-size="16" fill="#fff" stroke="#3d1a4f" stroke-width="3.2" paint-order="stroke" stroke-linejoin="round">×2</text><path d="M32 4l1.2 3 3 1.2-3 1.2L32 12.4l-1.2-3-3-1.2 3-1.2z" fill="#fff"/></symbol>
   <symbol id="i-ticket" viewBox="0 0 40 40"><image href="art/icon-ticket.webp" x="1" y="1" width="38" height="38"/></symbol>
@@ -972,7 +976,7 @@ var LINES = (function () {
 /* ---------- saved progress (this phone only, for now) ---------- */
 var KEY = 'bingoBloom.v1';
 function fresh() {
-  return { v: 3, bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1 },
+  return { v: 3, bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'classic', auto: false, autoAlert: true } };
@@ -1026,9 +1030,9 @@ var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-moti
 function xpNeed() { return 60 + S.level * 40; }
 function addXp(n) {
   S.xp += n;
-  while (S.xp >= xpNeed()) { S.xp -= xpNeed(); S.level++; S.coins += 100; S.tickets += 20; S.alerts++; toast('Level ' + S.level + '! +20 tickets, +100 coins and a Bloom Alert'); SFX.set(); }
+  while (S.xp >= xpNeed()) { S.xp -= xpNeed(); S.level++; S.coins += 100; S.tickets += 20; S.alerts++; S.gems += 2; toast('Level ' + S.level + '! +20 tickets, +100 coins, 2 amethysts and a Bloom Alert'); SFX.set(); }
 }
-var CITY_ROOMS = ['patisserie', 'cafe', 'carousel', 'boutique'], ROOM_REWARD = 100, CITY_TICKETS = 500;
+var CITY_ROOMS = ['patisserie', 'cafe', 'carousel', 'boutique'], ROOM_REWARD = 100, CITY_TICKETS = 500, CITY_GEMS = 50;
 function cityStars() { return CITY_ROOMS.reduce(function (a, id) { return a + Math.min(3, S.build[id] || 0); }, 0); }
 function roomByLm(id) { return ROOMS.filter(function (r) { return r.lm === id; })[0]; }
 
@@ -1319,8 +1323,8 @@ function dropCard(gp) {
   var id = set.id + '|' + (idx + 1), isNew = !S.album[id];
   S.album[id] = (S.album[id] || 0) + 1;
   var extra = [];
-  if (ownedIn(set) === 9 && !S.setsDone[set.id]) { S.setsDone[set.id] = true; S.coins += SET_REWARD; extra.push(set.id); logEvent({ t: 'setComplete', set: set.id }); }
-  if (!S.albumDone && ownedAll() === SETS.length * 9) { S.albumDone = true; S.coins += ALBUM_REWARD; logEvent({ t: 'albumComplete', album: 'paris' }); }
+  if (ownedIn(set) === 9 && !S.setsDone[set.id]) { S.setsDone[set.id] = true; S.coins += SET_REWARD; S.gems += 5; extra.push(set.id); logEvent({ t: 'setComplete', set: set.id }); }
+  if (!S.albumDone && ownedAll() === SETS.length * 9) { S.albumDone = true; S.coins += ALBUM_REWARD; S.gems += 100; logEvent({ t: 'albumComplete', album: 'paris' }); }
   return { id: id, isNew: isNew, sets: extra };
 }
 function dropIng() { var g = INGS[rand(INGS.length)]; S.ing[g.id] = (S.ing[g.id] || 0) + 1; return g.id; }
@@ -1353,6 +1357,7 @@ function topBar(extra) {
     '<div class="cur" title="Tickets play bingo">' + icon('i-ticket') + '<span id="tickets">' + S.tickets.toLocaleString() + '</span></div>' +
     '<div class="cur" title="Coins buy power-ups and card packs">' + icon('i-coin') + '<span id="coins">' + S.coins.toLocaleString() + '</span></div>' +
     '<div class="cur" title="Petals build the city">' + icon('i-petal') + '<span id="petals">' + S.petals + '</span></div>' +
+    '<button class="cur gem" id="bGems" title="Amethysts: rare gems for the Amethyst Vault">' + icon('i-gem') + '<span id="gems">' + S.gems + '</span></button>' +
     (extra || '') + '</div>';
 }
 function lobby() {
@@ -1397,6 +1402,7 @@ function lobby() {
   $('#bGames').onclick = games;
   $('#bTeam').onclick = teamGarden;
   $('#bSet').onclick = settings;
+  $('#bGems').onclick = function () { SFX.tap(); shop('gems'); };
 }
 function fitMap() { /* the map always shows the whole painting, as wide as the screen */ }
 addEventListener('resize', function () {  if (R && $('#cards')) fitCards(); });
@@ -1437,10 +1443,10 @@ function buildSheet(i, after) {
         logEvent({ t: 'build', landmark: lm.id, stars: lvl + 1 });
         var msg = lm.name + ' now has ' + (lvl + 1) + ' blossom' + (lvl ? 's' : '') + '!';
         var cityNow = false;
-        if (lvl + 1 === 3 && CITY_ROOMS.indexOf(lm.id) >= 0) { S.tickets += ROOM_REWARD; msg = lm.name + ' is complete! +' + ROOM_REWARD + ' tickets'; }
-        if (!S.cityDone && cityStars() === 12) { S.cityDone = true; cityNow = true; S.coins += CITY_REWARD; S.tickets += CITY_TICKETS; S.build.bridge = 3; logEvent({ t: 'cityComplete', city: 'paris' }); }
+        if (lvl + 1 === 3 && CITY_ROOMS.indexOf(lm.id) >= 0) { S.tickets += ROOM_REWARD; S.gems += 5; msg = lm.name + ' is complete! +' + ROOM_REWARD + ' tickets and 5 amethysts'; }
+        if (!S.cityDone && cityStars() === 12) { S.cityDone = true; cityNow = true; S.coins += CITY_REWARD; S.tickets += CITY_TICKETS; S.gems += CITY_GEMS; S.build.bridge = 3; logEvent({ t: 'cityComplete', city: 'paris' }); }
         save(); SFX.build(); (after || lobby)(); toast(msg, 3200);
-        if (cityNow) setTimeout(function () { pupFx('i-blossom', 'Paris complete!', '+' + CITY_TICKETS + ' tickets, +' + CITY_REWARD + ' coins and a Gold Pack'); setTimeout(function () { openPack(PACKS[PACKS.length - 1], true); }, 1400); }, 600); sparkle(innerWidth / 2, innerHeight / 2, 110);
+        if (cityNow) setTimeout(function () { pupFx('i-blossom', 'Paris complete!', '+' + CITY_TICKETS + ' tickets, ' + CITY_GEMS + ' amethysts, +' + CITY_REWARD + ' coins and a Gold Pack'); setTimeout(function () { openPack(PACKS[PACKS.length - 1], true); }, 1400); }, 600); sparkle(innerWidth / 2, innerHeight / 2, 110);
       };
     });
 }
@@ -1469,7 +1475,7 @@ function roomTop(back, title) {
 function roomGrow(room) {
   var lvl = Math.min(3, S.build[room.lm] || 0);
   return '<div class="rbonus rgrow"><b>' + [0, 1, 2].map(function (k) { return '<svg viewBox="0 0 40 40"><use href="#' + (k < lvl ? 'i-blossom' : 'i-blossom0') + '"/></svg>'; }).join('') + ' ' + (lvl >= 3 ? 'Room complete!' : lvl + '/3 blossoms') + '</b>' +
-    (lvl < 3 ? '<button class="b3 green" id="bGrow">Grow · ' + icon('i-petal', 'ic" style="width:20px;height:20px;vertical-align:-5px') + ' ' + STAR_COST[lvl] + '</button><small>3 blossoms: +' + ROOM_REWARD + ' tickets</small>' : '') + '</div>';
+    (lvl < 3 ? '<button class="b3 green" id="bGrow">Grow · ' + icon('i-petal', 'ic" style="width:20px;height:20px;vertical-align:-5px') + ' ' + STAR_COST[lvl] + '</button><small>3 blossoms: +' + ROOM_REWARD + ' tickets and 5 amethysts</small>' : '') + '</div>';
 }
 function roomScreen(room) {
   stopRound();
@@ -2075,7 +2081,7 @@ function grant(p) {
 function fmt(ms) { var s = Math.max(0, Math.ceil(ms / 1000)), m = Math.floor(s / 60); return m + ':' + ('0' + s % 60).slice(-2); }
 function hoursLeftToday() { var d = new Date(), m = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d; return Math.floor(m / 3600000) + 'h ' + Math.floor(m % 3600000 / 60000) + 'm'; }
 function curPill(id, n, extra) { return '<span class="pill2">' + icon(id) + '<b' + (extra ? ' id="' + extra + '"' : '') + '>' + n.toLocaleString() + '</b></span>'; }
-function refreshTop() { ['tickets', 'coins', 'petals'].forEach(function (k) { var e = document.getElementById(k); if (e) e.textContent = S[k].toLocaleString(); }); }
+function refreshTop() { ['tickets', 'coins', 'petals', 'gems'].forEach(function (k) { var e = document.getElementById(k); if (e) e.textContent = S[k].toLocaleString(); }); }
 
 function kitchen() {
   var timer;
@@ -2128,7 +2134,12 @@ function kitchen() {
 function shop(tab) {
   tab = tab || 'power';
   var body;
-  if (tab === 'power') {
+  if (tab === 'gems') {
+    body = '<div class="shopgrid">' + VAULT.map(function (g) {
+      return '<div class="sitem vault"><svg viewBox="0 0 40 40"><use href="#' + g.icon + '"/></svg><b>' + g.name + '</b><small>' + g.desc + '</small>' +
+        '<button class="b3 plum buy" data-gem="' + g.id + '">' + icon('i-gem') + g.price + '</button></div>';
+    }).join('') + '</div>';
+  } else if (tab === 'power') {
     body = '<div class="shopgrid">' + POWERUPS.map(function (p) {
       return '<div class="sitem"><svg viewBox="0 0 40 40"><use href="#' + p.icon + '"/></svg><b>' + p.name + '</b><small>' + p.desc + '</small><span class="own">You have ' + owned(p.id) + '</span>' +
         '<button class="b3 gold buy" data-buy="' + p.id + '">' + icon('i-coin') + p.price + '</button></div>';
@@ -2140,14 +2151,25 @@ function shop(tab) {
         '<button class="b3 gold buy" data-pack="' + k.id + '">' + icon('i-coin') + k.price.toLocaleString() + '</button></div>';
     }).join('') + '</div>';
   }
-  panel('<div class="tabs"><button data-t="power" aria-pressed="' + (tab === 'power') + '">Power-ups</button><button data-t="packs" aria-pressed="' + (tab === 'packs') + '">Card packs</button>' +
-    '<span class="spacer"></span>' + curPill('i-coin', S.coins) + '</div>' + body + '<p class="note">Everything in the shop is bought with coins you win in bingo. All odds are shown.</p>', '', function (v) {
+  panel('<div class="tabs"><button data-t="power" aria-pressed="' + (tab === 'power') + '">Power-ups</button><button data-t="packs" aria-pressed="' + (tab === 'packs') + '">Card packs</button><button data-t="gems" aria-pressed="' + (tab === 'gems') + '">Amethyst Vault</button>' +
+    '<span class="spacer"></span>' + (tab === 'gems' ? curPill('i-gem', S.gems) : curPill('i-coin', S.coins)) + '</div>' + body +
+    '<p class="note">' + (tab === 'gems' ? 'Amethysts are rare gems. Earn them from level-ups, finished rooms and cities, and album sets.' : 'Everything here is bought with coins you win in bingo. All odds are shown.') + '</p>', '', function (v) {
       v.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { SFX.tap(); shop(b.dataset.t); }; });
       v.querySelectorAll('[data-buy]').forEach(function (b) {
         b.onclick = function () {
           var p = pupById(b.dataset.buy);
           if (S.coins < p.price) { SFX.no(); toast('You need ' + (p.price - S.coins) + ' more coins. Win them in bingo.'); return; }
           S.coins -= p.price; give(p.id, 1); save(); SFX.coin(); refreshTop(); shop('power'); toast(p.name + ' bought! You have ' + owned(p.id) + '.');
+        };
+      });
+      v.querySelectorAll('[data-gem]').forEach(function (b) {
+        b.onclick = function () {
+          var g = VAULT.filter(function (x) { return x.id === b.dataset.gem; })[0];
+          if (S.gems < g.price) { SFX.no(); toast('You need ' + (g.price - S.gems) + ' more amethysts. Finish rooms, sets and level up to earn them.', 3400); return; }
+          S.gems -= g.price; save(); refreshTop();
+          if (g.id === 'gpack') { openPack(PACKS[PACKS.length - 1]); return; }
+          if (g.id === 'tix') S.tickets += 150; else give(g.give, g.n);
+          save(); SFX.coin(); shop('gems'); toast(g.name + ' added!');
         };
       });
       v.querySelectorAll('[data-pack]').forEach(function (b) {
@@ -2159,6 +2181,14 @@ function shop(tab) {
       });
     });
 }
+var VAULT = [
+  { id: 'gpack', name: 'Gold Pack', icon: 'i-card', price: 40, desc: '8 album cards, at least 1 gold.' },
+  { id: 'inst3', name: '3 Instant Bingos', icon: 'i-instant', price: 30, desc: 'Finish your closest line, three times.', give: 'instant', n: 3 },
+  { id: 'x23', name: '3 All ×2', icon: 'i-allx2', price: 25, desc: 'Double every prize for a round, three times.', give: 'allx2', n: 3 },
+  { id: 'tix', name: '150 Tickets', icon: 'i-ticket', price: 20, desc: 'Thirty cards of bingo.' },
+  { id: 'al5', name: '5 Bloom Alerts', icon: 'i-bulb', price: 15, desc: 'Called numbers glow for five rounds.', give: 'alert', n: 5 },
+  { id: 'wild3', name: '3 Wild Petals', icon: 'i-wild', price: 12, desc: 'Mark any square you choose.', give: 'wild', n: 3 }
+];
 function openPack(k, free) {
   var got = [], sets = [];
   for (var i = 0; i < k.cards; i++) { var d = dropCard(k.sure && i === 0 ? 1 : k.gold); got.push(d); sets = sets.concat(d.sets); }
