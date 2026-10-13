@@ -51,7 +51,7 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 @keyframes drift { from { transform: translateX(-220px); } to { transform: translateX(110vw); } }
 
 /* ---------- map lobby ---------- */
-#mapWrap { position: absolute; inset: 0; overflow-x: auto; overflow-y: hidden; background: #86cf5e; scrollbar-width: none; cursor: grab; }
+#mapWrap { position: absolute; inset: 0; overflow-x: auto; overflow-y: hidden; background: radial-gradient(ellipse at center, #fbefcb, #f1d99c); scrollbar-width: none; cursor: grab; }
 #mapWrap::-webkit-scrollbar { display: none; }
 #mapSvg { display: block; height: 100%; margin: 0 84px 0 76px; }
 .lm { cursor: pointer; }
@@ -996,7 +996,7 @@ function landmarkArt(id, lvl, ghost) {
 }
 function sign(x, y) { return '<g transform="translate(' + x + ' ' + y + ')"><path d="M0 0v-26" stroke="#3d1a4f" stroke-width="4"/><rect x="-26" y="-50" width="52" height="28" rx="6" fill="#e9b27a"' + OL + '/><svg x="-14" y="-50" width="28" height="28" viewBox="0 0 40 40"><use href="#i-hammer"/></svg></g>'; }
 function ribbon(lm, i) {
-  var p = PLACE[lm.id].rib, lvl = S.build[lm.id] || 0, W = lm.name.length * 11 + 36, s = '<g transform="translate(' + p[0] + ' ' + p[1] + ')">';
+  var pl = PLOT[lm.id], p = [pl[0], pl[1] + LM_S * FOOTC[lm.id][2] + 30], lvl = S.build[lm.id] || 0, W = lm.name.length * 11 + 36, s = '<g transform="translate(' + p[0] + ' ' + p[1] + ') scale(1.2)">';
   s += '<path d="M' + (-W / 2 - 18) + ' 2l12 -10v24l-12 -4z M' + (W / 2 + 18) + ' 2l-12 -10v24l12 -4z" fill="#4f1fa3"' + OLT + '/>';
   s += '<rect x="' + (-W / 2) + '" y="-15" width="' + W + '" height="30" rx="9" fill="url(#gRib)"' + OL + '/>';
   s += '<text x="0" y="6" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="700" font-size="18" fill="#fff" stroke="#3d1a4f" stroke-width="4" paint-order="stroke" stroke-linejoin="round">' + esc(lm.name) + '</text>';
@@ -1007,32 +1007,18 @@ function ribbon(lm, i) {
   if (lvl < 3 && S.petals >= STAR_COST[lvl]) s += '<g class="bounce"><circle cx="' + (W / 2 + 4) + '" cy="-30" r="17" fill="url(#gBuild)"' + OL + '/><svg x="' + (W / 2 - 10) + '" y="-44" width="28" height="28" viewBox="0 0 40 40"><use href="#i-hammer"/></svg></g>';
   return s + '</g>';
 }
+var MAP_W = 1344, MAP_H = 768, LM_S = .72;
+// plot centers on art/lobby-paris-map.webp, and each landmark's footprint (center offset and depth below center, in drawing units)
+var PLOT = { patisserie: [175, 300], cafe: [455, 640], bridge: [770, 205], carousel: [880, 440], boutique: [1235, 482] };
+var FOOTC = { patisserie: [10, 50, 50], cafe: [0, 50, 50], bridge: [78, 61, 61], carousel: [0, 0, 44], boutique: [0, 45, 45] };
 function mapSvg() {
-  var s = '<svg id="mapSvg" viewBox="0 0 1600 640" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The city of Paris that you build">';
-  // ground, grass, paths, river
-  s += '<rect width="1600" height="640" fill="url(#grassP)"/>';
-  s += '<path d="M-20 420 C 200 360, 420 470, 640 430 S 1000 520, 1200 470 S 1500 470, 1640 500" fill="none" stroke="#dcc08c" stroke-width="66" stroke-linecap="round"/>';
-  s += '<path d="M-20 420 C 200 360, 420 470, 640 430 S 1000 520, 1200 470 S 1500 470, 1640 500" fill="none" stroke="url(#cob)" stroke-width="56" stroke-linecap="round"/>';
-  s += '<path d="M330 360 C 360 410, 520 420, 640 470 M1390 330 C 1400 400, 1250 400, 1190 420" fill="none" stroke="#dcc08c" stroke-width="40" stroke-linecap="round"/><path d="M330 360 C 360 410, 520 420, 640 470 M1390 330 C 1400 400, 1250 400, 1190 420" fill="none" stroke="url(#cob)" stroke-width="32" stroke-linecap="round"/>';
-  var river = 'M1030 -30 C 990 120, 880 220, 950 320 S 960 520, 860 680';
-  s += '<path d="' + river + '" fill="none" stroke="#c9a46a" stroke-width="150"/><path d="' + river + '" fill="none" stroke="#e8d2a8" stroke-width="138"/>';
-  s += '<path d="' + river + '" fill="none" stroke="url(#gWater)" stroke-width="118"/><path d="' + river + '" fill="none" stroke="#bff6fa" stroke-width="6" stroke-linecap="round" class="wave" opacity=".8"/>';
-  s += '<path d="M1010 -30 C 960 140, 850 220, 920 330" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" class="wave" opacity=".6" style="animation-duration:4.5s"/>';
-  // plazas under buildings
-  LANDMARKS.forEach(function (lm) { var f = FOOT[lm.id], p = PLACE[lm.id].at; if (f && lm.id !== 'bridge') s += '<g transform="translate(' + p[0] + ' ' + p[1] + ')">' + plaza(f[0], f[1]) + '</g>'; });
-  s += '<ellipse cx="1190" cy="400" rx="120" ry="46" fill="#fbf0d6" stroke="#dcc08c" stroke-width="3"/>';
-  // fountain in the main square
-  s += '<g transform="translate(130 520)"><ellipse cx="0" cy="0" rx="62" ry="24" fill="#c9a46a"' + OL + '/><ellipse cx="0" cy="-6" rx="54" ry="19" fill="url(#gWater)"' + OLT + '/><path d="M-8 -6v-30h16v30" fill="#f0dcb2"' + OLT + '/><ellipse cx="0" cy="-36" rx="22" ry="8" fill="#f0dcb2"' + OLT + '/><path d="M0 -40c-6-18 6-18 0-34M0 -40c-14-6-18 4-22 10M0 -40c14-6 18 4 22 10" fill="none" stroke="#bff6fa" stroke-width="4" stroke-linecap="round"/></g>';
-  // trees, behind the buildings
-  [[60, 120, 1, 0], [170, 90, .9, 1], [520, 110, 1, 0], [760, 140, .85, 1], [1150, 90, 1, 0], [1270, 150, .9, 1], [1560, 120, 1, 0]].forEach(function (t) { s += tree(t[0], t[1], t[2], t[3]); });
-  // landmarks, painted back to front
-  LANDMARKS.slice().sort(function (a, b) { return PLACE[a.id].at[1] - PLACE[b.id].at[1]; }).forEach(function (lm) {
-    var p = PLACE[lm.id].at, i = LANDMARKS.indexOf(lm);
-    s += '<g class="lm" data-lm="' + i + '" transform="translate(' + p[0] + ' ' + p[1] + ')">' + landmarkArt(lm.id, S.build[lm.id] || 0) + '</g>';
+  var s = '<svg id="mapSvg" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The city of Paris that you build">';
+  s += '<image href="art/lobby-paris-map.webp" x="0" y="0" width="' + MAP_W + '" height="' + MAP_H + '" preserveAspectRatio="xMidYMid slice"/>';
+  LANDMARKS.slice().sort(function (a, b) { return PLOT[a.id][1] - PLOT[b.id][1]; }).forEach(function (lm) {
+    var p = PLOT[lm.id], f = FOOTC[lm.id], i = LANDMARKS.indexOf(lm);
+    s += '<g class="lm" data-lm="' + i + '"><ellipse cx="' + p[0] + '" cy="' + p[1] + '" rx="95" ry="60" fill="transparent"/>' +
+      '<g transform="translate(' + (p[0] - LM_S * f[0]) + ' ' + (p[1] - LM_S * f[1]) + ') scale(' + LM_S + ')">' + landmarkArt(lm.id, S.build[lm.id] || 0) + '</g></g>';
   });
-  // trees, lamps and flowers in front
-  [[40, 610, 1.1, 1], [470, 600, 1, 0], [800, 590, .95, 1], [1080, 610, 1.05, 0], [1520, 610, 1.1, 1]].forEach(function (t) { s += tree(t[0], t[1], t[2], t[3]); });
-  s += lamp(250, 470) + lamp(560, 450) + lamp(1100, 470) + lamp(1470, 500);
   LANDMARKS.forEach(function (lm, i) { s += '<g class="lm" data-lm="' + i + '">' + ribbon(lm, i) + '</g>'; });
   return s + '</svg>';
 }
@@ -1124,12 +1110,12 @@ function lobby() {
 }
 function fitMap(keep) {
   var w = $('#mapWrap'), svg = $('#mapSvg'); if (!w || !svg) return;
-  var H = w.clientHeight, W = Math.max(w.clientWidth - 160, Math.round(H * 1600 / 640));
+  var H = w.clientHeight, W = Math.max(w.clientWidth - 160, Math.round(H * MAP_W / MAP_H));
   svg.style.width = W + 'px'; svg.style.height = H + 'px';
   if (keep !== null && keep !== undefined) w.scrollLeft = keep;
   else { // show the next landmark to build
     var next = LANDMARKS.filter(function (l) { return (S.build[l.id] || 0) < 3; })[0];
-    if (next) w.scrollLeft = Math.max(0, 76 + PLACE[next.id].at[0] / 1600 * W - w.clientWidth / 2);
+    if (next) w.scrollLeft = Math.max(0, 76 + PLOT[next.id][0] / MAP_W * W - w.clientWidth / 2);
   }
 }
 addEventListener('resize', function () { if ($('#mapWrap')) fitMap($('#mapWrap').scrollLeft); if (R && $('#cards')) fitCards(); });
