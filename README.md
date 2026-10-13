@@ -31,7 +31,9 @@ Bingo Bloom uses ideas common to many bingo games (balls, 5×5 cards, bingos lef
 - **Top:** level, tickets, coins, petals, Paris progress, settings.
 - **Left:** daily gift, album, Kitchen.
 - **Right:** Shop, side games, Team Garden.
-- **PLAY:** pick a room, the number of cards (1, 2 or 4), a bet (×1 to ×5), and power-ups (Head Start, Double Coins, Double Petals).
+- **ROOMS (bottom right):** opens the Bingo Rooms screen, with City and Featured tabs.
+- **Inside a room:** its own painted screen. Choose the number of cards (1, 2 or 4), a bet (×1 to ×5) and power-ups (Head Start, Double Coins, Double Petals), then press the big **PLAY** button.
+- **After a round:** Play again (or leaving a round) brings you back to the same room.
 
 ### A round of bingo
 - 45 balls. Speeds: Relaxed (5 s), Classic (4 s, the default), Quick (3 s).

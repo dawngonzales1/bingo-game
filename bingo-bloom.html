@@ -468,6 +468,50 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .stamp b { font-size: clamp(36px, 13vh, 64px); color: #fff4c9; }
 .stamp span { padding: 6px 16px; border-radius: 14px; background: linear-gradient(180deg, var(--gold1), var(--gold2)); border: 3px solid var(--ol); font-weight: 700; font-size: 16px; }
 
+/* ---------- room list and room screen ---------- */
+#rooms, #room { display: grid; gap: 10px; padding: max(8px, env(safe-area-inset-top, 0px)) max(14px, env(safe-area-inset-right, 0px)) max(10px, env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px)); box-sizing: border-box; }
+#rooms { grid-template-rows: auto auto minmax(0, 1fr); background: radial-gradient(ellipse at 50% 0%, #b98cff, var(--plum2) 55%, var(--plum3)); }
+.rtop { display: flex; align-items: center; gap: 10px; grid-column: 1 / -1; min-width: 0; }
+.rtop h2 { margin: 0; font-size: clamp(20px, 6vh, 30px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rback { padding: 5px 14px 6px; font-size: 16px; flex: none; }
+#rooms .tabs { padding-right: 0; justify-content: center; }
+#rooms .posters { align-items: center; justify-content: safe center; height: 100%; box-sizing: border-box; }
+#rooms .poster { width: auto; height: min(320px, 100%); max-height: 100%; }
+#room { grid-template-columns: minmax(0, 1fr) minmax(300px, 46%); grid-template-rows: auto minmax(0, 1fr) auto; background-size: cover; background-repeat: no-repeat; background-color: var(--plum3); }
+.rinfo { grid-row: 2 / 4; align-self: end; display: grid; gap: 8px; justify-items: start; max-width: 360px; }
+.rtag { padding: 3px 12px; border-radius: 12px; background: linear-gradient(180deg, var(--green1), var(--green2)); border: 3px solid var(--ol); color: #fff; font-weight: 700; font-size: 13px; text-shadow: 0 1px 0 var(--ol); }
+.rhow { margin: 0; padding: 6px 12px; border-radius: 14px; background: rgba(61,26,79,.82); color: #fff; font-weight: 600; font-size: 14px; }
+.rbonus { width: 100%; box-sizing: border-box; padding: 6px 12px 8px; border-radius: 14px; background: rgba(61,26,79,.82); color: #fff; font-size: 13px; display: grid; gap: 4px; }
+.rset { align-self: end; max-height: 100%; overflow: auto; box-sizing: border-box; display: grid; gap: 8px; padding: 12px; border-radius: 22px; background: rgba(255,247,232,.94); border: 4px solid var(--ol); box-shadow: 0 6px 0 var(--ol), inset 0 0 0 4px #f2dcae; }
+.rset .opt { padding: 6px 10px; flex-wrap: wrap; }
+.rset .opt small { color: var(--mist); font-weight: 600; font-size: 12px; }
+.rset .pick { padding: 6px; }
+.rpups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.rpups button { position: relative; display: flex; align-items: center; gap: 4px; padding: 3px 6px 3px 3px; border-radius: 14px; border: 2.5px solid var(--ol); background: #fff; font-weight: 700; font-size: 12px; line-height: 1.05; text-align: left; }
+.rpups button svg { width: 30px; height: 30px; flex: none; }
+.rpups button b { position: absolute; top: -7px; right: -5px; min-width: 18px; height: 18px; border-radius: 9px; background: var(--plum2); color: #fff; font-size: 11px; display: grid; place-items: center; border: 2px solid #fff; }
+.rpups button[aria-pressed="true"] { background: linear-gradient(180deg, #f3e8ff, #dcc4ff); box-shadow: inset 0 0 0 2px var(--plum2); }
+.rpups button:disabled { opacity: .45; }
+#room #bGo { grid-column: 2; justify-self: end; align-self: end; display: grid; line-height: 1; font-size: 32px; padding: 6px 40px 8px; border-radius: 22px; }
+#room #bGo small { font-size: 12px; font-weight: 600; margin-top: 2px; }
+@media (max-height: 360px) {
+  #rooms, #room { gap: 6px; padding-top: max(5px, env(safe-area-inset-top, 0px)); padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
+  .rback { padding: 3px 10px 4px; font-size: 14px; }
+  #rooms .tabs button { padding: 3px 14px; font-size: 14px; }
+  .rset { padding: 7px 9px; gap: 5px; border-width: 3px; border-radius: 18px; }
+  .rset .pick .mini { display: none; }
+  .rset .pick { padding: 3px; gap: 0; font-size: 14px; }
+  .rset .opt { padding: 3px 8px; }
+  .rset .opt small { display: none; }
+  #room #bGo { font-size: 22px; padding: 3px 26px 5px; border-radius: 16px; }
+  #room #bGo small { font-size: 10.5px; }
+  .rpups button span { display: none; }
+  .rpups button { justify-content: center; padding: 1px; }
+  .rpups button svg { width: 26px; height: 26px; }
+  .rhow { font-size: 12px; padding: 4px 10px; }
+  .rbonus { padding: 4px 10px 6px; font-size: 12px; }
+}
+@media (min-height: 361px) { .rpu { display: none; } }
 /* ---------- short screens (for example inside the Claude app, sideways) ---------- */
 @media (max-height: 360px) {
   .hud-top { padding-top: calc(4px + env(safe-area-inset-top, 0px)); gap: 6px; }
@@ -1107,13 +1151,13 @@ function lobby() {
       rb('bGames', 'i-games', 'pl', 'Games', gamesHot) +
       rb('bTeam', 'i-team', '', 'Team', gardenReady()) +
     '</div>' +
-    '<div class="hud hud-play"><button class="b3 gold" id="bPlay"><span>PLAY</span><small>' + icon('i-ticket', 'ic" style="width:18px;height:18px;vertical-align:-4px') + ' ' + (S.cards * CARD_COST * S.bet) + ' · ' + S.cards + ' card' + (S.cards > 1 ? 's' : '') + '</small></button></div>' +
+    '<div class="hud hud-play"><button class="b3 gold" id="bPlay"><span>ROOMS</span><small>' + ROOMS.length + ' bingo rooms open</small></button></div>' +
   '</div>');
   fitMap(keepScroll);
   var mw = $('#mapWrap');
   mw.addEventListener('click', function (e) { var g = e.target.closest('.lm'); if (g && !dragMoved) buildSheet(+g.dataset.lm); });
   enableDrag(mw);
-  $('#bPlay').onclick = rooms;
+  $('#bPlay').onclick = function () { SFX.tap(); rooms(); };
   $('#bGift').onclick = function (e) {
     if (!giftReady) { toast('Your next gift is ready in ' + nextGiftText() + '.'); return; }
     S.coins += DAILY_GIFT; S.tickets += 50; S.alerts++; S.lastGift = today(); save(); SFX.coin(); sparkle(e.clientX, e.clientY, 50); lobby(); toast('+50 tickets, +' + DAILY_GIFT + ' coins and a Bloom Alert. Come back tomorrow!', 3200);
@@ -1179,12 +1223,12 @@ function buildSheet(i) {
 }
 
 var ROOMS = [
-  { id: 'paris', name: 'Paris Patisserie', open: true, mode: 'multi', art: posterParis },
-  { id: 'garden', name: 'Midnight Garden', open: true, mode: 'blackout', art: posterGarden },
-  { id: 'meadow', name: 'Butterfly Meadow', open: true, mode: 'butterfly', art: posterMeadow },
-  { id: 'carnival', name: 'Candy Carnival', open: true, mode: 'recipe', art: posterCandy },
-  { id: 'coast', name: 'Gold Coast', open: true, mode: 'shape', art: posterCoast },
-  { id: 'market', name: 'Lantern Market', open: true, mode: 'mystery', art: posterMarket }
+  { id: 'paris', name: 'Paris Patisserie', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '30%' },
+  { id: 'garden', name: 'Midnight Garden', open: true, mode: 'blackout', art: posterGarden, img: 'art/room-midnight-garden.webp', pos: '22%' },
+  { id: 'meadow', name: 'Butterfly Meadow', open: true, mode: 'butterfly', art: posterMeadow, img: 'art/room-butterfly-meadow.webp', pos: '70%' },
+  { id: 'carnival', name: 'Candy Carnival', open: true, mode: 'recipe', art: posterCandy, img: 'art/room-candy-carnival.webp', pos: '22%' },
+  { id: 'coast', name: 'Gold Coast', open: true, mode: 'shape', art: posterCoast, img: 'art/room-gold-coast.webp', pos: '72%' },
+  { id: 'market', name: 'Lantern Market', open: true, mode: 'mystery', art: posterMarket, img: 'art/room-lantern-market.webp', pos: '18%' }
 ];
 function posterMeadow() { return '<span class="art" style="background:url(art/room-butterfly-meadow.webp) 70% center / cover no-repeat"></span>'; }
 function posterMarket() { return '<span class="art" style="background:url(art/room-lantern-market.webp) 18% center / cover no-repeat"></span>'; }
@@ -1192,40 +1236,58 @@ function posterParis() { return '<span class="art" style="background:url(art/roo
 function posterGarden() { return '<span class="art" style="background:url(art/room-midnight-garden.webp) 22% center / cover no-repeat"></span>'; }
 function posterCoast() { return '<span class="art" style="background:url(art/room-gold-coast.webp) 72% center / cover no-repeat"></span>'; }
 function posterCandy() { return '<span class="art" style="background:url(art/room-candy-carnival.webp) 22% center / cover no-repeat"></span>'; }
+function roomTop(back, title) {
+  return '<div class="rtop"><button class="b3 cream rback" id="bBack">‹ ' + back + '</button><h2 class="outl">' + title + '</h2><span class="spacer"></span>' +
+    '<div class="cur">' + icon('i-ticket') + '<span>' + S.tickets.toLocaleString() + '</span></div><div class="cur">' + icon('i-coin') + '<span>' + S.coins.toLocaleString() + '</span></div></div>';
+}
 function rooms(tab) {
-  tab = tab || 'featured';
+  stopRound();
+  tab = tab || S.roomTab || 'featured'; S.roomTab = tab;
   var list = ROOMS.filter(function (r) { return tab === 'city' ? r.mode === 'multi' : r.mode !== 'multi'; });
-  panel('<div class="tabs"><button data-t="city" aria-pressed="' + (tab === 'city') + '">City</button><button data-t="featured" aria-pressed="' + (tab === 'featured') + '">Featured</button></div>' +
+  show('<div class="screen" id="rooms">' + roomTop('Map', 'Bingo Rooms') +
+    '<div class="tabs"><button data-t="city" aria-pressed="' + (tab === 'city') + '">City</button><button data-t="featured" aria-pressed="' + (tab === 'featured') + '">Featured</button></div>' +
     '<div class="posters">' + list.map(function (r) {
       var mi = MODE_INFO[r.mode];
       return '<button class="poster" data-r="' + ROOMS.indexOf(r) + '">' + r.art() +
         '<span class="tag new">' + mi.tag + '</span><span class="nm outl">' + esc(r.name).replace(' ', '<br>') + '</span>' +
         '<span class="foot">' + mi.foot + (r.mode !== 'multi' ? '<br>Bonus ' + bonusPct(r.id) + '%' : '') + '</span></button>';
-    }).join('') + '</div>', '', function (v) {
-      v.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { SFX.tap(); rooms(b.dataset.t); }; });
-      v.querySelectorAll('.poster').forEach(function (b) { b.onclick = function () { SFX.tap(); pickCards(ROOMS[+b.dataset.r]); }; });
-    });
+    }).join('') + '</div></div>');
+  $('#bBack').onclick = function () { SFX.tap(); lobby(); };
+  app.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { SFX.tap(); rooms(b.dataset.t); }; });
+  app.querySelectorAll('.poster').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
 }
-function pickCards(room) {
+function roomScreen(room) {
+  stopRound();
   room = room || ROOMS[0];
-  var arm = {}, fair = S.dry >= 3;
-  panel('<h3>' + room.name + ' <small style="font-size:13px;color:var(--mist)">' + MODE_INFO[room.mode].how + (room.mode !== 'multi' ? ' · Garden Path ' + bonusPct(room.id) + '%' : '') + '</small></h3>' +
-    '<div class="picks">' + [1, 2, 4].map(function (n) { return '<button class="pick" data-n="' + n + '" aria-pressed="' + (S.cards === n) + '"><span class="mini">' + '<i></i>'.repeat(n) + '</span>' + n + ' card' + (n > 1 ? 's' : '') + '<small data-c="' + n + '"></small></button>'; }).join('') + '</div>' +
-    '<div class="opt"><span>Bet <small style="color:var(--mist)">costs more, wins more</small></span><div class="seg" id="bet">' + [1, 2, 3, 5].map(function (b) { return '<button data-b="' + b + '" aria-pressed="' + (S.bet === b) + '">×' + b + '</button>'; }).join('') + '</div></div>' +
-    '<div class="opt"><span>Power-ups</span><div class="prearm">' + ['headstart', 'dcoins', 'dpetals'].map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + '>' + icon(p.icon) + p.name + ' (' + owned(id) + ')</button>'; }).join('') + '</div></div>' +
-    (fair ? '<p><b>Fair Play:</b> after 3 rounds without a bingo, this round starts with a free Head Start.</p>' : '') +
-    '<div style="display:flex;gap:10px;align-items:center">' + curPill('i-ticket', S.tickets) + '<button class="b3 gold" id="bGo" style="flex:1;padding:8px;font-size:21px"></button></div>', 'mid', function (v) {
-      function upd() {
-        var cost = S.cards * CARD_COST * S.bet, ok = S.tickets >= cost;
-        v.querySelectorAll('small[data-c]').forEach(function (x) { x.textContent = (+x.dataset.c * CARD_COST * S.bet) + ' tickets'; });
-        $('#bGo', v).textContent = ok ? 'START · ' + cost + ' tickets' : 'Get 100 practice tickets';
-      }
-      v.querySelectorAll('.pick').forEach(function (b) { b.onclick = function () { S.cards = +b.dataset.n; save(); SFX.tap(); v.querySelectorAll('.pick').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); upd(); }; });
-      v.querySelectorAll('#bet button').forEach(function (b) { b.onclick = function () { S.bet = +b.dataset.b; save(); SFX.tap(); v.querySelectorAll('#bet button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); upd(); }; });
-      v.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function () { arm[b.dataset.arm] = !arm[b.dataset.arm]; b.setAttribute('aria-pressed', !!arm[b.dataset.arm]); SFX.tap(); }; });
-      $('#bGo', v).onclick = function () { if (S.tickets < S.cards * CARD_COST * S.bet) { S.tickets += 100; save(); SFX.coin(); toast('100 practice tickets added. In the full game, bake treats in the Kitchen to earn tickets.', 3600); pickCards(room); return; } startRound(arm, room); };
-      upd();
-    });
+  var arm = {}, fair = S.dry >= 3, mi = MODE_INFO[room.mode], featured = room.mode !== 'multi';
+  show('<div class="screen" id="room" style="background-image:linear-gradient(90deg, rgba(40,15,70,.05) 30%, rgba(40,15,70,.35)), url(' + room.img + ');background-position:center, ' + room.pos + ' center">' +
+    roomTop('Rooms', esc(room.name)) +
+    '<div class="rinfo">' +
+      '<span class="rtag">' + (featured ? 'FEATURED · ' : 'CITY · ') + mi.tag + '</span>' +
+      '<p class="rhow">' + mi.how + '.</p>' +
+      '<p class="rhow rpu">Tap a power-up to use it this round.</p>' +
+      (featured ? '<div class="rbonus"><b>Garden Path bonus ' + bonusPct(room.id) + '%</b><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div>' : '') +
+      (fair ? '<p class="rhow"><b>Fair Play:</b> no bingo in 3 rounds, so this round starts with a free Head Start.</p>' : '') +
+    '</div>' +
+    '<div class="rset">' +
+      '<div class="picks">' + [1, 2, 4].map(function (n) { return '<button class="pick" data-n="' + n + '" aria-pressed="' + (S.cards === n) + '"><span class="mini">' + '<i></i>'.repeat(n) + '</span>' + n + ' card' + (n > 1 ? 's' : '') + '<small data-c="' + n + '"></small></button>'; }).join('') + '</div>' +
+      '<div class="opt"><span>Bet <small>costs more, wins more</small></span><div class="seg" id="bet">' + [1, 2, 3, 5].map(function (b) { return '<button data-b="' + b + '" aria-pressed="' + (S.bet === b) + '">×' + b + '</button>'; }).join('') + '</div></div>' +
+      '<div class="rpups">' + ['headstart', 'dcoins', 'dpetals'].map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<span>' + p.name + '</span><b>' + owned(id) + '</b></button>'; }).join('') + '</div>' +
+    '</div>' +
+    '<button class="b3 gold" id="bGo"><span>PLAY</span><small></small></button>' +
+    '</div>');
+  function upd() {
+    var cost = S.cards * CARD_COST * S.bet, ok = S.tickets >= cost;
+    app.querySelectorAll('small[data-c]').forEach(function (x) { x.textContent = (+x.dataset.c * CARD_COST * S.bet) + ' tickets'; });
+    $('#bGo span').textContent = ok ? 'PLAY' : 'GET TICKETS';
+    $('#bGo small').innerHTML = ok ? icon('i-ticket', 'ic" style="width:18px;height:18px;vertical-align:-4px') + ' ' + cost + ' · ' + S.cards + ' card' + (S.cards > 1 ? 's' : '') : '100 free practice tickets';
+  }
+  $('#bBack').onclick = function () { SFX.tap(); rooms(); };
+  app.querySelectorAll('.pick').forEach(function (b) { b.onclick = function () { S.cards = +b.dataset.n; save(); SFX.tap(); app.querySelectorAll('.pick').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); upd(); }; });
+  app.querySelectorAll('#bet button').forEach(function (b) { b.onclick = function () { S.bet = +b.dataset.b; save(); SFX.tap(); app.querySelectorAll('#bet button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); upd(); }; });
+  app.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function () { arm[b.dataset.arm] = !arm[b.dataset.arm]; b.setAttribute('aria-pressed', !!arm[b.dataset.arm]); SFX.tap(); }; });
+  $('#bGo').onclick = function () { if (S.tickets < S.cards * CARD_COST * S.bet) { S.tickets += 100; save(); SFX.coin(); toast('100 practice tickets added. In the full game, bake treats in the Kitchen to earn tickets.', 3600); roomScreen(room); return; } startRound(arm, room); };
+  upd();
 }
 function pantry() {
   panel('<h3>Pantry</h3><p>Ingredients you find while playing. In the team version you can send them to teammates who need them.</p>' +
@@ -1233,7 +1295,7 @@ function pantry() {
 }
 function howTo() {
   panel('<h3>How to play</h3><ul>' +
-    '<li>Tap <b>PLAY</b>, pick a room, then choose 1, 2 or 4 cards. Each card costs tickets.</li>' +
+    '<li>Tap <b>ROOMS</b> and enter a room. Choose 1, 2 or 4 cards and a bet, then press <b>PLAY</b>. Each card costs tickets.</li>' +
     '<li><b>Tickets</b> play bingo. <b>Coins</b> buy power-ups and card packs in the Shop. <b>Petals</b> build the city.</li>' +
     '<li>Bake treats in the <b>Kitchen</b> with ingredients you win to earn tickets.</li>' +
     '<li>A ball is called every few seconds. If the number is on your card, tap it to mark it with a bloom.</li>' +
@@ -1574,7 +1636,7 @@ function endRound(why) {
   if (why !== 'quit' && R.mode !== 'multi') { S.bonus[R.room] = Math.min(100, (S.bonus[R.room] || 0) + R.marks * 1.5); R.pathReady = S.bonus[R.room] >= 100; }
   logEvent({ t: 'round', room: R.room, mode: R.mode, cards: R.cards.length, bingos: R.bingos, coins: R.earned.coins, petals: R.earned.petals });
   save();
-  if (why === 'quit') { R = null; lobby(); return; }
+  if (why === 'quit') { var qr = R.roomObj; R = null; roomScreen(qr); return; }
   var perfect = !R.usedAuto && R.idx >= 10 && R.cards.every(function (k) { return k.won || k.cells.every(function (c) { return c.d || !R.called[c.n]; }); });
   if (perfect) { R.perfect = Math.round(50 * R.bet); S.coins += R.perfect; S.drops += 1; R.earned.coins += R.perfect; R.earned.drops += 1; save(); }
   var st = document.createElement('div'); st.className = 'stamp'; st.innerHTML = '<div><b class="outl">Round complete!</b>' + (perfect ? '<span>Perfect Bloom: you marked every number!</span>' : '') + '</div>';
@@ -1607,7 +1669,7 @@ function results() {
       (E.petals ? '<p>You have <b>' + S.petals + ' petals</b>. Spend them on the map to build Paris.</p>' : '') +
     '</div></div></div>');
   if (R.bingos) setTimeout(function () { sparkle(innerWidth * .25, 80, 90); SFX.set(); }, 250);
-  var lastRoom = R.roomObj, lastBet = R.bet; $('#bAgain').onclick = function () { pickCards(lastRoom); };
+  var lastRoom = R.roomObj, lastBet = R.bet; $('#bAgain').onclick = function () { roomScreen(lastRoom); };
   if ($('#bPath')) { $('#bPath').onclick = function () { this.remove(); gardenPath(lastBet, lastRoom.id); }; setTimeout(function () { if ($('#bPath')) toast('Your Garden Path bonus is full! Tap Play Garden Path.', 3400); }, 600); }
   $('#bLobby').onclick = lobby; $('#bAlb').onclick = function () { album(null); };
   R = null;
