@@ -881,6 +881,10 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
   .hud-top .cur .plus { width: 19px; height: 19px; font-size: 15px; }
   .ftile .fnm { font-size: 10.5px; }
 }
+/* no green around rooms and rounds: plum and gold only */
+.rtag { background: linear-gradient(180deg, #8f5cf0, #5b25b8) padding-box, linear-gradient(90deg, #b8780a, #ffe58f, #e9a81c) border-box; border: 2.5px solid transparent; box-shadow: 0 0 0 2px var(--ol); color: #ffe58f; }
+#play .autob[aria-pressed="true"], .autob[aria-pressed="true"] { background: linear-gradient(180deg, #ffe58f, #f7b924 60%, #e9940f); color: var(--ink); text-shadow: none; }
+.rgrow .b3.green { background: linear-gradient(180deg, var(--gold1), var(--gold2) 60%, #f0a40f); color: var(--ink); }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
