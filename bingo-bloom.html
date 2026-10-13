@@ -987,6 +987,45 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .grand { max-width: 100%; overflow: hidden; }
 .starx { position: relative; z-index: 2; flex: none; }
 @media (max-width: 780px) { .grand b { display: none; } .grand { font-size: 11px; gap: 3px; } .grand > svg { width: 16px; height: 16px; } }
+/* ===== round, v4: big cards in the middle, slim columns (like the feel Dawn wants) ===== */
+#play { --tb: clamp(44px, 14vh, 62px); --pu: clamp(34px, 9.5vh, 46px); --lc: clamp(78px, 11vw, 104px); --rc: clamp(92px, 13.5vw, 124px);
+  grid-template-columns: var(--lc) minmax(0, 1fr) var(--rc); grid-template-rows: var(--tb) minmax(0, 1fr); grid-template-areas: "l t r" "l c r"; gap: 6px 8px; }
+#play .lcol { grid-area: l; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 6px; padding: 6px 4px; border-radius: 18px; min-height: 0;
+  background: linear-gradient(180deg, rgba(118,56,182,.9), rgba(56,20,90,.92)) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; border: 2.5px solid transparent; box-shadow: 0 0 0 2px var(--ol), 0 5px 0 2px var(--ol); }
+#play .lbtns { display: flex; gap: 6px; }
+#play .lcol .mini-btn { width: 30px; height: 30px; }
+#play .lcol .mini-btn svg { width: 15px; height: 15px; }
+#play .bleft { display: grid; justify-items: center; gap: 0; width: 100%; box-sizing: border-box; margin: 0; padding: 4px 2px; border-radius: 14px; line-height: 1; }
+#play .bleft small { font-size: 10px; font-weight: 700; letter-spacing: .05em; }
+#play .bleft b { font-size: clamp(24px, 9vh, 40px); line-height: 1.05; }
+#play .lcol .auto { color: #fff4c9; flex-direction: column; gap: 2px; font-size: 10.5px; }
+#play .ptop { grid-area: t; display: flex; align-items: center; gap: 8px; min-width: 0; }
+#play .ptop .stripwrap { flex: 1; min-width: 0; }
+#play .rail { grid-area: r; grid-row: 1 / 3; justify-content: flex-start; gap: 6px; padding: 8px 6px; }
+#play .rail .boostb .orb { width: calc(var(--rc) - 34px); height: calc(var(--rc) - 34px); }
+#play .rail .boostb .orb svg { width: 70%; height: 70%; }
+#play .rail .boostb .pl { font-size: 12px; }
+#play .dock { grid-template-columns: repeat(2, var(--pu)); gap: 2px 10px; margin-top: auto; }
+#play .pu .pl { font-size: 9.5px; margin-top: 3px; }
+#play .pu .orb b { min-width: 17px; height: 17px; font-size: 10px; top: -5px; right: -6px; }
+#play #cards { grid-area: c; padding-right: 0; }
+#play .bcard .hdr { padding: 1.2cqw 2.6cqw .2cqw; }
+#play .bcard .hdr span { width: 58%; font-size: 6.8cqw; }
+#play .grid { gap: 1.4cqw; padding: 1cqw 2.2cqw 2.2cqw; }
+#play .cell { aspect-ratio: 1.22; font-size: 8.2cqw; }
+#play .minis .cell { aspect-ratio: 1.22; }
+.float { color: #ffe58f; font-size: 14px; }
+.pbanner { position: absolute; z-index: 6; left: 50%; top: 2px; transform: translateX(-50%); padding: 3px 18px 4px; border-radius: 999px; font-size: clamp(14px, 5vh, 20px); white-space: nowrap; pointer-events: none;
+  background: linear-gradient(180deg, #ff9cc4, #d9608f); box-shadow: 0 0 0 2px #fff3b8, 0 0 0 4px var(--ol), 0 0 22px 6px rgba(255,156,196,.75); animation: popIn .35s cubic-bezier(.2,.9,.3,1.4), pulse 1s ease-in-out infinite .35s; }
+.bigs { position: relative; }
+#cards.wildmode .bcard { box-shadow: 0 0 0 2px var(--ol), 0 7px 0 2px var(--ol), 0 0 26px 8px rgba(255,156,196,.85); }
+@media (max-height: 300px) {
+  #play { --tb: 40px; --pu: 32px; --lc: 74px; --rc: 88px; gap: 4px 6px; }
+  #play .lcol .mini-btn { width: 26px; height: 26px; }
+  #play .rail .boostb .orb { width: 50px; height: 50px; }
+  #play .bleft small { font-size: 8.5px; }
+}
+@media (max-height: 300px) { #play .dock .pl { display: none; } #play .dock { gap: 8px 10px; } #play .rail { gap: 4px; padding: 6px 4px; } #play .rail .boostb .pl { display: none; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1760,20 +1799,21 @@ function startRound(arm, room) {
 }
 function renderPlay() {
   show('<div class="screen" id="play">' +
-    '<div class="ptop"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button><button class="mini-btn" id="bPause" aria-label="Pause">' + LINE_ICON.pause + '</button>' +
-      '<div class="ballwrap"><div class="ball" id="ball"><div class="in"><small>READY</small><b>·</b></div></div><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength="100"/></svg></div>' +
-      '<div class="stripwrap"><button class="strip tube" id="strip" aria-label="Called numbers. Tap to see them all."><span class="lbl">Balls<br><b id="nCalled">0/' + R.seq.length + '</b></span></button><span class="goal" id="goal" hidden></span></div>' +
-      '<div class="bleft" id="sLeftW"><span><small>Bingos left</small><small id="sPlayers">0 players</small></span><b id="sLeft">0</b></div></div>' +
-    '<div class="rail"><div class="rtopr"><span class="auto">Auto<button class="sw" id="swAuto" aria-pressed="' + !!S.settings.auto + '" aria-label="Auto daub"></button></span></div>' +
+    '<div class="lcol"><div class="lbtns"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button><button class="mini-btn" id="bPause" aria-label="Pause">' + LINE_ICON.pause + '</button></div>' +
+      '<div class="bleft" id="sLeftW"><small>BINGOS</small><b id="sLeft">0</b><small id="sPlayers">0 players</small></div>' +
+      '<span class="auto">Auto<button class="sw" id="swAuto" aria-pressed="' + !!S.settings.auto + '" aria-label="Auto daub"></button></span></div>' +
+    '<div class="ptop"><div class="ballwrap"><div class="ball" id="ball"><div class="in"><small>READY</small><b>·</b></div></div><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength="100"/></svg></div>' +
+      '<div class="stripwrap"><button class="strip tube" id="strip" aria-label="Called numbers. Tap to see them all."><span class="lbl">Balls<br><b id="nCalled">0/' + R.seq.length + '</b></span></button><span class="goal" id="goal" hidden></span></div></div>' +
+    '<div class="rail">' +
+      '<button class="pu boostb" id="bBoost" disabled aria-label="Bloom Boost"><span class="orb"><span class="fillr"></span>' + icon('i-blossom') + '</span><span class="pl">Boost</span></button>' +
+      '<button class="autob" id="bAutoB" aria-pressed="' + (S.settings.autoBoost !== false) + '" aria-label="Use Boost automatically">Auto</button>' +
       '<div class="dock">' +
         '<button class="pu" id="bWild" aria-label="Wild"><span class="orb">' + icon('i-wild') + '<b id="nWild">' + S.items.wild + '</b></span><span class="pl">Wild</span></button>' +
         '<button class="pu" id="bInstant" aria-label="Instant"><span class="orb">' + icon('i-instant') + '<b id="nInstant">' + (S.items.instant || 0) + '</b></span><span class="pl">Instant</span></button>' +
         '<button class="pu" id="bAllx2" aria-label="All ×2"><span class="orb">' + icon('i-allx2') + '<b id="nAllx2">' + (S.items.allx2 || 0) + '</b></span><span class="pl">All ×2</span></button>' +
         '<button class="pu" id="bBalls" aria-label="+5 Balls"><span class="orb">' + icon('i-plus5') + '<b id="nBalls">' + S.items.balls5 + '</b></span><span class="pl">+5 Balls</span></button>' +
         '<button class="pu" id="bAlert" aria-label="Alert"><span class="orb">' + icon('i-bulb') + '<b id="nAlert">' + S.alerts + '</b></span><span class="pl">Alert</span></button>' +
-        '<button class="pu boostb" id="bBoost" disabled aria-label="Bloom Boost"><span class="orb"><span class="fillr"></span>' + icon('i-blossom') + '</span><span class="pl">Boost</span></button>' +
       '</div>' +
-      '<button class="autob" id="bAutoB" aria-pressed="' + (S.settings.autoBoost !== false) + '" aria-label="Use Boost automatically">Auto Boost</button>' +
       '<span hidden><b id="sBalls"></b><b id="sCoins"></b><b id="sPetals"></b><i id="meter"></i></span></div>' +
     '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap">⇄ Swap</button></div></div></div>');
   R.els = R.cards.map(function (k, ci) { var t = document.createElement('div'); t.innerHTML = cardHtml(k, ci); return t.firstChild; });
@@ -1789,9 +1829,9 @@ function renderPlay() {
   $('#strip').onclick = calledBoard;
   $('#bWild').onclick = function () {
     if (!R || !R.active) { toast('Wait for the first ball.'); return; }
-    if (R.wild) { R.wild = false; this.classList.remove('on'); return; }
+    if (R.wild) { R.wild = false; this.classList.remove('on'); $('#cards').classList.remove('wildmode'); var pb = $('.pbanner'); if (pb) pb.remove(); return; }
     if (S.items.wild < 1) { toast('No Wild Petals left. Buy them in the Shop with coins.'); return; }
-    R.wild = true; this.classList.add('on'); $('#cards').classList.add('wildmode'); pupFx('i-wild', 'Wild Petal!', 'Tap any square to mark it');
+    R.wild = true; this.classList.add('on'); $('#cards').classList.add('wildmode'); $('.bigs').insertAdjacentHTML('afterbegin', '<div class="pbanner outl">Tap any square!</div>'); pupFx('i-wild', 'Wild Petal!', 'Tap any square to mark it');
   };
   $('#bBalls').onclick = function () {
     if (!R || R.ended || !R.active) { toast('Use +5 Balls while the round is running.'); return; }
@@ -1862,12 +1902,12 @@ function autoDaub(n) {
 }
 function fitCards() {
   var area = $('.bigs'); if (!area || !R) return;
-  var n = Math.min(2, R.cards.length), gap = 10, W = area.clientWidth, H = area.clientHeight;
-  var cw = Math.floor(Math.min((W - gap * (n - 1)) / n, (H - 14) / 1.2));
+  var n = Math.min(2, R.cards.length), gap = 12, W = area.clientWidth, H = area.clientHeight - 8;
+  var cw = Math.floor((W - gap * (n - 1)) / n);
   area.style.setProperty('--cw', cw + 'px');
-  var one = area.querySelector('.bcard'); // the jewel frame makes cards taller; shrink until they fit
-  if (one && one.offsetHeight > H - 14) area.style.setProperty('--cw', Math.floor(cw * (H - 14) / one.offsetHeight) + 'px');
-  var c = $('#cards'); if (c) c.style.setProperty('--mw', Math.floor(Math.max(54, Math.min(96, (c.clientHeight - 54) / 2 / 1.2))) + 'px');
+  var one = area.querySelector('.bcard'); // fill the width, then shrink until the card fits the height
+  if (one && one.offsetHeight > H) area.style.setProperty('--cw', Math.floor(cw * H / one.offsetHeight) + 'px');
+  var c = $('#cards'); if (c) c.style.setProperty('--mw', Math.floor(Math.max(54, Math.min(110, (c.clientHeight - 54) / 2 / 1.05))) + 'px');
 }
 function cardHtml(k, ci) {
   return '<div class="bcard" data-c="' + ci + '"><span class="lucky outl">×2</span><div class="hdr">' + COLS.map(function (l) { return '<span>' + l + '</span>'; }).join('') + '</div>' +
@@ -1911,7 +1951,7 @@ function onCardTap(e) {
   var cell = e.target.closest('.cell[data-i]'); if (!cell || !R || !R.active || R.paused) return;
   var ci = +cell.closest('.bcard').dataset.c, k = R.cards[ci], c = k.cells[+cell.dataset.i];
   if (k.won || c.d) return;
-  if (R.wild) { R.wild = false; S.items.wild--; save(); $('#bWild').classList.remove('on'); $('#cards').classList.remove('wildmode'); $('#nWild').textContent = S.items.wild; flyTo($('#bWild'), cell, 'i-wild', function () { if (R && !c.d) { daub(ci, +cell.dataset.i, cell); cell.classList.add('zap'); } }); return; }
+  if (R.wild) { R.wild = false; S.items.wild--; save(); $('#bWild').classList.remove('on'); $('#cards').classList.remove('wildmode'); var pbn = $('.pbanner'); if (pbn) pbn.remove(); $('#nWild').textContent = S.items.wild; flyTo($('#bWild'), cell, 'i-wild', function () { if (R && !c.d) { daub(ci, +cell.dataset.i, cell); cell.classList.add('zap'); } }); return; }
   if (!R.called[c.n]) { cell.classList.remove('no'); void cell.offsetWidth; cell.classList.add('no'); SFX.no(); return; }
   daub(ci, +cell.dataset.i, cell);
 }
@@ -1921,7 +1961,7 @@ function daub(ci, i, cell, fromBoost) {
   var tr = cell.querySelector('.tr'); if (tr) tr.remove();
   cell.insertAdjacentHTML('afterbegin', dauberSvg(S.style.dauber) + '<i class="burst"></i>');
   setTimeout(function () { var bu = cell.querySelector('.burst'); if (bu) bu.remove(); }, 700);
-  SFX.daub(); addXp(2);
+  SFX.daub(); addXp(2); if (!fromBoost && Math.random() < .7) floatText(cell, '+2 xp');
   if (c.t) collect(c, cell);
   modeDaub(ci, i, cell);
   if (!fromBoost) R.meter = Math.min(R.boostAt, R.meter + 1);
