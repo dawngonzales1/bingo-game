@@ -420,7 +420,7 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .bfly.caught { animation: none; inset: auto 2% 2% auto; width: 38%; height: 38%; }
 .bfly.away { animation: flyAway .7s ease-in forwards; }
 @keyframes flyAway { to { transform: translate(60%, -160%) scale(.6); opacity: 0; } }
-#play.m-butterfly { background: radial-gradient(circle at 25% 25%, rgba(255,255,255,.6) 0 3px, transparent 4px) 0 0 / 40px 40px, linear-gradient(160deg, #d9f7ff, #e3ffd6 60%, #ffe3ec); }
+#play.m-butterfly { background: linear-gradient(180deg, rgba(255,214,232,.22), rgba(246,226,255,.30)), url(art/room-butterfly-meadow.webp) center / cover no-repeat, #e3ffd6; }
 #play.m-recipe { background: repeating-linear-gradient(135deg, #ffe3ec 0 26px, #fff4f7 26px 52px); }
 #play.m-shape { background: linear-gradient(180deg, #bfeeff 0%, #e8f9ff 55%, #fbe7b8 56%, #f6dfa6 100%); }
 #play.m-mystery { background: radial-gradient(circle at 20% 30%, rgba(255,214,92,.55) 0 4px, transparent 5px) 0 0 / 60px 60px, linear-gradient(160deg, #6a3fa8, #3d1a6e); }
@@ -1170,7 +1170,7 @@ var ROOMS = [
   { id: 'coast', name: 'Gold Coast', open: true, mode: 'shape', art: posterCoast },
   { id: 'market', name: 'Lantern Market', open: true, mode: 'mystery', art: posterMarket }
 ];
-function posterMeadow() { return '<svg class="art" viewBox="0 0 150 200" preserveAspectRatio="xMidYMid slice"><rect width="150" height="200" fill="#c9f0ff"/><circle cx="118" cy="40" r="18" fill="#fff3b0"/><path d="M0 140q40-24 75-6t75-8v74H0z" fill="#8fdc6a"/><path d="M0 162q50-18 90 0t60-6v44H0z" fill="#5cc24a"/>' + [[20, 150, '#ff8fb1'], [45, 172, '#ffd45c'], [110, 160, '#b996ff'], [132, 180, '#ff8fb1'], [80, 186, '#ffd45c']].map(function (f) { return '<circle cx="' + f[0] + '" cy="' + f[1] + '" r="6" fill="' + f[2] + '" stroke="#3d1a4f" stroke-width="1.4"/><circle cx="' + f[0] + '" cy="' + f[1] + '" r="2" fill="#fff"/>'; }).join('') + '<svg x="42" y="70" width="66" height="66" viewBox="0 0 40 40"><use href="#i-bfly"/></svg></svg>'; }
+function posterMeadow() { return '<span class="art" style="background:linear-gradient(rgba(255,214,232,.18), rgba(255,214,232,.18)), url(art/room-butterfly-meadow.webp) 75% center / cover no-repeat"></span>'; }
 function posterMarket() { return '<svg class="art" viewBox="0 0 150 200" preserveAspectRatio="xMidYMid slice"><rect width="150" height="200" fill="#4a2a7a"/><path d="M0 40q75 30 150 0" fill="none" stroke="#3d1a4f" stroke-width="2"/>' + [20, 50, 80, 110, 135].map(function (x, i) { var y = 44 + Math.sin(i) * 6 + (i === 2 ? 10 : 0); return '<path d="M' + x + ' ' + (y - 6) + 'v6" stroke="#3d1a4f" stroke-width="1.5"/><ellipse cx="' + x + '" cy="' + (y + 8) + '" rx="8" ry="10" fill="' + ['#ffd45c', '#ff8fb1', '#ffb07a', '#ffd45c', '#ff8fb1'][i] + '" stroke="#3d1a4f" stroke-width="1.6"/>'; }).join('') + '<rect y="150" width="150" height="50" fill="#7a4a2a"/><svg x="45" y="100" width="60" height="60" viewBox="0 0 40 40"><use href="#i-gift"/></svg></svg>'; }
 function posterParis() { return '<span class="art" style="background:url(art/room-paris.webp) 30% center / cover no-repeat"></span>'; }
 function posterGarden() { return '<span class="art" style="background:url(art/room-midnight-garden.webp) 22% center / cover no-repeat"></span>'; }
