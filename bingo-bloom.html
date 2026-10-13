@@ -421,7 +421,7 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .bfly.away { animation: flyAway .7s ease-in forwards; }
 @keyframes flyAway { to { transform: translate(60%, -160%) scale(.6); opacity: 0; } }
 #play.m-butterfly { background: linear-gradient(180deg, rgba(255,240,246,.12), rgba(255,240,246,.24)), url(art/room-butterfly-meadow.webp) center / cover no-repeat, #e3ffd6; }
-#play.m-recipe { background: repeating-linear-gradient(135deg, #ffe3ec 0 26px, #fff4f7 26px 52px); }
+#play.m-recipe { background: linear-gradient(180deg, rgba(255,240,246,.12), rgba(255,240,246,.24)), url(art/room-candy-carnival.webp) center / cover no-repeat, #ffe3ec; }
 #play.m-shape { background: linear-gradient(180deg, #bfeeff 0%, #e8f9ff 55%, #fbe7b8 56%, #f6dfa6 100%); }
 #play.m-mystery { background: radial-gradient(circle at 20% 30%, rgba(255,214,92,.55) 0 4px, transparent 5px) 0 0 / 60px 60px, linear-gradient(160deg, #6a3fa8, #3d1a6e); }
 .gpath { display: flex; align-items: stretch; gap: 6px; overflow-x: auto; padding: 4px 2px 8px; }
@@ -1175,7 +1175,7 @@ function posterMarket() { return '<svg class="art" viewBox="0 0 150 200" preserv
 function posterParis() { return '<span class="art" style="background:url(art/room-paris.webp) 30% center / cover no-repeat"></span>'; }
 function posterGarden() { return '<span class="art" style="background:url(art/room-midnight-garden.webp) 22% center / cover no-repeat"></span>'; }
 function posterCoast() { return '<svg class="art" viewBox="0 0 150 200" preserveAspectRatio="xMidYMid slice"><rect width="150" height="200" fill="#9fe2ff"/><circle cx="40" cy="60" r="20" fill="#ffe58f"/><rect y="120" width="150" height="40" fill="#29b6d8"/><path d="M0 128q12-6 25 0t25 0 25 0 25 0 25 0 25 0" fill="none" stroke="#fff" stroke-width="3"/><rect y="155" width="150" height="45" fill="#f6dfa6"/><path d="M118 165c-2-30 4-46 6-50" stroke="#9a6a44" stroke-width="5" fill="none"/><path d="M124 115c-14-4-24 2-28 8 10-4 20-4 28-8zm0 0c12-8 22-6 28-2-10 0-20 0-28 2zm0 0c2-12 10-18 16-20-4 8-10 14-16 20z" fill="#5cc24a" stroke="#3d1a4f" stroke-width="1.6"/></svg>'; }
-function posterCandy() { return '<svg class="art" viewBox="0 0 150 200" preserveAspectRatio="xMidYMid slice"><rect width="150" height="200" fill="#ffd6ea"/>' + [0, 1, 2, 3, 4, 5].map(function (i) { return '<path d="M' + (i * 30 - 10) + ' 0l30 0-40 200h-30z" fill="#fff" opacity=".55"/>'; }).join('') + '<circle cx="75" cy="135" r="34" fill="#ff6f9d" stroke="#3d1a4f" stroke-width="2.5"/><path d="M75 101a34 34 0 0 1 0 68a17 17 0 0 1 0-34a17 17 0 0 0 0-34" fill="#fff"/><path d="M75 169v30" stroke="#3d1a4f" stroke-width="5"/></svg>'; }
+function posterCandy() { return '<span class="art" style="background:url(art/room-candy-carnival.webp) 22% center / cover no-repeat"></span>'; }
 function rooms(tab) {
   tab = tab || 'featured';
   var list = ROOMS.filter(function (r) { return tab === 'city' ? r.mode === 'multi' : r.mode !== 'multi'; });
