@@ -46,7 +46,8 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
 - **After a round:** Play again (or leaving a round) brings you back to the same room.
 
 ### A round of bingo
-- 45 balls. Speeds: Relaxed (5 s), Classic (4 s, the default), Quick (3 s).
+- 45 balls (65 in Blackout). Speeds: Relaxed (4 s), Classic (3 s, the default), Quick (2.2 s). A 3-second Get ready.
+- **Fair Play caller:** the caller leans toward numbers on your cards, so bingos come sooner (in Blackout it leans toward one lucky card so a Blackout is really reachable). No number is ever called twice.
 - **A row of called numbers across the top**, drawn as little flowers, newest first. Tap it to see every called number.
 - **With 4 cards:** 2 are big; tap a small card or Swap to bring the others up.
 - **The screen:** the ball being called sits at the top left, and called balls roll into a glass tube across the top. Bingos left is at the top right.
@@ -60,6 +61,9 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
 - **Auto** marks numbers for you; you still tap BINGO!
 - **Treasure squares:** coins, tickets, petals, album cards, ingredients, drop balls or a Bloom Alert.
 - **Each bingo gives:** coins, petals, an album card, 2 ingredients, 2 drop balls and 1 seed (sometimes a Bloom Alert).
+
+- **Hot room of the day:** one featured room each day has a flaming HOT badge on the map and pays double petals.
+- **Room screen extras:** fireflies drift over the painting, a Grand Jackpot banner counts up to the top prize for your bet, and POPULAR / BEST VALUE flags wiggle on the card choices.
 
 ### Rooms
 | Room | Kind | How it plays |
