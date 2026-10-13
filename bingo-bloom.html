@@ -134,9 +134,9 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .seg button[aria-pressed="true"] { background: var(--plum2); color: #fff; }
 
 /* ---------- play ---------- */
-#play { display: grid; grid-template-columns: minmax(170px, 23%) 1fr; gap: 10px; padding: max(8px, env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
+#play { display: grid; grid-template-columns: minmax(150px, 23%) 1fr; grid-template-rows: minmax(0, 1fr); gap: 10px; padding: max(8px, env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
   background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.7) 0 2px, transparent 3px) 0 0 / 34px 34px, linear-gradient(135deg, #ffd8e6 0%, #ffeccc 55%, #d9f2ff 100%); }
-.side { display: flex; flex-direction: column; gap: 6px; min-height: 0; border-radius: 22px; padding: 8px; background: rgba(255,253,247,.92); border: 3px solid var(--ol); box-shadow: 0 5px 0 var(--ol); }
+.side { display: flex; flex-direction: column; gap: 6px; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; border-radius: 22px; padding: 8px; background: rgba(255,253,247,.92); border: 3px solid var(--ol); box-shadow: 0 5px 0 var(--ol); }
 .side .row { display: flex; justify-content: space-between; align-items: center; }
 .mini-btn { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; border: 3px solid var(--ol); box-shadow: 0 3px 0 var(--ol); background: linear-gradient(180deg, #fff, #f1e2c6); }
 .mini-btn svg { width: 20px; height: 20px; stroke: var(--ol); stroke-width: 2.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
@@ -164,7 +164,7 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .bigs { display: flex; justify-content: center; align-items: center; gap: 10px; min-width: 0; min-height: 0; height: 100%; }
 .minis { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 8px; }
 #cards.has-minis .minis { display: flex; }
-.minis .bcard { width: 92px; cursor: pointer; box-shadow: 0 3px 0 var(--ol); }
+.minis .bcard { width: var(--mw, 92px); cursor: pointer; box-shadow: 0 3px 0 var(--ol); }
 .minis .bcard * { pointer-events: none; }
 .minis .bcard.ready { box-shadow: 0 0 0 3px var(--gold2), 0 0 18px var(--gold2); animation: pulse 1s ease-in-out infinite; }
 .minis .bcard.ready::after { content: 'BINGO!'; position: absolute; left: 50%; top: 40%; transform: translateX(-50%); padding: 2px 6px; border-radius: 8px; background: var(--gold2); border: 2px solid var(--ol); font-weight: 700; font-size: 12px; }
@@ -359,7 +359,7 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .claimed.off { color: var(--mist); }
 .bed .b3 { padding: 4px 14px; font-size: 15px; }
 /* the called numbers, across the top of a round */
-.right { display: grid; grid-template-rows: auto 1fr; gap: 8px; min-width: 0; min-height: 0; }
+.right { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 8px; min-width: 0; min-height: 0; }
 .strip { display: flex; align-items: center; gap: 3px; height: 46px; padding: 0 8px; border-radius: 23px; background: rgba(255,253,247,.92); border: 3px solid var(--ol); box-shadow: 0 3px 0 var(--ol); overflow: hidden; cursor: pointer; min-width: 0; }
 .strip .lbl { flex: none; font-size: 11px; font-weight: 700; line-height: 1.05; color: var(--mist); text-align: center; margin-right: 4px; }
 .strip .lbl b { font-size: 15px; color: var(--ink); }
@@ -388,6 +388,70 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .prearm button svg { width: 22px; height: 22px; }
 .prearm button[aria-pressed="true"] { background: linear-gradient(180deg, #f3e8ff, #dcc4ff); box-shadow: inset 0 0 0 2px var(--plum2); }
 .prearm button:disabled { opacity: .45; }
+
+/* ---------- short screens (for example inside the Claude app, sideways) ---------- */
+@media (max-height: 360px) {
+  .hud-top { padding-top: calc(4px + env(safe-area-inset-top, 0px)); gap: 6px; }
+  .lvl .badge { width: 38px; height: 38px; font-size: 17px; }
+  .lvl .xp { width: 80px; height: 16px; }
+  .cur { height: 28px; font-size: 14px; }
+  .cur .ic { width: 30px; height: 30px; }
+  .city { min-width: 100px; padding: 2px 8px 4px; }
+  .city b { font-size: 12px; }
+  .round { width: 56px; }
+  .round .c { width: 42px; height: 42px; border-width: 2.5px; box-shadow: 0 3px 0 var(--ol), inset 0 2px 0 rgba(255,255,255,.5); }
+  .round .c svg { width: 26px; height: 26px; }
+  .round .lb { font-size: 10.5px; margin-top: -5px; }
+  .round .dot { width: 11px; height: 11px; }
+  .hud-left { top: calc(50px + env(safe-area-inset-top, 0px)); gap: 2px; }
+  .hud-right { top: calc(46px + env(safe-area-inset-top, 0px)); gap: 2px; }
+  .hud-play .b3 { font-size: 22px; padding: 5px 22px 6px; }
+  .hud-play .b3 small { font-size: 10.5px; }
+  #play { gap: 6px; padding-top: max(4px, env(safe-area-inset-top, 0px)); padding-bottom: max(4px, env(safe-area-inset-bottom, 0px)); }
+  .side { gap: 4px; padding: 5px; border-radius: 16px; box-shadow: 0 3px 0 var(--ol); }
+  .mini-btn { width: 32px; height: 32px; }
+  .mini-btn svg { width: 16px; height: 16px; }
+  .auto { font-size: 11px; }
+  .ball { --s: min(60px, 19vh); }
+  .bleft { padding: 1px 8px; border-radius: 10px; }
+  .bleft b { font-size: 19px; }
+  .bleft small + small { display: none; }
+  .stat { padding: 1px 4px; font-size: 9.5px; }
+  .stat b { font-size: 13px; }
+  .meter { height: 8px; }
+  .boost { gap: 3px; }
+  .boost .b3 { padding: 2px; font-size: 13px; border-radius: 10px; }
+  .pu { height: 28px; }
+  .pu svg { width: 19px; height: 19px; }
+  .right { gap: 5px; }
+  .strip { height: 36px; }
+  .fl { width: 30px; height: 30px; }
+  .fl b { font-size: 10.5px; }
+  .swap { font-size: 11px; padding: 3px 8px; }
+  .panel { padding: 10px 14px; gap: 8px; border-radius: 20px; }
+  .panel h3 { font-size: 21px; }
+  .x { width: 34px; height: 34px; font-size: 18px; top: 6px; right: 8px; }
+  .veil { padding-top: 6px; padding-bottom: 6px; }
+}
+@media (max-height: 300px) {
+  .panel.mid .pick .mini { display: none; }
+  .panel.mid .pick { padding: 4px; gap: 0; }
+  .panel.mid .picks { gap: 6px; }
+  .panel.mid .opt { padding: 4px 10px; }
+  .panel h3 { font-size: 19px; }
+  .panel.mid #bGo { padding: 5px !important; font-size: 18px !important; }
+  .hud-play .b3 { font-size: 19px; padding: 4px 16px 5px; border-radius: 16px; }
+  .hud-right { top: calc(42px + env(safe-area-inset-top, 0px)); }
+  .hud-play { right: calc(max(10px, env(safe-area-inset-right, 0px)) + 64px); }
+}
+@media (max-height: 260px) {
+  .panel.mid h3 { display: none; }
+}
+@media (max-height: 290px) {
+  .stats3 { display: none; }
+  .ball { --s: 52px; }
+  .lvl .xp { display: none; }
+}
 
 /* ---------- misc ---------- */
 #toast { position: fixed; left: 50%; top: calc(10px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); z-index: 60; max-width: min(520px, 86vw); padding: 8px 16px; border-radius: 14px; background: linear-gradient(180deg, var(--plum1), var(--plum2)); border: 3px solid var(--ol); box-shadow: 0 4px 0 var(--ol); color: #fff; font-weight: 600; text-align: center; animation: popIn .25s; }
@@ -1134,7 +1198,7 @@ function renderPlay() {
       '<div class="pups"><button class="pu" id="bAlert" aria-label="Bloom Alert">' + icon('i-bulb') + '<b id="nAlert">' + S.alerts + '</b></button>' +
       '<button class="pu" id="bWild" aria-label="Wild Petal">' + icon('i-wild') + '<b id="nWild">' + S.items.wild + '</b></button>' +
       '<button class="pu" id="bBalls" aria-label="5 more balls">' + icon('i-plus5') + '<b id="nBalls">' + S.items.balls5 + '</b></button></div></div>' +
-    '</div><div class="right"><button class="strip" id="strip" aria-label="Called numbers. Tap to see them all."><span class="lbl">Called<br><b id="nCalled">0</b></span></button>' +
+    '</div><div class="right"><button class="strip" id="strip" aria-label="Called numbers. Tap to see them all."><span class="lbl">Called<br><b id="nCalled">0/' + R.seq.length + '</b></span></button>' +
     '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap">⇄ Swap</button></div></div></div></div>');
   R.els = R.cards.map(function (k, ci) { var t = document.createElement('div'); t.innerHTML = cardHtml(k, ci); return t.firstChild; });
   placeCards();
@@ -1156,7 +1220,7 @@ function renderPlay() {
     S.items.balls5--; save();
     var rest = shuffle(range(1, 75).filter(function (n) { return R.seq.indexOf(n) < 0; }));
     R.seq = R.seq.concat(rest.slice(0, 5));
-    $('#nBalls').textContent = S.items.balls5; $('#sBalls').textContent = R.idx + '/' + R.seq.length; SFX.boost();
+    $('#nBalls').textContent = S.items.balls5; $('#sBalls').textContent = R.idx + '/' + R.seq.length; $('#nCalled').textContent = R.idx + '/' + R.seq.length; SFX.boost();
     toast('+5 balls added to this round!');
     if (R.lastBall) { clearTimeout(R.timer); R.lastBall = false; if (!R.paused) R.timer = setTimeout(callNext, 1200); }
   };
@@ -1185,7 +1249,7 @@ function placeCards() {
     R.els.forEach(function (e, i) { (Math.floor(i / 2) === R.focus ? big : mini).appendChild(e); });
     mini.appendChild(swap);
   }
-  fitCards(); updateMinis();
+  fitCards(); updateMinis(); requestAnimationFrame(fitCards);
 }
 function swapCards() { if (!R || R.els.length <= 2) return; R.focus = 1 - R.focus; SFX.tap(); placeCards(); }
 function bingoReady(k) { return LINES.some(function (L) { return L.every(function (i) { return k.cells[i].d; }); }); }
@@ -1214,7 +1278,8 @@ function autoDaub(n) {
 function fitCards() {
   var area = $('.bigs'); if (!area || !R) return;
   var n = Math.min(2, R.cards.length), gap = 10, W = area.clientWidth, H = area.clientHeight;
-  area.style.setProperty('--cw', Math.floor(Math.min((W - gap * (n - 1)) / n, (H - 8) / 1.33)) + 'px');
+  area.style.setProperty('--cw', Math.floor(Math.min((W - gap * (n - 1)) / n, (H - 10) / 1.42)) + 'px');
+  var c = $('#cards'); if (c) c.style.setProperty('--mw', Math.floor(Math.max(54, Math.min(92, (c.clientHeight - 54) / 2 / 1.42))) + 'px');
 }
 function cardHtml(k, ci) {
   return '<div class="bcard" data-c="' + ci + '"><div class="hdr">' + COLS.map(function (l) { return '<span>' + l + '</span>'; }).join('') + '</div>' +
@@ -1231,7 +1296,7 @@ function callNext() {
   var b = $('#ball'); b.style.setProperty('--bc', ballColor(n)); b.innerHTML = '<div class="in"><small>' + letter(n) + '</small><b>' + n + '</b></div>';
   b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
   var st = $('#strip');
-  if (st) { var f = document.createElement('span'); f.className = 'fl new'; f.style.color = ballColor(n); f.innerHTML = '<svg viewBox="0 0 40 40"><use href="#fbloom"/></svg><b>' + n + '</b>'; st.insertBefore(f, st.children[1] || null); while (st.children.length > 46) st.lastChild.remove(); $('#nCalled').textContent = R.idx; }
+  if (st) { var f = document.createElement('span'); f.className = 'fl new'; f.style.color = ballColor(n); f.innerHTML = '<svg viewBox="0 0 40 40"><use href="#fbloom"/></svg><b>' + n + '</b>'; st.insertBefore(f, st.children[1] || null); while (st.children.length > 46) st.lastChild.remove(); $('#nCalled').textContent = R.idx + '/' + R.seq.length; }
   $('#sBalls').textContent = R.idx + '/' + R.seq.length;
   SFX.ball(); say(letter(n) + ' ' + n);
   hintUi();
