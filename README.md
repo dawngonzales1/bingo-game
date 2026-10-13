@@ -39,7 +39,10 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
   - finishing all 4 rooms gives **500 tickets, 1,000 coins and a Gold Pack**, and opens the Stone Bridge.
 - **Featured rooms** sit in a row of picture tiles along the bottom: Midnight Garden, Butterfly Meadow, Candy Carnival, Gold Coast and Lantern Market.
 - **Top:** level, tickets, coins, petals, Paris progress (out of 12 blossoms) and settings. **Left:** daily gift, album, Kitchen. **Right:** Shop, side games, Team Garden.
-- **Inside a room:** choose the number of cards (1, 2 or 4), a bet (×1 to ×5) and power-ups (Head Start, Double Coins, Double Petals), then press the big **PLAY** button.
+- **Inside a room:** three card choices (1, 2 or 4 cards), each showing what it can win, with its own PLAY button and ticket price. A bet slider (− and +, ×1 to ×5) and pre-round power-ups (Head Start, Double Coins, Double Petals) sit along the bottom.
+- **Bake to Win (Paris rooms):** each room bakes 3 pastries in turn, pictured with the album's painted pastries. Every bingo in that room adds 4 of the room's 3 ingredients. When the bars are full the golden cloche wobbles; tap it to bake for tickets (150, 300, 450), amethysts (5, 10, 15) and a Bronze, Silver or Gold Pack.
+- **Style Studio:** tap your picture (top left). Use your photo or any album card you own as your avatar, and pick a frame and a dauber. Frames and daubers are won from levels, sets, rooms, lucky bingo drops, the Album Grand Prize and the Amethyst Vault.
+- **Movement:** screens slide in, the map's landmarks breathe, butterflies and clouds drift by, buttons shine, cards are dealt onto the table, and bingos burst with confetti.
 - **After a round:** Play again (or leaving a round) brings you back to the same room.
 
 ### A round of bingo
