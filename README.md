@@ -46,6 +46,37 @@ Bingo Bloom uses ideas common to many bingo games (balls, 5×5 cards, bingos lef
 - **Treasure squares:** coins, tickets, petals, album cards, ingredients, drop balls or a Bloom Alert.
 - **Each bingo gives:** coins, petals, an album card, 2 ingredients, 2 drop balls and 1 seed (sometimes a Bloom Alert).
 
+### Rooms
+| Room | Kind | How it plays |
+|---|---|---|
+| Paris Patisserie | City room | Multi-bingo: every new line wins, up to 4 per card (Bingo, Double Bloom, Triple Bloom, Full Bouquet). Bingo is called automatically. |
+| Midnight Garden | Featured | Blackout: cover all 24 squares. 65 balls. |
+| Butterfly Meadow | Featured | Butterflies land on squares. Mark them before they fly away (3 balls) for tickets. Lines with a caught butterfly pay double. |
+| Candy Carnival | Featured | Ingredients hide under squares. Bingo lines put them in a mixing bowl, and finished recipes bake into tickets (the ingredients also go to the pantry). |
+| Gold Coast | Featured | A shape each round (heart, flower, L, T, frame, X, diamond, square). Complete it for a big prize. |
+| Lantern Market | Featured | Gift squares open into a prize or a ×2/×3 boost for any bingo through them. |
+
+- **Every round:**
+  - starts with a 5-second Get ready;
+  - picks one Lucky ×2 card;
+  - shows a timer ring on the newest ball;
+  - ends with Round complete and a Perfect Bloom bonus if you marked every called number yourself.
+- **Auto Boost** fires the Boost by itself when it's full. The Boost charges per card played, and its own marks don't recharge it (tuned with a simulation of thousands of rounds).
+- **Bouquet Jackpot Wheel:** a Full Bouquet or a Blackout earns a spin after the round. Tickets only, times your bet: Grand 500 (2%), Major 150 (6%), Minor 60 (12%), 40 (20%), 25 (25%), 15 (35%).
+- **Garden Path** (featured rooms' bonus game): your marks fill a bar. When it's full, pick stepping stones toward the fountain:
+  - the first two rows are safe;
+  - Hops move you ahead;
+  - a Splash ends the walk with a small prize;
+  - the fountain gives 150 tickets and a gold card.
+- **Gold cards outside bingo:**
+  - Daily Wheel (5%)
+  - Scratch Cards
+  - Petal Drop's gold cup
+  - the Royal Gateau
+  - 3 stars in Macaron Match (50% gold)
+  - Team Garden
+  - card packs
+
 ### Kitchen
 2 ovens. Bake treats with ingredients to earn tickets:
 
