@@ -1603,7 +1603,27 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 /* power-up bar across the top of the round */
 #play { grid-template-columns: var(--lc) minmax(0, 1fr) !important; grid-template-areas: "l t" "l c" !important; }
 #play .rail { display: none !important; }
-#play #cards { grid-template-rows: minmax(0, 1fr); }
+#play #cards { grid-template-rows: minmax(0, 1fr) auto; }
+#play #cards .prow { grid-column: 1 / -1; grid-row: 2; display: flex; align-items: center; gap: 8px; height: 34px; margin-top: 2px; padding: 0 8px; border-radius: 17px; background: linear-gradient(180deg, rgba(118,56,182,.9), rgba(56,20,90,.92)) padding-box, linear-gradient(90deg, #b8780a, #ffe58f 30%, #e9a81c 70%, #fff3b8) border-box; border: 2px solid transparent; box-shadow: 0 0 0 1.5px var(--ol), 0 3px 0 1.5px var(--ol); }
+.pavs { display: flex; align-items: center; gap: 2px; flex: 1; min-width: 0; overflow: hidden; }
+.ppl { position: relative; display: grid; justify-items: center; width: 34px; flex: none; background: none; }
+.ppl i, .ppl .av { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font: 800 11px var(--ui); font-style: normal; color: #fff; background: var(--pc, #7b44d8); box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--ol); }
+.ppl .av { --av: 22px !important; }
+.ppl small { display: none; position: absolute; top: 100%; margin-top: -3px; font: 700 7.5px var(--ui); color: #e6d4ff; max-width: 44px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ppl.you i, .ppl.you .av { box-shadow: 0 0 0 2px #ffe58f, 0 0 0 3px var(--ol), 0 0 8px rgba(255,229,143,.9); }
+.ppl.won { animation: pavWon 1.2s cubic-bezier(.2,.9,.3,1.4); z-index: 2; }
+.ppl.won::after { content: 'BINGO'; position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); padding: 1px 5px; border-radius: 6px; font: 800 8px var(--ui); color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #f6c64a); box-shadow: 0 0 0 1.5px var(--ol); animation: popIn .3s both, fade .3s 1.2s reverse both; white-space: nowrap; }
+@keyframes pavWon { 0% { transform: scale(1); } 30% { transform: scale(1.35) translateY(-3px); } 100% { transform: scale(1); } }
+.pgoal { display: flex; align-items: center; gap: 6px; flex: none; }
+.pbar { display: block; width: clamp(60px, 14vw, 140px); height: 10px; border-radius: 5px; background: rgba(0,0,0,.35); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.4); overflow: hidden; }
+.pbar b { display: block; height: 100%; width: 0; border-radius: 5px; background: linear-gradient(90deg, #ffe58f, #f6c64a); transition: width .5s ease; box-shadow: 0 0 8px rgba(255,214,92,.8); }
+.pstar { position: relative; width: 44px; height: 44px; display: grid; place-items: center; align-content: center; line-height: 1; color: #3d1a4f; background: radial-gradient(circle at 40% 30%, #fff8d6, #ffd45c 55%, #e9a81c); clip-path: polygon(50% 0, 62% 35%, 100% 38%, 70% 60%, 80% 100%, 50% 78%, 20% 100%, 30% 60%, 0 38%, 38% 35%); filter: drop-shadow(0 0 5px rgba(255,214,92,.9)); }
+.pstar b { font-size: 13px; } .pstar small { font-size: 6.5px; font-weight: 800; }
+.pstar.bump { animation: bump .4s; } .pstar.hot { animation: pulse 1s ease-in-out infinite; }
+.bcard.in { animation: cardIn .4s cubic-bezier(.2,.9,.3,1.3) both; }
+@keyframes cardIn { from { transform: scale(.7) translateX(10%); opacity: .2; } }
+.strip > *:nth-child(3) { opacity: .88; } .strip > *:nth-child(4) { opacity: .74; } .strip > *:nth-child(5) { opacity: .6; } .strip > *:nth-child(n+6) { opacity: .45; }
+@media (max-height: 340px) { #play #cards .prow { display: none; } #play #cards { grid-template-rows: minmax(0, 1fr); } }
 #play #cards .bigs, #play #cards .minis { min-height: 0; }
 #play .minis > * { flex: none; }
 @media (max-height: 300px) { #play #cards.has-minis .minis { display: grid; grid-template-columns: auto auto; align-content: center; justify-content: center; gap: 5px; } #play .minis .bcard { grid-column: 1 / -1; justify-self: center; } #play .minis .swap { padding: 2px 8px; font-size: 13px; } #play .minis .swap span { display: none; } }
@@ -1902,8 +1922,8 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .cal { position: relative; }
 .ingdot.pic { background-color: transparent !important; background-position: center !important; background-size: contain !important; background-repeat: no-repeat !important; width: 26px; height: 26px; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; filter: drop-shadow(0 2px 2px rgba(40,10,60,.35)); }
 .ingdot.pic::before, .ingdot.pic::after { display: none !important; }
-.cell .rdaub { position: absolute; inset: 4%; display: block; width: auto; height: auto; background-size: contain !important; background: center / contain no-repeat; filter: drop-shadow(0 2px 2px rgba(40,10,60,.45)); animation: daubPop .35s cubic-bezier(.2,.9,.3,1.6) both; pointer-events: none; z-index: 1; }
-@keyframes daubPop { from { transform: scale(.2) rotate(-30deg); opacity: 0; } }
+.cell .rdaub { position: absolute; inset: 0; display: block; width: auto; height: auto; background-size: contain !important; background: center / contain no-repeat; filter: drop-shadow(0 2px 2px rgba(40,10,60,.45)); animation: daubPop .35s cubic-bezier(.2,.9,.3,1.6) both; pointer-events: none; z-index: 1; }
+@keyframes daubPop { from { transform: scale(.2) rotate(-30deg); opacity: 0; } 55% { transform: scale(1.22, .86) rotate(3deg); opacity: 1; } 78% { transform: scale(.94, 1.08); } to { transform: none; } }
 
 /* Macaron Match: Firefly macarons, bright and clear (admin item 26) */
 .mac::before { background: center / contain no-repeat !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; width: 92% !important; height: 92% !important; filter: drop-shadow(0 3px 3px rgba(20,5,35,.45)); }
@@ -3815,7 +3835,7 @@ function renderPlay() {
         '<button class="pu pmore" id="bMore" aria-label="All power-ups"><span class="orb">' + icon('i-more') + '<b id="nMore">' + IN_PUPS.reduce(function (a, k) { return a + owned(k); }, 0) + '</b></span><span class="pl">More</span></button>' +
       '</div>' +
       '<span hidden><b id="sBalls"></b><b id="sCoins"></b><b id="sPetals"></b><i id="meter"></i></span></div>' +
-    '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap" aria-label="Swap cards">⇄<span> Swap</span></button><button class="b3 plum swap" id="bView4" aria-label="Show all 4 cards">⊞<span> All 4</span></button></div></div></div>');
+    '<div id="cards"><div class="prow" id="prow"><div class="pavs" id="pavs"></div><div class="pgoal"><i class="pbar"><b id="pbarFill"></b></i><div class="pstar" id="pstar"><b id="pLeft">0</b><small>LEFT</small></div></div></div><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap" aria-label="Swap cards">⇄<span> Swap</span></button><button class="b3 plum swap" id="bView4" aria-label="Show all 4 cards">⊞<span> All 4</span></button></div></div></div>');
   R.els = R.cards.map(function (k, ci) { var t = document.createElement('div'); t.innerHTML = cardHtml(k, ci); return t.firstChild; });
   placeCards();
   $('#cards').addEventListener('click', onCardTap);
@@ -3823,7 +3843,7 @@ function renderPlay() {
   $('#bAutoB').onclick = function () { S.settings.autoBoost = !autoPups(); save(); this.setAttribute('aria-pressed', autoPups()); SFX.tap(); toast(autoPups() ? 'Auto power-ups on: when Boost fills, your power-ups fire by themselves' : 'Auto power-ups off: tap the glowing Boost to fire them', 3000); meterUi(); };
   R.pq = []; pqFill(true);
   $('#pq').onclick = function (e) { if (e.target.closest('#bAutoB') || !R) return; if (R.meter >= R.boostAt && R.active) useBoost(); else { SFX.tap(); toast(R.pq.length ? 'Your power-ups fire when the glow line under them is full. Keep marking numbers!' : 'No power-ups loaded. Get more in the Shop between rounds.', 2800); } };
-  $('#bSwap').onclick = swapCards;
+  $('#bSwap').onclick = swapCards; playersRow();
   $('#bView4').onclick = function () { S.settings.view4 = !S.settings.view4; save(); SFX.tap(); placeCards(); };
   $('#bAlert').onclick = useAlert;
   $('#bMore').onclick = pupTray;
@@ -3880,7 +3900,7 @@ function placeCards() {
   }
   fitCards(); updateMinis(); requestAnimationFrame(fitCards);
 }
-function swapCards() { if (!R || R.els.length <= 2) return; R.focus = 1 - R.focus; SFX.tap(); placeCards(); }
+function swapCards() { if (!R || R.els.length <= 2) return; R.focus = 1 - R.focus; SFX.tap(); placeCards(); R.els.forEach(function (e) { e.classList.remove('in'); void e.offsetWidth; e.classList.add('in'); }); }
 function bingoReady(k) { return LINES.some(function (L) { return L.every(function (i) { return k.cells[i].d; }); }); }
 function updateMinis() { /* bingos are called automatically, so small cards need no reminder */ }
 function hintUi() {
@@ -3962,20 +3982,36 @@ var RIV_COLORS = ['#3f86ec', '#2fae55', '#e9a81c', '#d8402a', '#7b44d8', '#16a3a
 function rivalWin() {
   var host = $('#play'); if (!host) return;
   var pool = LEAGUE_NAMES.concat((ON.friends || []).map(function (f) { return f.name; }).filter(Boolean));
-  var nm = pool[rand(pool.length)], what = R.mode === 'blackout' ? 'BLACKOUT' : ['BINGO', 'BINGO', 'BINGO', 'Double Bloom'][rand(4)];
+  var nm = (R.pavs && R.pavs.length && Math.random() < .8) ? R.pavs[rand(R.pavs.length)] : pool[rand(pool.length)], what = R.mode === 'blackout' ? 'BLACKOUT' : ['BINGO', 'BINGO', 'BINGO', 'Double Bloom'][rand(4)];
+  var pav = host.querySelector('.ppl[data-n="' + nm.replace(/"/g, '') + '"]'); if (pav) { pav.classList.remove('won'); void pav.offsetWidth; pav.classList.add('won'); }
   var feed = host.querySelector('.rfeed'); if (!feed) { feed = document.createElement('div'); feed.className = 'rfeed'; host.appendChild(feed); }
   var it = document.createElement('div'); it.className = 'rfi';
   it.innerHTML = '<i style="background:' + RIV_COLORS[rand(RIV_COLORS.length)] + '">' + esc(nm.charAt(0)) + '</i><span><b>' + esc(nm) + '</b> got ' + what + '!</span><em>' + R.left + ' left</em>';
   feed.appendChild(it); while (feed.children.length > 2) feed.firstChild.remove();
   setTimeout(function () { it.classList.add('out'); setTimeout(function () { it.remove(); }, 400); }, 3200);
 }
-function bumpLeft() { var w = $('#sLeftW'); if (!w) return; w.classList.remove('bump'); void w.offsetWidth; w.classList.add('bump'); }
+function bumpLeft() {
+  var w = $('#sLeftW'); if (!w) return; w.classList.remove('bump'); void w.offsetWidth; w.classList.add('bump');
+  var pl = $('#pLeft'), ps = $('#pstar'), pf = $('#pbarFill');
+  if (pl) { pl.textContent = R.left; if (pf) pf.style.width = Math.round(100 * (1 - R.left / Math.max(1, R.total))) + '%'; ps.classList.remove('bump'); void ps.offsetWidth; ps.classList.add('bump'); ps.classList.toggle('hot', R.left <= 3); }
+}
+// the people playing this round with you: a row of faces under the cards, lit up when one of them wins
+function playersRow() {
+  var box = $('#pavs'); if (!box || !R) return;
+  var pool = LEAGUE_NAMES.concat((ON.friends || []).map(function (f) { return f.name; }).filter(Boolean)), seen = {}, names = [];
+  while (names.length < 7 && names.length < pool.length) { var nm = pool[rand(pool.length)]; if (!seen[nm]) { seen[nm] = 1; names.push(nm); } }
+  R.pavs = names;
+  box.innerHTML = '<span class="ppl you" title="' + esc(myName()) + '">' + avatarHtml(28) + '<small>YOU</small></span>' + names.map(function (n, i) {
+    return '<span class="ppl" data-n="' + esc(n) + '" title="' + esc(n) + '" style="--pc:' + RIV_COLORS[i % RIV_COLORS.length] + '"><i>' + esc(n.charAt(0)) + '</i><small>' + esc(n) + '</small></span>';
+  }).join('');
+  var pl = $('#pLeft'); if (pl) pl.textContent = R.left;
+}
 function rivals() {
   var startAt = R.mode === 'blackout' ? 30 : 12;
   if (R.idx < startAt || R.left <= 0) return;
   var p = R.mode === 'blackout' ? Math.min(.3, .04 + (R.idx - startAt) * .02) : Math.min(.42, .05 + (R.idx - 12) * .013);
   if (Math.random() < p) {
-    R.left--; $('#sLeft').textContent = R.left; bumpLeft();
+    R.left--; $('#sLeft').textContent = R.left; bumpLeft(); floatText($('#sLeftW'), '-1');
     $('#sLeftW').classList.toggle('hot', R.left <= 3);
     rivalWin();
     if (R.left === 0) { toast('All bingos have been claimed'); R.active = false; clearTimeout(R.timer); setTimeout(function () { endRound('claimed'); }, 1600); }
@@ -4517,6 +4553,7 @@ function claimLine(ci, line) {
   if (blackout || k.n >= MULTI_MAX) { k.won = true; R.jp = (R.jp || 0) + 1; }
   line.forEach(function (i) { var c = el.querySelector('[data-i="' + i + '"]'); if (c) c.classList.add('win'); });
   el.classList.add('has-bingo'); el.querySelector('.bcount').textContent = k.n > 1 ? '×' + k.n : 'BINGO';
+  var me = $('#play .ppl.you'); if (me) { me.classList.remove('won'); void me.offsetWidth; me.classList.add('won'); }
   var name = blackout ? 'Blackout!' : BLOOM_NAMES[Math.min(k.n, 4)];
   var burst = document.createElement('div'); burst.className = 'won';
   burst.innerHTML = '<div><b>' + name + '</b><small>' + (luck > 1 ? 'Lucky ×2! ' : '') + (lb.note ? lb.note + ' · ' : '') + '+' + coins + ' coins · +' + petals + ' petals</small></div>';
