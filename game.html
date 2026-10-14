@@ -2433,6 +2433,8 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .gpic { width: 76px; height: 70px; object-fit: contain; filter: drop-shadow(0 4px 4px rgba(0,0,0,.4)); }
 .panel .gtile[data-g="drop"] .gpic { animation: gDrop 2.4s cubic-bezier(.5,0,.5,1) infinite; } .panel .gtile[data-g="wheel"] .gpic { animation: gSpin 5s cubic-bezier(.3,.1,.2,1) infinite; } .panel .gtile[data-g="scratch"] .gpic { animation: gTilt 3s ease-in-out infinite; }
 .panel .gtile b.outl { font-size: 20px; }
+.kpan:not(.trade) { opacity: .75; } .kpan.trade { box-shadow: inset 0 0 0 2px #7dff9a, 0 0 12px rgba(125,255,154,.4); }
+.ktag { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 0 6px; border-radius: 999px; font: 900 8.5px var(--ui); color: #fff; background: linear-gradient(180deg, #3fd46a, #1f8a3e); }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4693,10 +4695,10 @@ function kitchen() {
         '<button class="b3 ' + (ok ? 'gold' : 'cream') + '" data-bake="' + r.id + '"' + (ok && fo >= 0 ? '' : ' disabled') + '>' + (!ok ? 'Need more' : fo < 0 ? 'Ovens full' : 'Bake') + '</button></div>';
     }).join('');
   }
-  function pantry() { return INGS.map(function (g) { var n = S.ing[g.id] || 0; return '<button class="kpan" data-ing="' + g.id + '"><i class="kip" style="background-image:url(art/ing-' + g.id + '.webp)"></i><b>' + n + '</b><small>' + g.name + '</small></button>'; }).join(''); }
+  function pantry() { var tr = tradeIngs(); return INGS.map(function (g) { var n = S.ing[g.id] || 0; return '<button class="kpan' + (tr.indexOf(g.id) >= 0 ? ' trade' : '') + '" data-ing="' + g.id + '">' + (tr.indexOf(g.id) >= 0 ? '<span class="ktag">SEND TODAY</span>' : '') + '<i class="kip" style="background-image:url(art/ing-' + g.id + '.webp)"></i><b>' + n + '</b><small>' + g.name + '</small></button>'; }).join(''); }
   function draw(v) { $('#kOv', v).innerHTML = ovens(); $('#kRec', v).innerHTML = recipes(); $('#kPan', v).innerHTML = pantry(); }
   panel('<div class="khead"><img src="art/mascot-gift.webp" alt=""><div><h3>Kitchen</h3><p>Bake treats with ingredients you win in bingo. Each treat turns into tickets.</p></div></div>' +
-    '<div class="kpantry"><span class="ksub">Your pantry · tap one to send it to a friend</span><div class="kpans" id="kPan"></div></div>' +
+    '<div class="kpantry"><span class="ksub">Your pantry · today you can send ' + tradeIngs().map(function (x) { return ingById(x).name; }).join(' and ') + ' to friends (changes daily)</span><div class="kpans" id="kPan"></div></div>' +
     '<div class="ovens" id="kOv"></div><div class="recipes" id="kRec"></div>', 'kitchen', function (v) {
       draw(v); if (!guideDone('kitchen')) setTimeout(function () { if (v.isConnected) kitchenTour(); }, 500);
       timer = setInterval(function () { if (!v.isConnected) { clearInterval(timer); return; } var kb = $('#kOv', v), sig = S.ovens.map(function (o) { return !o ? 'e' : (o.done > Date.now() ? 'b' : 'r') + o.r; }).join();
@@ -4724,7 +4726,10 @@ function kitchen() {
 
 // the Firefly picture of each treat (from the Patisserie album set)
 var TREAT_PIC = { macarons: 'S1-1', eclair: 'S1-3', tart: 'S1-5', gateau: 'S1-8' };
+// only 2 ingredients can be sent each day; which ones changes daily in a scrambled order no one can predict
+function tradeIngs() { return seedPick(INGS.map(function (g) { return g.id; }), 2, 'ingtrade-' + dayKey() + '-bloom7'); }
 function sendIngredient(id) {
+  if (tradeIngs().indexOf(id) < 0) { toast((ingById(id) || {}).name + ' can\'t be sent today. Today you can send ' + tradeIngs().map(function (x) { return ingById(x).name; }).join(' and ') + '. It changes every day!', 3600); return; }
   var g = ingById(id), n = S.ing[id] || 0, d = ON.daily || {};
   if (!ON.ok || !ON.user) { toast('Sign in to send ingredients to friends.', 2600); return; }
   if (!ON.friends.length) { toast('Add a friend first in Team & Friends.', 2600); return; }
