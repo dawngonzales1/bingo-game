@@ -1785,6 +1785,30 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @keyframes panelJelly { 0% { transform: scale(.6) translateY(30px); opacity: 0; } 55% { transform: scale(1.04, .96); opacity: 1; } 75% { transform: scale(.98, 1.02); } 100% { transform: none; } }
 .veil.typing .panel { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { .round .c, .round .c svg, .round .c img, .round .dot { animation: none !important; } }
+
+/* feedback */
+.pid { margin: 0; font-size: 12px; color: #d9c8f5; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; } .pid code { font-size: 11px; color: #ffe58f; word-break: break-all; } .pid .b3 { padding: 2px 10px; font-size: 12px; }
+.fbpill { display: inline-flex; align-items: center; gap: 5px; margin-right: 8px; padding: 5px 12px 5px 7px; border: 0; border-radius: 999px; cursor: pointer; font: 700 13px var(--ui); color: #3d1a4f;
+  background: linear-gradient(180deg, #fff6c9, #ffd45c); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--ol), 0 4px 0 2px #8a4a06; animation: hudBob 3s ease-in-out infinite; }
+.fbpill svg { width: 22px; height: 22px; }
+@media (max-height: 300px) { .fbpill span { display: none; } .fbpill { padding: 4px; } }
+.fbsub { margin: -6px 0 0; font-size: 13px; color: #e9dcff; }
+.fbtypes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.panel:has(.fbtypes) { gap: 8px; }
+.fbtypes button { display: grid; gap: 1px; padding: 4px 3px; border: 0; border-radius: 12px; cursor: pointer; text-align: center; background: rgba(255,255,255,.1); color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.4); }
+.fbtypes button b { font-size: 13px; } .fbtypes button small { font-size: 9.5px; color: #d9c8f5; line-height: 1.15; }
+.fbtypes button[aria-pressed="true"] { background: linear-gradient(180deg, #fff3b8, #ffd45c); color: #3d1a4f; box-shadow: 0 0 0 2px #fff, 0 0 14px rgba(255,214,92,.7); } .fbtypes button[aria-pressed="true"] small { color: #6a3a1a; }
+.pinf textarea { font: 600 15px var(--ui); color: #fff; background: rgba(10,2,20,.5); border: 1.5px solid rgba(255,214,92,.5); border-radius: 12px; padding: 8px 10px; resize: vertical; min-height: 54px; }
+.fbrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; } .fbshot { padding: 5px 12px; font-size: 13px; cursor: pointer; }
+#fbThumb img { height: 44px; border-radius: 8px; box-shadow: 0 0 0 2px #f6c64a; } .fbwhere { color: #d9c8f5; font-size: 11.5px; } .fbwhere b { color: #ffe58f; }
+.fblist { display: grid; gap: 8px; max-height: 52vh; overflow: auto; }
+.fbitem { padding: 8px 10px; border-radius: 14px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.35); display: grid; gap: 4px; }
+.fbitem.done { opacity: .55; } .fbitem p { margin: 0; font-size: 14px; white-space: pre-wrap; } .fbmeta { font-size: 11px; color: #cdb6ee; }
+.fbhd { display: flex; align-items: center; gap: 8px; } .fbhd small { margin-left: auto; font-size: 11px; color: #cdb6ee; }
+.fbtag { padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; background: #ffe58f; color: #3d1a4f; }
+.fbimg { max-width: 160px; border-radius: 8px; cursor: zoom-in; } .fbimg.big { max-width: 100%; cursor: zoom-out; }
+.fbdone { justify-self: start; padding: 3px 12px; font-size: 12.5px; }
+.veil.typing .fbtypes, .veil.typing .fbrow { display: none; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1806,7 +1830,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
     <radialGradient id="gOrbP" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#c9a2ff"/><stop offset=".55" stop-color="#7b3fe0"/><stop offset="1" stop-color="#3d1680"/></radialGradient>
     <linearGradient id="gBolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffbd0"/><stop offset=".45" stop-color="#ffd23f"/><stop offset="1" stop-color="#e98f0c"/></linearGradient>
     <radialGradient id="gDrop" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#ffb3cf"/><stop offset="1" stop-color="#d9608f"/></radialGradient>
-  </defs>
+  <symbol id="i-chat" viewBox="0 0 40 40"><path d="M6 9a5 5 0 0 1 5-5h18a5 5 0 0 1 5 5v13a5 5 0 0 1-5 5H17l-8 7v-7H11a5 5 0 0 1-5-5z" fill="#fff6c9" stroke="#3d1a4f" stroke-width="2.6" stroke-linejoin="round"/><circle cx="14" cy="16" r="2.4" fill="#e0478c"/><circle cx="20" cy="16" r="2.4" fill="#8a4cf0"/><circle cx="26" cy="16" r="2.4" fill="#e9a81c"/></symbol></defs>
   <symbol id="i-gem" viewBox="0 0 40 40"><path d="M11 6h18l8 10-17 20L3 16z" fill="url(#gGem)" stroke="#3d1a4f" stroke-width="2.4" stroke-linejoin="round"/><path d="M3 16h34M11 6l4 10 5 20 5-20 4-10M15 16l5-10 5 10" fill="none" stroke="#3d1a4f" stroke-width="1.3" stroke-linejoin="round" opacity=".55"/><path d="M12 8.5l2.6 6H6.6z" fill="#fff" opacity=".55"/><path d="M33 3l1 2.5 2.5 1-2.5 1L33 10l-1-2.5-2.5-1 2.5-1z" fill="#ffd45c"/></symbol>
   <symbol id="i-daub1" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2.4"/><circle cx="20" cy="20" r="12" fill="url(#gStamp)"/><ellipse cx="15" cy="14" rx="5" ry="2.6" fill="#fff" opacity=".55" transform="rotate(-30 15 14)"/><text x="20" y="26" text-anchor="middle" font-family="Fredoka,system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff" stroke="#3d1a4f" stroke-width="3" paint-order="stroke">1</text></symbol>
   <symbol id="i-daub2" viewBox="0 0 40 40"><circle cx="15" cy="17" r="11" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2"/><circle cx="15" cy="17" r="8" fill="url(#gStamp)"/><circle cx="25" cy="23" r="12" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2.2"/><circle cx="25" cy="23" r="9" fill="url(#gStamp)"/><text x="25" y="28.5" text-anchor="middle" font-family="Fredoka,system-ui,sans-serif" font-weight="700" font-size="14" fill="#fff" stroke="#3d1a4f" stroke-width="3" paint-order="stroke">2</text></symbol>
@@ -1928,7 +1952,7 @@ var LINES = (function () {
 /* ---------- saved progress (this phone only, for now) ---------- */
 var KEY = 'bingoBloom.v1';
 function fresh() {
-  return { v: 3, cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
+  return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'classic', auto: false, autoAlert: true } };
@@ -2455,7 +2479,7 @@ function lobby() {
       '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span><span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>' +
       '<div class="cityban"><b class="outl">PARIS</b><small>' + stars + '/12 blossoms · finish all 4 rooms for a big prize</small></div></div>' +
       '<div class="nextsec"><div class="cityban soon"><b class="outl">NEXT CITY</b><small>Finish Paris to travel on · coming soon</small></div></div></div>' +
-    topBar('<div class="spacer"></div><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
+    topBar('<div class="spacer"></div><button class="fbpill" id="bFb" aria-label="Send feedback">' + icon('i-chat') + '<span>Feedback</span></button><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       rb('bGift', 'i-gift', 'pk', giftReady ? 'Day ' + (calState().day + 1) + '!' : untilText(nextReset()), giftReady) +
       rb('bAlbum', 'i-album', 'gd', 'Album ' + ownedAll() + '/72') +
@@ -2489,6 +2513,7 @@ function lobby() {
   $('#bTeam').onclick = function () { social(); };
   setTimeout(teamDot, 0);
   $('#bSet').onclick = settings;
+  $('#bFb').onclick = function () { SFX.tap(); feedback(); };
   $('#bGems').onclick = function () { SFX.tap(); shop('gems'); };
   $('#bTixPlus').onclick = function () { SFX.tap(); kitchen(); };
   $('#bMe').onclick = function () { SFX.tap(); studio('avatar'); };
@@ -2709,7 +2734,7 @@ function settings() {
     '<div class="opt"><span>Caller voice <small style="color:var(--mist)">reads each ball out loud</small></span><button class="sw" id="swVoice" aria-pressed="' + st.voice + '" aria-label="Caller voice"></button></div>' +
     '<div class="opt"><span>Turn on Bloom Alert by itself <small style="color:var(--mist)">uses one at the start of each round</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
-    '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button></div><div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
+    '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button><button class="b3 plum" id="bFb2">💬 Send feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">📥 Feedback inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
     '<button class="b3 cream" id="bReset" style="padding:8px">Start over (clear my progress)</button>', 'small', function (v) {
       $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; S.alerts += 5; PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
@@ -2718,6 +2743,8 @@ function settings() {
       $('#swVoice', v).onclick = function () { st.voice = !st.voice; this.setAttribute('aria-pressed', st.voice); save(); say('B 7'); };
       v.querySelectorAll('#spd button').forEach(function (b) { b.onclick = function () { st.speed = b.dataset.s; save(); v.querySelectorAll('#spd button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
       $('#bAcct', v).onclick = accountPanel;
+      $('#bFb2', v).onclick = function () { feedback('Settings'); };
+      if ($('#bFbIn', v)) $('#bFbIn', v).onclick = feedbackInbox;
       $('#bHow', v).onclick = howTo; $('#bFair', v).onclick = fairPlay;
       var armed = false;
       $('#bReset', v).onclick = function () {
@@ -4384,7 +4411,8 @@ var FV = function () { return firebase.firestore.FieldValue; };
 function onlineInit() {
   if (!window.firebase || !window.BLOOM_FIREBASE || ON.ok) return;
   try { firebase.initializeApp(window.BLOOM_FIREBASE); ON.auth = firebase.auth(); ON.db = firebase.firestore(); ON.ok = true; } catch (e) { return; }
-  ON.auth.onAuthStateChanged(function (u) { ON.user = u; if (u) onSignedIn(u); else onSignedOut(); refreshTitle(); });
+  ON.auth.onAuthStateChanged(function (u) { ON.user = u; if (u) onSignedIn(u); else { onSignedOut(); ON.admin = false; } refreshTitle(); });
+  setTimeout(fbFlush, 4000);
 }
 /* daily reset at 8:00 AM Central (America/Chicago, daylight saving handled), the same moment worldwide */
 function chiOffset(ms) {
@@ -4416,7 +4444,7 @@ function onSignedIn(u) {
     if (!p) { p = { name: cleanName(ON.pendingName || (S.name !== 'Player' ? S.name : '') || 'Player') || 'Player', named: !!ON.pendingName, level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, team: null, createdAt: Date.now() }; p.nameLower = slugName(p.name); ref.set(p); }
     ON.profile = p; S.name = p.name; refreshTitle();
     var pinUser = u.providerData.some(function (x) { return x.providerId === 'password'; });
-    if (!p.named && !ON.pendingName && !pinUser) (function ask() { setTimeout(function () { if (!ON.user || ON.user.uid !== u.uid || (ON.profile && ON.profile.named)) return; if (veil || $('#play')) ask(); else nameForm(true); }, 1200); })();
+    if (!p.named && !ON.pendingName && !pinUser && !ON.quietGuest) (function ask() { setTimeout(function () { if (!ON.user || ON.user.uid !== u.uid || (ON.profile && ON.profile.named)) return; if (veil || $('#play')) ask(); else nameForm(true); }, 1200); })();
     return ref.collection('private').doc('save').get();
   }).then(function (sv) {
     if (sv && sv.exists) {
@@ -4427,7 +4455,7 @@ function onSignedIn(u) {
         else { cloudSaveNow(); toast('Signed in as ' + myName() + '. This phone has newer progress, so it was saved to your account.', 3600); }
       }
     } else { cloudSaveNow(); toast((myName() === 'Player' ? 'Signed in!' : 'Signed in as ' + myName() + '.') + ' Your progress now saves to your account.', 3200); }
-    listenSocial();
+    listenSocial(); fbAdminCheck(); fbFlush();
   }).catch(function (e) { toast('Could not reach your account right now. Your game still saves on this phone.', 3400); });
 }
 function onSignedOut() { ON.subs.forEach(function (f) { f(); }); ON.subs = []; ON.profile = null; ON.inbox = []; ON.friends = []; ON.requests = []; ON.team = null; teamDot(); }
@@ -4502,9 +4530,87 @@ function nameForm(first) {
 /* forms: tapping outside never throws away what you typed, and while the keyboard is up the boxes move
    to the top of the screen in one compact row so they stay visible above it */
 function formVeil(v) {
-  v.onclick = function (e) { if (e.target.closest('[data-x]')) closeVeil(); else if (e.target === v) { var f = v.querySelector('input:focus'); if (f) f.blur(); } };
-  v.addEventListener('focusin', function (e) { if (e.target.matches('input')) { v.classList.add('typing'); setTimeout(function () { e.target.scrollIntoView({ block: 'nearest' }); }, 60); } });
-  v.addEventListener('focusout', function () { setTimeout(function () { if (!v.querySelector('input:focus')) v.classList.remove('typing'); }, 150); });
+  v.onclick = function (e) { if (e.target.closest('[data-x]')) closeVeil(); else if (e.target === v) { var f = v.querySelector('input:focus, textarea:focus'); if (f) f.blur(); } };
+  v.addEventListener('focusin', function (e) { if (e.target.matches('input, textarea')) { v.classList.add('typing'); setTimeout(function () { e.target.scrollIntoView({ block: 'nearest' }); }, 60); } });
+  v.addEventListener('focusout', function () { setTimeout(function () { if (!v.querySelector('input:focus, textarea:focus')) v.classList.remove('typing'); }, 150); });
+}
+
+/* ---------- team feedback: goes to one inbox only Dawn can read ---------- */
+var BUILD = '2026.10.14';
+var FB_TYPES = [['bug', '🐞 Bug', 'Something broke or looks wrong'], ['looks', '🎨 Looks', 'Plain, cheap, hard to read'], ['fun', '💖 Fun', 'What you loved'], ['slow', '🐢 Too slow', 'Waiting, slow bingos'], ['idea', '💡 Idea', 'Something to add']];
+function whereNow() {
+  var sc = app.firstElementChild, id = sc ? sc.id : '', h = veil && veil.querySelector('h3');
+  var names = { title: 'Title screen', lobby: 'Map', room: 'Room', play: 'Bingo round', summary: 'Round summary', album: 'Album', kitchen: 'Kitchen' };
+  var nm = (names[id] || id || 'Game') + (id === 'room' && $('#room .rtitle, #room h2') ? '' : '');
+  if (R && R.roomObj && (id === 'play' || id === 'room')) nm += ': ' + R.roomObj.name;
+  else if (id === 'room') { var t = document.querySelector('#room .rtop b, #room .rhead b'); if (t) nm += ': ' + t.textContent; }
+  if (h) nm += ' › ' + h.textContent.trim().slice(0, 40);
+  return nm;
+}
+function deviceText() {
+  var u = navigator.userAgent, os = /iPhone|iPad/.test(u) ? 'iPhone/iPad' : /Android/.test(u) ? 'Android' : /Mac/.test(u) ? 'Mac' : /Windows/.test(u) ? 'Windows' : 'Other';
+  var br = /CriOS|Chrome/.test(u) && !/Edg/.test(u) ? 'Chrome' : /Safari/.test(u) ? 'Safari' : /Firefox/.test(u) ? 'Firefox' : /Edg/.test(u) ? 'Edge' : 'Browser';
+  var m = u.match(/Android [^;]*; ([^;)]+)/); return os + (m ? ' (' + m[1].trim() + ')' : '') + ' · ' + br;
+}
+function shrinkShot(file, done) {
+  var r = new FileReader();
+  r.onload = function () { var im = new Image(); im.onload = function () { var k = Math.min(1, 900 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); done(c.toDataURL('image/jpeg', .62)); }; im.onerror = function () { done(null); }; im.src = r.result; };
+  r.onerror = function () { done(null); }; r.readAsDataURL(file);
+}
+function fbSend(doc, ok, fail) {
+  if (!ON.ok) { fail('offline'); return; }
+  function go() { doc.uid = ON.auth.currentUser.uid; ON.db.collection('feedback').add(doc).then(ok).catch(function (e) { fail(e && e.code || 'error'); }); }
+  if (ON.auth.currentUser) go(); else { ON.quietGuest = true; ON.auth.signInAnonymously().then(go).catch(function (e) { fail(e && e.code || 'error'); }); } // a guest pass is enough to send feedback
+}
+function fbFlush() { // feedback written while offline goes out on the next visit
+  if (!ON.ok || !S.fbQueue || !S.fbQueue.length) return;
+  var q = S.fbQueue.slice(); S.fbQueue = []; save();
+  q.forEach(function (d) { fbSend(d, function () {}, function () { S.fbQueue.push(d); save(); }); });
+}
+function feedback(from) {
+  var where = from || whereNow(), type = 'bug', shot = null;
+  panel('<h3>Send feedback</h3><p class="fbsub typehide">Be honest, it helps! It goes straight to Dawn.</p>' +
+    '<div class="fbtypes typehide">' + FB_TYPES.map(function (t) { return '<button data-ft="' + t[0] + '" aria-pressed="' + (t[0] === type) + '"><b>' + t[1] + '</b><small>' + t[2] + '</small></button>'; }).join('') + '</div>' +
+    '<div class="pinf"><label>What happened, or what would make it better?<textarea id="fbText" rows="3" maxlength="2000" placeholder="Type here…"></textarea></label></div>' +
+    '<div class="fbrow typehide"><label class="b3 cream fbshot"><input type="file" id="fbFile" accept="image/*" hidden>📷 Add a screenshot</label><span id="fbThumb"></span><small class="fbwhere">About: <b>' + esc(where) + '</b></small></div>' +
+    '<div class="res-btns"><button class="b3 gold" id="fbGo">Send</button></div><p class="status" id="fbMsg"></p>', 'small', function (v) {
+      formVeil(v);
+      v.querySelectorAll('[data-ft]').forEach(function (b) { b.onclick = function () { type = b.dataset.ft; v.querySelectorAll('[data-ft]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); SFX.tap(); }; });
+      $('#fbFile', v).onchange = function () { var f = this.files && this.files[0]; if (!f) return; $('#fbThumb', v).textContent = 'Adding…'; shrinkShot(f, function (d) { shot = d; $('#fbThumb', v).innerHTML = d ? '<img src="' + d + '" alt="Screenshot">' : 'Could not read that picture'; }); };
+      $('#fbGo', v).onclick = function () {
+        var text = $('#fbText', v).value.trim(), msg = $('#fbMsg', v), btn = this;
+        if (text.length < 3) { msg.textContent = 'Tell us a little about it first.'; return; }
+        var doc = { uid: ON.user ? ON.user.uid : null, name: myName(), type: type, text: text.slice(0, 2000), screen: where.slice(0, 120), device: deviceText().slice(0, 120), size: innerWidth + '×' + innerHeight, version: BUILD, level: S.level, at: Date.now(), done: false };
+        if (shot && shot.length < 650000) doc.shot = shot;
+        btn.disabled = true; msg.textContent = 'Sending…';
+        fbSend(doc, function () { closeVeil(); SFX.set(); fireworks(1200); toast('Thank you! Your feedback was sent to Dawn. 💖', 3000); },
+          function (why) { if (!S.fbQueue) S.fbQueue = []; delete doc.shot; S.fbQueue.push(doc); save(); closeVeil(); toast(why === 'offline' ? 'Saved! It sends when you play the web version online.' : 'Saved! It will send next time you open the game.', 3400); });
+      };
+    });
+}
+function fbAdminCheck() { if (!ON.ok || !ON.user) { ON.admin = false; return; } ON.db.collection('feedback').limit(1).get().then(function () { ON.admin = true; }).catch(function () { ON.admin = false; }); }
+function feedbackInbox(filter) {
+  filter = filter || 'open';
+  panel('<h3>Feedback inbox</h3><div class="seg" id="fbF"><button data-f="open" aria-pressed="' + (filter === 'open') + '">New</button><button data-f="all" aria-pressed="' + (filter === 'all') + '">All</button></div><div class="fblist" id="fbList"><p class="note">Loading…</p></div>' +
+    '<div class="res-btns"><button class="b3 plum" id="fbCopy">Copy all for Claude</button></div><p class="status" id="fbMsg"></p>', 'mid', function (v) {
+      v.querySelectorAll('[data-f]').forEach(function (b) { b.onclick = function () { feedbackInbox(b.dataset.f); }; });
+      var items = [];
+      ON.db.collection('feedback').orderBy('at', 'desc').limit(200).get().then(function (snap) {
+        items = snap.docs.map(function (d) { var x = d.data(); x.id = d.id; return x; }).filter(function (x) { return filter === 'all' || !x.done; });
+        var T = {}; FB_TYPES.forEach(function (t) { T[t[0]] = t[1]; });
+        $('#fbList', v).innerHTML = items.length ? items.map(function (x) {
+          return '<div class="fbitem' + (x.done ? ' done' : '') + '"><div class="fbhd"><span class="fbtag t-' + x.type + '">' + (T[x.type] || x.type) + '</span><b>' + esc(x.name || 'Player') + '</b><small>' + new Date(x.at).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '</small></div>' +
+            '<p>' + esc(x.text) + '</p><small class="fbmeta">' + esc(x.screen || '') + ' · ' + esc(x.device || '') + ' · ' + esc(x.size || '') + ' · LV ' + (x.level || '?') + '</small>' +
+            (x.shot ? '<img class="fbimg" src="' + x.shot + '" alt="Screenshot">' : '') + (x.done ? '' : '<button class="b3 cream fbdone" data-done="' + x.id + '">✓ Done</button>') + '</div>';
+        }).join('') : '<p class="note">' + (filter === 'open' ? 'No new feedback. 🎉' : 'No feedback yet.') + '</p>';
+        v.querySelectorAll('[data-done]').forEach(function (b) { b.onclick = function () { ON.db.collection('feedback').doc(b.dataset.done).update({ done: true }).then(function () { b.closest('.fbitem').classList.add('done'); b.remove(); SFX.tap(); }); }; });
+        v.querySelectorAll('.fbimg').forEach(function (im) { im.onclick = function () { im.classList.toggle('big'); }; });
+      }).catch(function () { $('#fbList', v).innerHTML = '<p class="note">Only Dawn can open the inbox.</p>'; });
+      $('#fbCopy', v).onclick = function () {
+        var txt = items.map(function (x) { return '[' + x.type + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text; }).join('\n');
+        try { navigator.clipboard.writeText(txt).then(function () { $('#fbMsg', v).textContent = 'Copied ' + items.length + ' notes. Paste them to Claude.'; }); } catch (e) { $('#fbMsg', v).textContent = 'Copy is not available here.'; }
+      };
+    });
 }
 function pinCred(name, pin) { return { email: slugName(name) + '@players.bingobloom.app', password: 'bloom-' + pin }; }
 function accountPanel() {
@@ -4514,7 +4620,8 @@ function accountPanel() {
     var how = u.isAnonymous ? 'Guest (only on this phone until you link it)' : (u.providerData[0] && u.providerData[0].providerId === 'google.com' ? 'Google' : 'Cordelle name and PIN');
     panel('<h3>Your account</h3><div class="acct">' + avatarHtml(64) + '<div><b class="acname">' + esc(myName()) + '</b><small>Signed in with ' + how + '</small></div></div>' +
       (u.isAnonymous ? '<p class="typehide"><b>Keep your progress safe:</b> link this guest account so you can play on any phone.</p><div class="signbtns"><button class="b3 gold sgn" id="lkG">' + gIcon() + ' Link Google</button><button class="b3 plum sgn" id="lkP">Link a Cordelle name &amp; PIN</button></div><div id="pinBox"></div>' : '<p class="note">Your progress saves to your account automatically and follows you to any phone.</p>') +
-      '<div class="res-btns"><button class="b3 plum" id="acName">✎ Game name</button><button class="b3 cream" id="acOut">Sign out</button><button class="b3 gold" data-x>Done</button></div><p class="status" id="acMsg"></p>', 'small', function (v) {
+      '<p class="pid">Player ID: <code id="acId">' + esc(u.uid) + '</code> <button class="b3 cream" id="acIdCp">Copy</button></p><div class="res-btns"><button class="b3 plum" id="acName">✎ Game name</button><button class="b3 cream" id="acOut">Sign out</button><button class="b3 gold" data-x>Done</button></div><p class="status" id="acMsg"></p>', 'small', function (v) {
+        $('#acIdCp', v).onclick = function () { var b = this; try { navigator.clipboard.writeText(u.uid).then(function () { b.textContent = 'Copied!'; }); } catch (e) { var r = document.createRange(); r.selectNodeContents($('#acId', v)); getSelection().removeAllRanges(); getSelection().addRange(r); } };
         $('#acName', v).onclick = function () { closeVeil(); setTimeout(function () { nameForm(false); }, 250); };
         $('#acOut', v).onclick = function () { cloudSaveNow(); ON.auth.signOut().then(function () { closeVeil(); toast('Signed out. You can keep playing here.'); }); };
         if ($('#lkG', v)) $('#lkG', v).onclick = function () { u.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(function () { closeVeil(); toast('Linked to Google!'); cloudSaveNow(); }).catch(function (e) { $('#acMsg', v).textContent = authErr(e); }); };
