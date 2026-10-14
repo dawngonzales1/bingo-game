@@ -341,6 +341,9 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .rwin svg { width: 28px; height: 28px; }
 .rwin small { font-size: 10.5px; color: var(--mist); text-align: center; font-weight: 600; }
 .recipe .b3 { padding: 6px 14px; font-size: 16px; }
+.rtag { justify-self: center; padding: 1px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #4a2a5c; background: #f1e6c8; }
+.rtag.rt-rare { color: #fff; background: linear-gradient(90deg, #4fa8e8, #8a6cf0); }
+.rtag.rt-super { color: #fff; background: linear-gradient(90deg, #ff7ab6, #c48bff, #79c6ff); box-shadow: 0 0 8px rgba(255,214,92,.8); }
 .shopgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .sitem { display: grid; justify-items: center; align-content: start; text-align: center; gap: 3px; padding: 10px; border-radius: 18px; background: #fff; border: 2px solid #ead6b2; }
 .sitem > svg { width: 44px; height: 44px; }
@@ -1551,6 +1554,12 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
   background: radial-gradient(circle at 38% 28%, #fff 0 8%, rgba(255,255,255,0) 26%), radial-gradient(circle, #b98cff, #6a32d0 62%, #3d1680); box-shadow: 0 0 0 2px #f6c64a, 0 2px 4px rgba(10,2,20,.5); }
 #play .pqo svg { width: 72%; height: 72%; filter: drop-shadow(0 1px 1px rgba(10,2,20,.5)); }
 #play .pqo:first-child:not(.empty) { box-shadow: 0 0 0 2px #fff3b8, 0 0 10px 3px rgba(255,214,92,.75); }
+#play .pqo.bloom { background: radial-gradient(circle at 38% 28%, #fff 0 8%, rgba(255,255,255,0) 26%), radial-gradient(circle, #ffd0e4, #ff8fbd 60%, #d9558f); }
+#play .pqo.r-rare { box-shadow: 0 0 0 2px #8fe3ff, 0 0 8px 2px rgba(120,210,255,.75), 0 2px 4px rgba(10,2,20,.5); }
+#play .pqo.r-super { position: relative; box-shadow: 0 0 12px 4px rgba(255,214,92,.9); }
+#play .pqo.r-super::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; z-index: -1; background: conic-gradient(#ff7ab6, #ffd45c, #7cf0c0, #79c6ff, #c48bff, #ff7ab6); animation: spinRays 1.6s linear infinite; }
+#play .pqo.r-super { isolation: isolate; }
+#play .pqsr { position: absolute; left: 50%; top: 100%; transform: translate(-50%, 6px); white-space: nowrap; padding: 2px 10px; border-radius: 999px; font-size: 11px; color: #fff; background: linear-gradient(90deg, #ff7ab6, #c48bff, #79c6ff); box-shadow: 0 0 0 1.5px var(--ol), 0 0 14px rgba(255,214,92,.9); animation: pqDrop .5s cubic-bezier(.2,.9,.3,1.4); z-index: 5; }
 #play .pqo.empty { background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.45); color: rgba(255,229,143,.6); font: 700 16px/1 Fredoka, system-ui, sans-serif; }
 #play .pqo.drop { animation: pqDrop .55s cubic-bezier(.2,.9,.3,1.4) var(--d, 0s) both; }
 @keyframes pqDrop { 0% { transform: translateY(-140%) scale(.4) rotate(-90deg); opacity: 0; } 70% { opacity: 1; } 100% { transform: none; } }
@@ -2300,6 +2309,7 @@ function pupGuide() {
   function row(id) { var p = pupById(id); return '<div class="pti info"><span class="pto">' + icon(p.icon) + '<b>' + owned(id) + '</b></span><span class="ptt"><b>' + p.name + '</b><small>' + p.desc + '</small></span></div>'; }
   panel('<h3>Power-ups</h3><p><b>Before the round:</b> tap them on the room screen to switch them on. They glow when they are on and are used when you press PLAY.</p><div class="ptray">' + PRE_PUPS.map(row).join('') + '</div>' +
     '<p><b>During the round:</b> you don\'t have to do anything. They load into the bar at the top and fire one by one as your Boost fills. Here is how many you have:</p><div class="ptray">' + IN_PUPS.map(row).join('') + '</div>' +
+    '<p class="note"><b>Which power-up comes next is random.</b> Regular ones show up most; rare ones (Triple Daub, Wild Petal, Supercharger) about 1 in 5; super rare ones (Instant Bingo, All ×2) only about 1 in 20. Empty draws give a free Bloom Boost.</p>' +
     '<p class="note">As you mark numbers the glow line under the bar fills; when it\'s full, the next power-up fires and every card gets 2 free marks. With <b>AUTO</b> on it all happens for you; with it off, tap the glowing bar. +5 Balls kicks in by itself on the last ball, Bloom Alert at the start (if it\'s on in Settings), and Time Freeze only when you mark numbers yourself.</p>', 'mid');
 }
 function roomScreen(room) {
@@ -2473,7 +2483,7 @@ function startRound(arm, room) {
 }
 function renderPlay() {
   show('<div class="screen" id="play">' +
-    '<div class="lcol"><div class="lbtns"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button><button class="mini-btn" id="bPause" aria-label="Pause">' + LINE_ICON.pause + '</button></div>' +
+    '<div class="lcol"><div class="lbtns"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button></div>' +
       '<div class="bleft" id="sLeftW"><small>BINGOS</small><b id="sLeft">0</b><small id="sPlayers">0 players</small></div>' +
       '<span class="auto">Auto<button class="sw" id="swAuto" aria-pressed="' + !!S.settings.auto + '" aria-label="Auto daub"></button></span></div>' +
     '<div class="ptop"><div class="ballwrap"><div class="ball" id="ball"><div class="in"><small>READY</small><b>·</b></div></div><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength="100"/></svg></div>' +
@@ -2497,7 +2507,6 @@ function renderPlay() {
   $('#bAutoB').onclick = function () { S.settings.autoBoost = !autoPups(); save(); this.setAttribute('aria-pressed', autoPups()); SFX.tap(); toast(autoPups() ? 'Auto power-ups on: when Boost fills, your power-ups fire by themselves' : 'Auto power-ups off: tap the glowing Boost to fire them', 3000); meterUi(); };
   R.pq = []; pqFill(true);
   $('#pq').onclick = function (e) { if (e.target.closest('#bAutoB') || !R) return; if (R.meter >= R.boostAt && R.active) useBoost(); else { SFX.tap(); toast(R.pq.length ? 'Your power-ups fire when the glow line under them is full. Keep marking numbers!' : 'No power-ups loaded. Get more in the Shop between rounds.', 2800); } };
-  $('#bPause').onclick = togglePause;
   $('#bSwap').onclick = swapCards;
   $('#bView4').onclick = function () { S.settings.view4 = !S.settings.view4; save(); SFX.tap(); placeCards(); };
   $('#bAlert').onclick = useAlert;
@@ -2698,17 +2707,30 @@ function boostMarks() {
 }
 
 /* ---------- power-up bar: loads itself from what you own; each full Boost fires the next one ---------- */
-var PQ_ORDER = ['allx2', 'daub3', 'instant', 'wild', 'daub2', 'chest', 'coinsq', 'daub1', 'super', 'freeze'], PQ_SLOTS = 3, pqFrom = null;
+/* Each slot is a random draw: the tier is rolled first (super rare 5%, rare 20%, regular 75%), then one of
+   your power-ups from that tier. If you own none in that tier it falls back to a more common tier, never up,
+   so super rare stays super rare. Empty draws are a free Bloom Boost. */
+var PQ_TIERS = [{ id: 'super', name: 'Super rare', p: .05, ids: ['instant', 'allx2'] }, { id: 'rare', name: 'Rare', p: .20, ids: ['daub3', 'wild', 'super'] }, { id: 'regular', name: 'Regular', p: .75, ids: ['daub1', 'daub2', 'coinsq', 'chest', 'freeze'] }],
+  PQ_SLOTS = 3, pqFrom = null;
+function pupTier(id) { return PQ_TIERS.filter(function (t) { return t.ids.indexOf(id) >= 0; })[0]; }
+function pqPick() {
+  var r = Math.random(), start = r < PQ_TIERS[0].p ? 0 : r < PQ_TIERS[0].p + PQ_TIERS[1].p ? 1 : 2;
+  for (var t = start; t < PQ_TIERS.length; t++) {
+    var ok = PQ_TIERS[t].ids.filter(function (id) { return owned(id) - R.pq.filter(function (q) { return q === id; }).length > 0 && !(id === 'allx2' && (R.allx2 || R.pq.indexOf('allx2') >= 0)) && !(id === 'freeze' && S.settings.auto); });
+    if (ok.length) return ok[rand(ok.length)];
+  }
+  return 'bloom';
+}
 function autoPups() { return S.settings.autoBoost !== false; }
 function pqSrc() { return pqFrom && pqFrom.isConnected ? pqFrom : null; }
 function pqFill(first) {
   if (!R || !R.pq) return;
   var before = R.pq.join();
-  R.pq = R.pq.filter(function (q, i) { return owned(q) > R.pq.slice(0, i).filter(function (x) { return x === q; }).length; });
+  R.pq = R.pq.filter(function (q, i) { return q === 'bloom' || owned(q) > R.pq.slice(0, i).filter(function (x) { return x === q; }).length; });
   var added = [];
   while (R.pq.length < PQ_SLOTS) {
-    var nx = PQ_ORDER.filter(function (id) { return owned(id) - R.pq.filter(function (q) { return q === id; }).length > 0 && !(id === 'allx2' && (R.allx2 || R.pq.indexOf('allx2') >= 0)) && !(id === 'freeze' && S.settings.auto); })[0];
-    if (!nx) break; R.pq.push(nx); added.push(R.pq.length - 1);
+    var nx = pqPick(); R.pq.push(nx); added.push(R.pq.length - 1);
+    if (!first && pupTier(nx) && pupTier(nx).id === 'super') setTimeout(function () { toast('✦ Super rare power-up loaded! ✦', 2200); SFX.boost(); }, 400);
   }
   if (first || added.length || before !== R.pq.join()) pqDraw(added, first);
 }
@@ -2717,17 +2739,20 @@ function pqDraw(added, first) {
   var h = '';
   for (var i = 0; i < PQ_SLOTS; i++) {
     var id = R.pq[i];
-    h += id ? '<span class="pqo' + (added.indexOf(i) >= 0 ? ' drop' : '') + '" style="--d:' + (first ? 1.2 + i * .35 : added.indexOf(i) >= 0 ? .25 : 0) + 's" title="' + esc(pupById(id).name) + '">' + icon(pupById(id).icon) + '</span>'
-      : '<span class="pqo empty" title="Buy power-ups in the Shop">+</span>';
+    var bl = id === 'bloom', tr = !bl && id && pupTier(id);
+    h += id ? '<span class="pqo' + (bl ? ' bloom' : ' r-' + (tr ? tr.id : 'regular')) + (added.indexOf(i) >= 0 ? ' drop' : '') + '" style="--d:' + (first ? 1.2 + i * .35 : added.indexOf(i) >= 0 ? .25 : 0) + 's" title="' + (bl ? 'Bloom Boost: 2 free marks on every card' : esc(pupById(id).name) + (tr ? ' · ' + tr.name : '')) + '">' + icon(bl ? 'i-blossom' : pupById(id).icon) + '</span>'
+      : '<span class="pqo empty">+</span>';
   }
   box.innerHTML = h;
 }
 function pqDeploy() {
   if (!R || !R.pq || !R.pq.length) return false;
   var id = R.pq[0], slot = $('#pqSlots .pqo');
+  if (id === 'bloom') { if (slot) slot.classList.add('fire'); R.pq.shift(); setTimeout(function () { if (R && R.pq) { pqDraw(); pqFill(); } }, 900); return false; }
   if (owned(id) < 1) { R.pq.shift(); pqFill(); return R.pq.length ? pqDeploy() : false; }
   if (slot) { slot.classList.add('fire'); var r = slot.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 30); }
   pqFrom = slot; R.pq.shift();
+  if (pupTier(id) && pupTier(id).id === 'super') { var bar = $('#pq'); if (bar) { bar.insertAdjacentHTML('beforeend', '<b class="pqsr outl">✦ SUPER RARE ✦</b>'); setTimeout(function () { var t = $('.pqsr'); if (t) t.remove(); }, 1800); } }
   if (id === 'wild') autoWild(); else PUP_USE[id]();
   setTimeout(function () { if (!R || !R.pq) return; var keep = pqFrom; pqFrom = null; pqDraw(); pqFill(); pqFrom = keep; }, 900);
   setTimeout(function () { pqFrom = null; }, 3000);
@@ -3034,9 +3059,8 @@ function togglePause() {
   if (!R) return;
   if (!R.paused && !R.active) return;
   R.paused = !R.paused;
-  $('#bPause').innerHTML = R.paused ? LINE_ICON.play : LINE_ICON.pause;
   var rc = $('.ring circle'); if (rc) rc.style.animationPlayState = R.paused ? 'paused' : 'running';
-  if (R.paused) { clearTimeout(R.timer); toast('Paused. Tap play to continue.', 1800); }
+  if (R.paused) clearTimeout(R.timer);
   else if (R.idx < R.seq.length) { if (rc) { rc.style.animation = 'none'; } R.timer = setTimeout(callNext, 600); }
   else R.timer = setTimeout(function () { endRound('balls'); }, 3000);
 }
@@ -3342,7 +3366,7 @@ function shop(tab) {
     }).join('') + '</div>';
   } else if (tab === 'power') {
     body = '<div class="shopgrid">' + POWERUPS.map(function (p) {
-      return '<div class="sitem"><svg viewBox="0 0 40 40"><use href="#' + p.icon + '"/></svg><b>' + p.name + '</b><small>' + p.desc + '</small><span class="own">You have ' + owned(p.id) + '</span>' +
+      return '<div class="sitem"><svg viewBox="0 0 40 40"><use href="#' + p.icon + '"/></svg><b>' + p.name + '</b>' + (pupTier(p.id) ? '<span class="rtag rt-' + pupTier(p.id).id + '">' + pupTier(p.id).name + '</span>' : '') + '<small>' + p.desc + '</small><span class="own">You have ' + owned(p.id) + '</span>' +
         '<button class="b3 gold buy" data-buy="' + p.id + '">' + icon('i-coin') + p.price + '</button></div>';
     }).join('') + '</div>';
   } else {
@@ -4265,7 +4289,11 @@ function drawChat() {
 }
 
 /* ---------- start ---------- */
-document.addEventListener('visibilitychange', function () { if (document.hidden && R && R.active && !R.paused) togglePause(); });
+/* no pause button (live bingo keeps going), but leaving the app holds a solo round until you come back */
+document.addEventListener('visibilitychange', function () {
+  if (document.hidden && R && R.active && !R.paused) { togglePause(); R.bgPaused = true; }
+  else if (!document.hidden && R && R.bgPaused) { R.bgPaused = false; if (R.paused) { togglePause(); toast('Welcome back! The round continues.', 1800); } }
+});
 function boot(data) {
   load();
   if (data && data.save) S = merge(data.save);
