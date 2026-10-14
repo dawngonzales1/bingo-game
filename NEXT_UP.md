@@ -32,3 +32,12 @@ Ideas to build with the new art:
 
 ## Done from admin feedback
 - Crystal (Oct 14): card pack pictures and names were too small to read. Fixed: cards are bigger and the art and names fill the card.
+
+## Living map direction (Dawn's Bingo Frenzy recording, Oct 14)
+"This is the direction I'm going": animation everywhere, nothing sits still.
+- City name banner sweeps across the map when you arrive, then fades.
+- The map is alive: water flowing, birds flying past, boats bobbing.
+- A pulsing gold ring around the player's own picture pin on the current landmark.
+- Event tiles play like tiny movies (scenes change, sun flares, spotlights).
+- Each side icon has its own little act: ticket flips, chick hatches, clam opens to show a pearl, chest bobs.
+- Gems and stars glint with a light sweep.
