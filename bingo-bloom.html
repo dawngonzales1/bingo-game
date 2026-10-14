@@ -2005,6 +2005,11 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 /* Battery saver: keeps the game, drops the extra moving effects */
 .lite .rlife, .lite #mapFx .mlife, .lite #mapFx .pring, .lite .gull, .lite .flyer2, .lite .cloudz, .lite .fmov, .lite .fflash, .lite .bubs, .lite .ffly, .lite .ftile .fspk { display: none !important; }
 .lite .ftile .fpic, .lite .ftile.ft2, .lite .ftile::after, .lite #lobby .round .c, .lite #lobby .round .c svg, .lite .round .c img, .lite .hud-top .cur > svg, .lite .hud-top .cur .plus, .lite #mapFx .pbob, .lite .cityban b, .lite .tier .tplay, .lite #play .bcard::after, .lite #play .cell.free, .lite .round .dot, .lite .fcordie { animation: none !important; }
+
+.fblang { display: flex; justify-content: center; gap: 6px; margin: -2px 0 4px; }
+.fblang button { padding: 3px 10px; border-radius: 999px; font: 800 12px var(--ui); color: #fff; background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,243,184,.5); cursor: pointer; }
+.fblang button[aria-pressed="true"] { color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #f6c64a); border-color: #fff; }
+.fbtag.fblg { background: #e9dcff; color: #3d1a4f; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4837,6 +4842,17 @@ function formVeil(v) {
 
 /* ---------- team feedback: goes to one inbox only Dawn can read ---------- */
 var BUILD = '2026.10.14';
+// the feedback form speaks English, Spanish or Greek (Dawn's team); the phone's language picks the first one
+var FB_L = {
+  en: { pill: 'English', title: 'Send feedback', sub: 'Be honest, it helps! It goes straight to Dawn.', label: 'What happened, or what would make it better?', ph: 'Type here…', shot: '📷 Add a screenshot', about: 'About:', send: 'Send', short: 'Tell us a little about it first.', sending: 'Sending…', thanks: 'Thank you! Your feedback was sent to Dawn. 💖', savedOff: 'Saved! It sends when you play the web version online.', saved: 'Saved! It will send next time you open the game.', adding: 'Adding…', badpic: 'Could not read that picture',
+    types: [['🐞 Bug', 'Something broke or looks wrong'], ['🎨 Looks', 'Plain, cheap, hard to read'], ['💖 Fun', 'What you loved'], ['🐢 Too slow', 'Waiting, slow bingos'], ['💡 Idea', 'Something to add']] },
+  es: { pill: 'Español', title: 'Enviar comentarios', sub: '¡Sé sincero, ayuda mucho! Llega directo a Dawn.', label: '¿Qué pasó o qué lo haría mejor?', ph: 'Escribe aquí…', shot: '📷 Agregar captura', about: 'Sobre:', send: 'Enviar', short: 'Cuéntanos un poco más primero.', sending: 'Enviando…', thanks: '¡Gracias! Tus comentarios llegaron a Dawn. 💖', savedOff: '¡Guardado! Se envía cuando juegues la versión web con internet.', saved: '¡Guardado! Se enviará la próxima vez que abras el juego.', adding: 'Agregando…', badpic: 'No se pudo leer esa imagen',
+    types: [['🐞 Error', 'Algo falló o se ve mal'], ['🎨 Aspecto', 'Simple, barato, difícil de leer'], ['💖 Diversión', 'Lo que te encantó'], ['🐢 Muy lento', 'Esperas, bingos lentos'], ['💡 Idea', 'Algo para agregar']] },
+  el: { pill: 'Ελληνικά', title: 'Στείλε σχόλια', sub: 'Πες μας ειλικρινά, βοηθάει! Πάει κατευθείαν στην Dawn.', label: 'Τι συνέβη ή τι θα το έκανε καλύτερο;', ph: 'Γράψε εδώ…', shot: '📷 Πρόσθεσε στιγμιότυπο', about: 'Σχετικά με:', send: 'Αποστολή', short: 'Πες μας λίγα περισσότερα πρώτα.', sending: 'Αποστολή…', thanks: 'Ευχαριστούμε! Τα σχόλιά σου στάλθηκαν στην Dawn. 💖', savedOff: 'Αποθηκεύτηκε! Θα σταλεί όταν παίξεις την έκδοση web με σύνδεση.', saved: 'Αποθηκεύτηκε! Θα σταλεί την επόμενη φορά που θα ανοίξεις το παιχνίδι.', adding: 'Προσθήκη…', badpic: 'Δεν ήταν δυνατό να διαβαστεί η εικόνα',
+    types: [['🐞 Σφάλμα', 'Κάτι χάλασε ή φαίνεται λάθος'], ['🎨 Εμφάνιση', 'Απλό, φτηνό, δυσανάγνωστο'], ['💖 Διασκέδαση', 'Τι σου άρεσε'], ['🐢 Πολύ αργό', 'Αναμονή, αργά μπίνγκο'], ['💡 Ιδέα', 'Κάτι να προστεθεί']] }
+};
+var fbLang = (function () { var k = ''; try { k = localStorage.getItem('bingoBloom.fbLang') || ''; } catch (e) { /* fine */ } if (FB_L[k]) return k; var nl = (navigator.language || 'en').slice(0, 2).toLowerCase(); return FB_L[nl] ? nl : 'en'; })();
+var FB_LANG_TAG = { es: '🇪🇸 Spanish', el: '🇬🇷 Greek' };
 var FB_TYPES = [['bug', '🐞 Bug', 'Something broke or looks wrong'], ['looks', '🎨 Looks', 'Plain, cheap, hard to read'], ['fun', '💖 Fun', 'What you loved'], ['slow', '🐢 Too slow', 'Waiting, slow bingos'], ['idea', '💡 Idea', 'Something to add']];
 function whereNow() {
   var sc = app.firstElementChild, id = sc ? sc.id : '', h = veil && veil.querySelector('h3');
@@ -4867,24 +4883,28 @@ function fbFlush() { // feedback written while offline goes out on the next visi
   var q = S.fbQueue.slice(); S.fbQueue = []; save();
   q.forEach(function (d) { fbSend(d, function () {}, function () { S.fbQueue.push(d); save(); }); });
 }
-function feedback(from) {
-  var where = from || whereNow(), type = 'bug', shot = null;
-  panel('<h3>Send feedback</h3><p class="fbsub typehide">Be honest, it helps! It goes straight to Dawn.</p>' +
-    '<div class="fbtypes typehide">' + FB_TYPES.map(function (t) { return '<button data-ft="' + t[0] + '" aria-pressed="' + (t[0] === type) + '"><b>' + t[1] + '</b><small>' + t[2] + '</small></button>'; }).join('') + '</div>' +
-    '<div class="pinf"><label>What happened, or what would make it better?<textarea id="fbText" rows="3" maxlength="2000" placeholder="Type here…"></textarea></label></div>' +
-    '<div class="fbrow typehide"><label class="b3 cream fbshot"><input type="file" id="fbFile" accept="image/*" hidden>📷 Add a screenshot</label><span id="fbThumb"></span><small class="fbwhere">About: <b>' + esc(where) + '</b></small></div>' +
-    '<div class="res-btns"><button class="b3 gold" id="fbGo">Send</button></div><p class="status" id="fbMsg"></p>', 'small', function (v) {
+function feedback(from, keep) {
+  keep = keep || {};
+  var where = from || whereNow(), type = keep.type || 'bug', shot = keep.shot || null, L = FB_L[fbLang] || FB_L.en;
+  panel('<div class="fblang typehide">' + ['en', 'es', 'el'].map(function (k) { return '<button data-lg="' + k + '" aria-pressed="' + (k === fbLang) + '">' + FB_L[k].pill + '</button>'; }).join('') + '</div>' +
+    '<h3>' + L.title + '</h3><p class="fbsub typehide">' + L.sub + '</p>' +
+    '<div class="fbtypes typehide">' + FB_TYPES.map(function (t, i) { return '<button data-ft="' + t[0] + '" aria-pressed="' + (t[0] === type) + '"><b>' + L.types[i][0] + '</b><small>' + L.types[i][1] + '</small></button>'; }).join('') + '</div>' +
+    '<div class="pinf"><label>' + L.label + '<textarea id="fbText" rows="3" maxlength="2000" placeholder="' + L.ph + '"></textarea></label></div>' +
+    '<div class="fbrow typehide"><label class="b3 cream fbshot"><input type="file" id="fbFile" accept="image/*" hidden>' + L.shot + '</label><span id="fbThumb">' + (shot ? '<img src="' + shot + '" alt="">' : '') + '</span><small class="fbwhere">' + L.about + ' <b>' + esc(where) + '</b></small></div>' +
+    '<div class="res-btns"><button class="b3 gold" id="fbGo">' + L.send + '</button></div><p class="status" id="fbMsg"></p>', 'small', function (v) {
       formVeil(v);
+      if (keep.text) $('#fbText', v).value = keep.text;
+      v.querySelectorAll('[data-lg]').forEach(function (b) { b.onclick = function () { fbLang = b.dataset.lg; try { localStorage.setItem('bingoBloom.fbLang', fbLang); } catch (e) { /* fine */ } SFX.tap(); feedback(where, { type: type, shot: shot, text: $('#fbText', v).value }); }; });
       v.querySelectorAll('[data-ft]').forEach(function (b) { b.onclick = function () { type = b.dataset.ft; v.querySelectorAll('[data-ft]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); SFX.tap(); }; });
-      $('#fbFile', v).onchange = function () { var f = this.files && this.files[0]; if (!f) return; $('#fbThumb', v).textContent = 'Adding…'; shrinkShot(f, function (d) { shot = d; $('#fbThumb', v).innerHTML = d ? '<img src="' + d + '" alt="Screenshot">' : 'Could not read that picture'; }); };
+      $('#fbFile', v).onchange = function () { var f = this.files && this.files[0]; if (!f) return; $('#fbThumb', v).textContent = L.adding; shrinkShot(f, function (d) { shot = d; $('#fbThumb', v).innerHTML = d ? '<img src="' + d + '" alt="Screenshot">' : L.badpic; }); };
       $('#fbGo', v).onclick = function () {
         var text = $('#fbText', v).value.trim(), msg = $('#fbMsg', v), btn = this;
-        if (text.length < 3) { msg.textContent = 'Tell us a little about it first.'; return; }
-        var doc = { uid: ON.user ? ON.user.uid : null, name: myName(), type: type, text: text.slice(0, 2000), screen: where.slice(0, 120), device: deviceText().slice(0, 120), size: innerWidth + '×' + innerHeight, version: BUILD, level: S.level, at: Date.now(), done: false };
+        if (text.length < 3) { msg.textContent = L.short; return; }
+        var doc = { uid: ON.user ? ON.user.uid : null, name: myName(), type: type, text: text.slice(0, 2000), screen: where.slice(0, 120), device: deviceText().slice(0, 120), size: innerWidth + '×' + innerHeight, version: BUILD, level: S.level, lang: fbLang, at: Date.now(), done: false };
         if (shot && shot.length < 650000) doc.shot = shot;
-        btn.disabled = true; msg.textContent = 'Sending…';
-        fbSend(doc, function () { closeVeil(); SFX.set(); fireworks(1200); toast('Thank you! Your feedback was sent to Dawn. 💖', 3000); },
-          function (why) { if (!S.fbQueue) S.fbQueue = []; delete doc.shot; S.fbQueue.push(doc); save(); closeVeil(); toast(why === 'offline' ? 'Saved! It sends when you play the web version online.' : 'Saved! It will send next time you open the game.', 3400); });
+        btn.disabled = true; msg.textContent = L.sending;
+        fbSend(doc, function () { closeVeil(); SFX.set(); fireworks(1200); toast(L.thanks, 3000); },
+          function (why) { if (!S.fbQueue) S.fbQueue = []; delete doc.shot; S.fbQueue.push(doc); save(); closeVeil(); toast(why === 'offline' ? L.savedOff : L.saved, 3400); });
       };
     });
 }
@@ -4899,7 +4919,7 @@ function feedbackInbox(filter) {
         items = snap.docs.map(function (d) { var x = d.data(); x.id = d.id; return x; }).filter(function (x) { return filter === 'all' || !x.done; });
         var T = {}; FB_TYPES.forEach(function (t) { T[t[0]] = t[1]; });
         $('#fbList', v).innerHTML = items.length ? items.map(function (x) {
-          return '<div class="fbitem' + (x.done ? ' done' : '') + '"><div class="fbhd"><span class="fbtag t-' + x.type + '">' + (T[x.type] || x.type) + '</span><b>' + esc(x.name || 'Player') + '</b><small>' + new Date(x.at).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '</small></div>' +
+          return '<div class="fbitem' + (x.done ? ' done' : '') + '"><div class="fbhd"><span class="fbtag t-' + x.type + '">' + (T[x.type] || x.type) + '</span>' + (FB_LANG_TAG[x.lang] ? '<span class="fbtag fblg">' + FB_LANG_TAG[x.lang] + '</span>' : '') + '<b>' + esc(x.name || 'Player') + '</b><small>' + new Date(x.at).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '</small></div>' +
             '<p>' + esc(x.text) + '</p><small class="fbmeta">' + esc(x.screen || '') + ' · ' + esc(x.device || '') + ' · ' + esc(x.size || '') + ' · LV ' + (x.level || '?') + '</small>' +
             (x.shot ? '<img class="fbimg" src="' + x.shot + '" alt="Screenshot">' : '') + (x.done ? '' : '<button class="b3 cream fbdone" data-done="' + x.id + '">✓ Done</button>') + '</div>';
         }).join('') : '<p class="note">' + (filter === 'open' ? 'No new feedback. 🎉' : 'No feedback yet.') + '</p>';
@@ -4907,7 +4927,7 @@ function feedbackInbox(filter) {
         v.querySelectorAll('.fbimg').forEach(function (im) { im.onclick = function () { im.classList.toggle('big'); }; });
       }).catch(function () { $('#fbList', v).innerHTML = '<p class="note">Only Dawn can open the inbox.</p>'; });
       $('#fbCopy', v).onclick = function () {
-        var txt = items.map(function (x) { return '[' + x.type + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text; }).join('\n');
+        var txt = items.map(function (x) { return '[' + x.type + (FB_LANG_TAG[x.lang] ? ', in ' + FB_LANG_TAG[x.lang].slice(5) : '') + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text; }).join('\n');
         try { navigator.clipboard.writeText(txt).then(function () { $('#fbMsg', v).textContent = 'Copied ' + items.length + ' notes. Paste them to Claude.'; }); } catch (e) { $('#fbMsg', v).textContent = 'Copy is not available here.'; }
       };
     });
