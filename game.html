@@ -2033,7 +2033,7 @@ function fresh() {
   return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, stats: { rounds: 0, bingos: 0 }, events: [],
-    settings: { sound: true, voice: false, speed: 'classic', auto: false, autoAlert: true } };
+    settings: { sound: true, voice: false, speed: 'classic', assist: false, autoAlert: true } };
 }
 function merge(saved) {
   var s = fresh();
@@ -2868,6 +2868,7 @@ function settings() {
     '<div class="opt"><span>Sounds</span><button class="sw" id="swSound" aria-pressed="' + st.sound + '" aria-label="Sounds"></button></div>' +
     '<div class="opt"><span>Caller voice <small style="color:var(--mist)">reads each ball out loud</small></span><button class="sw" id="swVoice" aria-pressed="' + st.voice + '" aria-label="Caller voice"></button></div>' +
     '<div class="opt"><span>Turn on Bloom Alert by itself <small style="color:var(--mist)">uses one at the start of each round</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
+    '<div class="opt"><span>Mark numbers for me <small style="color:var(--mist)">for players who find tapping hard · Perfect Card rewards pause while it is on</small></span><button class="sw" id="swAssist" aria-pressed="' + !!st.assist + '" aria-label="Mark numbers for me"></button></div>' +
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
     '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button><button class="b3 plum" id="bFb2">💬 Send feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">📥 Feedback inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
@@ -2875,6 +2876,7 @@ function settings() {
       $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; S.alerts += 5; PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
+      $('#swAssist', v).onclick = function () { st.assist = !st.assist; this.setAttribute('aria-pressed', st.assist); save(); };
       $('#swVoice', v).onclick = function () { st.voice = !st.voice; this.setAttribute('aria-pressed', st.voice); save(); say('B 7'); };
       v.querySelectorAll('#spd button').forEach(function (b) { b.onclick = function () { st.speed = b.dataset.s; save(); v.querySelectorAll('#spd button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
       $('#bAcct', v).onclick = accountPanel;
@@ -2926,7 +2928,7 @@ function startRound(arm, room) {
   save();
   var total = blackout ? 6 + rand(3) : 14 + rand(5);
   R = { roomObj: room, room: room.id, mode: room.mode, boostAt: (blackout ? 4 : 6) + 4 * S.cards, bet: S.bet, dc: dc, dp: dp, wild: false, players: total * 4 + rand(20), focus: 0, alert: false, els: [], cards: [], seq: shuffle(range(1, 75)).slice(0, blackout ? 65 : BALLS), idx: 0, called: {}, recent: [], active: false, paused: false, timer: null,
-    total: total, left: total, meter: 0, bingos: 0, lucky: rand(S.cards), usedAuto: !!S.settings.auto, earned: { coins: 0, petals: 0, alerts: 0, tickets: 0, drops: 0, seeds: 0, cards: [], ings: [], sets: [] } };
+    total: total, left: total, meter: 0, bingos: 0, lucky: rand(S.cards), usedAuto: !!S.settings.assist, earned: { coins: 0, petals: 0, alerts: 0, tickets: 0, drops: 0, seeds: 0, cards: [], ings: [], sets: [] } };
   R.feat = roomFeat(room); modeSetup(); R.xp2 = dxp; if (dxp) setTimeout(function () { toast('Double XP is on for this round'); }, 2600);
   for (var k = 0; k < S.cards; k++) { var nc = makeCard(); nc.lines = {}; nc.n = 0; R.cards.push(nc); }
   R.seq = kindSeq(R.seq.length, R.cards[R.lucky], blackout ? .64 : .68);
@@ -2957,7 +2959,7 @@ function renderPlay() {
   show('<div class="screen" id="play">' +
     '<div class="lcol"><div class="lbtns"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button></div>' +
       '<div class="bleft" id="sLeftW"><small>BINGOS</small><b id="sLeft">0</b><small id="sPlayers">0 players</small></div>' +
-      '<span class="auto">Auto<button class="sw" id="swAuto" aria-pressed="' + !!S.settings.auto + '" aria-label="Auto daub"></button></span></div>' +
+      '</div>' +
     '<div class="ptop"><div class="ballwrap"><div class="ball" id="ball"><div class="in"><small>READY</small><b>·</b></div></div><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength="100"/></svg></div>' +
       '<div class="stripwrap"><button class="strip tube" id="strip" aria-label="Called numbers. Tap to see them all."><span class="lbl">Balls<br><b id="nCalled">0/' + R.seq.length + '</b></span></button><span class="goal" id="goal" hidden></span></div><div class="pqbar" id="pq"><button class="pqauto" id="bAutoB" aria-pressed="' + autoPups() + '" aria-label="Use power-ups automatically">AUTO</button><div class="pqslots" id="pqSlots"></div><span class="pqcharge"><i id="pqFill"></i></span></div><span class="ballcount" id="nBallsTop">0/' + R.seq.length + '</span></div>' +
     '<div class="rail" hidden>' +
@@ -3002,11 +3004,6 @@ function renderPlay() {
     pupFx('i-plus5', '+5 Balls!', 'Five more balls this round');
     var tb = $('#strip'); if (tb) { tb.classList.remove('plus5'); void tb.offsetWidth; tb.classList.add('plus5'); }
     if (R.lastBall) { clearTimeout(R.timer); R.lastBall = false; if (!R.paused) R.timer = setTimeout(callNext, 1200); }
-  };
-  $('#swAuto').onclick = function () {
-    S.settings.auto = !S.settings.auto; save(); this.setAttribute('aria-pressed', S.settings.auto); SFX.tap(); if (S.settings.auto) R.usedAuto = true;
-    toast(S.settings.auto ? 'Auto is on: numbers are marked for you. You still tap BINGO!' : 'Auto is off');
-    if (S.settings.auto) Object.keys(R.called).forEach(function (n) { autoDaub(+n); });
   };
   var armed = false;
   $('#bQuit').onclick = function () {
@@ -3102,7 +3099,7 @@ function callNext() {
   $('#sBalls').textContent = R.idx + '/' + R.seq.length;
   SFX.ball(); say(letter(n) + ' ' + n);
   setTimeout(hintUi, 2200); bfTick();
-  if (S.settings.auto) setTimeout(function () { autoDaub(n); }, 450);
+  if (S.settings.assist) setTimeout(function () { autoDaub(n); }, 450);
   rivals();
   if (!R.active) return;
   if (R.idx >= R.seq.length && autoPups() && S.items.balls5 > 0 && R.cards.some(function (k) { return !k.won; }) && !R.autoBalls) { R.autoBalls = true; R.timer = setTimeout(function () { if (R && !R.ended) { var bb = $('#bBalls'); if (bb) bb.click(); } }, 900); return; }
@@ -3188,7 +3185,7 @@ function pupTier(id) { return PQ_TIERS.filter(function (t) { return t.ids.indexO
 function pqPick() {
   var r = Math.random(), start = r < PQ_TIERS[0].p ? 0 : r < PQ_TIERS[0].p + PQ_TIERS[1].p ? 1 : 2;
   for (var t = start; t < PQ_TIERS.length; t++) {
-    var ok = PQ_TIERS[t].ids.filter(function (id) { return owned(id) - R.pq.filter(function (q) { return q === id; }).length > 0 && !(id === 'allx2' && (R.allx2 || R.pq.indexOf('allx2') >= 0)) && !(id === 'freeze' && S.settings.auto); });
+    var ok = PQ_TIERS[t].ids.filter(function (id) { return owned(id) - R.pq.filter(function (q) { return q === id; }).length > 0 && !(id === 'allx2' && (R.allx2 || R.pq.indexOf('allx2') >= 0)) && !(id === 'freeze' && S.settings.assist); });
     if (ok.length) { var fe = ok.filter(function (id) { return R.feat && R.feat.indexOf(id) >= 0; }); return fe.length && Math.random() < .5 ? fe[rand(fe.length)] : ok[rand(ok.length)]; }
   }
   return 'bloom';
