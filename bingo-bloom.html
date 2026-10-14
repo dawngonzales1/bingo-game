@@ -187,7 +187,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
   background: radial-gradient(circle at 35% 28%, rgba(255,255,255,.5) 0, rgba(255,255,255,.18) 14%, var(--bc, var(--gold1)) 55%, color-mix(in srgb, var(--bc, var(--gold2)) 62%, #000) 100%); box-shadow: 0 5px 0 var(--ol); }
 .ball .in { width: 66%; height: 66%; border-radius: 50%; background: var(--paper); display: grid; place-items: center; align-content: center; line-height: 1; border: 2px solid rgba(61,26,79,.25); }
 .ball .in small { font-size: calc(var(--s) * .14); font-weight: 700; }
-.ball .in b { font-size: calc(var(--s) * .3); font-weight: 700; font-variant-numeric: tabular-nums; }
+.ball .in b { font-size: calc(var(--s) * .35); font-weight: 800; font-variant-numeric: tabular-nums; }
 .ball.pop { animation: ballIn .5s cubic-bezier(.2,.9,.3,1.3); }
 @keyframes ballIn { from { transform: translateX(-60px) rotate(-200deg) scale(.5); opacity: 0; } }
 .recent { display: flex; justify-content: center; gap: 4px; min-height: 22px; }
@@ -744,7 +744,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .b3d { --s: calc(var(--tb) - 16px); flex: none; width: var(--s); height: var(--s); border-radius: 50%; display: grid; place-items: center; transform: rotate(var(--r));
   background: radial-gradient(circle at 32% 24%, rgba(255,255,255,.95) 0 8%, rgba(255,255,255,0) 24%), radial-gradient(circle at 50% 118%, rgba(20,5,30,.5), transparent 55%), radial-gradient(circle at 42% 36%, color-mix(in srgb, var(--c) 55%, #fff), var(--c) 50%, color-mix(in srgb, var(--c) 55%, #1a0526) 100%);
   box-shadow: 0 0 0 2px rgba(30,8,45,.8), 0 3px 4px rgba(0,0,0,.45); }
-.b3d i { width: 58%; height: 58%; border-radius: 50%; display: grid; place-items: center; align-content: center; background: radial-gradient(circle at 45% 35%, #fff, #efe6d3); box-shadow: inset 0 -1px 2px rgba(61,26,79,.3); font-style: normal; font-weight: 700; font-size: calc(var(--s) * .27); line-height: .9; color: var(--ink); }
+.b3d i { width: 58%; height: 58%; border-radius: 50%; display: grid; place-items: center; align-content: center; background: radial-gradient(circle at 45% 35%, #fff, #efe6d3); box-shadow: inset 0 -1px 2px rgba(61,26,79,.3); font-style: normal; font-weight: 800; font-size: calc(var(--s) * .31); line-height: .9; color: var(--ink); }
 .b3d i small { font-size: calc(var(--s) * .14); color: var(--c); }
 .b3d.new { animation: rollIn .6s cubic-bezier(.2,.9,.3,1.15); }
 @keyframes rollIn { from { transform: translateX(-120%) rotate(-280deg) scale(.6); opacity: 0; } }
@@ -2286,6 +2286,12 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .cards9 .cf .new { z-index: 5; font-size: 13px; padding: 2px 8px; animation: newPulse 1.6s ease-in-out infinite; }
 .calm .mnew, .calm .cards9 .cf .new { animation: none; }
 @keyframes newPulse { 50% { transform: scale(1.12); } }
+
+.updbar { position: fixed; z-index: 99; left: 50%; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 16px; border-radius: 999px; transform: translateX(-50%); font: 800 14px var(--ui); color: #3d1a4f; background: #fffaf0; box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px var(--ol), 0 8px 18px rgba(20,5,35,.45); animation: popIn .4s both; white-space: nowrap; }
+.updbar .b3 { padding: 5px 16px; font-size: 14px; }
+.updx { border: 0; background: none; font: 800 16px var(--ui); color: #9a7ab8; cursor: pointer; }
+#ball .havetag { position: absolute; left: 50%; top: 100%; margin-top: 2px; padding: 1px 8px; border-radius: 999px; transform: translateX(-50%); white-space: nowrap; font: 800 10px var(--ui); color: #fff; background: #2fae55; box-shadow: 0 0 0 1.5px #fff; pointer-events: none; animation: popIn .3s both; }
+#ball { position: relative; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3638,9 +3644,11 @@ function callNext() {
   while (R.called[n] && R.idx < R.seq.length) n = R.seq[R.idx++];
   if (R.called[n]) return;
   R.called[n] = true; R.lastCall = Date.now();
+  var onCards = 0, covered = 0; R.cards.forEach(function (k) { k.cells.forEach(function (c) { if (c.n === n) { onCards++; if (c.d) covered++; } }); });
+  R.callHave = onCards > 0 && covered === onCards;
   R.recent.unshift(n); R.recent = R.recent.slice(0, 5);
   var b = $('#ball'); b.style.setProperty('--bc', ballColor(n)); b.innerHTML = '<div class="in"><small>' + letter(n) + '</small><b>' + n + '</b></div>';
-  b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
+  b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); b.classList.toggle('have', !!R.callHave); if (R.callHave) b.insertAdjacentHTML('beforeend', '<span class="havetag">✓ already marked</span>');
   var bw = b.closest('.ballwrap'); if (bw) { var sh = document.createElement('i'); sh.className = 'bshock'; sh.style.setProperty('--bc', ballColor(n)); bw.appendChild(sh); setTimeout(function () { sh.remove(); }, 800); }
   var ring = $('.ring circle'); if (ring) { ring.style.animation = 'none'; void ring.getBoundingClientRect(); ring.style.animation = 'ringDown ' + (R.idx < R.seq.length ? speedMs() : 7000) + 'ms linear forwards'; }
   b.style.setProperty('--bc', ballDeep(n));
@@ -4212,6 +4220,25 @@ var WATCH = setInterval(function () {
   if (now - (R.lastCall || now) > speedMs() * 2 + 1500) { clearTimeout(R.timer); R.lastCall = now; callNext(); }
 }, 1000);
 addEventListener('pageshow', function () { if (R && R.bgPaused && !document.hidden) { R.bgPaused = false; if (R.paused) togglePause(); } });
+/* new version notice: phones (Android Chrome especially) keep showing an old copy of the game, so it checks for a newer one */
+function checkUpdate() {
+  if (location.protocol.indexOf('http') !== 0 || document.querySelector('.updbar')) return;
+  var cur = (location.search.match(/v=([a-z0-9]+)/) || [])[1]; if (!cur) return;
+  fetch('index.html?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) {
+    var m = t.match(/game\.html\?v=([a-z0-9]+)/); if (!m || m[1] === cur) return;
+    (function show() {
+      if (R && R.active && !R.ended) { setTimeout(show, 5000); return; }
+      if (document.querySelector('.updbar')) return;
+      var d = document.createElement('div'); d.className = 'updbar';
+      d.innerHTML = '<span>✨ A new version of Bingo Bloom is ready!</span><button class="b3 gold" id="updGo">Update</button><button class="updx" aria-label="Later">✕</button>';
+      document.body.appendChild(d);
+      d.querySelector('#updGo').onclick = function () { save(); var t = window.top || window; try { t.location.replace(t.location.pathname + '?u=' + Date.now()); } catch (e) { location.reload(); } };
+      d.querySelector('.updx').onclick = function () { d.remove(); };
+    })();
+  }).catch(function () {});
+}
+setTimeout(checkUpdate, 8000); setInterval(checkUpdate, 5 * 60000);
+document.addEventListener('visibilitychange', function () { if (!document.hidden) checkUpdate(); });
 function stopRound() { if (R) { clearTimeout(R.timer); R.active = false; } try { if (wake) wake.release(); } catch (e) { /* fine */ } wake = null; }
 function endRound(why) {
   if (!R || R.ended) return;
