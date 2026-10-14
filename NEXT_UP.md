@@ -53,3 +53,12 @@ Worth borrowing (fair, no money pressure):
 - Chef Menu (Blitz) = our Kitchen; "Dish Served!" big reveal moment is a good model.
 Skip (greedy or off-brand):
 - Sale pop-ups stacked on opening the app, "100% more gems", endless sale chains, paid unlock paths, countdown pressure, slots and casino mini games.
+
+## Team feedback, Oct 14 (first test day)
+Bugs: blackout froze ~5s and the voice came on after it (Jo Anne); voice calls missing after a restart in Gold Coast (Sapphire); Macaron Match kicks you out on each move (Mac Safari); Petal Drop balls get stuck (Sapphire); Kitchen red dot with nothing ready; Album icon overlaps the gift button; flashing missed numbers trigger migraines, but others say the called-number glow is now too hard to see (Crystal, Jo Anne).
+Seeing: ball numbers and macarons too small, text shadows, white gloss spots, busy backgrounds (Sherri, visually impaired; Mac player).
+Speed: still too fast even on Relaxed (Crystal: "biggest complaint").
+Clarity: how do you know a room is complete (Sandy); daily gift button unclear (sleeping bunny, purple square); signed-in name not shown anywhere, wants a picture (Sandy); step-by-step guide for new players (Sandy); Kitchen unclear.
+Looks: featured tiles too busy, should be subtle but eye-catching; Cordie hopping between tiles looks cheap and laggy, should stay and point; next city should be a blurred teaser, not plain; buttons overlapping; still looks plain/cheap, needs better animation.
+Team/social (online): one place for everything Teams; send cards from the album; see who on your team is online; dots for new messages, friend requests and cards; tap a teammate to friend them.
+Ideas: Bee power-up like Bingo Frenzy's boomerang (Crystal). Unique game names (already enforced). Crystal likes being able to choose auto-mark (kept in Settings).
