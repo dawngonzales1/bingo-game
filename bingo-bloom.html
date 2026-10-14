@@ -18,6 +18,8 @@
 }
 html, body { height: 100%; }
 body { margin: 0; background: #f0d7a6; color: var(--ink); font-family: var(--ui); font-weight: 500; font-size: 15px; overflow: hidden; -webkit-font-smoothing: antialiased; overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
+/* text boxes must stay typeable: tablets refuse to open the keyboard when selection is off */
+input, textarea, [contenteditable] { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
 button { font: inherit; color: inherit; border: 0; background: none; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 #app { position: fixed; inset: 0; overflow: hidden; }
@@ -4902,9 +4904,11 @@ function nameForm(first) {
    to the top of the screen in one compact row so they stay visible above it */
 // only phones and tablets squeeze the form up for the on-screen keyboard; on a computer it stays put
 var TOUCHY = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);
+// tablets have room for the keyboard, so only short phone screens squeeze the form up
+function squeezeForm() { return TOUCHY && Math.min(innerHeight, screen.height || innerHeight) < 520; }
 function formVeil(v) {
-  v.onclick = function (e) { if (e.target.closest('[data-x]')) closeVeil(); else if (e.target === v) { var f = v.querySelector('input:focus, textarea:focus'); if (f) f.blur(); } };
-  v.addEventListener('focusin', function (e) { if (e.target.matches('input, textarea') && TOUCHY) { v.classList.add('typing'); setTimeout(function () { e.target.scrollIntoView({ block: 'nearest' }); }, 60); } });
+  v.onclick = function (e) { if (e.target.closest('[data-x]')) closeVeil(); else if (e.target === v && Date.now() - (v._focusAt || 0) > 700) { var f = v.querySelector('input:focus, textarea:focus'); if (f) f.blur(); } };
+  v.addEventListener('focusin', function (e) { v._focusAt = Date.now(); if (e.target.matches('input, textarea') && squeezeForm()) { v.classList.add('typing'); setTimeout(function () { e.target.scrollIntoView({ block: 'nearest' }); }, 60); } });
   v.addEventListener('focusout', function () { setTimeout(function () { if (!v.querySelector('input:focus, textarea:focus')) v.classList.remove('typing'); }, 150); });
 }
 
