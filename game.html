@@ -2211,6 +2211,9 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 #mapSvg .lmlock image { filter: grayscale(.75) brightness(.8); }
 #mapSvg .growme { transform-box: fill-box; transform-origin: 50% 100%; animation: growBob 1.2s ease-in-out infinite; }
 @keyframes growBob { 50% { transform: translateY(-6px) scale(1.08); } }
+/* top bar: on phones the Events and Feedback pills show just their icons so Settings always fits */
+#bSet { flex: none; }
+@media (max-width: 960px) { .evpill span, .fbpill span { display: none; } .evpill { padding: 3px 6px; margin-right: 4px; } .fbpill { padding: 5px 7px; margin-right: 4px; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
