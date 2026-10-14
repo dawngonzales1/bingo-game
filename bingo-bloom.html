@@ -2206,6 +2206,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .stbar b { margin-right: auto; font-size: clamp(18px, 6vh, 26px); color: #fff3b8; }
 #stGo { animation: popIn .4s 2.4s both, playPulse 1.4s 2.8s ease-in-out infinite; }
 .lite .gcol .bsrays { display: none; }
+#mapSvg .lmlock image { filter: grayscale(.75) brightness(.8); }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2410,6 +2411,14 @@ function addXp(n) {
 }
 var CITY_ROOMS = ['patisserie', 'cafe', 'carousel', 'boutique'], ROOM_REWARD = 100, CITY_TICKETS = 500, CITY_GEMS = 50;
 function cityStars() { return CITY_ROOMS.reduce(function (a, id) { return a + Math.min(3, S.build[id] || 0); }, 0); }
+// Paris rooms open in order: grow at least 1 blossom in a room to open the next one (Dawn)
+function cityLock(id) {
+  var i = CITY_ROOMS.indexOf(id); if (i <= 0 || (S.build[id] || 0) > 0) return null;
+  var prev = CITY_ROOMS[i - 1]; if ((S.build[prev] || 0) >= 1) return null;
+  return LANDMARKS.filter(function (l) { return l.id === prev; })[0];
+}
+function lockMsg(r) { var p = cityLock(r.lm || r.id); return p ? r.name + ' opens when ' + p.name + ' has its first blossom. Win petals in bingo, then tap Grow in ' + p.name + '.' : ''; }
+function stepOpen(ri, d) { for (var k = 1; k <= ROOMS.length; k++) { var r = ROOMS[(ri + d * k + ROOMS.length * k) % ROOMS.length]; if (!cityLock(r.lm || r.id)) return r; } return ROOMS[ri]; }
 function roomByLm(id) { return ROOMS.filter(function (r) { return r.lm === id; })[0]; }
 
 /* ---------- sound: made from scratch with the phone's synthesizer ---------- */
@@ -2670,6 +2679,7 @@ function ribbon(lm, i) {
     var on = k < lvl, x = (k - 1) * 28, y = -30 - (k === 1 ? 6 : 0);
     var sz = k === 1 ? 30 : 26; s += '<svg x="' + (x - sz / 2) + '" y="' + (y - sz / 2) + '" width="' + sz + '" height="' + sz + '" viewBox="0 0 40 40"><use href="#' + (on ? 'i-blossom' : 'i-blossom0') + '"/></svg>';
   }
+  if (cityLock(lm.id)) s += '<g class="maplock"><circle cx="' + (W / 2 + 10) + '" cy="-2" r="17" fill="#3d1a4f" stroke="#fff3b8" stroke-width="3"/><text x="' + (W / 2 + 10) + '" y="6" text-anchor="middle" font-size="20">🔒</text></g>';
   if (false) s += '<g class="bounce"><circle cx="' + (W / 2 + 4) + '" cy="-30" r="17" fill="url(#gBuild)"' + OL + '/><svg x="' + (W / 2 - 10) + '" y="-44" width="28" height="28" viewBox="0 0 40 40"><use href="#i-hammer"/></svg></g>';
   return s + '</g>';
 }
@@ -2718,7 +2728,7 @@ function mapSvg() {
   s += '<image href="art/lobby-paris-map.webp" x="0" y="0" width="' + MAP_W + '" height="' + MAP_H + '" preserveAspectRatio="xMidYMid slice"/>';
   LANDMARKS.slice().sort(function (a, b) { return PLOT[a.id][1] - PLOT[b.id][1]; }).forEach(function (lm) {
     var p = PLOT[lm.id], f = FOOTC[lm.id], i = LANDMARKS.indexOf(lm);
-    s += '<g class="lm" data-lm="' + i + '"><ellipse cx="' + p[0] + '" cy="' + p[1] + '" rx="95" ry="60" fill="transparent"/>' +
+    s += '<g class="lm' + (cityLock(lm.id) ? ' lmlock' : '') + '" data-lm="' + i + '"><ellipse cx="' + p[0] + '" cy="' + p[1] + '" rx="95" ry="60" fill="transparent"/>' +
       (LM_IMG[lm.id] ? lmPicture(lm.id, S.build[lm.id] || 0, p[0], p[1] + LM_S * f[2] + 6) :
       '<g transform="translate(' + (p[0] - LM_S * f[0]) + ' ' + (p[1] - LM_S * f[1]) + ') scale(' + LM_S + ')">' + landmarkArt(lm.id, S.build[lm.id] || 0) + '</g>') + '</g>';
   });
@@ -3145,6 +3155,7 @@ function pupGuide() {
 function roomScreen(room) {
   stopRound();
   room = room || ROOMS[0];
+  if (cityLock(room.lm || room.id)) { SFX.no && SFX.no(); toast('🔒 ' + lockMsg(room), 4200); if (!$('#lobby')) lobby(); return; }
   if (!S.seen) S.seen = {};
   if (!S.seen[room.id] && STORIES[room.id]) { S.seen[room.id] = 1; save(); roomStory(room, function () { roomScreen(room); }); return; }
   var arm = {}, fair = S.dry >= 3, mi = MODE_INFO[room.mode], featured = room.mode !== 'multi';
@@ -3185,9 +3196,9 @@ function roomScreen(room) {
   app.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function (e) { var id = b.dataset.arm; arm[id] = !arm[id]; b.setAttribute('aria-pressed', !!arm[id]); SFX.tap(); if (arm[id]) { var r = b.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 22); b.classList.remove('armpop'); void b.offsetWidth; b.classList.add('armpop'); toast(pupById(id).name + ' on: ' + pupById(id).desc, 2600); } else toast(pupById(id).name + ' off'); }; });
   $('#bPinfo').onclick = function () { SFX.tap(); pupGuide(); };
   var ri = ROOMS.indexOf(room);
-  $('#rPrev').onclick = function () { SFX.tap(); roomScreen(ROOMS[(ri + ROOMS.length - 1) % ROOMS.length]); };
-  $('#rNext').onclick = function () { SFX.tap(); roomScreen(ROOMS[(ri + 1) % ROOMS.length]); };
-  swipe($('#room'), function (d) { roomScreen(ROOMS[(ri + (d > 0 ? ROOMS.length - 1 : 1)) % ROOMS.length]); });
+  $('#rPrev').onclick = function () { SFX.tap(); roomScreen(stepOpen(ri, -1)); };
+  $('#rNext').onclick = function () { SFX.tap(); roomScreen(stepOpen(ri, 1)); };
+  swipe($('#room'), function (d) { roomScreen(stepOpen(ri, d > 0 ? -1 : 1)); });
   app.querySelectorAll('[data-play]').forEach(function (b) {
     b.onclick = function () {
       S.cards = +b.dataset.play; save();
