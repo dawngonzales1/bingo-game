@@ -2393,6 +2393,8 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 @media (max-height: 420px) { .kpans { grid-template-columns: repeat(6, 1fr); } .kip { width: 32px; height: 32px; } .kplate.big { width: 54px; height: 54px; } .krec { gap: 8px; padding: 8px 10px !important; } .khead img { height: 48px; } }
 #bSet .c svg { filter: drop-shadow(0 3px 0 rgba(20,10,40,.55)) drop-shadow(0 6px 8px rgba(20,5,30,.35)); transition: transform .5s; }
 #bSet:hover .c svg, #bSet:active .c svg { transform: rotate(60deg); }
+.dropside [data-games] { width: auto !important; justify-self: start; padding: 6px 18px; }
+.dropcv canvas { box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px #2a1640, 0 8px 18px rgba(0,0,0,.45) !important; border: 0 !important; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4869,26 +4871,31 @@ function petalDrop() {
       }
       var stat = null, dirty = true;
       // the board never changes, so it is painted once; only the pearls move
-      function drawStatic(c) {
-        var g = c.createRadialGradient(W / 2, H * .25, 10, W / 2, H * .5, H * .8); g.addColorStop(0, '#7a3fd6'); g.addColorStop(.6, '#4a1a84'); g.addColorStop(1, '#260a45');
-        c.fillStyle = g; c.fillRect(0, 0, W, H);
-        for (var st = 0; st < 26; st++) { var sx = (st * 97) % W, sy = 60 + (st * 53) % (H - 140); c.fillStyle = 'rgba(255,229,143,' + (.15 + (st % 4) * .08) + ')'; c.beginPath(); c.arc(sx, sy, 1 + st % 2, 0, 7); c.fill(); }
-        var tg = c.createLinearGradient(0, 0, 0, 54); tg.addColorStop(0, 'rgba(255,229,143,.35)'); tg.addColorStop(1, 'rgba(255,229,143,0)'); c.fillStyle = tg; c.fillRect(0, 0, W, 54);
-        c.textAlign = 'center';
+      function drawStatic(x2) {
+        var g = x2.createRadialGradient(W / 2, H * .2, 10, W / 2, H * .55, H * .9); g.addColorStop(0, '#2f4f8f'); g.addColorStop(.55, '#172a55'); g.addColorStop(1, '#0b1430');
+        x2.fillStyle = g; x2.fillRect(0, 0, W, H);
+        var glow = x2.createRadialGradient(W / 2, 0, 4, W / 2, 0, W * .7); glow.addColorStop(0, 'rgba(255,214,92,.35)'); glow.addColorStop(1, 'rgba(255,214,92,0)'); x2.fillStyle = glow; x2.fillRect(0, 0, W, H * .5);
+        for (var st = 0; st < 34; st++) { var sx = (st * 97 + 13) % W, sy = 58 + (st * 53) % (H - 150), r0 = .8 + st % 3 * .5; x2.fillStyle = 'rgba(255,240,190,' + (.25 + (st % 4) * .12) + ')'; x2.beginPath(); x2.arc(sx, sy, r0, 0, 7); x2.fill(); }
+        x2.strokeStyle = 'rgba(255,214,92,.55)'; x2.setLineDash([4, 5]); x2.lineWidth = 1.5; x2.beginPath(); x2.moveTo(10, 46); x2.lineTo(W - 10, 46); x2.stroke(); x2.setLineDash([]);
+        x2.textAlign = 'center';
         pegs.forEach(function (p) {
-          c.fillStyle = 'rgba(20,5,30,.55)'; c.beginPath(); c.arc(p.x + 1, p.y + 2.5, 5.5, 0, 7); c.fill();
-          var pg = c.createRadialGradient(p.x - 1.8, p.y - 1.8, .5, p.x, p.y, 5.5); pg.addColorStop(0, '#fffbe0'); pg.addColorStop(.45, '#ffd45c'); pg.addColorStop(1, '#b8780a');
-          c.fillStyle = pg; c.beginPath(); c.arc(p.x, p.y, 5.2, 0, 7); c.fill();
+          x2.fillStyle = 'rgba(0,0,0,.45)'; x2.beginPath(); x2.arc(p.x + 1, p.y + 2.5, 5.8, 0, 7); x2.fill();
+          var pg = x2.createRadialGradient(p.x - 1.8, p.y - 1.8, .5, p.x, p.y, 5.6); pg.addColorStop(0, '#fffbe0'); pg.addColorStop(.45, '#ffd45c'); pg.addColorStop(1, '#a8660a');
+          x2.fillStyle = pg; x2.beginPath(); x2.arc(p.x, p.y, 5.4, 0, 7); x2.fill();
         });
-        DROP_CUPS.forEach(function (c, i) {
-          var x = i * binW, cg = c.createLinearGradient(0, cupTop + 8, 0, H); cg.addColorStop(0, '#fff'); cg.addColorStop(.18, c.c); cg.addColorStop(1, c.c);
-          c.fillStyle = cg; c.beginPath(); if (c.roundRect) c.roundRect(x + 3, cupTop + 8, binW - 6, H - cupTop - 11, [4, 4, 8, 8]); else c.rect(x + 3, cupTop + 8, binW - 6, H - cupTop - 11); c.fill();
-          c.strokeStyle = '#3d1a4f'; c.lineWidth = 2.5; c.stroke();
-          c.fillStyle = 'rgba(255,255,255,.45)'; c.fillRect(x + 6, cupTop + 12, 3, H - cupTop - 22);
-          c.fillStyle = '#3d1a4f'; c.font = '700 15px Fredoka, system-ui, sans-serif'; c.fillText(c.t === 'ing' ? '1' : c.t === 'gcard' ? '★' : c.n, x + binW / 2, cupTop + 32);
-          c.font = '600 9.5px Fredoka, system-ui, sans-serif'; c.fillText({ tickets: 'tickets', seeds: 'seeds', coins: 'coins', ing: 'ingred.', gcard: 'gold' }[c.t], x + binW / 2, cupTop + 46);
+        DROP_CUPS.forEach(function (cup, i) {
+          var x = i * binW, top = cupTop + 8, h = H - cupTop - 11, cg = x2.createLinearGradient(0, top, 0, H);
+          cg.addColorStop(0, '#ffffff'); cg.addColorStop(.22, cup.c); cg.addColorStop(1, 'rgba(10,15,40,.9)');
+          x2.fillStyle = cg; x2.beginPath(); if (x2.roundRect) x2.roundRect(x + 3, top, binW - 6, h, [5, 5, 10, 10]); else x2.rect(x + 3, top, binW - 6, h); x2.fill();
+          x2.strokeStyle = '#f6c64a'; x2.lineWidth = 2.5; x2.stroke();
+          x2.fillStyle = 'rgba(255,255,255,.4)'; x2.fillRect(x + 7, top + 5, 2.5, h - 16);
+          x2.lineJoin = 'round'; x2.strokeStyle = 'rgba(10,15,40,.85)'; x2.lineWidth = 4; x2.fillStyle = '#fff';
+          var big = cup.t === 'ing' ? '1' : cup.t === 'gcard' ? '★' : String(cup.n);
+          x2.font = '800 17px Fredoka, system-ui, sans-serif'; x2.strokeText(big, x + binW / 2, cupTop + 33); x2.fillText(big, x + binW / 2, cupTop + 33);
+          var lab = { tickets: 'tickets', seeds: 'seeds', coins: 'coins', ing: 'ingred.', gcard: 'gold' }[cup.t];
+          x2.font = '700 10px Fredoka, system-ui, sans-serif'; x2.lineWidth = 3; x2.strokeText(lab, x + binW / 2, cupTop + 48); x2.fillText(lab, x + binW / 2, cupTop + 48);
         });
-        for (var k = 1; k < DROP_CUPS.length; k++) { c.fillStyle = '#3d1a4f'; c.fillRect(k * binW - 2.5, cupTop - 4, 5, H - cupTop + 4); c.fillStyle = '#ffd45c'; c.beginPath(); c.arc(k * binW, cupTop - 4, 4, 0, 7); c.fill(); }
+        for (var k = 1; k < DROP_CUPS.length; k++) { x2.fillStyle = '#0b1430'; x2.fillRect(k * binW - 2.5, cupTop - 4, 5, H - cupTop + 4); var kg = x2.createRadialGradient(k * binW - 1, cupTop - 5, .5, k * binW, cupTop - 4, 4.5); kg.addColorStop(0, '#fffbe0'); kg.addColorStop(1, '#c98a12'); x2.fillStyle = kg; x2.beginPath(); x2.arc(k * binW, cupTop - 4, 4.5, 0, 7); x2.fill(); }
       }
       function draw() {
         if (!stat) { stat = document.createElement('canvas'); stat.width = cv.width; stat.height = cv.height; var c2 = stat.getContext('2d'); c2.scale(d, d); drawStatic(c2); }
