@@ -1534,6 +1534,13 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @media (max-width: 640px) { .tmwrap { grid-template-columns: 1fr; } }
 
 /* power-up bar across the top of the round */
+#play { grid-template-columns: var(--lc) minmax(0, 1fr) !important; grid-template-areas: "l t" "l c" !important; }
+#play .rail { display: none !important; }
+#play #cards { grid-template-rows: minmax(0, 1fr); }
+#play #cards .bigs, #play #cards .minis { min-height: 0; }
+#play .minis > * { flex: none; }
+@media (max-height: 300px) { #play #cards.has-minis .minis { display: grid; grid-template-columns: auto auto; align-content: center; justify-content: center; gap: 5px; } #play .minis .bcard { grid-column: 1 / -1; justify-self: center; } #play .minis .swap { padding: 2px 8px; font-size: 13px; } #play .minis .swap span { display: none; } }
+#play .pqbar { cursor: pointer; }
 #play .pqbar { flex: none; position: relative; display: flex; align-items: center; gap: 5px; height: calc(var(--tb) - 10px); padding: 0 8px 0 4px; border-radius: 999px;
   background: linear-gradient(180deg, rgba(74,26,110,.92), rgba(40,10,62,.92)); box-shadow: 0 0 0 2px #f6c64a, 0 0 0 3.5px var(--ol), 0 4px 10px rgba(10,2,20,.45); }
 #play .pqbar.full { animation: pqGlow .9s ease-in-out infinite; }
@@ -2294,8 +2301,8 @@ function swipe(el, fn) {
 function pupGuide() {
   function row(id) { var p = pupById(id); return '<div class="pti info"><span class="pto">' + icon(p.icon) + '<b>' + owned(id) + '</b></span><span class="ptt"><b>' + p.name + '</b><small>' + p.desc + '</small></span></div>'; }
   panel('<h3>Power-ups</h3><p><b>Before the round:</b> tap them on the room screen to switch them on. They glow when they are on and are used when you press PLAY.</p><div class="ptray">' + PRE_PUPS.map(row).join('') + '</div>' +
-    '<p><b>During the round:</b> tap them on the right side of the bingo screen, or tap <b>More</b> for the full list. Each one plays its own show when it works.</p><div class="ptray">' + IN_PUPS.map(row).join('') + '</div>' +
-    '<p class="note">Your power-ups load into the bar at the top by themselves. As you mark numbers the <b>Boost</b> fills; when it's full, the next power-up fires and every card gets 2 free marks. With <b>AUTO</b> on it all happens for you. +5 Balls kicks in by itself on the last ball.</p>', 'mid');
+    '<p><b>During the round:</b> you don\'t have to do anything. They load into the bar at the top and fire one by one as your Boost fills. Here is how many you have:</p><div class="ptray">' + IN_PUPS.map(row).join('') + '</div>' +
+    '<p class="note">As you mark numbers the glow line under the bar fills; when it\'s full, the next power-up fires and every card gets 2 free marks. With <b>AUTO</b> on it all happens for you; with it off, tap the glowing bar. +5 Balls kicks in by itself on the last ball, Bloom Alert at the start (if it\'s on in Settings), and Time Freeze only when you mark numbers yourself.</p>', 'mid');
 }
 function roomScreen(room) {
   stopRound();
@@ -2473,7 +2480,7 @@ function renderPlay() {
       '<span class="auto">Auto<button class="sw" id="swAuto" aria-pressed="' + !!S.settings.auto + '" aria-label="Auto daub"></button></span></div>' +
     '<div class="ptop"><div class="ballwrap"><div class="ball" id="ball"><div class="in"><small>READY</small><b>·</b></div></div><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength="100"/></svg></div>' +
       '<div class="stripwrap"><button class="strip tube" id="strip" aria-label="Called numbers. Tap to see them all."><span class="lbl">Balls<br><b id="nCalled">0/' + R.seq.length + '</b></span></button><span class="goal" id="goal" hidden></span></div><div class="pqbar" id="pq"><button class="pqauto" id="bAutoB" aria-pressed="' + autoPups() + '" aria-label="Use power-ups automatically">AUTO</button><div class="pqslots" id="pqSlots"></div><span class="pqcharge"><i id="pqFill"></i></span></div><span class="ballcount" id="nBallsTop">0/' + R.seq.length + '</span></div>' +
-    '<div class="rail">' +
+    '<div class="rail" hidden>' +
       '<button class="pu boostb" id="bBoost" disabled aria-label="Bloom Boost"><span class="orb"><span class="fillr"></span>' + icon('i-blossom') + '</span><span class="pl">Boost</span></button>' +
       '<div class="dock">' +
         '<button class="pu" id="bWild" aria-label="Wild"><span class="orb">' + icon('i-wild') + '<b id="nWild">' + S.items.wild + '</b></span><span class="pl">Wild</span></button>' +
@@ -2484,13 +2491,14 @@ function renderPlay() {
         '<button class="pu pmore" id="bMore" aria-label="All power-ups"><span class="orb">' + icon('i-more') + '<b id="nMore">' + IN_PUPS.reduce(function (a, k) { return a + owned(k); }, 0) + '</b></span><span class="pl">More</span></button>' +
       '</div>' +
       '<span hidden><b id="sBalls"></b><b id="sCoins"></b><b id="sPetals"></b><i id="meter"></i></span></div>' +
-    '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap">⇄ Swap</button><button class="b3 plum swap" id="bView4">⊞ All 4</button></div></div></div>');
+    '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap" aria-label="Swap cards">⇄<span> Swap</span></button><button class="b3 plum swap" id="bView4" aria-label="Show all 4 cards">⊞<span> All 4</span></button></div></div></div>');
   R.els = R.cards.map(function (k, ci) { var t = document.createElement('div'); t.innerHTML = cardHtml(k, ci); return t.firstChild; });
   placeCards();
   $('#cards').addEventListener('click', onCardTap);
   $('#bBoost').onclick = useBoost;
   $('#bAutoB').onclick = function () { S.settings.autoBoost = !autoPups(); save(); this.setAttribute('aria-pressed', autoPups()); SFX.tap(); toast(autoPups() ? 'Auto power-ups on: when Boost fills, your power-ups fire by themselves' : 'Auto power-ups off: tap the glowing Boost to fire them', 3000); meterUi(); };
   R.pq = []; pqFill(true);
+  $('#pq').onclick = function (e) { if (e.target.closest('#bAutoB') || !R) return; if (R.meter >= R.boostAt && R.active) useBoost(); else { SFX.tap(); toast(R.pq.length ? 'Your power-ups fire when the glow line under them is full. Keep marking numbers!' : 'No power-ups loaded. Get more in the Shop between rounds.', 2800); } };
   $('#bPause').onclick = togglePause;
   $('#bSwap').onclick = swapCards;
   $('#bView4').onclick = function () { S.settings.view4 = !S.settings.view4; save(); SFX.tap(); placeCards(); };
@@ -2539,11 +2547,11 @@ function placeCards() {
   if (R.els.length <= 2) { R.els.forEach(function (e) { big.appendChild(e); }); cards.classList.remove('has-minis'); }
   else if (S.settings.view4) {
     cards.classList.remove('has-minis'); cards.classList.add('all4'); big.classList.add('four');
-    R.els.forEach(function (e) { big.appendChild(e); }); big.appendChild(v4); v4.textContent = '⊟ 2 big';
+    R.els.forEach(function (e) { big.appendChild(e); }); big.appendChild(v4); v4.innerHTML = '⊟<span> 2 big</span>';
   } else {
     cards.classList.add('has-minis');
     R.els.forEach(function (e, i) { (Math.floor(i / 2) === R.focus ? big : mini).appendChild(e); });
-    mini.appendChild(swap); mini.appendChild(v4); v4.textContent = '⊞ All 4';
+    mini.appendChild(swap); mini.appendChild(v4); v4.innerHTML = '⊞<span> All 4</span>';
   }
   fitCards(); updateMinis(); requestAnimationFrame(fitCards);
 }
@@ -2578,12 +2586,18 @@ function autoDaub(n) {
 }
 function fitCards() {
   var area = $('.bigs'); if (!area || !R) return;
+  var c = $('#cards'), m = $('.minis');
+  if (c && m && c.classList.contains('has-minis')) { // small cards: share the height with the Swap and All 4 buttons
+    var mc = m.querySelector('.bcard'), btns = 0; m.querySelectorAll('.swap').forEach(function (b) { btns = getComputedStyle(m).display === 'grid' ? Math.max(btns, b.offsetHeight) : btns + b.offsetHeight; });
+    var ratio = mc && mc.offsetWidth ? mc.offsetHeight / mc.offsetWidth : 1.05, avail = c.clientHeight - btns - parseFloat(getComputedStyle(m).rowGap || 8) * (getComputedStyle(m).display === 'grid' ? 2 : m.children.length - 1) - 6;
+    var extra = mc ? Math.max(0, mc.offsetWidth - (parseFloat(getComputedStyle(c).getPropertyValue('--mw')) || mc.offsetWidth)) : 0;
+    c.style.setProperty('--mw', Math.floor(Math.max(44, Math.min(110, avail / 2 / ratio - extra))) + 'px');
+  }
   var four = area.classList.contains('four'), n = four ? 2 : Math.min(2, R.cards.length), gap = 12, W = area.clientWidth, H = (four ? (area.clientHeight - 8 - gap) / 2 : area.clientHeight - 8);
   var cw = Math.floor((W - gap * (n - 1)) / n);
   area.style.setProperty('--cw', cw + 'px');
   var one = area.querySelector('.bcard'); // fill the width, then shrink until the card fits the height
   if (one && one.offsetHeight > H) area.style.setProperty('--cw', Math.floor(cw * H / one.offsetHeight) + 'px');
-  var c = $('#cards'); if (c) c.style.setProperty('--mw', Math.floor(Math.max(54, Math.min(110, (c.clientHeight - 54) / 2 / 1.05))) + 'px');
 }
 function cardHtml(k, ci) {
   return '<div class="bcard" data-c="' + ci + '"><span class="lucky outl">×2</span><div class="hdr">' + COLS.map(function (l) { return '<span>' + l + '</span>'; }).join('') + '</div>' +
@@ -2686,7 +2700,7 @@ function boostMarks() {
 }
 
 /* ---------- power-up bar: loads itself from what you own; each full Boost fires the next one ---------- */
-var PQ_ORDER = ['allx2', 'daub3', 'instant', 'wild', 'daub2', 'chest', 'coinsq', 'daub1', 'super'], PQ_SLOTS = 3, pqFrom = null;
+var PQ_ORDER = ['allx2', 'daub3', 'instant', 'wild', 'daub2', 'chest', 'coinsq', 'daub1', 'super', 'freeze'], PQ_SLOTS = 3, pqFrom = null;
 function autoPups() { return S.settings.autoBoost !== false; }
 function pqSrc() { return pqFrom && pqFrom.isConnected ? pqFrom : null; }
 function pqFill(first) {
@@ -2695,7 +2709,7 @@ function pqFill(first) {
   R.pq = R.pq.filter(function (q, i) { return owned(q) > R.pq.slice(0, i).filter(function (x) { return x === q; }).length; });
   var added = [];
   while (R.pq.length < PQ_SLOTS) {
-    var nx = PQ_ORDER.filter(function (id) { return owned(id) - R.pq.filter(function (q) { return q === id; }).length > 0 && !(id === 'allx2' && (R.allx2 || R.pq.indexOf('allx2') >= 0)); })[0];
+    var nx = PQ_ORDER.filter(function (id) { return owned(id) - R.pq.filter(function (q) { return q === id; }).length > 0 && !(id === 'allx2' && (R.allx2 || R.pq.indexOf('allx2') >= 0)) && !(id === 'freeze' && S.settings.auto); })[0];
     if (!nx) break; R.pq.push(nx); added.push(R.pq.length - 1);
   }
   if (first || added.length || before !== R.pq.join()) pqDraw(added, first);
