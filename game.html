@@ -1679,6 +1679,26 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .pinvr b { background: linear-gradient(180deg, #b98cff, #6a32d0) !important; color: #fff !important; }
 @media (max-height: 480px) { .bundles { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; } .btray { height: 64px; } .bund.hero .btray { height: 88px; } .stabs .sto { width: 40px; height: 40px; } }
 @media (max-height: 300px) { .stabs { gap: 10px; padding: 3px 12px 2px; } .stabs .sto { width: 30px; height: 30px; } .stabs small { display: none; } .stabs button[aria-pressed="true"] .sto { transform: translateY(-2px) scale(1.08); } }
+
+/* ===== featured room tiles: bright, colorful, each room its own color ===== */
+.hud-feat { justify-content: center; gap: 10px !important; padding: 12px 6px 8px !important; overflow: visible !important; }
+.ftile.ft2 { flex: 1 1 0; min-width: 0; max-width: 168px; height: auto !important; aspect-ratio: 16 / 9.6; max-height: clamp(52px, 21vh, 92px); overflow: visible !important; border-radius: 16px;
+  background: linear-gradient(180deg, var(--c1), var(--c2)) !important; padding: 0; box-shadow: 0 0 0 2.5px #fff, 0 0 0 4.5px var(--ol), 0 5px 0 4px color-mix(in srgb, var(--c2) 55%, #2a0c46), 0 10px 16px rgba(20,5,30,.35) !important; }
+.ftile.ft2::before { content: ''; position: absolute; inset: 4px; z-index: 2; border-radius: 12px; pointer-events: none; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.75), inset 0 -22px 18px -12px color-mix(in srgb, var(--c2) 70%, transparent); }
+.ftile.ft2 .fpic { inset: 4px; border-radius: 12px; overflow: hidden; filter: brightness(var(--fb, 1.1)) saturate(1.25); }
+.ftile.ft2::after { inset: 4px; border-radius: 12px; z-index: 3; }
+.ftile.ft2 .fnm { position: absolute; z-index: 4; left: 50%; right: auto; bottom: -9px; transform: translateX(-50%); max-width: 104%; padding: 2px 10px; border-radius: 999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 11.5px; font-weight: 800; color: var(--c2); background: linear-gradient(180deg, #fffdf4, #ffeccc); box-shadow: 0 0 0 2px var(--c2), 0 0 0 3.5px var(--ol), 0 3px 4px rgba(20,5,30,.35); text-shadow: none; }
+.ftile.ft2 .fnm { color: color-mix(in srgb, var(--c2) 80%, #2a0c46); }
+.ftile.ft2 .frib { top: -8px; left: 8px; border-radius: 999px; padding: 1px 8px; font-size: 8.5px; color: #fff; background: linear-gradient(180deg, var(--c1), var(--c2)); box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol); text-shadow: 0 1px 0 rgba(40,10,50,.5); z-index: 5; }
+.ftile.ft2 .fhot { top: -12px; right: 2px; left: auto; width: 40px; height: 40px; padding: 0; border-radius: 50%; display: grid; place-content: center; justify-items: center; gap: 0; line-height: 1; z-index: 6;
+  background: radial-gradient(circle at 35% 30%, #ffe08a, #ff8a3c 55%, #e5383b); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--ol), 0 0 14px 4px rgba(255,120,60,.75); font-size: 12px; animation: hotPulse 1s ease-in-out infinite; }
+.ftile.ft2 .fhot b { font-size: 10px; color: #fff; text-shadow: 0 1px 0 #8a1a10; } .ftile.ft2 .fhot small { font-size: 6.5px; font-weight: 800; color: #fff; }
+.ftile.ft2.is-hot { box-shadow: 0 0 0 2.5px #fff3b8, 0 0 0 4.5px var(--ol), 0 5px 0 4px color-mix(in srgb, var(--c2) 55%, #2a0c46), 0 0 22px 6px rgba(255,170,80,.65) !important; }
+.ftile.ft2 .fspk { z-index: 4; } .ftile.ft2 .fspk.s3 { top: 18%; right: 34%; left: auto; width: 6px; height: 6px; animation-delay: .4s; }
+.ftile.ft2:hover, .ftile.ft2:focus-visible { transform: translateY(-3px); }
+.ftile.ft2 { transition: transform .15s; }
+@media (max-height: 300px) { .ftile.ft2 .fnm { font-size: 9px; padding: 1px 6px; bottom: -7px; } .ftile.ft2 .fhot { width: 30px; height: 30px; top: -9px; right: 2px; } .ftile.ft2 .fhot small { display: none; } .ftile.ft2 .frib { font-size: 7px; top: -6px; } .hud-feat { gap: 7px !important; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2292,7 +2312,10 @@ function lobby() {
       rb('bTeam', 'i-team', '', 'Team', gardenReady()) +
     '</div>' +
     '<div class="hud hud-feat">' + feat.map(function (r) {
-      return '<button class="ftile" data-r="' + ROOMS.indexOf(r) + '" style="background-image:url(' + r.img + ')"><span class="fpic" style="background-image:url(' + r.img + ')"></span><span class="frib">' + MODE_INFO[r.mode].tag + '</span>' + (r.id === hotRoom() ? '<span class="fhot">🔥 HOT · 2× petals</span>' : '') + '<span class="fnm outl">' + esc(r.name) + '</span><i class="fspk s1"></i><i class="fspk s2"></i></button>';
+      var th = FEAT_THEME[r.id] || FEAT_THEME.garden, hot = r.id === hotRoom();
+      return '<button class="ftile ft2' + (hot ? ' is-hot' : '') + '" data-r="' + ROOMS.indexOf(r) + '" style="--c1:' + th[0] + ';--c2:' + th[1] + ';--fb:' + th[2] + '"><span class="fpic" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span>' +
+        '<span class="frib">' + MODE_INFO[r.mode].tag + '</span>' + (hot ? '<span class="fhot" title="2× petals here today">🔥<b>HOT</b><small>2× petals</small></span>' : '') +
+        '<span class="fnm">' + esc(r.name) + '</span><i class="fspk s1"></i><i class="fspk s2"></i><i class="fspk s3"></i></button>';
     }).join('') + '</div>' +
   '</div>');
   $('#worldWrap').scrollTop = keep;
@@ -2364,6 +2387,8 @@ function buildSheet(i, after) {
     });
 }
 
+/* featured tile colors: frame light, frame deep, picture brightness */
+var FEAT_THEME = { garden: ['#b79cff', '#6a3fd6', 1.32], meadow: ['#8ff0cf', '#1fa58c', 1.1], carnival: ['#ffb3d6', '#e0478c', 1.08], coast: ['#ffe08a', '#f08a1c', 1.06], market: ['#ffb08f', '#d9443a', 1.18] };
 var ROOMS = [
   { id: 'patisserie', lm: 'patisserie', name: 'Rose Patisserie', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '30%' },
   { id: 'cafe', lm: 'cafe', name: 'Cafe du Parc', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '60%' },
