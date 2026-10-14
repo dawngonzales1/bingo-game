@@ -2207,6 +2207,8 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 #stGo { animation: popIn .4s 2.4s both, playPulse 1.4s 2.8s ease-in-out infinite; }
 .lite .gcol .bsrays { display: none; }
 #mapSvg .lmlock image { filter: grayscale(.75) brightness(.8); }
+#mapSvg .growme { transform-box: fill-box; transform-origin: 50% 100%; animation: growBob 1.2s ease-in-out infinite; }
+@keyframes growBob { 50% { transform: translateY(-6px) scale(1.08); } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2419,6 +2421,15 @@ function cityLock(id) {
 }
 function lockMsg(r) { var p = cityLock(r.lm || r.id); return p ? r.name + ' opens when ' + p.name + ' has its first blossom. Win petals in bingo, then tap Grow in ' + p.name + '.' : ''; }
 function stepOpen(ri, d) { for (var k = 1; k <= ROOMS.length; k++) { var r = ROOMS[(ri + d * k + ROOMS.length * k) % ROOMS.length]; if (!cityLock(r.lm || r.id)) return r; } return ROOMS[ri]; }
+// the room to work on next: the first open Paris room that still needs blossoms
+function goalLm() { for (var i = 0; i < CITY_ROOMS.length; i++) { var id = CITY_ROOMS[i]; if (!cityLock(id) && (S.build[id] || 0) < 3) return id; } return null; }
+function mapToGoal() {
+  var w = $('#worldWrap'), id = goalLm(); if (!w || !id) return;
+  var g = [].slice.call(document.querySelectorAll('#mapSvg .lm')).filter(function (x) { return LANDMARKS[+x.dataset.lm].id === id; })[0]; if (!g) return;
+  var t = $('.hud-feat'), vis = (t ? t.getBoundingClientRect().top : w.clientHeight) - w.getBoundingClientRect().top, r = g.getBoundingClientRect();
+  var mid = r.top - w.getBoundingClientRect().top + w.scrollTop + r.height / 2;
+  w.scrollTop = Math.max(0, mid - vis * .5);
+}
 function roomByLm(id) { return ROOMS.filter(function (r) { return r.lm === id; })[0]; }
 
 /* ---------- sound: made from scratch with the phone's synthesizer ---------- */
@@ -2679,7 +2690,8 @@ function ribbon(lm, i) {
     var on = k < lvl, x = (k - 1) * 28, y = -30 - (k === 1 ? 6 : 0);
     var sz = k === 1 ? 30 : 26; s += '<svg x="' + (x - sz / 2) + '" y="' + (y - sz / 2) + '" width="' + sz + '" height="' + sz + '" viewBox="0 0 40 40"><use href="#' + (on ? 'i-blossom' : 'i-blossom0') + '"/></svg>';
   }
-  if (cityLock(lm.id)) s += '<g class="maplock"><circle cx="' + (W / 2 + 10) + '" cy="-2" r="17" fill="#3d1a4f" stroke="#fff3b8" stroke-width="3"/><text x="' + (W / 2 + 10) + '" y="6" text-anchor="middle" font-size="20">🔒</text></g>';
+  if (cityLock(lm.id)) s += '<g class="maplock"><circle cx="' + (-W / 2 - 4) + '" cy="-2" r="17" fill="#3d1a4f" stroke="#fff3b8" stroke-width="3"/><text x="' + (-W / 2 - 4) + '" y="6" text-anchor="middle" font-size="20">🔒</text></g>';
+  if (CITY_ROOMS.indexOf(lm.id) >= 0 && !cityLock(lm.id) && lvl < 3 && S.petals >= STAR_COST[lvl]) s += '<g class="growme"><rect x="' + (W / 2 - 14) + '" y="-50" width="76" height="30" rx="15" fill="#3fb43a" stroke="#fff" stroke-width="3"/><text x="' + (W / 2 + 24) + '" y="-29" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="800" font-size="17" fill="#fff" stroke="#1d5a1a" stroke-width="3" paint-order="stroke">Grow!</text></g>';
   if (false) s += '<g class="bounce"><circle cx="' + (W / 2 + 4) + '" cy="-30" r="17" fill="url(#gBuild)"' + OL + '/><svg x="' + (W / 2 - 10) + '" y="-44" width="28" height="28" viewBox="0 0 40 40"><use href="#i-hammer"/></svg></g>';
   return s + '</g>';
 }
@@ -2999,6 +3011,7 @@ function lobby() {
     }).join('') + '</div>' +
   '</div>');
   $('#worldWrap').scrollTop = keep;
+  if (!keep) mapToGoal();
   if (!SWEPT) { SWEPT = true; var sw = $('.csweep'); if (sw) setTimeout(function () { sw.remove(); }, 3400); }
   $('#worldWrap').addEventListener('click', function (e) {
     var g = e.target.closest('.lm'); if (!g) return;
