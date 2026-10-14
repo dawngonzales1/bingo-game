@@ -216,6 +216,10 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #cards.has-minis .minis { display: flex; }
 .minis .bcard { width: var(--mw, 92px); cursor: pointer; box-shadow: 0 3px 0 var(--ol); }
 .minis .bcard * { pointer-events: none; }
+.minis .bcard { overflow: visible; }
+.minis .bcard:nth-of-type(1)::before { content: '3'; }
+.minis .bcard:nth-of-type(2)::before { content: '4'; }
+.minis .bcard::before { position: absolute; z-index: 4; top: -9px; left: -9px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 800 12px var(--ui); color: #3d1a4f; background: radial-gradient(circle at 40% 30%, #fff8d6, #ffd45c 55%, #e9a81c); box-shadow: 0 0 0 2px #3d1a4f; }
 .minis .bcard.ready { box-shadow: 0 0 0 3px var(--gold2), 0 0 18px var(--gold2); animation: pulse 1s ease-in-out infinite; }
 .minis .bcard.ready::after { content: 'BINGO!'; position: absolute; left: 50%; top: 40%; transform: translateX(-50%); padding: 2px 6px; border-radius: 8px; background: var(--gold2); border: 2px solid var(--ol); font-weight: 700; font-size: 12px; }
 .swap { font-size: 13px; padding: 5px 10px; border-radius: 12px; }
@@ -1260,7 +1264,9 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @keyframes stampIn { 0% { transform: scale(2.2) rotate(-25deg); opacity: 0; } 60% { transform: scale(.88) rotate(4deg); opacity: 1; } 100% { transform: none; } }
 #play .cell.d { background: linear-gradient(180deg, #f6ecff, #e2cdfb); }
 #play .cell.d span { color: #fff; text-shadow: 0 .4cqw 0 #2a0d3d, 0 0 1.4cqw rgba(42,13,61,.9); }
-#play .cell .tr { top: auto; bottom: 4%; right: 4%; width: 36%; height: 36%; filter: drop-shadow(0 0 1.4cqw rgba(255,214,92,.95)); animation: trBob 1.8s ease-in-out infinite; }
+#play .cell .tr { top: 22%; left: 24%; right: auto; bottom: auto; width: 68%; height: 68%; opacity: .92; z-index: 0; filter: drop-shadow(0 0 1.4cqw rgba(255,214,92,.95)); animation: trBob 1.8s ease-in-out infinite; }
+#play .cell:has(.tr):not(.d) > span { position: relative; z-index: 1; color: #fff; text-shadow: 0 .4cqw 0 #3d1a4f, 0 0 .9cqw #3d1a4f, 0 0 2cqw rgba(20,5,35,.9); }
+#play .cell.d .tr { opacity: .35; }
 #play .cell:has(.tr):not(.d) { box-shadow: inset 0 0 0 .6cqw rgba(255,214,92,.75), inset 0 -1.1cqw 0 rgba(176,122,18,.3), 0 .9cqw 0 rgba(20,5,30,.55); }
 @keyframes trBob { 50% { transform: translateY(-8%) scale(1.08); } }
 #play .cell.free { background: radial-gradient(circle at 35% 28%, #fffbe0 0 12%, #ffd45c 45%, #d99211); color: #5b2a00; text-shadow: 0 1px 0 rgba(255,255,255,.6); animation: freeGlow 2.4s ease-in-out infinite; }
@@ -1533,7 +1539,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .ptt b { font-size: 14px; color: #ffe58f; }
 .ptt small { font-size: 11.5px; line-height: 1.25; color: #e6d4ff; }
 #play .pmore .orb { background: radial-gradient(circle at 40% 30%, rgba(255,255,255,.5) 0, rgba(255,255,255,.18) 10%, rgba(255,255,255,0) 30%), radial-gradient(circle, #fff3c4, #ffd45c 70%, #e9a81c); }
-.cell .tr.big { width: 46%; height: 46%; filter: drop-shadow(0 0 1.6cqw rgba(255,214,92,1)); }
+.cell .tr.big { filter: drop-shadow(0 0 1.6cqw rgba(255,214,92,1)); }
 .frost { position: absolute; inset: 0; z-index: 8; pointer-events: none; display: grid; place-items: center; background: radial-gradient(ellipse at center, rgba(217,242,255,.05), rgba(150,210,255,.45)); box-shadow: inset 0 0 60px 20px rgba(200,235,255,.8); animation: fade .4s; }
 .frost b { font-size: clamp(40px, 22vh, 110px); color: #d9f2ff; opacity: .85; animation: pulse 1s ease-in-out infinite; }
 #cards.all4 .bigs.four { display: grid; grid-template-columns: repeat(2, auto); justify-content: center; align-content: center; gap: 12px; position: relative; }
@@ -2136,6 +2142,16 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 #play > .bslam { position: fixed; grid-area: 1 / 1 / -1 / -1; }
 .bslam { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; pointer-events: none; overflow: hidden; animation: bsOut .4s ease-in 1.55s forwards; }
 @keyframes bsOut { to { opacity: 0; transform: scale(1.06); } }
+.bcard .bslam.incard { position: absolute; inset: 0; z-index: 6; border-radius: inherit; background: radial-gradient(ellipse at 50% 55%, rgba(45,12,70,.55), rgba(45,12,70,.2) 70%); }
+.bslam.incard .bsrays { width: 320%; margin: -160% 0 0 -160%; }
+.bslam.incard .bswrap::before { display: none; }
+.bslam.incard .bstrophy { width: 34cqw; height: auto; margin-bottom: -4cqw; filter: drop-shadow(0 2cqw 3cqw rgba(20,5,35,.55)); animation: gcBox .7s cubic-bezier(.2,1.5,.4,1) both; }
+.bslam.incard .bsl { font-size: 16.5cqw; gap: 0; }
+.bcard:has(.bslam.incard) .won { opacity: 0; }
+.bslam.incard .bsl b { animation: bsDrop2 .5s cubic-bezier(.2,1.5,.4,1) both; animation-delay: calc(.1s + var(--k) * .06s); }
+@keyframes bsDrop2 { from { transform: translateY(-60%) scale(1.6) rotate(-10deg); opacity: 0; } 60% { opacity: 1; } to { transform: none; } }
+.bslam.incard em { font-size: 6.5cqw; }
+.bslam.incard small { font-size: 5cqw; padding: .6cqw 3cqw; }
 .bsrays { position: absolute; left: 50%; top: 50%; width: 150vmax; aspect-ratio: 1; margin: -75vmax 0 0 -75vmax; background: repeating-conic-gradient(rgba(255,229,143,.38) 0 8deg, transparent 8deg 22deg); -webkit-mask: radial-gradient(circle, #000 8%, transparent 52%); mask: radial-gradient(circle, #000 8%, transparent 52%); animation: bsRays 2s ease-out both; }
 @keyframes bsRays { from { transform: scale(.3) rotate(0); opacity: 0; } 25% { opacity: 1; } to { transform: scale(1) rotate(60deg); opacity: .9; } }
 .bswrap { position: relative; display: grid; justify-items: center; gap: 2px; }
@@ -2283,7 +2299,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .giftwait .gclock { position: absolute; right: -4px; bottom: -2px; font-size: 18px; font-style: normal; filter: drop-shadow(0 1px 1px rgba(0,0,0,.4)); }
 
 /* featured row, calmer: Cordie stands at the end pointing at the rooms; the spotlight is a soft glow, not a resize */
-.hud-feat .fcordie { height: clamp(50px, 20vh, 96px) !important; left: auto !important; right: -14px; transform: none; transition: none; animation: hudBob 3s ease-in-out infinite; }
+.hud-feat .fcordie { height: clamp(50px, 20vh, 96px) !important; left: auto !important; right: 2px; transform: none; transition: none; animation: hudBob 3s ease-in-out infinite; }
 .hud-feat .fcordie.nudge { animation: fcNudge .6s ease-out, hudBob 3s .6s ease-in-out infinite; }
 @keyframes fcNudge { 40% { transform: translateX(-8px) rotate(-4deg); } }
 .ftile.ft2 { transition: transform .5s ease, box-shadow .5s ease !important; }
@@ -3436,7 +3452,7 @@ function lobby() {
   $('#worldWrap').addEventListener('click', function (e) {
     var g = e.target.closest('.lm'); if (!g) return;
     var lm = LANDMARKS[+g.dataset.lm], r = roomByLm(lm.id); SFX.tap();
-    if (r) roomScreen(r); else toast(lm.name + ' opens when all 4 Paris rooms have 3 blossoms.', 3200);
+    if (r) roomScreen(r); else if (S.cityDone) toast('Paris is complete! The Stone Bridge leads to the next city, coming soon.', 3200); else toast(lm.name + ' opens when all 4 Paris rooms have 3 blossoms.', 3200);
   });
   app.querySelectorAll('.ftile').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
   featSpotlight();
@@ -4453,11 +4469,18 @@ function checkBingo(ci) {
   }
 }
 /* the BINGO moment: gold letters slam down over light rays and Cordie cheers. Never blocks taps, gone in under 2 seconds */
-function bingoSlam(name, sub) {
+function bingoSlam(name, sub, card) {
   var host = $('#play'); if (!host) return;
+  var big = /blackout/i.test(name) ? 'BLACKOUT' : 'BINGO';
+  if (card && big === 'BINGO') { // the callout slams onto the winning card; your other cards stay in play
+    var oldc = card.querySelector('.bslam'); if (oldc) oldc.remove();
+    var c = document.createElement('div'); c.className = 'bslam incard';
+    c.innerHTML = '<i class="bsrays"></i><div class="bswrap"><img class="bstrophy" src="art/art-trophy.webp" alt=""><div class="bsl">' + big.split('').map(function (ch, i) { return '<b class="outl" style="--k:' + i + '">' + ch + '</b>'; }).join('') + '</div>' +
+      (!/^bingo!?$/i.test(name) ? '<em class="outl">' + esc(name) + '</em>' : '') + '<small>' + esc(sub) + '</small></div>';
+    card.appendChild(c); setTimeout(function () { c.remove(); }, 2000); return;
+  }
   var old = host.querySelector('.bslam'); if (old) old.remove();
   var d = document.createElement('div'); d.className = 'bslam';
-  var big = /blackout/i.test(name) ? 'BLACKOUT' : 'BINGO';
   d.innerHTML = '<i class="bsrays"></i><div class="bswrap"><div class="bsl">' + big.split('').map(function (ch, i) { return '<b class="outl" style="--k:' + i + '">' + ch + '</b>'; }).join('') + '</div>' +
     (big === 'BINGO' && !/^bingo!?$/i.test(name) ? '<em class="outl">' + esc(name) + '</em>' : '') + '<small>' + esc(sub) + '</small></div><img class="bscordie" src="art/mascot-cheer.webp" alt="">';
   host.appendChild(d); setTimeout(function () { d.remove(); }, 2000);
@@ -4500,7 +4523,7 @@ function claimLine(ci, line) {
   var burst = document.createElement('div'); burst.className = 'won';
   burst.innerHTML = '<div><b>' + name + '</b><small>' + (luck > 1 ? 'Lucky ×2! ' : '') + (lb.note ? lb.note + ' · ' : '') + '+' + coins + ' coins · +' + petals + ' petals</small></div>';
   el.appendChild(burst);
-  bingoSlam(name, (luck > 1 ? 'Lucky ×2! ' : '') + '+' + coins + ' coins');
+  bingoSlam(name, (luck > 1 ? 'Lucky ×2! ' : '') + '+' + coins + ' coins', el);
   line.forEach(function (i, w) { var c = el.querySelector('[data-i="' + i + '"]'); if (c) { c.style.setProperty('--w', w); c.classList.remove('wave'); void c.offsetWidth; c.classList.add('wave'); setTimeout(function () { c.classList.remove('wave'); }, 1400); } });
   oneToGo(ci);
   if (k.won) el.classList.add('done'); else setTimeout(function () { burst.remove(); }, 1700);
