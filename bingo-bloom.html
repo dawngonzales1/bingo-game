@@ -2275,6 +2275,11 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .ccordie { position: fixed; bottom: 0; height: min(42vh, 200px); pointer-events: none; filter: drop-shadow(0 6px 10px rgba(10,2,20,.5)); animation: hudBob 2.6s ease-in-out infinite; }
 .ccordie.l { left: 8px; } .ccordie.r { right: 8px; }
 @media (max-height: 300px) { .cbub2 p { font-size: 13px; } .ccordie { height: 34vh; } }
+
+.onl { display: inline-block; width: 9px; height: 9px; margin-right: 5px; border-radius: 50%; background: #3fd46a; box-shadow: 0 0 0 2px #fff, 0 0 8px #3fd46a; vertical-align: 1px; }
+.onlt { font-style: normal; font-weight: 800; color: #2fae55; }
+.albsend { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.albsend select { padding: 6px 8px; border-radius: 10px; font: 600 14px var(--ui); }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3164,7 +3169,7 @@ function lobby() {
   $('#bKitchen').onclick = kitchen;
   $('#bShop').onclick = function () { shop(); };
   $('#bGames').onclick = games;
-  $('#bTeam').onclick = function () { social(); };
+  $('#bTeam').onclick = function () { social(); }; setTimeout(teamDot, 0);
   setTimeout(teamDot, 0);
   $('#bSet').onclick = settings;
   $('#bFb').onclick = function () { SFX.tap(); feedback(); };
@@ -4363,7 +4368,9 @@ function album(setIdx) {
       var id = b.dataset.id, n = S.album[id] || 0, ci = cardInfo(id);
       if (!n) { buyCardSheet(id, setIdx); return; }
       panel('<div style="display:grid;grid-template-columns:min(150px,30vh) 1fr;gap:16px;align-items:center">' + cardFace(id) +
-        '<div style="display:grid;gap:8px"><h3>' + esc(ci.name) + '</h3><p>' + ci.set.name + ' set · card ' + (ci.idx + 1) + (ci.gold ? ' · ★ Gold' : '') + '</p><p>You have <b>' + n + '</b>' + (n > 1 ? ' (' + (n - 1) + ' extra to share)' : '') + '.</p></div></div>', 'small');
+        '<div style="display:grid;gap:8px"><h3>' + esc(ci.name) + '</h3><p>' + ci.set.name + ' set · card ' + (ci.idx + 1) + (ci.gold ? ' · ★ Gold' : '') + '</p><p>You have <b>' + n + '</b>' + (n > 1 ? ' (' + (n - 1) + ' extra to share)' : '') + '.</p>' + (n > 1 ? (ON.user && ON.friends.length ? '<div class="albsend"><select id="alTo">' + ON.friends.map(function (f) { return '<option value="' + f.id + '"' + (SOC.tradeTo === f.id ? ' selected' : '') + '>' + esc(f.name || 'Friend') + '</option>'; }).join('') + '</select><button class="b3 gold" id="alSend">Send a spare</button></div>' : '<p class="note">' + (ON.user ? 'Add friends in Team &amp; Friends to send them your spares.' : 'Sign in to send spares to friends and teammates.') + '</p>') : '') + '</div></div>', 'small', function (v) {
+        if ($('#alSend', v)) $('#alSend', v).onclick = function () { SOC.tradeTo = $('#alTo', v).value; sendCard(id, SOC.tradeTo); };
+      });
     };
   });
 }
@@ -5540,16 +5547,27 @@ function onSignedIn(u) {
     listenSocial(); fbAdminCheck(); fbFlush();
   }).catch(function (e) { toast('Could not reach your account right now. Your game still saves on this phone.', 3400); });
 }
-function onSignedOut() { ON.subs.forEach(function (f) { f(); }); ON.subs = []; ON.profile = null; ON.inbox = []; ON.friends = []; ON.requests = []; ON.team = null; teamDot(); }
+function onSignedOut() { ON.subs.forEach(function (f) { f(); }); ON.subs = []; clearInterval(ON.beatT); if (ON.chatW) { ON.chatW(); ON.chatW = null; } ON.lastChat = null; ON.profile = null; ON.inbox = []; ON.friends = []; ON.requests = []; ON.team = null; teamDot(); }
+// you show as online to your team while the game is open; a quiet heartbeat every 2 minutes
+function beat() { if (ON.user && !document.hidden) uref().set({ lastSeen: Date.now() }, { merge: true }).catch(function () {}); }
+function onlineText(p) { var t = p && p.lastSeen; if (!t) return ''; var m = (Date.now() - t) / 60000; return m < 5 ? 'on' : m < 60 ? 'Seen ' + Math.round(m) + ' min ago' : m < 1440 ? 'Seen ' + Math.round(m / 60) + ' hr ago' : 'Seen ' + Math.round(m / 1440) + ' day' + (m >= 2880 ? 's' : '') + ' ago'; }
+// the newest team chat message, so the Team button can show a dot for unread messages
+function watchTeamChat() {
+  if (ON.chatW) { ON.chatW(); ON.chatW = null; } ON.lastChat = null;
+  var tid = ON.profile && ON.profile.team; if (!tid) { teamDot(); return; }
+  ON.chatW = ON.db.collection('teams').doc(tid).collection('chat').orderBy('at', 'desc').limit(1).onSnapshot(function (s) { ON.lastChat = s.empty ? null : s.docs[0].data(); teamDot(); socialRefresh(); }, function () {});
+}
+function chatUnread() { return !!(ON.lastChat && ON.user && ON.lastChat.uid !== ON.user.uid && ON.lastChat.at > (S.chatSeen || 0)); }
 function listenSocial() {
   var me = uref();
+  beat(); clearInterval(ON.beatT); ON.beatT = setInterval(beat, 120000);
   ON.subs.push(me.collection('inbox').orderBy('at').limit(100).onSnapshot(function (s) { ON.inbox = s.docs.map(function (d) { var v = d.data(); v.id = d.id; return v; }); teamDot(); socialRefresh(); }, function () {}));
   ON.subs.push(me.collection('friends').onSnapshot(function (s) { ON.friends = s.docs.map(function (d) { var v = d.data(); v.id = d.id; return v; }); socialRefresh(); }, function () {}));
   ON.subs.push(me.collection('requests').onSnapshot(function (s) { ON.requests = s.docs.map(function (d) { var v = d.data(); v.id = d.id; return v; }); teamDot(); socialRefresh(); }, function () {}));
   ON.subs.push(dailyRef().onSnapshot(function (s) { ON.daily = s.exists ? s.data() : {}; socialRefresh(); }, function () {}));
-  ON.subs.push(me.onSnapshot(function (s) { if (s.exists) { ON.profile = s.data(); } }, function () {}));
+  ON.subs.push(me.onSnapshot(function (s) { if (s.exists) { var was = ON.profile && ON.profile.team; ON.profile = s.data(); if (ON.profile.team !== was || !ON.chatW) watchTeamChat(); } }, function () {}));
 }
-function teamDot() { var b = $('#bTeam .c'); if (!b) return; var hot = ON.inbox.length || ON.requests.length || gardenReady(); var d = b.querySelector('.dot'); if (hot && !d) b.insertAdjacentHTML('beforeend', '<span class="dot"></span>'); if (!hot && d) d.remove(); }
+function teamDot() { var b = $('#bTeam .c'); if (!b) return; var hot = ON.inbox.length || ON.requests.length || gardenReady() || chatUnread(); var d = b.querySelector('.dot'); if (hot && !d) b.insertAdjacentHTML('beforeend', '<span class="dot"></span>'); if (!hot && d) d.remove(); }
 function cloudSaveSoon() { if (!ON.user) return; clearTimeout(ON.saveT); ON.saveT = setTimeout(cloudSaveNow, 12000); }
 function cloudSaveNow() {
   if (!ON.user) return; clearTimeout(ON.saveT);
@@ -5775,7 +5793,9 @@ function social(tab) {
     });
     return;
   }
-  var tabs = [['friends', 'Friends', ON.requests.length], ['inbox', 'Inbox', ON.inbox.length], ['trade', 'Trade', 0], ['team', 'Team', 0], ['garden', 'Garden', gardenReady() ? 1 : 0]];
+  if (!tab && !SOC.opened) { SOC.opened = 1; if (ON.profile && ON.profile.team) SOC.tab = 'team'; }
+  if (SOC.tab === 'team' && chatUnread()) { S.chatSeen = Date.now(); save(); }
+  var tabs = [['team', 'Team', chatUnread() ? 1 : 0], ['friends', 'Friends', ON.requests.length], ['inbox', 'Inbox', ON.inbox.length], ['trade', 'Trade', 0], ['garden', 'Garden', gardenReady() ? 1 : 0]];
   panel('<div class="tabs">' + tabs.map(function (t) { return '<button data-st="' + t[0] + '" aria-pressed="' + (SOC.tab === t[0]) + '">' + t[1] + (t[2] ? '<i class="tbadge">' + t[2] + '</i>' : '') + '</button>'; }).join('') + '</div><div id="socBody" class="socbody"></div>', 'studio-p', function (v) {
     v.querySelectorAll('[data-st]').forEach(function (b) { b.onclick = function () { SFX.tap(); if (b.dataset.st === 'garden') { teamGarden(); return; } social(b.dataset.st); }; });
     socialBody();
@@ -5788,7 +5808,7 @@ function limitsLine() {
 }
 function personRow(p, right) {
   var av = p.avatar && p.avatar.indexOf('|') > 0 ? '<span class="pav" style="background-image:url(art/card-' + p.avatar.replace('|', '-') + '.webp)"></span>' : '<span class="pav ini">' + esc((p.name || '?').charAt(0).toUpperCase()) + '</span>';
-  return '<div class="prow"><span class="pfr fr-' + esc(p.frame || 'gold') + '">' + av + '</span><span class="pnm"><b>' + esc(p.name || 'Player') + '</b><small>Level ' + (p.level || 1) + '</small></span><span class="pbtn">' + right + '</span></div>';
+  return '<div class="prow"><span class="pfr fr-' + esc(p.frame || 'gold') + '">' + av + '</span><span class="pnm"><b>' + (onlineText(p) === 'on' ? '<i class="onl" title="Online now"></i>' : '') + esc(p.name || 'Player') + '</b><small>Level ' + (p.level || 1) + (onlineText(p) === 'on' ? ' · <em class="onlt">Online now</em>' : onlineText(p) ? ' · ' + onlineText(p) : '') + '</small></span><span class="pbtn">' + right + '</span></div>';
 }
 function socialBody() {
   var b = $('#socBody'); if (!b) return; var t = SOC.tab, d = ON.daily || {};
@@ -5909,7 +5929,13 @@ function teamBody(b) {
     if (!s.exists) { uref().set({ team: null }, { merge: true }); ON.profile.team = null; socialBody(); return; }
     var t = s.data(); ON.team = t; $('#tmName').textContent = t.name; $('#tmCount').textContent = (t.members || []).length + '/' + TEAM_MAX + ' members';
     Promise.all((t.members || []).slice(0, TEAM_MAX).map(function (m) { return uref(m).get(); })).then(function (ps) {
-      var mem = $('#tmMem'); if (mem) mem.innerHTML = ps.map(function (p) { var v = p.data() || {}; return personRow(v, p.id === t.owner ? '<span class="ok">Captain</span>' : ''); }).join('');
+      var mem = $('#tmMem'); if (!mem) return;
+      var fr = ON.friends.map(function (f) { return f.id; }), rows = ps.map(function (p) { var v = p.data() || {}; v.id = p.id; return v; });
+      rows.sort(function (a, b) { return (b.lastSeen || 0) - (a.lastSeen || 0); });
+      var on = rows.filter(function (v) { return onlineText(v) === 'on'; }).length;
+      $('#tmCount').textContent = (t.members || []).length + '/' + TEAM_MAX + ' members · ' + on + ' online';
+      mem.innerHTML = rows.map(function (v) { var me = v.id === ON.user.uid; return personRow(v, (v.id === t.owner ? '<span class="ok">Captain</span>' : '') + (me ? '<span class="ok">You</span>' : fr.indexOf(v.id) >= 0 ? '' : '<button class="b3 gold sm" data-add="' + v.id + '">+ Friend</button>')); }).join('');
+      mem.querySelectorAll('[data-add]').forEach(function (x) { x.onclick = function () { addFriend(x.dataset.add, x); }; });
     });
     $('#tmLeave').onclick = function () {
       if (!this.dataset.sure) { this.dataset.sure = 1; this.textContent = 'Tap again to leave'; return; }
@@ -5925,6 +5951,7 @@ function teamBody(b) {
   else drawChat();
 }
 function drawChat() {
+  if (SOC.tab === 'team' && $('#tmMsgs')) { S.chatSeen = Date.now(); save(); setTimeout(teamDot, 0); }
   var m = $('#tmMsgs'); if (!m) return;
   m.innerHTML = SOC.chat.length ? SOC.chat.map(function (c) { var mine = c.uid === ON.user.uid; return '<div class="msg' + (mine ? ' mine' : '') + '"><small>' + esc(c.name || 'Player') + ' · ' + localTime(c.at) + '</small><span>' + esc(c.text) + '</span></div>'; }).join('') : '<p class="note">No messages yet. Say hi to your team!</p>';
   m.scrollTop = m.scrollHeight;
