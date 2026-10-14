@@ -2399,7 +2399,7 @@ var LINES = (function () {
 /* ---------- saved progress (this phone only, for now) ---------- */
 var KEY = 'bingoBloom.v1';
 function fresh() {
-  return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
+  return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 0, alertMin: 60, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 0, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', quest: {}, league: {}, raffle: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'slow', assist: false, lite: false, autoAlert: true } };
@@ -2456,7 +2456,7 @@ function xpNeed() { return 60 + S.level * 40; }
 function addXp(n) {
   if (R && R.xp2 && !R.ended) n *= 2;
   S.xp += n;
-  while (S.xp >= xpNeed()) { S.xp -= xpNeed(); S.level++; S.coins += 100; S.tickets += 20; S.alerts++; S.gems += 2; reward('art-levelup', 'Level ' + S.level + '!', '+20 tickets · +100 coins · 2 amethysts · a Bloom Alert', 'cheer'); SFX.set(); }
+  while (S.xp >= xpNeed()) { S.xp -= xpNeed(); S.level++; S.coins += 100; S.tickets += 20; give('alert', 2); S.gems += 2; reward('art-levelup', 'Level ' + S.level + '!', '+20 tickets · +100 coins · 2 amethysts · 1 hour of Bloom Alert', 'cheer'); SFX.set(); }
 }
 var CITY_ROOMS = ['patisserie', 'cafe', 'carousel', 'boutique'], ROOM_REWARD = 100, CITY_TICKETS = 500, CITY_GEMS = 50;
 function cityStars() { return CITY_ROOMS.reduce(function (a, id) { return a + Math.min(3, S.build[id] || 0); }, 0); }
@@ -2895,7 +2895,7 @@ var PUP_IDS = ['headstart', 'wild', 'balls5', 'dcoins', 'dpetals', 'instant', 'a
 function albumTier() { return ALBUM_TIERS[Math.min(2, S.albumTimes || 0)]; }
 function albumComplete(delay) {
   var t = albumTier(); S.albumDone = true; S.albumTimes = (S.albumTimes || 0) + 1;
-  S.tickets += t.tickets; S.coins += t.coins; S.gems += t.gems; S.alerts += t.pups; PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + t.pups; });
+  S.tickets += t.tickets; S.coins += t.coins; S.gems += t.gems; give('alert', t.pups); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + t.pups; });
   logEvent({ t: 'albumComplete', album: 'paris', times: S.albumTimes }); save();
   setTimeout(function () { albumCelebrate(t); }, delay || 0);
 }
@@ -2980,7 +2980,7 @@ function calState() { if (!S.cal) S.cal = { day: 0, total: 0, last: '' }; return
 function calReady() { return calState().last !== dayKey(); }
 function calItems(d) {
   var a = [['i-ticket', d.t], ['i-coin', d.c]];
-  if (d.alert) a.push(['i-bulb', d.alert]); if (d.pe) a.push(['i-petal', d.pe]); if (d.g) a.push(['i-gem', d.g]);
+  if (d.alert) a.push(['i-bulb', alertText(d.alert * ALERT_UNIT)]); if (d.pe) a.push(['i-petal', d.pe]); if (d.g) a.push(['i-gem', d.g]);
   if (d.pu) a.push(['i-super', d.pu]); if (d.pack) a.push(['i-card', 'pack']);
   return a;
 }
@@ -3002,7 +3002,7 @@ function calendar() {
       if ($('#calGo', v)) $('#calGo', v).onclick = function () {
         if (!calReady()) return;
         var d = CAL[st.day], got = [];
-        S.tickets += d.t; S.coins += d.c; if (d.alert) S.alerts += d.alert; if (d.pe) S.petals += d.pe; if (d.g) S.gems += d.g;
+        S.tickets += d.t; S.coins += d.c; if (d.alert) give('alert', d.alert); if (d.pe) S.petals += d.pe; if (d.g) S.gems += d.g;
         for (var k = 0; k < (d.pu || 0); k++) { var id = drawBundle({ n: 1 })[0]; give(id, 1); got.push(pupById(id).name); }
         st.last = dayKey(); st.total++; st.day = (st.day + 1) % CAL.length; S.lastGift = today();
         var mile = CAL_MILES.filter(function (m) { return m.n === st.total; })[0]; if (mile) S.gems += mile.g;
@@ -3358,7 +3358,7 @@ function howTo() {
     '<li>In featured rooms your marks fill the <b>Garden Path</b> bonus. When it is full, hop along stepping stones to the Wishing Gazebo for the Grand Prize.</li>' +
     '<li>Be quick: other players claim bingos too. The earlier you call it, the more you win.</li>' +
     '<li>Some squares hide treasure: coins, petals, album cards, ingredients or a Bloom Alert.</li>' +
-    '<li><b>Bloom Alert</b> (the flower bud): makes called numbers on your cards glow for the whole round. Win more from treasure squares, bingos, level-ups and the daily gift.</li>' +
+    '<li><b>Bloom Alert</b> (the flower bud): called numbers on your cards glow. It is time you collect: bingos, treasure squares, level-ups and daily gifts add 30 minutes or more. It only counts down while you play, and if it runs out mid-round the glow stays on until the round ends.</li>' +
     '<li><b>Auto</b> marks numbers for you. You still tap BINGO!</li>' +
     '<li>With 4 cards, two are big and two are small. Tap a small card or Swap to switch.</li>' +
     '<li>Every bingo gives petals. Spend petals on the map to build landmarks. Each one grows up to 3 blossoms.</li>' +
@@ -3375,7 +3375,7 @@ function settings() {
   panel('<h3>Settings</h3>' +
     '<div class="opt"><span>Sounds</span><button class="sw" id="swSound" aria-pressed="' + st.sound + '" aria-label="Sounds"></button></div>' +
     '<div class="opt"><span>Caller voice <small style="color:var(--mist)">reads each ball out loud</small></span><button class="sw" id="swVoice" aria-pressed="' + st.voice + '" aria-label="Caller voice"></button></div>' +
-    '<div class="opt"><span>Turn on Bloom Alert by itself <small style="color:var(--mist)">uses one at the start of each round</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
+    '<div class="opt"><span>Use my Bloom Alert time <small style="color:var(--mist)">you have ' + alertText(S.alertMin) + ' · it only counts down while you play</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
     '<div class="opt"><span>Calm mode <small style="color:var(--mist)">no flashing or pulsing (kind to migraines)</small></span><button class="sw" id="swCalm" aria-pressed="' + !!st.calm + '" aria-label="Calm mode"></button></div>' +
     '<div class="opt"><span>Clear view <small style="color:var(--mist)">bigger ball numbers, plain text, calmer backgrounds</small></span><button class="sw" id="swClear" aria-pressed="' + !!st.clear + '" aria-label="Clear view"></button></div>' +
     '<div class="opt"><span>Battery saver <small style="color:var(--mist)">fewer moving effects, keeps your phone cool</small></span><button class="sw" id="swLite" aria-pressed="' + !!st.lite + '" aria-label="Battery saver"></button></div>' +
@@ -3384,7 +3384,7 @@ function settings() {
     '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button><button class="b3 plum" id="bFb2">💬 Send feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">📥 Feedback inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
     '<button class="b3 cream" id="bReset" style="padding:8px">Start over (clear my progress)</button>', 'small', function (v) {
-      $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; S.alerts += 5; PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
+      $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; give('alert', 5); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
       $('#swCalm', v).onclick = function () { st.calm = !st.calm; this.setAttribute('aria-pressed', st.calm); save(); document.documentElement.classList.toggle('calm', !!st.calm); };
@@ -3484,7 +3484,7 @@ function renderPlay() {
         '<button class="pu" id="bInstant" aria-label="Instant"><span class="orb">' + icon('i-instant') + '<b id="nInstant">' + (S.items.instant || 0) + '</b></span><span class="pl">Instant</span></button>' +
         '<button class="pu" id="bAllx2" aria-label="All ×2"><span class="orb">' + icon('i-allx2') + '<b id="nAllx2">' + (S.items.allx2 || 0) + '</b></span><span class="pl">All ×2</span></button>' +
         '<button class="pu" id="bBalls" aria-label="+5 Balls"><span class="orb">' + icon('i-plus5') + '<b id="nBalls">' + S.items.balls5 + '</b></span><span class="pl">+5 Balls</span></button>' +
-        '<button class="pu" id="bAlert" aria-label="Alert"><span class="orb">' + icon('i-bulb') + '<b id="nAlert">' + S.alerts + '</b></span><span class="pl">Alert</span></button>' +
+        '<button class="pu" id="bAlert" aria-label="Alert"><span class="orb">' + icon('i-bulb') + '<b id="nAlert">' + alertShort() + '</b></span><span class="pl">Alert</span></button>' +
         '<button class="pu pmore" id="bMore" aria-label="All power-ups"><span class="orb">' + icon('i-more') + '<b id="nMore">' + IN_PUPS.reduce(function (a, k) { return a + owned(k); }, 0) + '</b></span><span class="pl">More</span></button>' +
       '</div>' +
       '<span hidden><b id="sBalls"></b><b id="sCoins"></b><b id="sPetals"></b><i id="meter"></i></span></div>' +
@@ -3558,14 +3558,13 @@ function hintUi() {
 }
 function autoAlertOn() {
   var btn = $('#bAlert');
-  if (S.freeAlertRounds > 0) { S.freeAlertRounds--; R.alert = true; save(); if (btn) btn.classList.add('on'); toast('Free Bloom Alert this round! Called numbers will glow. (' + S.freeAlertRounds + ' free rounds left)', 3200); return; }
-  if (S.settings.autoAlert && S.alerts > 0) { S.alerts--; R.alert = true; save(); if (btn) btn.classList.add('on'); var na = $('#nAlert'); if (na) na.textContent = S.alerts; toast('Bloom Alert on: called numbers will glow.'); }
+  if (S.settings.autoAlert !== false && S.alertMin > 0) { R.alert = true; R.alertT0 = Date.now(); if (btn) btn.classList.add('on'); toast('Bloom Alert on: called numbers glow · ' + alertText(S.alertMin) + ' left', 2400); }
 }
 function useAlert() {
   if (!R || !R.active) { toast('Wait for the first ball, then turn on Bloom Alert.'); return; }
   if (R.alert) { toast('Bloom Alert is already on for this round.'); return; }
-  if (S.alerts < 1) { toast('No Bloom Alerts left. Win more from treasure squares, bingos, level-ups and the daily gift.', 3600); return; }
-  S.alerts--; save(); R.alert = true; this.classList.add('on'); $('#nAlert').textContent = S.alerts; hintUi();
+  if (S.alertMin <= 0) { toast('No Bloom Alert time left. Win more from bingos, treasure squares, level-ups and daily gifts.', 3600); return; }
+  R.alert = true; R.alertT0 = Date.now(); this.classList.add('on'); hintUi();
   pupFx('i-bulb', 'Bloom Alert!', 'Called numbers on your cards glow'); wave();
 }
 function autoDaub(n) {
@@ -3661,7 +3660,7 @@ function collect(c, cell) {
   if (c.t === 'seed') { addSeeds(2); R.earned.seeds += 2; floatText(cell, '+2 seeds'); SFX.coin(); }
   if (c.t === 'chest') { var opts = [{ t: 'tickets', n: 20 * R.bet }, { t: 'drops', n: 3 }, { t: 'card', n: 1 }, { t: 'gcard', n: 1 }, { t: PUP_IDS[rand(PUP_IDS.length)], n: 1 }], pk = Math.random() < .1 ? opts[3] : opts[[0, 1, 2, 4][rand(4)]], tx = grant(pk); if (pk.t === 'tickets') R.earned.tickets += pk.n; if (pk.t === 'drops') R.earned.drops += pk.n; floatText(cell, 'Chest: ' + tx); pupFx(prizeIcon(pk.t), 'Treasure Chest!', tx); }
   if (c.t === 'coins') { var cc = 10 * R.bet * R.dc * (c.big ? 4 : 1); S.coins += cc; R.earned.coins += cc; floatText(cell, '+' + cc + ' coins'); SFX.coin(); }
-  if (c.t === 'alert') { S.alerts++; R.earned.alerts++; floatText(cell, 'Bloom Alert!'); SFX.coin(); var na = $('#nAlert'); if (na) na.textContent = S.alerts; }
+  if (c.t === 'alert') { give('alert', 1); R.earned.alerts += ALERT_UNIT; floatText(cell, '+30 min Bloom Alert!'); SFX.coin(); alertUi(); }
   if (c.t === 'petal') { var pp = 2 * R.dp; S.petals += pp; R.earned.petals += pp; floatText(cell, '+' + pp + ' petals'); SFX.coin(); }
   if (c.t === 'card') { var d = dropCard(); R.earned.cards.push(d); R.earned.sets = R.earned.sets.concat(d.sets); floatText(cell, 'Album card!'); }
   if (c.t === 'ing') { var g = dropIng(); R.earned.ings.push(g); floatText(cell, '+1 ' + ingById(g).name); }
@@ -3974,7 +3973,7 @@ function openSquares(onlyCalled) {
   var list = []; R.cards.forEach(function (k, ci) { if (k.won) return; k.cells.forEach(function (c, i) { if (!c.d && i !== 12 && (!onlyCalled || R.called[c.n])) list.push([ci, i]); }); });
   return list;
 }
-function spend(id) { if (owned(id) < 1) { SFX.no(); toast('You have no ' + pupById(id).name + ' left. Get more in the Shop with coins.', 3000); return false; } if (id === 'alert') S.alerts--; else S.items[id]--; save(); pupCount(id); return true; }
+function spend(id) { if (owned(id) < 1) { SFX.no(); toast('You have no ' + pupById(id).name + ' left. Get more in the Shop with coins.', 3000); return false; } if (id === 'alert') return false; else S.items[id]--; save(); pupCount(id); return true; }
 function useDaub(n, id) {
   if (!R || !R.active) { toast('Wait for the first ball.'); return; }
   var pool = shuffle(openSquares(false)); if (!pool.length) { toast('No open squares left.'); return; }
@@ -4116,7 +4115,7 @@ function claimLine(ci, line) {
   if (BAKES[R.room]) { bakeGain(R.room, 4); R.earned.bake = (R.earned.bake || 0) + 4; }
   confetti(el);
   var dr = blackout ? 4 : 2, sd = blackout ? 3 : 1; S.drops += dr; R.earned.drops += dr; addSeeds(sd); R.earned.seeds += sd;
-  if (Math.random() < .3) { S.alerts++; R.earned.alerts++; var na = $('#nAlert'); if (na) na.textContent = S.alerts; }
+  if (Math.random() < .2) { give('alert', 1); R.earned.alerts += ALERT_UNIT; alertUi(); toast('+30 min of Bloom Alert time!', 1800); }
   if (Math.random() < STYLE_DROP) styleDrop();
   statsUi(); save();
   if (blackout || k.n >= MULTI_MAX) { k.won = true; R.jp = (R.jp || 0) + 1; }
@@ -4147,7 +4146,7 @@ function togglePause() {
 function stopRound() { if (R) { clearTimeout(R.timer); R.active = false; } try { if (wake) wake.release(); } catch (e) { /* fine */ } wake = null; }
 function endRound(why) {
   if (!R || R.ended) return;
-  R.ended = true; stopRound();
+  R.ended = true; alertSpend(); stopRound();
   S.stats.rounds++; S.stats.bingos += R.bingos;
   if (why !== 'quit') { if (R.bingos) S.dry = 0; else S.dry++; }
   if (why !== 'quit' && R.mode !== 'multi') { S.bonus[R.room] = Math.min(100, (S.bonus[R.room] || 0) + R.marks * 1.5); R.pathReady = S.bonus[R.room] >= 100; }
@@ -4191,7 +4190,7 @@ function results() {
   var ingCount = {}; E.ings.forEach(function (g) { ingCount[g] = (ingCount[g] || 0) + 1; });
   var tiles = BAKES[R.room] ? bakeNeed(R.room).map(function (nd) { var g = ingById(nd[0]), h = Math.min(nd[1], bakeState(R.room).have[nd[0]] || 0), full = h >= nd[1]; return '<div class="stile' + (full ? ' full' : '') + '">' + ingDot(nd[0]) + '<small>' + g.name + '</small><span class="ibar"><i style="width:' + (h / nd[1] * 100) + '%"></i><em>' + h + '/' + nd[1] + '</em></span>' + (full ? '<span class="sok">✓</span>' : '') + (ingCount[nd[0]] ? '<span class="sbadge">' + ingCount[nd[0]] + '</span>' : '') + '</div>'; }).join('')
     : Object.keys(ingCount).map(function (id) { var g = ingById(id); return '<div class="stile">' + ingDot(id) + '<small>' + g.name + '</small><span class="sbadge">' + ingCount[id] + '</span></div>'; }).join('');
-  var chips = [['i-ticket', E.tickets], ['i-coin', E.coins], ['i-petal', E.petals], ['i-card', E.cards.length], ['i-drop', E.drops], ['i-seed', E.seeds], ['i-bulb', E.alerts]].filter(function (c) { return c[1]; })
+  var chips = [['i-ticket', E.tickets], ['i-coin', E.coins], ['i-petal', E.petals], ['i-card', E.cards.length], ['i-drop', E.drops], ['i-seed', E.seeds], ['i-bulb', E.alerts ? alertText(E.alerts) : 0]].filter(function (c) { return c[1]; })
     .map(function (c, i) { return '<span class="schip" style="animation-delay:' + (.4 + i * .1) + 's">' + icon(c[0]) + '<b>' + c[1] + '</b></span>'; }).join('');
   show('<div class="screen" id="summary" style="--rbg:url(' + room.img + ')">' +
     '<div class="sumL"><i class="srays"></i><div class="sribbon"><span class="outl">' + head + '</span></div><img class="scordie" src="art/mascot-' + (R.bingos ? 'cheer' : 'point') + '.webp" alt="">' +
@@ -4331,7 +4330,7 @@ var POWERUPS = [
   { id: 'balls5', name: '+5 Balls', icon: 'i-plus5', price: 200, desc: 'Five more balls in a round.' },
   { id: 'dcoins', name: 'Double Coins', icon: 'i-x2', price: 120, desc: 'Doubles the coins you win in one round.' },
   { id: 'dpetals', name: 'Double Petals', icon: 'i-x2p', price: 120, desc: 'Doubles the petals you win in one round.' },
-  { id: 'alert', name: 'Bloom Alert', icon: 'i-bulb', price: 80, desc: 'Called numbers on your cards glow for the whole round.' },
+  { id: 'alert', name: 'Bloom Alert', icon: 'i-bulb', price: 80, desc: '30 minutes of glowing called numbers. Time only counts down while you play.' },
   { id: 'instant', name: 'Instant Bingo', icon: 'i-instant', price: 350, desc: 'Finishes your closest line for an instant bingo.' },
   { id: 'allx2', name: 'All ×2', icon: 'i-allx2', price: 250, desc: 'Doubles every coin and petal prize for the rest of the round.' },
   { id: 'daub1', name: 'Single Daub', icon: 'i-daub1', price: 60, desc: 'Marks 1 random square on one of your cards.' },
@@ -4346,8 +4345,15 @@ var POWERUPS = [
 var PRE_PUPS = ['headstart', 'dcoins', 'dpetals', 'dxp'];
 var IN_PUPS = ['wild', 'instant', 'allx2', 'balls5', 'alert', 'daub1', 'daub2', 'daub3', 'coinsq', 'chest', 'super', 'freeze'];
 function pupById(id) { return POWERUPS.filter(function (p) { return p.id === id; })[0]; }
-function owned(id) { return id === 'alert' ? S.alerts : (S.items[id] || 0); }
-function give(id, n) { if (id === 'alert') S.alerts += n; else S.items[id] = (S.items[id] || 0) + n; }
+function owned(id) { return id === 'alert' ? Math.floor(S.alertMin || 0) : (S.items[id] || 0); }
+function give(id, n) { if (id === 'alert') S.alertMin = (S.alertMin || 0) + n * ALERT_UNIT; else S.items[id] = (S.items[id] || 0) + n; }
+/* Bloom Alert is time you collect by playing: each win adds 30 minutes, it only counts down during bingo rounds,
+   and a round that starts with time keeps its glow to the end even if the time runs out part way (Dawn) */
+var ALERT_UNIT = 30;
+function alertText(m) { m = Math.max(0, Math.round(m)); var h = Math.floor(m / 60), r = m % 60; return h ? h + ' hr' + (h > 1 ? 's' : '') + (r ? ' ' + r + ' min' : '') : r + ' min'; }
+function alertShort() { var m = Math.max(0, Math.round(S.alertMin || 0)), h = Math.floor(m / 60); return h ? h + 'h' + (m % 60 ? m % 60 : '') : m + 'm'; }
+function alertUi() { var na = $('#nAlert'); if (na) na.textContent = alertShort(); }
+function alertSpend() { if (R && R.alertT0) { S.alertMin = Math.max(0, (S.alertMin || 0) - (Date.now() - R.alertT0) / 60000); R.alertT0 = 0; } }
 var PACKS = [
   { id: 'bronze', name: 'Bronze Pack', cards: 3, gold: .05, price: 250, col: ['#ffd9b8', '#c9773f'] },
   { id: 'silver', name: 'Silver Pack', cards: 5, gold: .12, price: 600, col: ['#f4f7fb', '#9aa7b8'] },
@@ -4364,6 +4370,7 @@ function prizeText(p) {
   var names = { tickets: 'tickets', coins: 'coins', petals: 'petals', seeds: 'seeds', drops: 'pearls', scratch: 'Scratch Card', spin: 'wheel spin', ing: 'ingredient', pack: 'Gold Pack', alert: 'Bloom Alert', gcard: 'gold album card', card: 'album card' };
   var nm = names[p.t] || (pupById(p.t) || {}).name || p.t;
   if (p.t === 'pack') return 'a Gold Pack';
+  if (p.t === 'alert') return alertText(n * ALERT_UNIT) + ' of Bloom Alert';
   if (p.t === 'gcard') return n > 1 ? n + ' gold album cards' : 'a gold album card';
   if (p.t === 'card') return n > 1 ? n + ' album cards' : 'an album card';
   return n + ' ' + nm + (n > 1 && /Card|spin|ingredient|Alert/.test(nm) ? 's' : '');
@@ -4451,7 +4458,7 @@ function shop(tab) {
   } else if (tab === 'power') {
     body = '<div class="pstore"><aside class="pinv"><h4>My power-ups</h4>' + PQ_TIERS.map(function (t) {
         return '<div class="pinvt t-' + t.id + '"><span class="rtag rt-' + t.id + '">' + t.name + '</span>' + t.ids.map(function (id) { var q = pupById(id); return '<div class="pinvr">' + icon(q.icon) + '<span>' + q.name + '</span><b>' + owned(id) + '</b></div>'; }).join('') + '</div>';
-      }).join('') + '<div class="pinvt"><span class="rtag">Before the round</span>' + PRE_PUPS.concat(['balls5', 'alert']).map(function (id) { var q = pupById(id); return '<div class="pinvr">' + icon(q.icon) + '<span>' + q.name + '</span><b>' + owned(id) + '</b></div>'; }).join('') + '</div></aside>' +
+      }).join('') + '<div class="pinvt"><span class="rtag">Before the round</span>' + PRE_PUPS.concat(['balls5', 'alert']).map(function (id) { var q = pupById(id); return '<div class="pinvr">' + icon(q.icon) + '<span>' + q.name + '</span><b>' + (id === 'alert' ? alertShort() : owned(id)) + '</b></div>'; }).join('') + '</div></aside>' +
       '<div class="pbund"><div class="bundles">' + BUNDLES.map(function (k) {
         return '<div class="bund' + (k.gems ? ' hero' : '') + (k.flag ? ' flagged' : '') + '">' + (k.flag ? '<span class="bflag">' + k.flag + '</span>' : '') +
           '<div class="bhd"><b class="outl">' + k.n + '</b><span>pack</span></div>' +
@@ -4517,7 +4524,7 @@ var VAULT = [
   { id: 'inst3', name: '3 Instant Bingos', icon: 'i-instant', price: 30, desc: 'Finish your closest line, three times.', give: 'instant', n: 3 },
   { id: 'x23', name: '3 All ×2', icon: 'i-allx2', price: 25, desc: 'Double every prize for a round, three times.', give: 'allx2', n: 3 },
   { id: 'tix', name: '150 Tickets', icon: 'i-ticket', price: 20, desc: 'Thirty cards of bingo.' },
-  { id: 'al5', name: '5 Bloom Alerts', icon: 'i-bulb', price: 15, desc: 'Called numbers glow for five rounds.', give: 'alert', n: 5 },
+  { id: 'al5', name: '2 hours of Bloom Alert', icon: 'i-bulb', price: 15, desc: 'Called numbers glow while you play.', give: 'alert', n: 4 },
   { id: 'wild3', name: '3 Wild Petals', icon: 'i-wild', price: 12, desc: 'Mark any square you choose.', give: 'wild', n: 3 }
 ];
 function openPack(k, free) {
@@ -5814,6 +5821,7 @@ document.addEventListener('visibilitychange', function () {
 function boot(data) {
   load();
   if (data && data.save) S = merge(data.save);
+  if (S.alerts > 0) { S.alertMin = (S.alertMin || 0) + S.alerts * ALERT_UNIT; S.alerts = 0; save(); }
   document.documentElement.classList.toggle('lite', !!S.settings.lite); document.documentElement.classList.toggle('calm', !!S.settings.calm); document.documentElement.classList.toggle('clearview', !!S.settings.clear);
   save(true);
   title();
