@@ -2395,6 +2395,21 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 #bSet:hover .c svg, #bSet:active .c svg { transform: rotate(60deg); }
 .dropside [data-games] { width: auto !important; justify-self: start; padding: 6px 18px; }
 .dropcv canvas { box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px #2a1640, 0 8px 18px rgba(0,0,0,.45) !important; border: 0 !important; }
+
+/* Daily Wheel, modern: prize pictures, jewel slices, glossy center button, prize tiles */
+.panel.wheelp { background: radial-gradient(ellipse at 25% 50%, rgba(255,214,92,.18), transparent 55%), linear-gradient(180deg, #24386a, #14203f) !important; }
+.dwheel .dropcv { position: relative; } .dwheel .dropcv canvas { box-shadow: none !important; border: 0 !important; background: none !important; border-radius: 50% !important; }
+.dwspin { width: clamp(56px, 21%, 84px) !important; background: radial-gradient(circle at 38% 28%, rgba(255,255,255,.75) 0, rgba(255,255,255,.2) 12%, rgba(255,255,255,0) 32%), radial-gradient(circle, #ffe58f, #f6b91f 55%, #b8780a) !important; box-shadow: 0 0 0 3px #fff3b8, 0 0 0 6px #2a1640, 0 6px 14px rgba(0,0,0,.5), 0 0 24px rgba(255,214,92,.7) !important; animation: playPulse 1.6s ease-in-out infinite; }
+.dwspin span { color: #3d1a4f !important; text-shadow: 0 1px 0 rgba(255,255,255,.6) !important; font-weight: 900 !important; }
+.dwspin:disabled { animation: none; filter: saturate(.4) brightness(.8); }
+.dwst { margin: 4px 0 10px; padding: 6px 12px; border-radius: 999px; font-weight: 800; background: rgba(0,0,0,.25); box-shadow: inset 0 0 0 1.5px rgba(246,198,74,.5); }
+.dwst.on { background: linear-gradient(90deg, rgba(125,255,154,.3), rgba(255,214,92,.2)); box-shadow: inset 0 0 0 1.5px #7dff9a; }
+.dwprizes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+.dwp { position: relative; display: grid; justify-items: center; gap: 2px; padding: 8px 4px 6px; border-radius: 14px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); box-shadow: inset 0 0 0 1.5px rgba(255,243,184,.3); }
+.dwp.jack { background: linear-gradient(180deg, rgba(255,214,92,.4), rgba(255,214,92,.08)); box-shadow: inset 0 0 0 2px #f6c64a, 0 0 12px rgba(255,214,92,.35); }
+.dwp img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 3px 3px rgba(0,0,0,.4)); }
+.dwp b { font: 800 12px/1.15 var(--ui); } .dwp small { position: absolute; top: 4px; right: 5px; padding: 0 6px; border-radius: 999px; font: 800 10px var(--ui); color: #3d1a4f; background: #fff3b8; }
+@media (max-height: 420px) { .dwprizes { gap: 5px; } .dwp img { width: 30px; height: 30px; } .dwp b { font-size: 10.5px; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4911,16 +4926,16 @@ var WHEEL = [{ t: 'tickets', n: 25, w: 20, c: '#ffd45c' }, { t: 'coins', n: 100,
   { t: 'headstart', n: 1, w: 10, c: '#7fe0a8' }, { t: 'scratch', n: 1, w: 10, c: '#ffb07a' }, { t: 'tickets', n: 100, w: 5, c: '#f7b924' }, { t: 'gcard', n: 1, w: 5, c: '#4f74e0' }];
 function wheel() {
   var free = S.wheelDay !== today(), can = free || S.spins > 0, angle = 0, spinning = false;
-  panel('<div class="dropwrap"><div class="dropcv"><canvas id="whCv" aria-label="Daily Wheel"></canvas></div><div class="dropside"><h3>Daily Wheel</h3>' +
-    '<p>' + (free ? 'Your free spin for today is ready.' : S.spins > 0 ? 'You have ' + S.spins + ' bonus spin' + (S.spins > 1 ? 's' : '') + '.' : 'Next free spin in ' + hoursLeftToday() + '.') + '</p>' +
-    '<button class="b3 gold" id="whGo" style="padding:8px;font-size:20px"' + (can ? '' : ' disabled') + '>SPIN</button>' +
-    '<table class="odds"><tr><th>Prize</th><th>Chance</th></tr>' + WHEEL.map(function (s) { return '<tr><td><i style="background:' + s.c + '"></i>' + prizeText(s) + '</td><td>' + s.w + '%</td></tr>'; }).join('') + '</table>' +
-    '<button class="b3 cream" data-games>‹ Side games</button></div></div>', '', function (v) {
+  panel('<div class="dropwrap dwheel"><div class="dropcv"><div class="wwrap"><canvas id="whCv" aria-label="Daily Wheel"></canvas><button class="wspin dwspin" id="whGo"' + (can ? '' : ' disabled') + '><span>' + (can ? 'SPIN' : '🔒') + '</span></button></div></div><div class="dropside"><h3>Daily Wheel</h3>' +
+    '<p class="dwst' + (can ? ' on' : '') + '">' + (free ? '✨ Your free spin is ready!' : S.spins > 0 ? '✨ ' + S.spins + ' bonus spin' + (S.spins > 1 ? 's' : '') + ' ready!' : '⏰ Next free spin in ' + hoursLeftToday()) + '</p>' +
+    '<div class="dwprizes">' + WHEEL.map(function (s) { return '<div class="dwp' + (s.t === 'gcard' || s.n >= 100 ? ' jack' : '') + '"><img src="art/' + WHEEL_PIC[s.t] + '.webp" alt=""><b>' + prizeText(s) + '</b><small>' + s.w + '%</small></div>'; }).join('') + '</div>' +
+    '<button class="b3 cream" data-games>‹ Side games</button></div></div>', 'wheelp', function (v) {
       backToGames(v);
       var cv = $('#whCv', v), ctx = cv.getContext('2d'), d = window.devicePixelRatio || 1, Wd = 300;
       var h = Math.max(200, Math.min(300, innerHeight - 80)); cv.style.width = cv.style.height = h + 'px'; cv.width = cv.height = Wd * d; ctx.scale(d, d);
       var seg = Math.PI * 2 / WHEEL.length;
-      var segs = WHEEL.map(function (x) { return { c: x.c, big: x.t === 'gcard' || x.n >= 100, lbl: x.t === 'gcard' ? 'GOLD\ncard' : x.t === 'headstart' ? 'Head\nStart' : x.t === 'scratch' ? 'Scratch\ncard' : x.t === 'alert' ? 'Bloom\nAlert' : x.n + '\n' + { tickets: 'tickets', coins: 'coins', drops: 'drops' }[x.t] }; });
+      var JEWEL = ['#2d4fb8', '#6a32c4', '#16806f', '#b23a6a'], ji = 0;
+      var segs = WHEEL.map(function (x) { var big = x.t === 'gcard' || x.n >= 100; return { c: big ? '#f2b628' : JEWEL[ji++ % JEWEL.length], img: wheelImg(x.t), num: x.t === 'gcard' ? 'GOLD' : x.t === 'alert' ? '30m' : x.t === 'headstart' || x.t === 'scratch' ? '×' + x.n : String(x.n), big: big, lbl: x.t === 'gcard' ? 'GOLD\ncard' : x.t === 'headstart' ? 'Head\nStart' : x.t === 'scratch' ? 'Scratch\ncard' : x.t === 'alert' ? 'Bloom\nAlert' : x.n + '\n' + { tickets: 'tickets', coins: 'coins', drops: 'drops' }[x.t] }; });
       function draw() { luxWheel(ctx, Wd, segs, angle, performance.now() / 1000); }
       (function idle() { if (!cv.isConnected) return; draw(); requestAnimationFrame(idle); })();
       $('#whGo', v).onclick = function () {
@@ -5293,6 +5308,9 @@ function gardenPath(bet, room) {
 function shadeHex(hex, f) { var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
   function m(c) { return Math.max(0, Math.min(255, Math.round(f > 0 ? c + (255 - c) * f : c * (1 + f)))); }
   return 'rgb(' + m(r) + ',' + m(g) + ',' + m(b) + ')'; }
+var WHEEL_PIC = { tickets: 'icon-ticket', coins: 'icon-coin', alert: 'icon-bloom-alert', drops: 'icon-drop-ball', headstart: 'icon-head-start', scratch: 'icon-scratch-card', gcard: 'icon-card-pack' };
+var WIMG = {};
+function wheelImg(t) { var k = WHEEL_PIC[t]; if (!k) return null; if (!WIMG[k]) { WIMG[k] = new Image(); WIMG[k].src = 'art/' + k + '.webp'; } return WIMG[k]; }
 function luxWheel(ctx, W, segs, angle, t) {
   var c = W / 2, R = W * .4, n = segs.length, seg = Math.PI * 2 / n, i, cy = c + 4;
   ctx.clearRect(0, 0, W, W);
@@ -5335,6 +5353,14 @@ function luxWheel(ctx, W, segs, angle, t) {
   }
   for (i = 0; i < n; i++) { // labels sized to fit between hub and rim
     ctx.save(); ctx.rotate(-Math.PI / 2 + (i + .5) * seg); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+    if (segs[i].img) { // picture + number, standing upright toward the rim (modern wheel look)
+      var im = segs[i].img, ir = R * .66, isz = R * .36;
+      ctx.translate(ir, 0); ctx.rotate(Math.PI / 2);
+      if (im.complete && im.naturalWidth) { ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 2; ctx.drawImage(im, -isz / 2, -isz / 2 - 6, isz, isz); ctx.shadowColor = 'transparent'; }
+      ctx.font = '900 ' + (segs[i].num.length > 3 ? 13 : 17) + 'px Fredoka, system-ui, sans-serif'; ctx.lineWidth = 5; ctx.strokeStyle = 'rgba(15,20,50,.95)'; ctx.strokeText(segs[i].num, 0, isz / 2 + 4);
+      ctx.fillStyle = segs[i].big ? '#fff3b8' : '#fff'; ctx.fillText(segs[i].num, 0, isz / 2 + 4);
+      ctx.restore(); continue;
+    }
     var lines = String(segs[i].lbl).split('\n'), big = segs[i].big, room = R - 70, mid = 54 + room / 2 - (big ? 0 : 6), fs = big ? 18 : 18;
     ctx.font = '800 ' + fs + 'px Fredoka, system-ui, sans-serif';
     var wmax = Math.max.apply(null, lines.map(function (ln) { return ctx.measureText(ln).width; })); if (wmax > room) { fs = Math.max(9, fs * room / wmax); ctx.font = '800 ' + fs + 'px Fredoka, system-ui, sans-serif'; wmax = room; }
