@@ -1253,6 +1253,57 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .bribbon b { white-space: nowrap; font-size: 11.5cqw; padding: 1.5cqw 6cqw; }
 .fhot { white-space: nowrap; }
 @media (max-height: 300px) { .fhot { font-size: 7.5px; padding: 0 4px; } .frib { font-size: 7.5px; } }
+/* ===== energy pass: glossy buttons, jewel toggles, shimmer, bounce ===== */
+.b3 { overflow: hidden; transition: transform .14s cubic-bezier(.3,1.7,.5,1), filter .14s; text-shadow: 0 1px 0 rgba(255,255,255,.35); }
+.b3.plum, .b3.green, .panel .b3.cream { text-shadow: 0 1.5px 0 rgba(42,13,61,.8); }
+.b3::before { content: ''; position: absolute; left: 7%; right: 7%; top: 5%; height: 42%; border-radius: 999px; pointer-events: none; background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.05)); }
+.b3 > * { position: relative; }
+.b3:not(:disabled):active { transform: translateY(3px) scale(.95); filter: brightness(1.08); }
+.b3:not(:disabled):hover { filter: brightness(1.06); }
+.b3.gold:not(:disabled)::after, .b3.green:not(:disabled)::after { content: ''; position: absolute; top: -20%; bottom: -20%; width: 34%; left: -60%; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255,255,255,.75), transparent); transform: skewX(-20deg); animation: sweep 3.2s ease-in-out infinite; }
+.b3.gold:not(:disabled) { animation: goldBreath 2.6s ease-in-out infinite; }
+@keyframes goldBreath { 50% { box-shadow: 0 5px 0 var(--ol), 0 0 18px 2px rgba(255,214,92,.55), inset 0 3px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(0,0,0,.12); } }
+.tier .tplay, #title #bStart { animation-name: playPulse, goldBreath; animation-duration: 1.8s, 2.6s; animation-iteration-count: infinite; }
+#title #bStart { animation: tierIn .6s .55s cubic-bezier(.2,.9,.3,1.3) both, playPulse 1.6s 1.2s ease-in-out infinite; }
+/* jewel toggles everywhere */
+.sw, .panel .sw { width: 58px; height: 30px; border-radius: 999px; border: 0; position: relative; cursor: pointer; transition: background .25s;
+  background: linear-gradient(180deg, #2a0c46, #4a1c78); box-shadow: 0 0 0 2px #e9a81c, 0 0 0 3.5px var(--ol), inset 0 3px 6px rgba(0,0,0,.45); }
+.sw::after, .panel .sw::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; border: 0; transition: transform .3s cubic-bezier(.3,1.6,.5,1), background .25s;
+  background: radial-gradient(circle at 35% 28%, #fff 0 18%, #e6d4ff 50%, #9c79d6); box-shadow: 0 2px 4px rgba(0,0,0,.5), inset 0 -2px 0 rgba(61,26,79,.25); }
+.sw::before { content: '✕'; position: absolute; right: 9px; top: 50%; transform: translateY(-50%); font: 700 11px var(--ui); color: rgba(255,255,255,.5); }
+.sw[aria-pressed="true"], .panel .sw[aria-pressed="true"] { background: linear-gradient(180deg, #fff3b8, #ffd45c 50%, #e9a81c); box-shadow: 0 0 0 2px #fff3b8, 0 0 0 3.5px var(--ol), 0 0 14px 3px rgba(255,214,92,.75); }
+.sw[aria-pressed="true"]::before { content: '✓'; right: auto; left: 10px; color: #3d1a4f; }
+.sw[aria-pressed="true"]::after, .panel .sw[aria-pressed="true"]::after { transform: translateX(28px); background: radial-gradient(circle at 35% 28%, #fff 0 18%, #c9a2ff 50%, #6a32d0); }
+/* segmented buttons, tabs, close */
+.panel .seg button { transition: transform .15s; }
+.panel .seg button[aria-pressed="true"] { box-shadow: 0 0 12px 2px rgba(255,214,92,.6); animation: popIn .3s; }
+.panel .tabs button { transition: transform .15s; }
+.panel .tabs button[aria-pressed="true"] { transform: translateY(-2px) scale(1.04); box-shadow: 0 0 0 2px #fff3b8, 0 0 0 3.5px var(--ol), 0 0 16px 3px rgba(255,214,92,.6); }
+.panel .tabs button:active { transform: scale(.94); }
+.x, .panel .x { transition: transform .2s cubic-bezier(.3,1.6,.5,1); }
+.x:hover, .panel .x:hover { transform: rotate(90deg) scale(1.08); }
+.x:active { transform: rotate(90deg) scale(.9); }
+/* popups: shimmering gold titles, drifting sparkle pattern, bouncy entrance */
+.panel { animation: panelIn .42s cubic-bezier(.2,.9,.3,1.35), panelDrift 18s linear infinite; }
+@keyframes panelIn { 0% { transform: scale(.7) translateY(20px); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@keyframes panelDrift { to { background-position: 0 0, 22px 66px, 0 0, 0 0; } }
+.panel h3 { background: linear-gradient(90deg, #ffe58f 0%, #fff 20%, #ffd45c 40%, #ffe58f 100%) 0 0 / 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; filter: drop-shadow(0 2px 0 #3d1a4f) drop-shadow(1px 0 0 #3d1a4f) drop-shadow(-1px 0 0 #3d1a4f); animation: titleShim 3.5s linear infinite; }
+@keyframes titleShim { to { background-position: -200% 0; } }
+.panel .sitem, .panel .pack, .panel .gtile, .panel .oven, .panel .recipe, .panel .bed, .panel .sti { transition: transform .15s cubic-bezier(.3,1.6,.5,1); }
+.panel .sitem:active, .panel .pack:active, .panel .gtile:active, .panel .sti:active { transform: scale(.95); }
+.panel .gtile { animation: tierIn .45s cubic-bezier(.2,.9,.3,1.3) both; }
+.panel .gtile:nth-child(2) { animation-delay: .06s; } .panel .gtile:nth-child(3) { animation-delay: .12s; } .panel .gtile:nth-child(4) { animation-delay: .18s; }
+.panel .gtile svg { animation: hudBob 2.6s ease-in-out infinite; }
+/* numbers that tick */
+.cur span.tick { display: inline-block; animation: bump .45s cubic-bezier(.2,.9,.3,1.6); color: #ffe58f; }
+.hud-top .cur .plus { animation: plusPulse 2.2s ease-in-out infinite; }
+@keyframes plusPulse { 50% { transform: scale(1.15); box-shadow: 0 0 0 2px var(--ol), 0 0 10px 3px rgba(166,240,122,.8), inset 0 2px 0 rgba(255,255,255,.5); } }
+#room .rpups button, #play .pu .orb, .bstep, .mini-btn { transition: transform .14s cubic-bezier(.3,1.7,.5,1); }
+#room .rpups button:active, #play .pu:active .orb, .bstep:active, .mini-btn:active { transform: scale(.88); }
+#play .pu:not(:disabled) .orb { animation: orbIdle 3s ease-in-out infinite; }
+#play .dock .pu:nth-child(2) .orb { animation-delay: -.6s; } #play .dock .pu:nth-child(3) .orb { animation-delay: -1.2s; } #play .dock .pu:nth-child(4) .orb { animation-delay: -1.8s; } #play .dock .pu:nth-child(5) .orb { animation-delay: -2.4s; }
+@keyframes orbIdle { 50% { transform: translateY(-2px) rotate(-3deg); } }
+@media (prefers-reduced-motion: reduce) { .b3.gold::after, .b3.green::after { display: none; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1742,6 +1793,7 @@ function dropIng() { var g = INGS[rand(INGS.length)]; S.ing[g.id] = (S.ing[g.id]
 
 /* ---------- screens ---------- */
 var LINE_ICON = { back: '<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>', pause: '<svg viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></svg>', play: '<svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg>' };
+document.addEventListener('pointerdown', function (e) { var b = e.target.closest && e.target.closest('button'); if (b && !b.disabled && !e.target.closest('#cards')) sparkle(e.clientX, e.clientY, 7); }, true);
 function show(html) { closeVeil(); app.innerHTML = html; var sc = app.firstElementChild; if (sc && !reduceMotion) sc.classList.add('enter'); }
 function confetti(el) {
   if (reduceMotion) return; var r = el ? el.getBoundingClientRect() : { left: innerWidth / 2 - 50, width: 100, top: 0 }, cols = ['#ffd45c', '#ff8fb1', '#b996ff', '#7fe0a8', '#7fbfff', '#fff'];
@@ -2016,7 +2068,9 @@ function settings() {
     '<div class="opt"><span>Turn on Bloom Alert by itself <small style="color:var(--mist)">uses one at the start of each round</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
     '<div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
+    '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
     '<button class="b3 cream" id="bReset" style="padding:8px">Start over (clear my progress)</button>', 'small', function (v) {
+      $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; S.alerts += 5; ['headstart', 'wild', 'balls5', 'dcoins', 'dpetals', 'instant', 'allx2'].forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
       $('#swVoice', v).onclick = function () { st.voice = !st.voice; this.setAttribute('aria-pressed', st.voice); save(); say('B 7'); };
@@ -2707,7 +2761,7 @@ function grant(p) {
 function fmt(ms) { var s = Math.max(0, Math.ceil(ms / 1000)), m = Math.floor(s / 60); return m + ':' + ('0' + s % 60).slice(-2); }
 function hoursLeftToday() { var d = new Date(), m = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d; return Math.floor(m / 3600000) + 'h ' + Math.floor(m % 3600000 / 60000) + 'm'; }
 function curPill(id, n, extra) { return '<span class="pill2">' + icon(id) + '<b' + (extra ? ' id="' + extra + '"' : '') + '>' + n.toLocaleString() + '</b></span>'; }
-function refreshTop() { ['tickets', 'coins', 'petals', 'gems'].forEach(function (k) { var e = document.getElementById(k); if (e) e.textContent = S[k].toLocaleString(); }); }
+function refreshTop() { ['tickets', 'coins', 'petals', 'gems'].forEach(function (k) { var e = document.getElementById(k); if (!e) return; var v = S[k].toLocaleString(); if (e.textContent !== v) { e.textContent = v; e.classList.remove('tick'); void e.offsetWidth; e.classList.add('tick'); } }); }
 
 function kitchen() {
   var timer;

@@ -144,6 +144,11 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
 
 Progress is saved on the phone only.
 
+## Testing with the admins
+
+- **Tester notes page:** https://claude.ai/artifact/WXUyBLLbQHRRmLTcdhmYW5 (share it with each admin as a Contributor). Testers pick a part of the game, how it feels, and write a note; everyone sees all notes and Dawn can mark them fixed.
+- **Tester boost:** Settings → Tester boost gives 2,000 tickets, 5,000 coins, 100 amethysts and 5 of every power-up, so testers can try everything quickly.
+
 ## Ideas saved for later
 
 - More rooms and cities.
