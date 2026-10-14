@@ -18,6 +18,10 @@ Ideas to build with the new art:
 - Cordie head-and-shoulders (`mascot-face`): crop from `mascot-wave`.
 - Loading screen (`splash-paris`): `room-paris` background + cut-out `mascot-wave`, with animated petals and balloons in the game.
 
+## Lettering Claude adds on top of icons (Dawn, Oct 14)
+- All ×2 icon: the Firefly medallion stays blank; the game adds crisp "ALL ×2" lettering on top (gold/plum, sparkling).
+- Same for other icons that read better with a word or number (e.g. +5 on +5 Balls, ×2 on Double XP).
+
 ## Art to swap in when it arrives
 - Cordie mascot: welcome back, Bloom Calendar presenter, tips, celebrations, sleeping on the gift button.
 - Loading screen key art.
