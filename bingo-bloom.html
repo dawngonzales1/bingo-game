@@ -258,6 +258,13 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .res-r h4 { margin: 0; font-size: 16px; }
 .got { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
 .got .cf { width: 108px; flex: none; animation: flip .6s both; }
+/* card faces size their art and text to the card itself, wherever they appear */
+.cf { container-type: inline-size; }
+.got .cf { padding: 10px 8px 8px !important; }
+.got { justify-content: safe center; gap: 12px; padding: 6px 4px 8px; }
+.got .cf { width: clamp(104px, 34vh, 170px) !important; }
+.got .cf .nm { font-size: 12cqw; }
+
 @keyframes flip { from { transform: perspective(600px) rotateY(90deg); opacity: 0; } }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 4px; border-radius: 14px; background: #fff; border: 2px solid #ead6b2; font-weight: 600; font-size: 13px; }
