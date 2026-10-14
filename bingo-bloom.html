@@ -2335,6 +2335,23 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 #room .bake { background: linear-gradient(180deg, rgba(74,26,120,.94), rgba(46,14,84,.94)) !important; }
 .fbsave { display: block; margin: 6px 0 0; padding: 4px 12px; font-size: 13px; }
 #mapSvg .bmon { filter: drop-shadow(0 0 5px rgba(255,170,210,.95)); }
+
+/* album sets: your Firefly cards in gold arch frames on navy velvet */
+.al-body { background: radial-gradient(circle at 50% 0, rgba(255,214,92,.12), transparent 60%), repeating-linear-gradient(45deg, rgba(255,255,255,.025) 0 2px, transparent 2px 14px), linear-gradient(180deg, #1b2a4f, #0f1830) !important; }
+.medal.mx { gap: 0; }
+.mxframe { position: relative; width: min(118px, 23vh); aspect-ratio: 4 / 5; border-radius: 60px 60px 14px 14px; padding: 5px; background: linear-gradient(160deg, #fff6c9, #f6c64a 30%, #b8780a 70%, #ffe58f); box-shadow: 0 0 0 2px #2a1640, 0 6px 14px rgba(0,0,0,.45); overflow: hidden; }
+.mxpic { position: absolute; inset: 5px; border-radius: 55px 55px 10px 10px; background: center 35% / cover no-repeat, #fff7e8; box-shadow: inset 0 0 0 2px rgba(120,70,0,.45), inset 0 -18px 22px -10px rgba(20,10,40,.45); }
+.mxshine { position: absolute; inset: 5px; border-radius: 55px 55px 10px 10px; pointer-events: none; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.45) 48%, transparent 60%); transform: translateX(-120%); animation: mxShine 6s ease-in-out infinite; animation-delay: calc(var(--i) * .7s); }
+@keyframes mxShine { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+.medal.mx.done .mxframe { box-shadow: 0 0 0 2px #2a1640, 0 0 22px 6px rgba(255,214,92,.6), 0 6px 14px rgba(0,0,0,.45); }
+.mxdone { position: absolute; right: 8px; bottom: 8px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font: 900 17px var(--ui); color: #fff; background: linear-gradient(180deg, #8ff07a, #2f9a3a); box-shadow: 0 0 0 2px #fff, 0 2px 4px rgba(0,0,0,.4); }
+.medal.mx .ban { margin-top: -12px; z-index: 2; font-size: 15px; }
+.mxbar { position: relative; width: min(104px, 20vh); height: 16px; margin-top: 5px; border-radius: 999px; overflow: hidden; background: rgba(0,0,0,.45); box-shadow: 0 0 0 1.5px #f6c64a; }
+.mxbar i { position: absolute; inset: 0 auto 0 0; width: var(--p); background: linear-gradient(180deg, #ffe58f, #e9a81c); }
+.mxbar b { position: relative; display: block; text-align: center; font: 800 11px/16px var(--ui); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.7); }
+.calm .mxshine, .lite .mxshine { display: none; }
+#album { background: radial-gradient(ellipse at 50% 0, rgba(255,214,92,.18), transparent 55%), linear-gradient(180deg, #24386a, #14203f) !important; }
+.al-body { border-top: 3px solid #f6c64a !important; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4457,8 +4474,9 @@ function album(setIdx) {
   if (setIdx === null) {
     body = '<div class="medals">' + SETS.map(function (s, i) {
       var own = ownedIn(s), done = !!S.setsDone[s.id];
-      return '<button class="medal" data-s="' + i + '" style="--i:' + i + '"><span class="ring"><div style="background:radial-gradient(circle at 50% 35%, ' + s.bg[0] + ', ' + s.bg[1] + ')"><svg viewBox="0 0 48 40" style="color:' + s.tint + '"><use href="#m-' + s.id + '"/></svg></div></span>' +
-        (newIn(s) ? '<span class="mnew outl">' + newIn(s) + ' NEW</span>' : '') + '<span class="ban">' + s.name + '</span><span class="st">' + (done ? '<svg viewBox="0 0 40 40"><use href="#i-check"/></svg>' : '<span class="outl">' + own + '/9</span>') + '</span></button>';
+      var pic = 'art/card-' + s.id + '-9.webp';
+      return '<button class="medal mx' + (done ? ' done' : '') + '" data-s="' + i + '" style="--i:' + i + ';--p:' + Math.round(own / 9 * 100) + '%"><span class="mxframe"><span class="mxpic" style="background-image:url(' + pic + ')"></span><i class="mxshine"></i>' + (done ? '<span class="mxdone">✓</span>' : '') + '</span>' +
+        (newIn(s) ? '<span class="mnew outl">' + newIn(s) + ' NEW</span>' : '') + '<span class="ban">' + s.name + '</span><span class="mxbar"><i></i><b>' + (done ? 'Complete!' : own + ' / 9') + '</b></span></button>';
     }).join('') + '</div>';
   } else {
     var set = SETS[setIdx], own = ownedIn(set);
