@@ -3629,7 +3629,7 @@ function callNext() {
   var n = R.seq[R.idx++];
   while (R.called[n] && R.idx < R.seq.length) n = R.seq[R.idx++];
   if (R.called[n]) return;
-  R.called[n] = true;
+  R.called[n] = true; R.lastCall = Date.now();
   R.recent.unshift(n); R.recent = R.recent.slice(0, 5);
   var b = $('#ball'); b.style.setProperty('--bc', ballColor(n)); b.innerHTML = '<div class="in"><small>' + letter(n) + '</small><b>' + n + '</b></div>';
   b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
@@ -4193,6 +4193,17 @@ function togglePause() {
   else if (R.idx < R.seq.length) { if (rc) { rc.style.animation = 'none'; } R.timer = setTimeout(callNext, 600); }
   else R.timer = setTimeout(function () { endRound('balls'); }, 3000);
 }
+/* watchdog: if the ball caller ever stops when it shouldn't (a pause that never got its 'welcome back',
+   a lost timer), it starts it again. Sapphire's round got stuck on an iPad. */
+var WATCH = setInterval(function () {
+  if (!R || R.ended || document.hidden) return;
+  var now = Date.now();
+  if (R.paused) { if (!veil && !document.querySelector('.coach')) { R.stuckP = (R.stuckP || 0) + 1; if (R.stuckP >= 3) { R.stuckP = 0; R.bgPaused = false; togglePause(); } } else R.stuckP = 0; R.lastCall = now; return; }
+  R.stuckP = 0;
+  if (!R.active || R.frozen || R.lastBall || R.idx >= R.seq.length) { R.lastCall = now; return; }
+  if (now - (R.lastCall || now) > speedMs() * 2 + 1500) { clearTimeout(R.timer); R.lastCall = now; callNext(); }
+}, 1000);
+addEventListener('pageshow', function () { if (R && R.bgPaused && !document.hidden) { R.bgPaused = false; if (R.paused) togglePause(); } });
 function stopRound() { if (R) { clearTimeout(R.timer); R.active = false; } try { if (wake) wake.release(); } catch (e) { /* fine */ } wake = null; }
 function endRound(why) {
   if (!R || R.ended) return;
