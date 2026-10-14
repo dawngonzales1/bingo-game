@@ -2282,6 +2282,12 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .onlt { font-style: normal; font-weight: 800; color: #2fae55; }
 .albsend { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .albsend select { padding: 6px 8px; border-radius: 10px; font: 600 14px var(--ui); }
+
+.medal { position: relative; }
+.mnew { position: absolute; z-index: 3; top: -6px; right: 4px; padding: 2px 9px; border-radius: 999px; font: 900 12px var(--ui); color: #fff; background: linear-gradient(180deg, #ff8fb1, #e0478c); box-shadow: 0 0 0 2px #fff3b8, 0 3px 6px rgba(20,5,35,.35); animation: newPulse 1.6s ease-in-out infinite; }
+.cards9 .cf .new { z-index: 5; font-size: 13px; padding: 2px 8px; animation: newPulse 1.6s ease-in-out infinite; }
+.calm .mnew, .calm .cards9 .cf .new { animation: none; }
+@keyframes newPulse { 50% { transform: scale(1.12); } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2428,7 +2434,7 @@ var KEY = 'bingoBloom.v1';
 function fresh() {
   return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 0, alertMin: 60, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 0, bet: 1, xp: 0, level: 1, items: { bee: 1, headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
-    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', quest: {}, league: {}, raffle: {}, guide: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
+    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', quest: {}, league: {}, raffle: {}, guide: {}, newCards: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'slow', assist: false, lite: false, autoAlert: true } };
 }
 function merge(saved) {
@@ -2889,6 +2895,7 @@ function mapSvg() {
 }
 
 /* ---------- album helpers ---------- */
+function newIn(set) { var n = 0; for (var i = 1; i <= 9; i++) if (S.newCards && S.newCards[set.id + '|' + i] && S.album[set.id + '|' + i]) n++; return n; }
 function ownedIn(set) { var n = 0; for (var i = 1; i <= 9; i++) if (S.album[set.id + '|' + i]) n++; return n; }
 function ownedAll() { return SETS.reduce(function (a, s) { return a + ownedIn(s); }, 0); }
 var CARD_ART = { S1: 1, S2: 1, S3: 1, S4: 1, S5: 1, S6: 1, S7: 1, S8: 1 };
@@ -2907,6 +2914,7 @@ function dropCard(gp) {
   var gold = Math.random() < (gp === undefined ? .12 : gp), set = SETS[rand(SETS.length)], idx = gold ? GOLD_FROM + rand(9 - GOLD_FROM) : rand(GOLD_FROM);
   var id = set.id + '|' + (idx + 1), isNew = !S.album[id];
   S.album[id] = (S.album[id] || 0) + 1;
+  if (isNew) { if (!S.newCards) S.newCards = {}; S.newCards[id] = 1; }
   var extra = [];
   if (ownedIn(set) === 9 && !S.setsDone[set.id]) { S.setsDone[set.id] = true; S.coins += SET_REWARD; S.gems += 5; extra.push(set.id); reward('art-set-ribbon', set.name + ' set complete!', '+' + SET_REWARD + ' coins · 5 amethysts', 'cheer'); logEvent({ t: 'setComplete', set: set.id }); }
   if (!S.albumDone && ownedAll() === SETS.length * 9) albumComplete(900);
@@ -3137,7 +3145,7 @@ function lobby() {
     topBar('<div class="spacer"></div><button class="evpill' + (eventsHot() ? ' hot' : '') + '" id="bEv" aria-label="Events"><img src="art/art-trophy.webp" alt=""><span>Events</span></button><button class="fbpill" id="bFb" aria-label="Send feedback">' + icon('i-chat') + '<span>Feedback</span></button><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       (giftReady ? rb('bGift', 'i-gift', 'pk', 'Day ' + (calState().day + 1) + '!', true) : '<button class="round giftwait" id="bGift"><span class="c pk">' + icon('i-gift') + '<i class="gclock">⏰</i></span><span class="lb">Gift in ' + untilText(nextReset()).replace(/ \d+m$/, '') + '</span></button>') +
-      rb('bAlbum', 'i-album', 'gd', 'Album ' + ownedAll() + '/72') +
+      rb('bAlbum', 'i-album', 'gd', 'Album ' + ownedAll() + '/72', SETS.some(newIn)) +
       rb('bKitchen', 'i-chef', 'pk', ovenReady ? 'Ready!' : 'Kitchen', ovenReady) +
     '</div>' +
     '<div class="hud hud-right">' +
@@ -3975,7 +3983,7 @@ function starExchange(setIdx) {
     '<div class="res-btns"><button class="b3 gold" id="bTrade"' + (ex ? '' : ' disabled') + '>Trade spares for ' + ex + ' stars</button><button class="b3 cream" data-x>Back to album</button></div>' +
     '<p class="note">Then tap any grey card in a set to get it with stars. In team play you can also send spares to teammates.</p>', 'small', function (v) {
       $('#bTrade', v).onclick = function () {
-        Object.keys(S.album).forEach(function (id) { if (S.album[id] > 1) S.album[id] = 1; });
+        Object.keys(S.album).forEach(function (id) { if (S.album[id] > 1) S.album[id] = 1; }); S.newCards = {};
         S.stars += ex; save(); SFX.set(); closeVeil(); album(setIdx === undefined ? null : setIdx); toast('+' + ex + ' stars! Tap a grey card to get it.');
       };
     });
@@ -4356,12 +4364,12 @@ function album(setIdx) {
     body = '<div class="medals">' + SETS.map(function (s, i) {
       var own = ownedIn(s), done = !!S.setsDone[s.id];
       return '<button class="medal" data-s="' + i + '" style="--i:' + i + '"><span class="ring"><div style="background:radial-gradient(circle at 50% 35%, ' + s.bg[0] + ', ' + s.bg[1] + ')"><svg viewBox="0 0 48 40" style="color:' + s.tint + '"><use href="#m-' + s.id + '"/></svg></div></span>' +
-        '<span class="ban">' + s.name + '</span><span class="st">' + (done ? '<svg viewBox="0 0 40 40"><use href="#i-check"/></svg>' : '<span class="outl">' + own + '/9</span>') + '</span></button>';
+        (newIn(s) ? '<span class="mnew outl">' + newIn(s) + ' NEW</span>' : '') + '<span class="ban">' + s.name + '</span><span class="st">' + (done ? '<svg viewBox="0 0 40 40"><use href="#i-check"/></svg>' : '<span class="outl">' + own + '/9</span>') + '</span></button>';
     }).join('') + '</div>';
   } else {
     var set = SETS[setIdx], own = ownedIn(set);
     body = '<div class="set-view"><div class="hd"><button class="b3 cream" id="bSets" style="padding:4px 14px">‹ Sets</button><button class="setnav" id="sPrev" aria-label="Previous set">‹</button><h3 class="outl">' + set.name + ' · ' + own + '/9</h3><button class="setnav" id="sNext" aria-label="Next set">›</button></div>' +
-      '<div class="cards9">' + set.cards.map(function (n, i) { return '<button data-id="' + set.id + '|' + (i + 1) + '">' + cardFace(set.id + '|' + (i + 1)) + '</button>'; }).join('') + '</div>' +
+      '<div class="cards9">' + set.cards.map(function (n, i) { var cid = set.id + '|' + (i + 1); return '<button data-id="' + cid + '">' + cardFace(cid, { isNew: !!(S.newCards && S.newCards[cid] && S.album[cid]) }) + '</button>'; }).join('') + '</div>' +
       '<p class="set-note">' + (S.setsDone[set.id] ? 'Set complete! Extra copies (+1, +2) can be sent to teammates in the team version.' : 'Finish this set for ' + SET_REWARD + ' coins. ★ Gold cards are rarer.') + '</p></div>';
   }
   show('<div class="screen" id="album">' + top + '<div class="al-body">' + body + '</div></div>');
@@ -4380,6 +4388,7 @@ function album(setIdx) {
     b.onclick = function () {
       var id = b.dataset.id, n = S.album[id] || 0, ci = cardInfo(id);
       if (!n) { buyCardSheet(id, setIdx); return; }
+      if (S.newCards && S.newCards[id]) { delete S.newCards[id]; save(); var nb = b.querySelector('.new'); if (nb) nb.remove(); }
       panel('<div style="display:grid;grid-template-columns:min(150px,30vh) 1fr;gap:16px;align-items:center">' + cardFace(id) +
         '<div style="display:grid;gap:8px"><h3>' + esc(ci.name) + '</h3><p>' + ci.set.name + ' set · card ' + (ci.idx + 1) + (ci.gold ? ' · ★ Gold' : '') + '</p><p>You have <b>' + n + '</b>' + (n > 1 ? ' (' + (n - 1) + ' extra to share)' : '') + '.</p>' + (n > 1 ? (ON.user && ON.friends.length ? '<div class="albsend"><select id="alTo">' + ON.friends.map(function (f) { return '<option value="' + f.id + '"' + (SOC.tradeTo === f.id ? ' selected' : '') + '>' + esc(f.name || 'Friend') + '</option>'; }).join('') + '</select><button class="b3 gold" id="alSend">Send a spare</button></div>' : '<p class="note">' + (ON.user ? 'Add friends in Team &amp; Friends to send them your spares.' : 'Sign in to send spares to friends and teammates.') + '</p>') : '') + '</div></div>', 'small', function (v) {
         if ($('#alSend', v)) $('#alSend', v).onclick = function () { SOC.tradeTo = $('#alTo', v).value; sendCard(id, SOC.tradeTo); };
@@ -5918,7 +5927,7 @@ function collectGift(g, quiet) {
   var inc = {}; inc[isCard ? 'cardsRecv' : 'giftsRecv'] = FV().increment(1);
   d[isCard ? 'cardsRecv' : 'giftsRecv'] = (d[isCard ? 'cardsRecv' : 'giftsRecv'] || 0) + 1;
   uref().collection('inbox').doc(g.id).delete().then(function () { return dailyRef().set(inc, { merge: true }); }).then(function () {
-    if (isCard) { var had = S.album[g.card] || 0; S.album[g.card] = had + 1; var set = cardInfo(g.card).set; if (ownedIn(set) === 9 && !S.setsDone[set.id]) { S.setsDone[set.id] = true; S.coins += SET_REWARD; S.gems += 5; toast(set.name + ' set complete!', 3000); } if (!S.albumDone && ownedAll() === SETS.length * 9) albumComplete(400); if (!quiet) pupFx('i-card', had ? 'Card collected' : 'New card!', cardInfo(g.card).name + ' from ' + (g.fromName || 'a friend')); }
+    if (isCard) { var had = S.album[g.card] || 0; S.album[g.card] = had + 1; if (!had) { if (!S.newCards) S.newCards = {}; S.newCards[g.card] = 1; } var set = cardInfo(g.card).set; if (ownedIn(set) === 9 && !S.setsDone[set.id]) { S.setsDone[set.id] = true; S.coins += SET_REWARD; S.gems += 5; toast(set.name + ' set complete!', 3000); } if (!S.albumDone && ownedAll() === SETS.length * 9) albumComplete(400); if (!quiet) pupFx('i-card', had ? 'Card collected' : 'New card!', cardInfo(g.card).name + ' from ' + (g.fromName || 'a friend')); }
     else { S.tickets += g.n || GIFT_TIX; refreshTop(); if (!quiet) { SFX.coin(); toast('+' + (g.n || GIFT_TIX) + ' tickets from ' + (g.fromName || 'a friend') + '!'); } }
     save();
   }).catch(function () { toast('Couldn\'t collect right now. Try again.'); });
