@@ -897,6 +897,45 @@ Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gol
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glowing lilac moonflower with a tiny gold star in the center, single object, plain cream background, soft shadow underneath.
 ```
 
+### Still to make (Oct 14): the five rooms without their own daub, and Cordie waving
+These work fine from a phone: open firefly.adobe.com in your phone browser, paste the prompt, choose Square, download, then open adobe.com/express on the phone and use Remove background. Send the PNGs to Claude or upload them to the `art` folder; the game picks each one up automatically.
+
+**Rose Patisserie daub** (save as `daub-macaron.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a single pink rose macaron seen from the front with a cream filling and a tiny sugar rose on top, single object, plain cream background, soft shadow underneath.
+```
+
+**Cafe du Parc daub** (save as `daub-cup.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a small round cup of hot chocolate with a swirl of whipped cream and a heart drawn in the foam, seen from above at an angle, single object, plain cream background, soft shadow underneath.
+```
+
+**Grand Carousel daub** (save as `daub-horse.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a round gold carousel token with a tiny white carousel horse and twinkle lights, seen from the front, single object, plain cream background, soft shadow underneath.
+```
+
+**Silk Boutique daub** (save as `daub-bow.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glossy plum purple silk bow with gold edges, round and tidy, seen from the front, single object, plain cream background, soft shadow underneath.
+```
+
+**Butterfly Meadow daub** (save as `daub-butterfly.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a round lilac and gold butterfly with open wings seen from above, compact and centered, single object, plain cream background, soft shadow underneath.
+```
+
+**Cordie waving** (save as `mascot-wave.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a cute cream bunny mascot in a plum bellhop coat with gold buttons and a pink rose on her beret, waving hello with a big friendly smile, full body, front view, single character, plain cream background, soft shadow underneath.
+```
+
 ## 7. Macaron Match pieces
 Item 26 on the admins' list: bright, clear macarons so the board is easy to read. Remove the background after downloading. Shape: **Square (1:1)**.
 

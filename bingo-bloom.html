@@ -3843,7 +3843,7 @@ function renderPlay() {
   $('#bAutoB').onclick = function () { S.settings.autoBoost = !autoPups(); save(); this.setAttribute('aria-pressed', autoPups()); SFX.tap(); toast(autoPups() ? 'Auto power-ups on: when Boost fills, your power-ups fire by themselves' : 'Auto power-ups off: tap the glowing Boost to fire them', 3000); meterUi(); };
   R.pq = []; pqFill(true);
   $('#pq').onclick = function (e) { if (e.target.closest('#bAutoB') || !R) return; if (R.meter >= R.boostAt && R.active) useBoost(); else { SFX.tap(); toast(R.pq.length ? 'Your power-ups fire when the glow line under them is full. Keep marking numbers!' : 'No power-ups loaded. Get more in the Shop between rounds.', 2800); } };
-  $('#bSwap').onclick = swapCards; playersRow();
+  $('#bSwap').onclick = swapCards; playersRow(); if (R.room && ROOM_DAUB[R.room]) daubReady(ROOM_DAUB[R.room]);
   $('#bView4').onclick = function () { S.settings.view4 = !S.settings.view4; save(); SFX.tap(); placeCards(); };
   $('#bAlert').onclick = useAlert;
   $('#bMore').onclick = pupTray;
@@ -4248,10 +4248,16 @@ var DAUBERS = [
 ];
 function hasStyle(kind, it) { return !it.ok && !it.drop && !it.gems ? true : !!(S.unlocked[kind + ':' + it.id] || (it.ok && it.ok())); }
 /* each themed room stamps its own daub, unless the player picked a special dauber in the Style Studio */
-var ROOM_DAUB = { garden: 'moonflower', carnival: 'candy', coast: 'shell', market: 'lantern' };
+var ROOM_DAUB = { garden: 'moonflower', carnival: 'candy', coast: 'shell', market: 'lantern', patisserie: 'macaron', cafe: 'cup', carousel: 'horse', boutique: 'bow', meadow: 'butterfly' };
+// daubs still being drawn in Firefly: the game checks once whether the picture exists and uses the drawn dauber until it does
+var DAUB_OK = {};
+function daubReady(d) {
+  if (DAUB_OK[d] === undefined) { DAUB_OK[d] = false; var im = new Image(); im.onload = function () { DAUB_OK[d] = true; }; im.onerror = function () { DAUB_OK[d] = false; }; im.src = 'art/daub-' + d + '.webp'; }
+  return DAUB_OK[d];
+}
 function roomDaub() {
   var d = R && R.room && ROOM_DAUB[R.room];
-  if (d && (S.style.dauber || 'bloom') === 'bloom') return '<i class="rdaub" style="background-image:url(art/daub-' + d + '.webp)"></i>';
+  if (d && daubReady(d) && (S.style.dauber || 'bloom') === 'bloom') return '<i class="rdaub" style="background-image:url(art/daub-' + d + '.webp)"></i>';
   return dauberSvg(S.style.dauber);
 }
 function dauberSvg(id) {
