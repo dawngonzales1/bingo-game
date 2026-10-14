@@ -2717,13 +2717,13 @@ function studio(tab) {
         '<small>' + it.name + '</small>' + (own ? (on ? '<i class="inuse">IN USE</i>' : '') : '<i class="how">' + (it.gems ? icon('i-gem') + it.gems : it.how) + '</i>') + '</button>';
     }).join('');
   }
-  prev = '<div class="stprev">' + avatarHtml(110) + '<label class="stname"><input id="stName" maxlength="14" value="' + esc(S.name || '') + '" aria-label="Your name"><span>✎</span></label>' +
+  prev = '<div class="stprev">' + avatarHtml(110) + '<label class="stname"><input id="stName" maxlength="14" value="' + esc(myName() === 'Player' ? '' : myName()) + '" placeholder="Game name" aria-label="Your game name"><span>✎</span></label>' +
     '<div class="minicard">' + range(0, 24).map(function (i) { return '<span>' + ([0, 6, 12, 18, 24, 4, 8, 16, 20].indexOf(i) >= 0 ? dauberSvg(S.style.dauber) : (i * 7 % 75 + 1)) + '</span>'; }).join('') + '</div></div>';
   panel('<div class="studio">' + prev + '<div class="stright"><div class="tabs"><button data-t="avatar" aria-pressed="' + (tab === 'avatar') + '">Avatar</button><button data-t="frame" aria-pressed="' + (tab === 'frame') + '">Frame</button><button data-t="dauber" aria-pressed="' + (tab === 'dauber') + '">Dauber</button></div>' +
     '<div class="stgrid">' + items + '</div><p class="note">' + (tab === 'avatar' ? 'Use your own photo or any album card you have found.' : 'Win more as you play: levels, finished sets and rooms, lucky drops in bingo, the Album Grand Prize and the Amethyst Vault.') + '</p></div></div>' +
     '<input type="file" id="stFile" accept="image/*" hidden>', 'studio-p', function (v) {
       v.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { SFX.tap(); studio(b.dataset.t); }; });
-      $('#stName', v).onchange = function () { S.name = this.value.trim().slice(0, 14) || 'Player'; save(); studio(tab); refreshMe(); };
+      $('#stName', v).onchange = function () { var inp = this; setGameName(inp.value, function (err) { if (err) { toast(err, 3000); inp.value = myName(); } else { toast('You\'re now ' + myName() + '!'); studio(tab); } }); };
       v.querySelectorAll('[data-av]').forEach(function (b) {
         b.onclick = function () {
           var a = b.dataset.av;
@@ -3877,8 +3877,10 @@ function onSignedIn(u) {
   var ref = uref();
   ref.get().then(function (snap) {
     var p = snap.exists ? snap.data() : null;
-    if (!p) { p = { name: (ON.pendingName || u.displayName || (S.name !== 'Player' ? S.name : '') || 'Player').slice(0, 14), level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, team: null, createdAt: Date.now() }; p.nameLower = slugName(p.name); ref.set(p); }
+    if (!p) { p = { name: cleanName(ON.pendingName || (S.name !== 'Player' ? S.name : '') || 'Player') || 'Player', named: !!ON.pendingName, level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, team: null, createdAt: Date.now() }; p.nameLower = slugName(p.name); ref.set(p); }
     ON.profile = p; S.name = p.name; refreshTitle();
+    var pinUser = u.providerData.some(function (x) { return x.providerId === 'password'; });
+    if (!p.named && !ON.pendingName && !pinUser) (function ask() { setTimeout(function () { if (!ON.user || ON.user.uid !== u.uid || (ON.profile && ON.profile.named)) return; if (veil || $('#play')) ask(); else nameForm(true); }, 1200); })();
     return ref.collection('private').doc('save').get();
   }).then(function (sv) {
     if (sv && sv.exists) {
@@ -3888,7 +3890,7 @@ function onSignedIn(u) {
         if (cs >= ls) { S = merge(cloud); S.name = myName(); save(true); toast('Welcome back, ' + myName() + '! Your saved progress is loaded.', 3200); if ($('#lobby')) lobby(); }
         else { cloudSaveNow(); toast('Signed in as ' + myName() + '. This phone has newer progress, so it was saved to your account.', 3600); }
       }
-    } else { cloudSaveNow(); toast('Signed in as ' + myName() + '. Your progress now saves to your account.', 3200); }
+    } else { cloudSaveNow(); toast((myName() === 'Player' ? 'Signed in!' : 'Signed in as ' + myName() + '.') + ' Your progress now saves to your account.', 3200); }
     listenSocial();
   }).catch(function (e) { toast('Could not reach your account right now. Your game still saves on this phone.', 3400); });
 }
@@ -3922,6 +3924,43 @@ function authErr(e) {
   if (c.indexOf('too-many') >= 0) return 'Too many tries. Wait a minute and try again.';
   return 'Sign-in didn\'t work (' + (c || 'unknown') + '). Try again or use another way.';
 }
+var NAME_BAD = ['fuck','shit','bitch','cunt','dick','pussy','cock','nigg','fag','slut','whore','bastard','asshole','rape','nazi','porn','sex'];
+function cleanName(n) { return String(n || '').replace(/[^A-Za-z0-9 ._'-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 14); }
+function nameProblem(n) {
+  var sl = slugName(n);
+  if (sl.length < 3) return 'Use at least 3 letters or numbers.';
+  if (sl === 'player' || sl === 'guest' || sl.indexOf('cordelle') >= 0 || sl.indexOf('admin') >= 0) return 'That name is reserved. Pick another.';
+  for (var i = 0; i < NAME_BAD.length; i++) if (sl.indexOf(NAME_BAD[i]) >= 0) return 'Let\'s keep names friendly. Pick another.';
+  return '';
+}
+/* Game name = the name friends and teammates see. Cordelle-name players still sign in with their original name. */
+function setGameName(raw, done) {
+  var n = cleanName(raw), bad = nameProblem(n);
+  if (bad) { done(bad); return; }
+  if (!ON.user) { S.name = n; save(); refreshMe(); refreshTitle(); done(''); return; }
+  var sl = slugName(n);
+  ON.db.collection('users').where('nameLower', '==', sl).limit(3).get().then(function (s) {
+    if (s.docs.some(function (d) { return d.id !== ON.user.uid; })) { done('Someone already has that name. Try adding a number or a twist.'); return; }
+    return uref().set({ name: n, nameLower: sl, named: true }, { merge: true }).then(function () {
+      if (ON.profile) { ON.profile.name = n; ON.profile.nameLower = sl; ON.profile.named = true; }
+      S.name = n; save(); refreshMe(); refreshTitle();
+      ON.friends.forEach(function (f) { uref(f.id).collection('friends').doc(ON.user.uid).set({ name: n }, { merge: true }).catch(function () {}); });
+      done('');
+    });
+  }).catch(function () { done('Couldn\'t save your name right now. Check your connection and try again.'); });
+}
+function nameForm(first) {
+  var cur = myName() === 'Player' ? '' : myName();
+  panel('<h3>' + (first ? 'Choose your game name' : 'Change your game name') + '</h3><p>' + (first ? 'This is the name friends and teammates will see. You can change it any time in your account or Style Studio.' : 'Friends and teammates will see your new name right away.') + '</p>' +
+    (ON.user && !ON.user.isAnonymous && !(ON.user.providerData[0] && ON.user.providerData[0].providerId === 'google.com') ? '<p class="note">You still sign in with your original Cordelle name and PIN.</p>' : '') +
+    '<div class="pinf"><label>Game name<input id="gnIn" maxlength="14" autocomplete="nickname" value="' + esc(cur) + '" placeholder="3 to 14 letters"></label></div><p class="note">Letters, numbers, spaces and . _ \' - are fine.</p>' +
+    '<div class="res-btns"><button class="b3 gold" id="gnGo">Save name</button>' + (first ? '' : '<button class="b3 cream" data-x>Cancel</button>') + '</div><p class="status" id="gnMsg"></p>', 'small', function (v) {
+      var inp = $('#gnIn', v), go = $('#gnGo', v);
+      function run() { go.disabled = true; $('#gnMsg', v).textContent = 'Saving…'; setGameName(inp.value, function (err) { go.disabled = false; if (err) { $('#gnMsg', v).textContent = err; return; } SFX.set(); closeVeil(); toast('You\'re now ' + myName() + '!'); }); }
+      go.onclick = run; inp.onkeydown = function (e) { if (e.key === 'Enter') run(); };
+      setTimeout(function () { inp.focus(); }, 50);
+    });
+}
 function pinCred(name, pin) { return { email: slugName(name) + '@players.bingobloom.app', password: 'bloom-' + pin }; }
 function accountPanel() {
   if (!ON.ok) { panel('<h3>Your account</h3><p>Sign-in, friends, teams, gifts and card trading work in the full web game:</p><p><b>dawngonzales1.github.io/bingo-game</b></p><p class="note">This version is for practice and saves on this phone only.</p>', 'small'); return; }
@@ -3930,7 +3969,8 @@ function accountPanel() {
     var how = u.isAnonymous ? 'Guest (only on this phone until you link it)' : (u.providerData[0] && u.providerData[0].providerId === 'google.com' ? 'Google' : 'Cordelle name and PIN');
     panel('<h3>Your account</h3><div class="acct">' + avatarHtml(64) + '<div><b class="acname">' + esc(myName()) + '</b><small>Signed in with ' + how + '</small></div></div>' +
       (u.isAnonymous ? '<p><b>Keep your progress safe:</b> link this guest account so you can play on any phone.</p><div class="signbtns"><button class="b3 gold sgn" id="lkG">' + gIcon() + ' Link Google</button><button class="b3 plum sgn" id="lkP">Link a Cordelle name &amp; PIN</button></div><div id="pinBox"></div>' : '<p class="note">Your progress saves to your account automatically and follows you to any phone.</p>') +
-      '<div class="res-btns"><button class="b3 cream" id="acOut">Sign out</button><button class="b3 gold" data-x>Done</button></div><p class="status" id="acMsg"></p>', 'small', function (v) {
+      '<div class="res-btns"><button class="b3 plum" id="acName">✎ Game name</button><button class="b3 cream" id="acOut">Sign out</button><button class="b3 gold" data-x>Done</button></div><p class="status" id="acMsg"></p>', 'small', function (v) {
+        $('#acName', v).onclick = function () { closeVeil(); setTimeout(function () { nameForm(false); }, 250); };
         $('#acOut', v).onclick = function () { cloudSaveNow(); ON.auth.signOut().then(function () { closeVeil(); toast('Signed out. You can keep playing here.'); }); };
         if ($('#lkG', v)) $('#lkG', v).onclick = function () { u.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(function () { closeVeil(); toast('Linked to Google!'); cloudSaveNow(); }).catch(function (e) { $('#acMsg', v).textContent = authErr(e); }); };
         if ($('#lkP', v)) $('#lkP', v).onclick = function () { pinForm($('#pinBox', v), 'link'); };
@@ -3948,8 +3988,8 @@ function gIcon() { return '<svg viewBox="0 0 48 48" class="gic" aria-hidden="tru
 function pinForm(box, mode) {
   box.innerHTML = '<div class="pinf"><label>Cordelle name<input id="pfN" maxlength="14" autocomplete="username" value="' + esc(S.name !== 'Player' ? S.name : '') + '"></label><label>PIN (4 to 8 numbers)<input id="pfP" inputmode="numeric" maxlength="8" autocomplete="current-password" type="password"></label>' +
     '<div class="res-btns">' + (mode === 'link' ? '<button class="b3 gold" id="pfL">Link</button>' : '<button class="b3 gold" id="pfI">Sign in</button><button class="b3 plum" id="pfC">Create account</button>') + '</div></div>';
-  function vals() { var n = $('#pfN').value.trim(), p = $('#pfP').value.trim(), m = $('#acMsg'); if (slugName(n).length < 3) { m.textContent = 'Use at least 3 letters or numbers for your name.'; return null; } if (!/^\d{4,8}$/.test(p)) { m.textContent = 'Your PIN must be 4 to 8 numbers.'; return null; } return { n: n.slice(0, 14), c: pinCred(n, p) }; }
-  function done(name) { return function (r) { var u = r.user || ON.auth.currentUser; S.name = name; ON.pendingName = null; setTimeout(refreshTitle, 300); if (u) { uref(u.uid).set({ name: name, nameLower: slugName(name) }, { merge: true }); if (ON.profile) ON.profile.name = name; } closeVeil(); toast('Welcome, ' + name + '!'); }; }
+  function vals() { var n = $('#pfN').value.trim(), p = $('#pfP').value.trim(), m = $('#acMsg'); var np = nameProblem(n); if (np) { m.textContent = np; return null; } if (!/^\d{4,8}$/.test(p)) { m.textContent = 'Your PIN must be 4 to 8 numbers.'; return null; } return { n: n.slice(0, 14), c: pinCred(n, p) }; }
+  function done(name) { return function (r) { var u = r.user || ON.auth.currentUser; S.name = name; ON.pendingName = null; setTimeout(refreshTitle, 300); if (u) { uref(u.uid).set({ name: name, nameLower: slugName(name), named: true }, { merge: true }); if (ON.profile) { ON.profile.name = name; ON.profile.named = true; } } closeVeil(); toast('Welcome, ' + name + '!'); }; }
   function fail(e) { $('#acMsg').textContent = authErr(e); }
   if ($('#pfI')) $('#pfI').onclick = function () { var x = vals(); if (x) ON.auth.signInWithEmailAndPassword(x.c.email, x.c.password).then(function () { closeVeil(); }).catch(fail); };
   if ($('#pfC')) $('#pfC').onclick = function () { var x = vals(); if (x) ON.pendingName = x.n; if (x) ON.auth.createUserWithEmailAndPassword(x.c.email, x.c.password).then(done(x.n)).catch(fail); };
