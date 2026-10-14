@@ -2389,6 +2389,8 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .ibing { background: center / 80% no-repeat, #fff !important; }
 .limits small { flex-basis: 100%; font-weight: 800; opacity: .8; } .limits .full b { color: #ff9a7a; }
 @media (max-height: 420px) { .kpans { grid-template-columns: repeat(6, 1fr); } .kip { width: 32px; height: 32px; } .kplate.big { width: 54px; height: 54px; } .krec { gap: 8px; padding: 8px 10px !important; } .khead img { height: 48px; } }
+#bSet .c svg { filter: drop-shadow(0 3px 0 rgba(20,10,40,.55)) drop-shadow(0 6px 8px rgba(20,5,30,.35)); transition: transform .5s; }
+#bSet:hover .c svg, #bSet:active .c svg { transform: rotate(60deg); }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2466,7 +2468,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
   <symbol id="i-card" viewBox="0 0 40 40"><image href="art/icon-card-pack.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-basket" viewBox="0 0 40 40"><image href="art/ing-berries.webp" x="0" y="0" width="40" height="40" preserveAspectRatio="xMidYMid meet"/></symbol>
   <symbol id="i-gift" viewBox="0 0 40 40"><image href="art/icon-gift.webp" x="1" y="1" width="38" height="38"/></symbol>
-  <symbol id="i-gear" viewBox="0 0 40 40"><path d="M17 4h6l1 5 4 2 4-3 4 4-3 4 2 4 5 1v6l-5 1-2 4 3 4-4 4-4-3-4 2-1 5h-6l-1-5-4-2-4 3-4-4 3-4-2-4-5-1v-6l5-1 2-4-3-4 4-4 4 3 4-2z" fill="url(#gBolt)" stroke="#3d1a4f" stroke-width="2.8" stroke-linejoin="round" transform="scale(.82) translate(4.4 4.4)"/><circle cx="20" cy="20" r="5.5" fill="#7b3fe0" stroke="#3d1a4f" stroke-width="2.6"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 40 40"><defs><linearGradient id="cgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3b8"/><stop offset=".35" stop-color="#ffcf3d"/><stop offset=".75" stop-color="#c98a12"/><stop offset="1" stop-color="#ffe58f"/></linearGradient><radialGradient id="cgJ" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#bfe9ff"/><stop offset=".45" stop-color="#2f8ef0"/><stop offset="1" stop-color="#0f2f7a"/></radialGradient></defs><g fill="url(#cgG)" stroke="#2a1640" stroke-width="1.8" stroke-linejoin="round"><rect x="16" y="1" width="8" height="10" rx="2" transform="rotate(0 20 20)"/><rect x="16" y="1" width="8" height="10" rx="2" transform="rotate(45 20 20)"/><rect x="16" y="1" width="8" height="10" rx="2" transform="rotate(90 20 20)"/><rect x="16" y="1" width="8" height="10" rx="2" transform="rotate(135 20 20)"/><rect x="16" y="1" width="8" height="10" rx="2" transform="rotate(180 20 20)"/><rect x="16" y="1" width="8" height="10" rx="2" transform="rotate(225 20 20)"/><rect x="16" y="1" width="8" height="10" rx="2" transform="rotate(270 20 20)"/><rect x="16" y="1" width="8" height="10" rx="2" transform="rotate(315 20 20)"/><circle cx="20" cy="20" r="12.5"/></g><circle cx="20" cy="20" r="12.5" fill="url(#cgG)"/><circle cx="20" cy="20" r="9.5" fill="none" stroke="#a8660a" stroke-width="1.4"/><circle cx="20" cy="20" r="6.4" fill="url(#cgJ)" stroke="#2a1640" stroke-width="1.6"/><circle cx="18" cy="17.8" r="1.8" fill="#fff" opacity=".85"/><path d="M10.5 13.5 A11 11 0 0 1 22 8.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity=".75"/></symbol>
   <symbol id="i-help" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#fff" stroke="#3d1a4f" stroke-width="3"/><path d="M15.5 16a4.6 4.6 0 1 1 6.6 4.2c-1.5.7-2.1 1.6-2.1 3.3" fill="none" stroke="#7b3fe0" stroke-width="3.4" stroke-linecap="round"/><circle cx="20" cy="28.5" r="2.2" fill="#7b3fe0"/></symbol>
   <symbol id="i-full" viewBox="0 0 40 40"><path d="M8 16V8h8M24 8h8v8M32 24v8h-8M16 32H8v-8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-check" viewBox="0 0 40 40"><path d="M6 21l9 9L34 9" fill="none" stroke="#3d1a4f" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 21l9 9L34 9" fill="none" stroke="#7fe35c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -2543,7 +2545,7 @@ var KEY = 'bingoBloom.v1';
 function fresh() {
   return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 0, alertMin: 60, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 0, bet: 1, xp: 0, level: 1, items: { bee: 1, headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
-    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', quest: {}, league: {}, raffle: {}, guide: {}, newCards: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
+    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', keepSpare: true, quest: {}, league: {}, raffle: {}, guide: {}, newCards: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'slow', assist: false, lite: false, autoAlert: true } };
 }
 function merge(saved) {
@@ -4103,16 +4105,19 @@ function loadPhoto(file, done) {
   r.readAsDataURL(file);
 }
 /* ---------- Star Exchange: spare album cards become stars, stars buy missing cards ---------- */
-function extraStars() { var n = 0; Object.keys(S.album).forEach(function (id) { var c = S.album[id] || 0; if (c > 1) n += (c - 1) * (cardInfo(id).gold ? 5 : 1); }); return n; }
+// keep = how many copies stay after trading (1 = only the album copy, 2 = also one spare to send to teammates)
+function extraStars(keep) { keep = keep || 1; var n = 0; Object.keys(S.album).forEach(function (id) { var c = S.album[id] || 0; if (c > keep) n += (c - keep) * (cardInfo(id).gold ? 5 : 1); }); return n; }
 function starExchange(setIdx) {
-  var ex = extraStars();
+  var keep = S.keepSpare === false ? 1 : 2, ex = extraStars(keep);
   panel('<h3>★ Star Exchange</h3><p>Spare copies of album cards turn into stars: <b>1 star</b> for a regular card, <b>5 stars</b> for a gold card. Spend stars on any card you are missing: <b>' + STAR_REG + ' stars</b> for a regular card, <b>' + STAR_GOLD + ' stars</b> for a gold card. You always keep one of each card.</p>' +
     '<div class="opt"><span>Your stars</span><b style="font-size:22px;color:#ffe58f">★ ' + S.stars + '</b></div>' +
-    '<div class="opt"><span>Your spare cards are worth</span><b style="font-size:22px;color:#ffe58f">★ ' + ex + '</b></div>' +
-    '<div class="res-btns"><button class="b3 gold" id="bTrade"' + (ex ? '' : ' disabled') + '>Trade spares for ' + ex + ' stars</button><button class="b3 cream" data-x>Back to album</button></div>' +
-    '<p class="note">Then tap any grey card in a set to get it with stars. In team play you can also send spares to teammates.</p>', 'small', function (v) {
+    '<div class="opt"><span>Keep 1 spare of each card to send to teammates</span><button class="sw" id="swKeep" aria-pressed="' + (keep === 2) + '"></button></div>' +
+    '<div class="opt"><span>' + (keep === 2 ? 'Your extra cards are worth' : 'Your spare cards are worth') + '</span><b style="font-size:22px;color:#ffe58f">★ ' + ex + '</b></div>' +
+    '<div class="res-btns"><button class="b3 gold" id="bTrade"' + (ex ? '' : ' disabled') + '>Trade for ' + ex + ' star' + (ex === 1 ? '' : 's') + '</button><button class="b3 cream" data-x>Back to album</button></div>' +
+    '<p class="note">' + (keep === 2 ? 'Trading keeps your album copy plus 1 spare of each card for teammates. ' : 'Trading keeps only your album copy of each card, so you will have no spares to send. ') + 'Then tap any grey card in a set to get it with stars.</p>', 'small', function (v) {
+      $('#swKeep', v).onclick = function () { S.keepSpare = !(S.keepSpare !== false); save(); SFX.tap(); starExchange(setIdx); };
       $('#bTrade', v).onclick = function () {
-        Object.keys(S.album).forEach(function (id) { if (S.album[id] > 1) S.album[id] = 1; }); S.newCards = {};
+        Object.keys(S.album).forEach(function (id) { if (S.album[id] > keep) S.album[id] = keep; });
         S.stars += ex; save(); SFX.set(); closeVeil(); album(setIdx === undefined ? null : setIdx); toast('+' + ex + ' stars! Tap a grey card to get it.');
       };
     });
