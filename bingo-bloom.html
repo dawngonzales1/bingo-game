@@ -2254,6 +2254,13 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .xpcol .xp { margin-left: 0 !important; }
 .myname { max-width: 120px; padding-left: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 800 13px/1.1 var(--ui); color: #fff; }
 @media (max-height: 300px) { .myname { font-size: 11px; } }
+
+.beefly { position: fixed; left: -26px; top: -26px; z-index: 65; width: 52px; height: 52px; pointer-events: none; transition: transform .45s cubic-bezier(.45,.05,.4,1.2); filter: drop-shadow(0 4px 4px rgba(20,5,35,.45)); }
+.beefly svg { width: 100%; height: 100%; animation: beeBuzz .12s linear infinite alternate; }
+.beefly.back svg { transform: scaleX(-1); animation-name: beeBuzzB; }
+.beefly.away { transition-duration: .7s; }
+@keyframes beeBuzz { to { transform: translateY(-3px) rotate(4deg); } }
+@keyframes beeBuzzB { from { transform: scaleX(-1); } to { transform: scaleX(-1) translateY(-3px) rotate(-4deg); } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2297,6 +2304,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
   <symbol id="i-games" viewBox="0 0 40 40"><image href="art/icon-wheel.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-team" viewBox="0 0 40 40"><image href="art/icon-team.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-head" viewBox="0 0 40 40"><image href="art/icon-head-start.webp" x="0" y="0" width="40" height="40" preserveAspectRatio="xMidYMid meet"/></symbol>
+  <symbol id="i-bee" viewBox="0 0 40 40"><g stroke="#3d1a4f" stroke-width="2" stroke-linejoin="round"><ellipse cx="14" cy="13" rx="8" ry="6" fill="#e9f6ff" opacity=".95" transform="rotate(-25 14 13)"/><ellipse cx="24" cy="11" rx="8" ry="6" fill="#e9f6ff" opacity=".95" transform="rotate(20 24 11)"/><ellipse cx="20" cy="25" rx="13" ry="10" fill="#ffd447"/><path d="M15 16.5c-1.5 5-1.5 12 0 17M22 15.5c-1.5 6-1.5 13 0 19" fill="none" stroke-width="3.5"/><circle cx="31" cy="23" r="4.5" fill="#3d1a4f"/><path d="M6 25l-4 1" stroke-width="2.5"/></g><circle cx="32.2" cy="21.8" r="1.2" fill="#fff"/></symbol>
   <symbol id="i-wild" viewBox="0 0 40 40"><image href="art/icon-wild-petal.webp" x="0" y="0" width="40" height="40" preserveAspectRatio="xMidYMid meet"/></symbol>
   <symbol id="i-plus5" viewBox="0 0 40 40"><image href="art/icon-plus5-balls.webp" x="0" y="0" width="40" height="40" preserveAspectRatio="xMidYMid meet"/></symbol>
   <symbol id="i-x2" viewBox="0 0 40 40"><image href="art/icon-double-coins.webp" x="0" y="0" width="40" height="40" preserveAspectRatio="xMidYMid meet"/></symbol>
@@ -2397,7 +2405,7 @@ var LINES = (function () {
 /* ---------- saved progress (this phone only, for now) ---------- */
 var KEY = 'bingoBloom.v1';
 function fresh() {
-  return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 0, alertMin: 60, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 0, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
+  return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 0, alertMin: 60, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 0, bet: 1, xp: 0, level: 1, items: { bee: 1, headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', quest: {}, league: {}, raffle: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'slow', assist: false, lite: false, autoAlert: true } };
@@ -2889,7 +2897,7 @@ var ALBUM_TIERS = [
   { tickets: 4500, coins: 7500, gems: 150, pups: 8 },
   { tickets: 6000, coins: 10000, gems: 200, pups: 10 }
 ];
-var PUP_IDS = ['headstart', 'wild', 'balls5', 'dcoins', 'dpetals', 'instant', 'allx2', 'daub1', 'daub2', 'daub3', 'coinsq', 'chest', 'super', 'freeze', 'dxp'];
+var PUP_IDS = ['bee', 'headstart', 'wild', 'balls5', 'dcoins', 'dpetals', 'instant', 'allx2', 'daub1', 'daub2', 'daub3', 'coinsq', 'chest', 'super', 'freeze', 'dxp'];
 function albumTier() { return ALBUM_TIERS[Math.min(2, S.albumTimes || 0)]; }
 function albumComplete(delay) {
   var t = albumTier(); S.albumDone = true; S.albumTimes = (S.albumTimes || 0) + 1;
@@ -3692,7 +3700,7 @@ function boostMarks() {
 /* Each slot is a random draw: the tier is rolled first (super rare 5%, rare 20%, regular 75%), then one of
    your power-ups from that tier. If you own none in that tier it falls back to a more common tier, never up,
    so super rare stays super rare. Empty draws are a free Bloom Boost. */
-var PQ_TIERS = [{ id: 'super', name: 'Super rare', p: .05, ids: ['instant', 'allx2'] }, { id: 'rare', name: 'Rare', p: .20, ids: ['daub3', 'wild', 'super'] }, { id: 'regular', name: 'Regular', p: .75, ids: ['daub1', 'daub2', 'coinsq', 'chest', 'freeze'] }],
+var PQ_TIERS = [{ id: 'super', name: 'Super rare', p: .05, ids: ['instant', 'allx2'] }, { id: 'rare', name: 'Rare', p: .20, ids: ['daub3', 'wild', 'super', 'bee'] }, { id: 'regular', name: 'Regular', p: .75, ids: ['daub1', 'daub2', 'coinsq', 'chest', 'freeze'] }],
   PQ_SLOTS = 3, pqFrom = null;
 function pupTier(id) { return PQ_TIERS.filter(function (t) { return t.ids.indexOf(id) >= 0; })[0]; }
 function pqPick() {
@@ -3972,6 +3980,29 @@ function openSquares(onlyCalled) {
   return list;
 }
 function spend(id) { if (owned(id) < 1) { SFX.no(); toast('You have no ' + pupById(id).name + ' left. Get more in the Shop with coins.', 3000); return false; } if (id === 'alert') return false; else S.items[id]--; save(); pupCount(id); return true; }
+/* Busy Bee (Crystal's idea, like Bingo Frenzy's boomerang): out across every card marking one square each, then back marking one more */
+function useBee() {
+  if (!R || !R.active) { toast('Wait for the first ball.'); return; }
+  var live = R.cards.map(function (k, ci) { return ci; }).filter(function (ci) { return !R.cards[ci].won; });
+  if (!live.length || !spend('bee')) return;
+  pupFx('i-bee', 'Busy Bee!', 'Buzzing across your cards');
+  var picked = {}, stops = [];
+  function pick(ci) { var k = R.cards[ci], open = k.cells.map(function (c, i) { return i; }).filter(function (i) { return !k.cells[i].d && i !== 12 && !picked[ci + ':' + i]; }); if (!open.length) return; var i = open[rand(open.length)]; picked[ci + ':' + i] = 1; stops.push([ci, i]); }
+  live.forEach(pick); live.slice().reverse().forEach(pick);
+  var bee = document.createElement('div'); bee.className = 'beefly'; bee.innerHTML = icon('i-bee'); document.body.appendChild(bee);
+  var src = (pqSrc() || $('#pq') || document.body).getBoundingClientRect(), x = src.left + src.width / 2, y = src.top + src.height / 2;
+  bee.style.transform = 'translate(' + x + 'px,' + y + 'px)'; tone(520, 0, .25, 'sawtooth', .015);
+  var t = 400;
+  stops.forEach(function (q, n) {
+    setTimeout(function () {
+      if (!R || R.ended) return; var k = R.cards[q[0]], el = R.els[q[0]].querySelector('[data-i="' + q[1] + '"]'); if (!el) return;
+      var r = el.getBoundingClientRect(), vis = r.width && r.top > -20 && r.bottom < innerHeight + 20;
+      if (vis) { bee.classList.toggle('back', n >= live.length); bee.style.transform = 'translate(' + (r.left + r.width / 2) + 'px,' + (r.top + r.height / 2) + 'px)'; }
+      setTimeout(function () { if (R && !R.ended && !k.cells[q[1]].d) { daub(q[0], q[1], el, true); el.classList.add('zap'); tone(880 + rand(200), 0, .08, 'sine', .04); } }, vis ? 330 : 0);
+    }, t); t += 520;
+  });
+  setTimeout(function () { bee.classList.add('away'); bee.style.transform = 'translate(' + (innerWidth + 60) + 'px,-60px)'; setTimeout(function () { bee.remove(); }, 700); }, t + 200);
+}
 function useDaub(n, id) {
   if (!R || !R.active) { toast('Wait for the first ball.'); return; }
   var pool = shuffle(openSquares(false)); if (!pool.length) { toast('No open squares left.'); return; }
@@ -4005,7 +4036,7 @@ function useFreeze() {
   var t = setInterval(function () { n--; var e = $('#frN'); if (e) e.textContent = n; if (n <= 0 || !R || R.ended) { clearInterval(t); fr.remove(); if (R) { R.frozen = false; if (R.active && !R.paused) R.timer = setTimeout(callNext, 600); } } }, 1000);
 }
 var PUP_USE = { wild: function () { $('#bWild').click(); }, instant: useInstant, allx2: useAllx2, balls5: function () { $('#bBalls').click(); }, alert: function () { useAlert.call($('#bAlert')); },
-  daub1: function () { useDaub(1, 'daub1'); }, daub2: function () { useDaub(2, 'daub2'); }, daub3: function () { useDaub(3, 'daub3'); },
+  bee: useBee, daub1: function () { useDaub(1, 'daub1'); }, daub2: function () { useDaub(2, 'daub2'); }, daub3: function () { useDaub(3, 'daub3'); },
   coinsq: function () { plantTreasure('coinsq', 'coins', 3); }, chest: function () { plantTreasure('chest', 'chest', 2); }, super: useSuper, freeze: useFreeze };
 function pupTray() {
   if (!R) return; var wasPaused = R.paused; if (!wasPaused && R.active) { R.paused = true; clearTimeout(R.timer); }
@@ -4338,7 +4369,8 @@ var POWERUPS = [
   { id: 'chest', name: 'Treasure Chest', icon: 'i-chest', price: 140, desc: 'Hides 2 treasure chests on your cards. Mark them for a mystery prize.' },
   { id: 'super', name: 'Supercharger', icon: 'i-super', price: 150, desc: 'Fills your Boost meter right away.' },
   { id: 'freeze', name: 'Time Freeze', icon: 'i-freeze', price: 130, desc: 'Stops the ball caller for 10 seconds so you can catch up.' },
-  { id: 'dxp', name: 'Double XP', icon: 'i-xp2', price: 120, desc: 'Doubles the XP you earn in one round.' }
+  { id: 'dxp', name: 'Double XP', icon: 'i-xp2', price: 120, desc: 'Doubles the XP you earn in one round.' },
+  { id: 'bee', name: 'Busy Bee', icon: 'i-bee', price: 170, desc: 'Buzzes across your cards marking a square on each, then flies back and marks one more on each.' }
 ];
 var PRE_PUPS = ['headstart', 'dcoins', 'dpetals', 'dxp'];
 var IN_PUPS = ['wild', 'instant', 'allx2', 'balls5', 'alert', 'daub1', 'daub2', 'daub3', 'coinsq', 'chest', 'super', 'freeze'];
