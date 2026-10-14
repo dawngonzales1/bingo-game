@@ -1488,6 +1488,48 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @media (max-height: 300px) { .rnav { width: 30px; height: 50px; font-size: 26px; } #room .tiers { padding: 0 30px; } .pinfo { width: 28px; height: 28px; font-size: 15px; } }
 #room > .rnav { position: absolute; }
 #play > .frost { position: absolute; }
+/* ===== online play ===== */
+.tacct { margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px 4px 4px; border: 0; border-radius: 999px; cursor: pointer; font: 700 13px var(--ui); color: #fff; background: rgba(42,13,61,.75); box-shadow: 0 0 0 1.5px #ffd45c; animation: dropIn .5s .8s both; }
+.tacct:only-of-type { padding: 6px 16px; }
+.signbtns { display: grid; gap: 8px; }
+.sgn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 14px; font-size: 16px; }
+.gic { width: 22px; height: 22px; background: #fff; border-radius: 50%; padding: 2px; }
+.pinf { display: grid; gap: 8px; }
+.pinf label { display: grid; gap: 3px; font: 700 12px var(--ui); color: #ffe58f; }
+.pinf input, .srch input, .tradehd select { font: 600 15px var(--ui); color: #fff; background: rgba(10,2,20,.5); border: 1.5px solid rgba(255,214,92,.5); border-radius: 12px; padding: 8px 10px; min-width: 0; }
+.status { min-height: 1.2em; color: #ffb35c; font-weight: 700; font-size: 13px; margin: 0; }
+.acct { display: flex; align-items: center; gap: 12px; } .acct div { display: grid; } .acname { font-size: 20px; color: #ffe58f; } .acct small { color: #e6d4ff; }
+.socbody { display: grid; gap: 8px; max-height: min(60vh, 420px); overflow-y: auto; padding-right: 2px; }
+.socbody h4 { margin: 4px 0 0; color: #ffe58f; font-size: 14px; }
+.tbadge { display: inline-grid; place-items: center; min-width: 17px; height: 17px; margin-left: 5px; padding: 0 4px; border-radius: 9px; background: #e5383b; color: #fff; font-style: normal; font-size: 10.5px; box-sizing: border-box; vertical-align: 2px; }
+.srch { display: flex; gap: 6px; } .srch input { flex: 1; } .srch .b3 { padding: 5px 14px; font-size: 14px; }
+.prow { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 14px; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.03)); box-shadow: inset 0 0 0 1.5px rgba(255,214,92,.3); }
+.pfr { flex: none; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; background: linear-gradient(145deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a); }
+.pav { width: 32px; height: 32px; border-radius: 9px; background: center / cover #f3e8ff; display: grid; place-items: center; }
+.pav.ini { background: radial-gradient(circle at 40% 30%, #c9a2ff, #6a32d0 60%, #3d1680); color: #fff; font-weight: 700; font-size: 16px; }
+.pnm { flex: 1; display: grid; min-width: 0; } .pnm b { color: #fff; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .pnm small { color: #cdb6ee; font-size: 11px; }
+.pbtn { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.b3.sm { padding: 3px 10px; font-size: 12.5px; display: inline-flex; align-items: center; gap: 3px; } .b3.sm svg { width: 18px; height: 18px; }
+.xs { border: 0; background: none; color: #cdb6ee; font: 700 13px var(--ui); cursor: pointer; } .xs.sure { color: #ff8fb1; }
+.ok { color: #a6f07a; font-weight: 700; font-size: 12.5px; }
+.limits { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 6px 10px; border-radius: 12px; background: rgba(0,0,0,.25); font-size: 11.5px; color: #e6d4ff; } .limits b { color: #ffe58f; } .limits .rs { flex-basis: 100%; }
+.ibcard { width: 40px; height: 40px; flex: none; border-radius: 9px; background: center / cover #f3e8ff; box-shadow: 0 0 0 2px #ffd45c; } .ibic { width: 40px; height: 40px; flex: none; display: grid; place-items: center; } .ibic svg { width: 36px; height: 36px; }
+.tradehd { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; } .tradehd label { display: flex; gap: 6px; align-items: center; font-weight: 700; color: #ffe58f; }
+.goldst { font-size: 12px; font-weight: 700; color: #e6d4ff; padding: 3px 10px; border-radius: 999px; background: rgba(0,0,0,.3); } .goldst.on { color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #ffd45c); animation: pulse 1.4s infinite; }
+.trgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; }
+.trc { position: relative; padding: 0; border: 0; background: none; cursor: pointer; transition: transform .15s; } .trc:active { transform: scale(.93); } .trc.lock { opacity: .55; }
+.trlock { position: absolute; left: 0; right: 0; bottom: 30%; font-style: normal; font-size: 9.5px; font-weight: 700; color: #3d1a4f; background: #ffd45c; text-align: center; }
+.sendc { display: grid; grid-template-columns: min(130px, 30vh) 1fr; gap: 14px; align-items: center; }
+.cf.flyaway { animation: flyAway .7s cubic-bezier(.5,0,.7,.4) forwards; }
+@keyframes flyAway { to { transform: translate(140%, -120%) rotate(30deg) scale(.4); opacity: 0; } }
+.tmhd { display: flex; align-items: center; gap: 10px; } .tmhd b { font-size: 18px; color: #ffe58f; } .tmhd small { flex: 1; color: #cdb6ee; }
+.tmwrap { display: grid; grid-template-columns: minmax(150px, 38%) 1fr; gap: 10px; min-height: 0; }
+.tmembers { display: grid; gap: 5px; align-content: start; max-height: 300px; overflow-y: auto; }
+.tchat { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 6px; min-height: 200px; }
+.tmsgs { overflow-y: auto; max-height: 260px; display: flex; flex-direction: column; gap: 5px; padding: 6px; border-radius: 12px; background: rgba(0,0,0,.25); }
+.msg { align-self: flex-start; max-width: 85%; display: grid; padding: 4px 10px 6px; border-radius: 12px 12px 12px 4px; background: rgba(255,255,255,.12); } .msg small { font-size: 10px; color: #cdb6ee; } .msg span { color: #fff; font-size: 13.5px; overflow-wrap: anywhere; }
+.msg.mine { align-self: flex-end; border-radius: 12px 12px 4px 12px; background: linear-gradient(180deg, #8f5cf0, #6a32d0); }
+@media (max-width: 640px) { .tmwrap { grid-template-columns: 1fr; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1655,7 +1697,7 @@ function merge(saved) {
 }
 var S = fresh();
 function load() { try { var raw = localStorage.getItem(KEY); if (raw) S = merge(JSON.parse(raw)); } catch (e) { /* storage blocked: play without saving */ } }
-function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ignore */ } }
+function save(noCloud) { S.savedAt = Date.now(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ignore */ } if (!noCloud && typeof cloudSaveSoon === 'function') cloudSaveSoon(); }
 function logEvent(e) { e.at = Date.now(); S.events.push(e); if (S.events.length > 100) S.events = S.events.slice(-100); }
 
 /* ---------- helpers ---------- */
@@ -2040,6 +2082,7 @@ function title() {
     '<div class="by"><span>by Cordelle</span></div>' +
     '<button class="b3 gold shine" id="bStart">PLAY</button>' +
     '<p class="tfoot">Fair bingo · every odd shown · no real-money prizes</p></div></div>');
+  setTimeout(refreshTitle, 0);
   $('#bStart').onclick = function () {
     ac(); SFX.coin();
     fsWanted = true; goFull();
@@ -2098,7 +2141,8 @@ function lobby() {
   $('#bKitchen').onclick = kitchen;
   $('#bShop').onclick = function () { shop(); };
   $('#bGames').onclick = games;
-  $('#bTeam').onclick = teamGarden;
+  $('#bTeam').onclick = function () { social(); };
+  setTimeout(teamDot, 0);
   $('#bSet').onclick = settings;
   $('#bGems').onclick = function () { SFX.tap(); shop('gems'); };
   $('#bTixPlus').onclick = function () { SFX.tap(); kitchen(); };
@@ -2316,7 +2360,7 @@ function settings() {
     '<div class="opt"><span>Caller voice <small style="color:var(--mist)">reads each ball out loud</small></span><button class="sw" id="swVoice" aria-pressed="' + st.voice + '" aria-label="Caller voice"></button></div>' +
     '<div class="opt"><span>Turn on Bloom Alert by itself <small style="color:var(--mist)">uses one at the start of each round</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
-    '<div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
+    '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button></div><div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
     '<button class="b3 cream" id="bReset" style="padding:8px">Start over (clear my progress)</button>', 'small', function (v) {
       $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; S.alerts += 5; PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
@@ -2324,6 +2368,7 @@ function settings() {
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
       $('#swVoice', v).onclick = function () { st.voice = !st.voice; this.setAttribute('aria-pressed', st.voice); save(); say('B 7'); };
       v.querySelectorAll('#spd button').forEach(function (b) { b.onclick = function () { st.speed = b.dataset.s; save(); v.querySelectorAll('#spd button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
+      $('#bAcct', v).onclick = accountPanel;
       $('#bHow', v).onclick = howTo; $('#bFair', v).onclick = fairPlay;
       var armed = false;
       $('#bReset', v).onclick = function () {
@@ -3792,13 +3837,303 @@ function prizeReveal(iconId, title, sub, done) {
   $('#rvGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (done) done(); }, 250); };
 }
 
+/* ---------- online play: accounts, cloud saves, friends, gifts, card trading and teams.
+   Runs only in the web version (dawngonzales1.github.io/bingo-game), where the Firebase library is loaded. ---------- */
+var ON = { ok: false, user: null, profile: null, db: null, auth: null, subs: [], inbox: [], friends: [], requests: [], daily: {}, team: null, saveT: null };
+var GIFT_TIX = 10, GIFT_SEND_MAX = 20, GIFT_RECV_MAX = 20, CARD_SEND_MAX = 20, CARD_RECV_MAX = 20, TEAM_MAX = 30;
+var GOLD_SAT0 = Date.UTC(2026, 9, 17); // the first Gold Trading Saturday (Oct 17, 2026); then every other Saturday
+var FV = function () { return firebase.firestore.FieldValue; };
+function onlineInit() {
+  if (!window.firebase || !window.BLOOM_FIREBASE || ON.ok) return;
+  try { firebase.initializeApp(window.BLOOM_FIREBASE); ON.auth = firebase.auth(); ON.db = firebase.firestore(); ON.ok = true; } catch (e) { return; }
+  ON.auth.onAuthStateChanged(function (u) { ON.user = u; if (u) onSignedIn(u); else onSignedOut(); refreshTitle(); });
+}
+/* daily reset at 8:00 AM Central (America/Chicago, daylight saving handled), the same moment worldwide */
+function chiOffset(ms) {
+  var p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+    .formatToParts(new Date(ms)).forEach(function (x) { if (x.type !== 'literal') p[x.type] = +x.value; });
+  return Date.UTC(p.year, p.month - 1, p.day, p.hour % 24, p.minute, p.second) - Math.floor(ms / 1000) * 1000;
+}
+function chiNow(ms) { var d = new Date(ms + chiOffset(ms)); return { y: d.getUTCFullYear(), m: d.getUTCMonth(), d: d.getUTCDate(), h: d.getUTCHours() }; }
+function tradeDayStart(ms) { var c = chiNow(ms); return Date.UTC(c.y, c.m, c.d - (c.h < 8 ? 1 : 0)); } // the trading day's date (as UTC midnight)
+function dayKey(ms) { return new Date(tradeDayStart(ms || Date.now())).toISOString().slice(0, 10); }
+function nextReset(ms) {
+  ms = ms || Date.now(); var day = tradeDayStart(ms) + 864e5, wall = day + 8 * 3600e3;
+  return wall - chiOffset(wall + 6 * 3600e3);
+}
+function isGoldDay(ms) { var d = tradeDayStart(ms || Date.now()); return new Date(d).getUTCDay() === 6 && Math.round((d - GOLD_SAT0) / 864e5) % 14 === 0; }
+function nextGoldDay() { for (var i = 0; i < 15; i++) { var t = Date.now() + i * 864e5; if (isGoldDay(t)) { var d = tradeDayStart(t), wall = d + 8 * 3600e3; return wall - chiOffset(wall + 6 * 3600e3); } } return null; }
+function untilText(t) { var m = Math.max(0, t - Date.now()), h = Math.floor(m / 3600e3); return (h >= 24 ? Math.floor(h / 24) + 'd ' + (h % 24) + 'h' : h + 'h ' + Math.floor(m % 3600e3 / 60000) + 'm'); }
+function localTime(t) { try { return new Date(t).toLocaleString([], { weekday: 'short', hour: 'numeric', minute: '2-digit' }); } catch (e) { return ''; } }
+
+function uref(uid) { return ON.db.collection('users').doc(uid || ON.user.uid); }
+function dailyRef() { return uref().collection('daily').doc(dayKey()); }
+function myName() { return (ON.profile && ON.profile.name) || S.name || 'Player'; }
+function slugName(n) { return String(n || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+function onSignedIn(u) {
+  ON.subs.forEach(function (f) { f(); }); ON.subs = [];
+  var ref = uref();
+  ref.get().then(function (snap) {
+    var p = snap.exists ? snap.data() : null;
+    if (!p) { p = { name: (ON.pendingName || u.displayName || (S.name !== 'Player' ? S.name : '') || 'Player').slice(0, 14), level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, team: null, createdAt: Date.now() }; p.nameLower = slugName(p.name); ref.set(p); }
+    ON.profile = p; S.name = p.name; refreshTitle();
+    return ref.collection('private').doc('save').get();
+  }).then(function (sv) {
+    if (sv && sv.exists) {
+      var cloud = null; try { cloud = JSON.parse(sv.data().data); } catch (e) { cloud = null; }
+      if (cloud) {
+        var cs = (cloud.level || 1) * 1000 + ((cloud.stats || {}).rounds || 0), ls = S.level * 1000 + S.stats.rounds;
+        if (cs >= ls) { S = merge(cloud); S.name = myName(); save(true); toast('Welcome back, ' + myName() + '! Your saved progress is loaded.', 3200); if ($('#lobby')) lobby(); }
+        else { cloudSaveNow(); toast('Signed in as ' + myName() + '. This phone has newer progress, so it was saved to your account.', 3600); }
+      }
+    } else { cloudSaveNow(); toast('Signed in as ' + myName() + '. Your progress now saves to your account.', 3200); }
+    listenSocial();
+  }).catch(function (e) { toast('Could not reach your account right now. Your game still saves on this phone.', 3400); });
+}
+function onSignedOut() { ON.subs.forEach(function (f) { f(); }); ON.subs = []; ON.profile = null; ON.inbox = []; ON.friends = []; ON.requests = []; ON.team = null; teamDot(); }
+function listenSocial() {
+  var me = uref();
+  ON.subs.push(me.collection('inbox').orderBy('at').limit(100).onSnapshot(function (s) { ON.inbox = s.docs.map(function (d) { var v = d.data(); v.id = d.id; return v; }); teamDot(); socialRefresh(); }, function () {}));
+  ON.subs.push(me.collection('friends').onSnapshot(function (s) { ON.friends = s.docs.map(function (d) { var v = d.data(); v.id = d.id; return v; }); socialRefresh(); }, function () {}));
+  ON.subs.push(me.collection('requests').onSnapshot(function (s) { ON.requests = s.docs.map(function (d) { var v = d.data(); v.id = d.id; return v; }); teamDot(); socialRefresh(); }, function () {}));
+  ON.subs.push(dailyRef().onSnapshot(function (s) { ON.daily = s.exists ? s.data() : {}; socialRefresh(); }, function () {}));
+  ON.subs.push(me.onSnapshot(function (s) { if (s.exists) { ON.profile = s.data(); } }, function () {}));
+}
+function teamDot() { var b = $('#bTeam .c'); if (!b) return; var hot = ON.inbox.length || ON.requests.length || gardenReady(); var d = b.querySelector('.dot'); if (hot && !d) b.insertAdjacentHTML('beforeend', '<span class="dot"></span>'); if (!hot && d) d.remove(); }
+function cloudSaveSoon() { if (!ON.user) return; clearTimeout(ON.saveT); ON.saveT = setTimeout(cloudSaveNow, 12000); }
+function cloudSaveNow() {
+  if (!ON.user) return; clearTimeout(ON.saveT);
+  try {
+    uref().collection('private').doc('save').set({ data: JSON.stringify(S), at: Date.now() });
+    uref().set({ name: myName(), nameLower: slugName(myName()), level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, seen: Date.now() }, { merge: true });
+  } catch (e) { /* offline: tries again on the next save */ }
+}
+document.addEventListener('visibilitychange', function () { if (document.hidden && ON.user && ON.saveT) cloudSaveNow(); });
+function authErr(e) {
+  var c = (e && e.code) || '';
+  if (c.indexOf('email-already-in-use') >= 0 || c.indexOf('credential-already-in-use') >= 0) return 'That name is already taken. Pick another, or sign in if it is yours.';
+  if (c.indexOf('invalid-credential') >= 0 || c.indexOf('wrong-password') >= 0 || c.indexOf('user-not-found') >= 0 || c.indexOf('invalid-login') >= 0) return 'That name and PIN don\'t match. Check them, or create a new account.';
+  if (c.indexOf('popup-closed') >= 0 || c.indexOf('cancelled-popup') >= 0) return 'Sign-in was closed before it finished.';
+  if (c.indexOf('popup-blocked') >= 0) return 'Your browser blocked the sign-in window. Allow pop-ups, or use your Cordelle name and PIN.';
+  if (c.indexOf('unauthorized-domain') >= 0) return 'This web address is not approved in Firebase yet (Authentication → Settings → Authorized domains).';
+  if (c.indexOf('network') >= 0) return 'No internet connection. Try again in a moment.';
+  if (c.indexOf('too-many') >= 0) return 'Too many tries. Wait a minute and try again.';
+  return 'Sign-in didn\'t work (' + (c || 'unknown') + '). Try again or use another way.';
+}
+function pinCred(name, pin) { return { email: slugName(name) + '@players.bingobloom.app', password: 'bloom-' + pin }; }
+function accountPanel() {
+  if (!ON.ok) { panel('<h3>Your account</h3><p>Sign-in, friends, teams, gifts and card trading work in the full web game:</p><p><b>dawngonzales1.github.io/bingo-game</b></p><p class="note">This version is for practice and saves on this phone only.</p>', 'small'); return; }
+  var u = ON.user;
+  if (u) {
+    var how = u.isAnonymous ? 'Guest (only on this phone until you link it)' : (u.providerData[0] && u.providerData[0].providerId === 'google.com' ? 'Google' : 'Cordelle name and PIN');
+    panel('<h3>Your account</h3><div class="acct">' + avatarHtml(64) + '<div><b class="acname">' + esc(myName()) + '</b><small>Signed in with ' + how + '</small></div></div>' +
+      (u.isAnonymous ? '<p><b>Keep your progress safe:</b> link this guest account so you can play on any phone.</p><div class="signbtns"><button class="b3 gold sgn" id="lkG">' + gIcon() + ' Link Google</button><button class="b3 plum sgn" id="lkP">Link a Cordelle name &amp; PIN</button></div><div id="pinBox"></div>' : '<p class="note">Your progress saves to your account automatically and follows you to any phone.</p>') +
+      '<div class="res-btns"><button class="b3 cream" id="acOut">Sign out</button><button class="b3 gold" data-x>Done</button></div><p class="status" id="acMsg"></p>', 'small', function (v) {
+        $('#acOut', v).onclick = function () { cloudSaveNow(); ON.auth.signOut().then(function () { closeVeil(); toast('Signed out. You can keep playing here.'); }); };
+        if ($('#lkG', v)) $('#lkG', v).onclick = function () { u.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(function () { closeVeil(); toast('Linked to Google!'); cloudSaveNow(); }).catch(function (e) { $('#acMsg', v).textContent = authErr(e); }); };
+        if ($('#lkP', v)) $('#lkP', v).onclick = function () { pinForm($('#pinBox', v), 'link'); };
+      });
+    return;
+  }
+  panel('<h3>Sign in to Bingo Bloom</h3><p>Save your progress to your account, play on any phone, and join friends and teams.</p>' +
+    '<div class="signbtns"><button class="b3 gold sgn" id="sgG">' + gIcon() + ' Continue with Google</button><button class="b3 plum sgn" id="sgP">Cordelle name &amp; PIN</button><button class="b3 cream sgn" id="sgA">Play as guest</button><button class="b3 cream sgn" disabled>Facebook (coming soon)</button></div><div id="pinBox"></div><p class="status" id="acMsg"></p>', 'small', function (v) {
+      $('#sgG', v).onclick = function () { ON.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(function () { closeVeil(); }).catch(function (e) { $('#acMsg', v).textContent = authErr(e); }); };
+      $('#sgA', v).onclick = function () { ON.auth.signInAnonymously().then(function () { closeVeil(); }).catch(function (e) { $('#acMsg', v).textContent = authErr(e); }); };
+      $('#sgP', v).onclick = function () { pinForm($('#pinBox', v), 'in'); };
+    });
+}
+function gIcon() { return '<svg viewBox="0 0 48 48" class="gic" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.7 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.2-13.4-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg>'; }
+function pinForm(box, mode) {
+  box.innerHTML = '<div class="pinf"><label>Cordelle name<input id="pfN" maxlength="14" autocomplete="username" value="' + esc(S.name !== 'Player' ? S.name : '') + '"></label><label>PIN (4 to 8 numbers)<input id="pfP" inputmode="numeric" maxlength="8" autocomplete="current-password" type="password"></label>' +
+    '<div class="res-btns">' + (mode === 'link' ? '<button class="b3 gold" id="pfL">Link</button>' : '<button class="b3 gold" id="pfI">Sign in</button><button class="b3 plum" id="pfC">Create account</button>') + '</div></div>';
+  function vals() { var n = $('#pfN').value.trim(), p = $('#pfP').value.trim(), m = $('#acMsg'); if (slugName(n).length < 3) { m.textContent = 'Use at least 3 letters or numbers for your name.'; return null; } if (!/^\d{4,8}$/.test(p)) { m.textContent = 'Your PIN must be 4 to 8 numbers.'; return null; } return { n: n.slice(0, 14), c: pinCred(n, p) }; }
+  function done(name) { return function (r) { var u = r.user || ON.auth.currentUser; S.name = name; ON.pendingName = null; setTimeout(refreshTitle, 300); if (u) { uref(u.uid).set({ name: name, nameLower: slugName(name) }, { merge: true }); if (ON.profile) ON.profile.name = name; } closeVeil(); toast('Welcome, ' + name + '!'); }; }
+  function fail(e) { $('#acMsg').textContent = authErr(e); }
+  if ($('#pfI')) $('#pfI').onclick = function () { var x = vals(); if (x) ON.auth.signInWithEmailAndPassword(x.c.email, x.c.password).then(function () { closeVeil(); }).catch(fail); };
+  if ($('#pfC')) $('#pfC').onclick = function () { var x = vals(); if (x) ON.pendingName = x.n; if (x) ON.auth.createUserWithEmailAndPassword(x.c.email, x.c.password).then(done(x.n)).catch(fail); };
+  if ($('#pfL')) $('#pfL').onclick = function () { var x = vals(); if (x) ON.pendingName = x.n; if (x) ON.user.linkWithCredential(firebase.auth.EmailAuthProvider.credential(x.c.email, x.c.password)).then(done(x.n)).catch(fail); };
+  $('#pfN').focus();
+}
+function refreshTitle() {
+  var t = $('#title .in'); if (!t) return; var a = $('#tAcct');
+  var html = !ON.ok ? '' : ON.user ? '<button class="tacct" id="tAcct">' + avatarHtml(26) + '<span>' + esc(myName()) + '</span></button>' : '<button class="tacct" id="tAcct">Sign in to save your progress</button>';
+  if (a) a.outerHTML = html; else t.insertAdjacentHTML('beforeend', html);
+  if ($('#tAcct')) $('#tAcct').onclick = function () { SFX.tap(); accountPanel(); };
+}
+
+/* social hub: friends, inbox, trading, team, garden */
+var SOC = { tab: 'friends', search: [], chat: [], chatSub: null, teamList: null, tradeTo: null };
+function social(tab) {
+  SOC.tab = tab || SOC.tab;
+  if (!ON.ok || !ON.user) {
+    panel('<h3>Team &amp; Friends</h3><p>' + (ON.ok ? 'Sign in to add friends, send daily gifts, trade cards and join a team.' : 'Friends, gifts, trading and teams work in the full web game at <b>dawngonzales1.github.io/bingo-game</b>.') + '</p><div class="res-btns">' + (ON.ok ? '<button class="b3 gold" id="soIn">Sign in</button>' : '') + '<button class="b3 plum" id="soG">Team Garden</button></div>', 'small', function (v) {
+      if ($('#soIn', v)) $('#soIn', v).onclick = accountPanel; $('#soG', v).onclick = teamGarden;
+    });
+    return;
+  }
+  var tabs = [['friends', 'Friends', ON.requests.length], ['inbox', 'Inbox', ON.inbox.length], ['trade', 'Trade', 0], ['team', 'Team', 0], ['garden', 'Garden', gardenReady() ? 1 : 0]];
+  panel('<div class="tabs">' + tabs.map(function (t) { return '<button data-st="' + t[0] + '" aria-pressed="' + (SOC.tab === t[0]) + '">' + t[1] + (t[2] ? '<i class="tbadge">' + t[2] + '</i>' : '') + '</button>'; }).join('') + '</div><div id="socBody" class="socbody"></div>', 'studio-p', function (v) {
+    v.querySelectorAll('[data-st]').forEach(function (b) { b.onclick = function () { SFX.tap(); if (b.dataset.st === 'garden') { teamGarden(); return; } social(b.dataset.st); }; });
+    socialBody();
+  });
+}
+function socialRefresh() { if ($('#socBody') && SOC.tab !== 'team') socialBody(); var ib = document.querySelector('[data-st="inbox"]'); if (ib) ib.innerHTML = 'Inbox' + (ON.inbox.length ? '<i class="tbadge">' + ON.inbox.length + '</i>' : ''); var fb = document.querySelector('[data-st="friends"]'); if (fb) fb.innerHTML = 'Friends' + (ON.requests.length ? '<i class="tbadge">' + ON.requests.length + '</i>' : ''); }
+function limitsLine() {
+  var d = ON.daily || {};
+  return '<div class="limits"><span>Gifts sent <b>' + ((d.giftTo || []).length) + '/' + GIFT_SEND_MAX + '</b></span><span>Gifts collected <b>' + (d.giftsRecv || 0) + '/' + GIFT_RECV_MAX + '</b></span><span>Cards sent <b>' + (d.cardsSent || 0) + '/' + CARD_SEND_MAX + '</b></span><span>Cards collected <b>' + (d.cardsRecv || 0) + '/' + CARD_RECV_MAX + '</b></span><span class="rs">Resets in <b>' + untilText(nextReset()) + '</b> · 8:00 AM Central (' + localTime(nextReset()) + ' your time)</span></div>';
+}
+function personRow(p, right) {
+  var av = p.avatar && p.avatar.indexOf('|') > 0 ? '<span class="pav" style="background-image:url(art/card-' + p.avatar.replace('|', '-') + '.webp)"></span>' : '<span class="pav ini">' + esc((p.name || '?').charAt(0).toUpperCase()) + '</span>';
+  return '<div class="prow"><span class="pfr fr-' + esc(p.frame || 'gold') + '">' + av + '</span><span class="pnm"><b>' + esc(p.name || 'Player') + '</b><small>Level ' + (p.level || 1) + '</small></span><span class="pbtn">' + right + '</span></div>';
+}
+function socialBody() {
+  var b = $('#socBody'); if (!b) return; var t = SOC.tab, d = ON.daily || {};
+  if (t === 'friends') {
+    var gifted = d.giftTo || [];
+    b.innerHTML = '<div class="srch"><input id="frQ" placeholder="Find a player by name" maxlength="14"><button class="b3 gold" id="frGo">Search</button></div><div id="frRes"></div>' +
+      (ON.requests.length ? '<h4>Friend requests</h4>' + ON.requests.map(function (r) { return personRow(r, '<button class="b3 gold sm" data-acc="' + r.id + '">Accept</button><button class="b3 cream sm" data-dec="' + r.id + '">No</button>'); }).join('') : '') +
+      '<h4>Friends (' + ON.friends.length + ')</h4>' + (ON.friends.length ? ON.friends.map(function (f) { var g = gifted.indexOf(f.id) >= 0; return personRow(f, '<button class="b3 gold sm" data-gift="' + f.id + '"' + (g ? ' disabled' : '') + '>' + (g ? 'Gift sent ✓' : icon('i-ticket') + ' Gift ' + GIFT_TIX) + '</button><button class="b3 plum sm" data-tr="' + f.id + '">Send card</button><button class="xs" data-rm="' + f.id + '" aria-label="Remove friend">✕</button>'); }).join('') : '<p class="note">No friends yet. Search for your teammates by their name and tap Add.</p>') + limitsLine();
+    $('#frGo').onclick = findPlayers; $('#frQ').onkeydown = function (e) { if (e.key === 'Enter') findPlayers(); };
+    if (SOC.search.length) showSearch();
+  } else if (t === 'inbox') {
+    var gR = d.giftsRecv || 0, cR = d.cardsRecv || 0;
+    b.innerHTML = (ON.inbox.length ? '<div class="res-btns"><button class="b3 gold" id="ibAll">Collect all</button></div>' + ON.inbox.map(function (g) {
+      var isCard = g.type === 'card', blocked = isCard ? cR >= CARD_RECV_MAX : gR >= GIFT_RECV_MAX;
+      return '<div class="prow ib">' + (isCard ? '<span class="ibcard" style="background-image:url(art/card-' + String(g.card).replace('|', '-') + '.webp)"></span>' : '<span class="ibic">' + icon('i-ticket') + '</span>') + '<span class="pnm"><b>' + (isCard ? esc(cardInfo(g.card).name) + (cardInfo(g.card).gold ? ' ★' : '') : g.n + ' tickets') + '</b><small>from ' + esc(g.fromName || 'a friend') + '</small></span><span class="pbtn"><button class="b3 gold sm" data-col="' + g.id + '"' + (blocked ? ' disabled' : '') + '>' + (blocked ? 'Daily limit' : 'Collect') + '</button></span></div>';
+    }).join('') : '<p class="note">Your inbox is empty. Gifts and cards from friends show up here.</p>') + limitsLine();
+    if ($('#ibAll')) $('#ibAll').onclick = function () { ON.inbox.slice().forEach(function (g) { collectGift(g, true); }); };
+  } else if (t === 'trade') {
+    var gold = isGoldDay(), ng = nextGoldDay(), sent = d.cardsSent || 0;
+    var extras = Object.keys(S.album).filter(function (id) { return (S.album[id] || 0) > 1; });
+    b.innerHTML = '<div class="tradehd"><label>Send to <select id="trTo">' + (ON.friends.length ? ON.friends.map(function (f) { return '<option value="' + f.id + '"' + (SOC.tradeTo === f.id ? ' selected' : '') + '>' + esc(f.name || 'Friend') + '</option>'; }).join('') : '<option value="">Add a friend first</option>') + '</select></label>' +
+      '<span class="goldst' + (gold ? ' on' : '') + '">' + (gold ? '★ Gold Trading is open today!' : '★ Gold Trading: ' + (ng ? localTime(ng) + ' (in ' + untilText(ng) + ')' : 'every other Saturday')) + '</span></div>' +
+      (extras.length ? '<div class="trgrid">' + extras.map(function (id) { var ci = cardInfo(id), lock = ci.gold && !gold; return '<button class="trc' + (lock ? ' lock' : '') + '" data-send="' + id + '">' + cardFace(id) + (lock ? '<i class="trlock">Gold Saturday</i>' : '') + '</button>'; }).join('') + '</div>' : '<p class="note">You have no spare cards yet. Extra copies of album cards show up here to send to friends.</p>') +
+      '<p class="note">Only spare copies can be sent; you always keep one of each card. Gold cards can be traded every other Saturday from 8:00 AM Central until 8:00 AM Sunday.</p>' + limitsLine();
+    var sel = $('#trTo'); if (sel) sel.onchange = function () { SOC.tradeTo = sel.value; };
+    b.querySelectorAll('[data-send]').forEach(function (x) { x.onclick = function () { sendCard(x.dataset.send, sel && sel.value); }; });
+  } else if (t === 'team') teamBody(b);
+  bindSocialButtons(b);
+}
+function bindSocialButtons(b) {
+  b.querySelectorAll('[data-acc]').forEach(function (x) { x.onclick = function () { acceptFriend(x.dataset.acc); }; });
+  b.querySelectorAll('[data-dec]').forEach(function (x) { x.onclick = function () { uref().collection('requests').doc(x.dataset.dec).delete(); }; });
+  b.querySelectorAll('[data-gift]').forEach(function (x) { x.onclick = function () { sendGift(x.dataset.gift, x); }; });
+  b.querySelectorAll('[data-tr]').forEach(function (x) { x.onclick = function () { SOC.tradeTo = x.dataset.tr; social('trade'); }; });
+  b.querySelectorAll('[data-rm]').forEach(function (x) { x.onclick = function () { if (x.dataset.sure) { var f = x.dataset.rm; uref().collection('friends').doc(f).delete(); uref(f).collection('friends').doc(ON.user.uid).delete().catch(function () {}); } else { x.dataset.sure = 1; x.textContent = 'Remove?'; x.classList.add('sure'); } }; });
+  b.querySelectorAll('[data-col]').forEach(function (x) { x.onclick = function () { var g = ON.inbox.filter(function (i) { return i.id === x.dataset.col; })[0]; if (g) collectGift(g); }; });
+  b.querySelectorAll('[data-add]').forEach(function (x) { x.onclick = function () { addFriend(x.dataset.add, x); }; });
+}
+function findPlayers() {
+  var q = slugName($('#frQ').value); if (q.length < 2) { toast('Type at least 2 letters of their name.'); return; }
+  ON.db.collection('users').where('nameLower', '>=', q).where('nameLower', '<=', q + '').limit(12).get().then(function (s) {
+    SOC.search = s.docs.filter(function (d) { return d.id !== ON.user.uid; }).map(function (d) { var v = d.data(); v.id = d.id; return v; }); showSearch();
+  }).catch(function () { toast('Search didn\'t work. Check your connection.'); });
+}
+function showSearch() {
+  var r = $('#frRes'); if (!r) return; var fr = ON.friends.map(function (f) { return f.id; });
+  r.innerHTML = SOC.search.length ? SOC.search.map(function (p) { return personRow(p, fr.indexOf(p.id) >= 0 ? '<span class="ok">Friends ✓</span>' : '<button class="b3 gold sm" data-add="' + p.id + '">Add</button>'); }).join('') : '<p class="note">No players found with that name.</p>';
+  bindSocialButtons(r);
+}
+function addFriend(id, btn) {
+  uref(id).collection('requests').doc(ON.user.uid).set({ name: myName(), level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, at: Date.now() })
+    .then(function () { btn.outerHTML = '<span class="ok">Request sent</span>'; SFX.coin(); }).catch(function () { toast('Couldn\'t send the request. Try again.'); });
+}
+function acceptFriend(id) {
+  var r = ON.requests.filter(function (x) { return x.id === id; })[0] || {}, b = ON.db.batch(), now = Date.now();
+  b.set(uref().collection('friends').doc(id), { name: r.name || 'Friend', level: r.level || 1, frame: r.frame || 'gold', avatar: r.avatar || 'initial', at: now });
+  b.set(uref(id).collection('friends').doc(ON.user.uid), { name: myName(), level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, at: now });
+  b.delete(uref().collection('requests').doc(id));
+  b.commit().then(function () { SFX.set(); toast('You and ' + (r.name || 'your new friend') + ' are now friends!'); }).catch(function () { toast('Couldn\'t accept right now. Try again.'); });
+}
+function sendGift(id, btn) {
+  var d = ON.daily || {}, g = d.giftTo || [];
+  if (g.length >= GIFT_SEND_MAX) { toast('You\'ve sent all ' + GIFT_SEND_MAX + ' gifts for today. More at the 8:00 AM Central reset.', 3200); return; }
+  if (g.indexOf(id) >= 0) return;
+  btn.disabled = true;
+  uref(id).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'tickets', n: GIFT_TIX, at: Date.now() })
+    .then(function () { return dailyRef().set({ giftTo: FV().arrayUnion(id) }, { merge: true }); })
+    .then(function () { SFX.coin(); var r = btn.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top, 30); toast('Gift sent! They get ' + GIFT_TIX + ' tickets.'); })
+    .catch(function () { btn.disabled = false; toast('Couldn\'t send the gift. Try again.'); });
+}
+function sendCard(id, to) {
+  if (!to) { toast('Add a friend first, then pick who to send to.'); return; }
+  var ci = cardInfo(id), d = ON.daily || {}, f = ON.friends.filter(function (x) { return x.id === to; })[0] || {};
+  if ((S.album[id] || 0) < 2) { toast('You need a spare copy to send this card.'); return; }
+  if (ci.gold && !isGoldDay()) { toast('Gold cards can only be traded on Gold Saturday.', 3000); return; }
+  if ((d.cardsSent || 0) >= CARD_SEND_MAX) { toast('You\'ve sent all ' + CARD_SEND_MAX + ' cards for today. More at the 8:00 AM Central reset.', 3200); return; }
+  panel('<div class="sendc">' + cardFace(id) + '<div><h3>Send ' + esc(ci.name) + '?</h3><p>To <b>' + esc(f.name || 'your friend') + '</b>. You\'ll keep ' + (S.album[id] - 1) + ' cop' + (S.album[id] - 1 === 1 ? 'y' : 'ies') + '.</p><div class="res-btns"><button class="b3 gold" id="scGo">Send</button><button class="b3 cream" data-x>Cancel</button></div></div></div>', 'small', function (v) {
+    $('#scGo', v).onclick = function () {
+      this.disabled = true; S.album[id]--; save();
+      uref(to).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'card', card: id, gold: !!ci.gold, at: Date.now() })
+        .then(function () { return dailyRef().set({ cardsSent: FV().increment(1) }, { merge: true }); })
+        .then(function () {
+          var face = v.querySelector('.cf'), r = face && face.getBoundingClientRect();
+          if (face) { face.classList.add('flyaway'); }
+          SFX.set(); if (r) sparkle(r.left + r.width / 2, r.top + r.height / 2, 50);
+          setTimeout(function () { closeVeil(); toast(ci.name + ' sent to ' + (f.name || 'your friend') + '!'); social('trade'); }, 700);
+        }).catch(function () { S.album[id]++; save(); closeVeil(); toast('Couldn\'t send the card. It\'s still yours.'); });
+    };
+  });
+}
+function collectGift(g, quiet) {
+  var d = ON.daily || {}, isCard = g.type === 'card';
+  if (isCard ? (d.cardsRecv || 0) >= CARD_RECV_MAX : (d.giftsRecv || 0) >= GIFT_RECV_MAX) { if (!quiet) toast('Daily limit reached. Collect more after the 8:00 AM Central reset.', 3000); return; }
+  var inc = {}; inc[isCard ? 'cardsRecv' : 'giftsRecv'] = FV().increment(1);
+  d[isCard ? 'cardsRecv' : 'giftsRecv'] = (d[isCard ? 'cardsRecv' : 'giftsRecv'] || 0) + 1;
+  uref().collection('inbox').doc(g.id).delete().then(function () { return dailyRef().set(inc, { merge: true }); }).then(function () {
+    if (isCard) { var had = S.album[g.card] || 0; S.album[g.card] = had + 1; var set = cardInfo(g.card).set; if (ownedIn(set) === 9 && !S.setsDone[set.id]) { S.setsDone[set.id] = true; S.coins += SET_REWARD; S.gems += 5; toast(set.name + ' set complete!', 3000); } if (!S.albumDone && ownedAll() === SETS.length * 9) albumComplete(400); if (!quiet) pupFx('i-card', had ? 'Card collected' : 'New card!', cardInfo(g.card).name + ' from ' + (g.fromName || 'a friend')); }
+    else { S.tickets += g.n || GIFT_TIX; refreshTop(); if (!quiet) { SFX.coin(); toast('+' + (g.n || GIFT_TIX) + ' tickets from ' + (g.fromName || 'a friend') + '!'); } }
+    save();
+  }).catch(function () { toast('Couldn\'t collect right now. Try again.'); });
+}
+function teamBody(b) {
+  var tid = ON.profile && ON.profile.team;
+  if (SOC.chatSub && (!tid || SOC.chatTid !== tid)) { SOC.chatSub(); SOC.chatSub = null; }
+  if (!tid) {
+    b.innerHTML = '<div class="srch"><input id="tmN" placeholder="Name your new team" maxlength="24"><button class="b3 gold" id="tmC">Create team</button></div><h4>Teams to join</h4><div id="tmList"><p class="note">Loading teams…</p></div>';
+    $('#tmC').onclick = function () { var n = $('#tmN').value.trim(); if (n.length < 3) { toast('Give your team a name with at least 3 letters.'); return; } ON.db.collection('teams').add({ name: n.slice(0, 24), owner: ON.user.uid, members: [ON.user.uid], createdAt: Date.now() }).then(function (r) { return uref().set({ team: r.id }, { merge: true }).then(function () { ON.profile.team = r.id; SFX.set(); toast('Team ' + n + ' created!'); socialBody(); }); }).catch(function () { toast('Couldn\'t create the team. Try again.'); }); };
+    ON.db.collection('teams').orderBy('createdAt', 'desc').limit(25).get().then(function (s) {
+      var l = $('#tmList'); if (!l) return;
+      l.innerHTML = s.empty ? '<p class="note">No teams yet. Create the first one!</p>' : s.docs.map(function (d) { var v = d.data(), full = (v.members || []).length >= TEAM_MAX; return '<div class="prow"><span class="ibic">' + icon('i-team') + '</span><span class="pnm"><b>' + esc(v.name) + '</b><small>' + (v.members || []).length + '/' + TEAM_MAX + ' members</small></span><span class="pbtn"><button class="b3 gold sm" data-join="' + d.id + '"' + (full ? ' disabled' : '') + '>' + (full ? 'Full' : 'Join') + '</button></span></div>'; }).join('');
+      l.querySelectorAll('[data-join]').forEach(function (x) { x.onclick = function () { ON.db.collection('teams').doc(x.dataset.join).update({ members: FV().arrayUnion(ON.user.uid) }).then(function () { return uref().set({ team: x.dataset.join }, { merge: true }); }).then(function () { ON.profile.team = x.dataset.join; SFX.set(); toast('Welcome to the team!'); socialBody(); }).catch(function () { toast('Couldn\'t join that team. Try again.'); }); }; });
+    }).catch(function () { var l = $('#tmList'); if (l) l.innerHTML = '<p class="note">Couldn\'t load teams. Check your connection.</p>'; });
+    return;
+  }
+  b.innerHTML = '<div class="tmhd"><b id="tmName">Your team</b><small id="tmCount"></small><button class="b3 cream sm" id="tmLeave">Leave team</button></div><div class="tmwrap"><div class="tmembers" id="tmMem"></div><div class="tchat"><div class="tmsgs" id="tmMsgs"><p class="note">Loading chat…</p></div><div class="srch"><input id="tmIn" placeholder="Message your team" maxlength="200"><button class="b3 gold" id="tmSend">Send</button></div></div></div>';
+  var tref = ON.db.collection('teams').doc(tid);
+  tref.get().then(function (s) {
+    if (!s.exists) { uref().set({ team: null }, { merge: true }); ON.profile.team = null; socialBody(); return; }
+    var t = s.data(); ON.team = t; $('#tmName').textContent = t.name; $('#tmCount').textContent = (t.members || []).length + '/' + TEAM_MAX + ' members';
+    Promise.all((t.members || []).slice(0, TEAM_MAX).map(function (m) { return uref(m).get(); })).then(function (ps) {
+      var mem = $('#tmMem'); if (mem) mem.innerHTML = ps.map(function (p) { var v = p.data() || {}; return personRow(v, p.id === t.owner ? '<span class="ok">Captain</span>' : ''); }).join('');
+    });
+    $('#tmLeave').onclick = function () {
+      if (!this.dataset.sure) { this.dataset.sure = 1; this.textContent = 'Tap again to leave'; return; }
+      var others = (t.members || []).filter(function (m) { return m !== ON.user.uid; }), p;
+      if (t.owner === ON.user.uid) p = others.length ? tref.update({ owner: others[0], members: others }) : tref.delete();
+      else p = tref.update({ members: FV().arrayRemove(ON.user.uid) });
+      p.then(function () { return uref().set({ team: null }, { merge: true }); }).then(function () { ON.profile.team = null; toast('You left the team.'); socialBody(); }).catch(function () { toast('Couldn\'t leave right now. Try again.'); });
+    };
+  });
+  function sendMsg() { var i = $('#tmIn'), txt = i.value.trim(); if (!txt) return; i.value = ''; tref.collection('chat').add({ uid: ON.user.uid, name: myName(), text: txt.slice(0, 200), at: Date.now() }).catch(function () { toast('Message didn\'t send.'); }); }
+  $('#tmSend').onclick = sendMsg; $('#tmIn').onkeydown = function (e) { if (e.key === 'Enter') sendMsg(); };
+  if (!SOC.chatSub) { SOC.chatTid = tid; SOC.chatSub = tref.collection('chat').orderBy('at', 'desc').limit(50).onSnapshot(function (s) { SOC.chat = s.docs.map(function (d) { return d.data(); }).reverse(); drawChat(); }, function () {}); }
+  else drawChat();
+}
+function drawChat() {
+  var m = $('#tmMsgs'); if (!m) return;
+  m.innerHTML = SOC.chat.length ? SOC.chat.map(function (c) { var mine = c.uid === ON.user.uid; return '<div class="msg' + (mine ? ' mine' : '') + '"><small>' + esc(c.name || 'Player') + ' · ' + localTime(c.at) + '</small><span>' + esc(c.text) + '</span></div>'; }).join('') : '<p class="note">No messages yet. Say hi to your team!</p>';
+  m.scrollTop = m.scrollHeight;
+}
+
 /* ---------- start ---------- */
 document.addEventListener('visibilitychange', function () { if (document.hidden && R && R.active && !R.paused) togglePause(); });
 function boot(data) {
   load();
   if (data && data.save) S = merge(data.save);
-  save();
+  save(true);
   title();
+  onlineInit(); refreshTitle();
 }
 if (window.claude && window.claude.hot && window.claude.hot.snapshot) { try { window.claude.hot.snapshot(function () { return { save: S }; }); } catch (e) { /* fine */ } }
 if (window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(boot);

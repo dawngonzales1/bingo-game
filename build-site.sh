@@ -5,7 +5,8 @@
 #                so it works even with rotation lock on (iPhones cannot be forced sideways)
 cd "$(dirname "$0")"
 HEAD='<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2a0c46"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="art/app-icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Bingo Bloom">'
-{ printf '<!doctype html>\n<html lang="en"><head>%s<style>html,body{height:100%%;margin:0}</style></head><body>\n' "$HEAD"; cat bingo-bloom.html; printf '\n</body></html>\n'; } > game.html
+LIBS='<script src="lib/firebase-app-compat.js"></script><script src="lib/firebase-auth-compat.js"></script><script src="lib/firebase-firestore-compat.js"></script><script src="firebase-config.js"></script>'
+{ printf '<!doctype html>\n<html lang="en"><head>%s<style>html,body{height:100%%;margin:0}</style>%s</head><body>\n' "$HEAD" "$LIBS"; cat bingo-bloom.html; printf '\n</body></html>\n'; } > game.html
 cat > index.html <<HTML
 <!doctype html>
 <html lang="en"><head>$HEAD<title>Bingo Bloom</title>
