@@ -142,6 +142,9 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @keyframes fade { from { opacity: 0; } }
 .panel { position: relative; width: min(860px, 100%); max-height: 100%; box-sizing: border-box; border-radius: 26px; background: var(--cream); border: 4px solid var(--ol); box-shadow: 0 8px 0 var(--ol), inset 0 0 0 5px #f2dcae; padding: 16px 18px; display: grid; gap: 12px; overflow: auto; animation: popIn .28s cubic-bezier(.2,.9,.3,1.25); }
 .panel.small { width: min(460px, 100%); }
+.resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
+.resetbox small { color: var(--mist); font-weight: 600; }
+.resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
 .panel.mid { width: min(640px, 100%); }
 @keyframes popIn { from { transform: scale(.88); opacity: 0; } }
 .panel h3 { margin: 0; font-size: 26px; font-weight: 700; color: var(--ink); }
@@ -479,24 +482,65 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #play.m-recipe { background: linear-gradient(180deg, rgba(255,240,246,.12), rgba(255,240,246,.24)), url(art/room-candy-carnival.webp) center / cover no-repeat, #ffe3ec; }
 #play.m-shape { background: linear-gradient(180deg, rgba(255,240,246,.10), rgba(255,240,246,.22)), url(art/room-gold-coast.webp) center / cover no-repeat, #f6dfa6; }
 #play.m-mystery { background: linear-gradient(180deg, rgba(40,15,70,.04), rgba(40,15,70,.20)), url(art/room-lantern-market.webp) center / cover no-repeat, #4a2a7a; }
-.gpath { display: flex; align-items: stretch; gap: 6px; overflow-x: auto; padding: 4px 2px 8px; }
-.pcol { display: grid; gap: 6px; padding: 6px; border-radius: 16px; background: #e8f6dc; border: 2px solid #c6e3b0; }
-.pcol.on { background: #fff6d6; border-color: var(--gold2); box-shadow: 0 0 12px rgba(247,185,36,.6); }
-.pcol.past { opacity: .7; }
-.stone { width: 62px; height: 52px; border-radius: 50%; border: 3px solid var(--ol); box-shadow: 0 4px 0 var(--ol); background: radial-gradient(circle at 40% 30%, #f3efe6, #b9b2a3); display: grid; place-items: center; align-content: center; line-height: 1; }
-.stone b { font-size: 18px; }
-.stone small { font-size: 10px; font-weight: 700; }
-.stone:disabled { cursor: default; }
-.stone.open.tix { background: radial-gradient(circle at 40% 30%, #fff6b0, var(--gold2)); }
-.stone.open.hop { background: radial-gradient(circle at 40% 30%, #d6ffd0, var(--green2)); color: #fff; }
-.stone.open.splash { background: radial-gradient(circle at 40% 30%, #c9f2ff, #29b6d8); color: #fff; }
-.stone.dim { opacity: .45; }
-.fountain { flex: none; display: grid; justify-items: center; align-content: center; text-align: center; gap: 2px; padding: 8px 12px; border-radius: 18px; background: linear-gradient(180deg, #d4f4ff, #7fd3f0); border: 3px solid var(--ol); min-width: 96px; }
-.fountain svg { width: 34px; height: 34px; }
-.fountain b { font-size: 14px; }
-.fountain small { font-size: 11px; font-weight: 600; }
-.fountain.won { background: linear-gradient(180deg, var(--gold1), var(--gold2)); }
-@media (max-height: 360px) { .goal svg { width: 22px; height: 22px; } .goal { padding-right: 8px; } .stone { width: 52px; height: 42px; } }
+/* Garden Path: a moonlit stroll across stepping stones to the Wishing Gazebo */
+.gpz { position: fixed; inset: 0; z-index: 80; display: grid; grid-template-rows: auto 1fr auto; gap: 4px; padding: 10px 14px calc(8px + env(safe-area-inset-bottom)); box-sizing: border-box; color: #fff; overflow: hidden; animation: fade .3s both; background: linear-gradient(180deg, rgba(10,16,40,.78), rgba(14,24,52,.6) 55%, rgba(20,40,30,.75)), url(art/room-midnight-garden.webp) center / cover no-repeat, #121a36; }
+.gpz.out { opacity: 0; transition: opacity .3s; }
+.gpstars { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle, #fff7c8 0 1.4px, transparent 2px) 12% 18% / 160px 120px, radial-gradient(circle, #ffe58f 0 1.2px, transparent 2px) 60% 40% / 190px 140px, radial-gradient(circle, #cfe8ff 0 1px, transparent 2px) 35% 70% / 140px 110px; opacity: .8; animation: gpTwinkle 2.6s ease-in-out infinite alternate; }
+@keyframes gpTwinkle { from { opacity: .35; } to { opacity: .95; } }
+.calm .gpstars, .lite .gpstars { animation: none; }
+.gphead { position: relative; display: grid; justify-items: center; gap: 4px; padding-top: 14px; text-align: center; }
+.gpz .gprib { position: relative; top: 0; left: 0; transform: none; background: linear-gradient(180deg, #ffd977, #d9950f) !important; filter: drop-shadow(0 3px 0 #3a2a05) drop-shadow(0 0 14px rgba(255,214,92,.5)); }
+.gpz .gprib span { color: #fff !important; font-size: clamp(18px, 6vh, 26px); }
+.gphead small { font-size: 12px; font-weight: 600; color: #ffe9b0; text-shadow: 0 1px 2px #000; max-width: 640px; }
+.gpscene { position: relative; display: flex; align-items: center; justify-content: safe center; gap: 14px; overflow-x: auto; overflow-y: hidden; padding: 56px 16px 10px; scrollbar-width: none; }
+.gpscene::-webkit-scrollbar { display: none; }
+.gptrail { position: relative; display: flex; align-items: center; gap: clamp(8px, 1.6vw, 16px); padding: 0 6px; flex: none; }
+.gptrail::before { content: ""; position: absolute; left: 10px; right: -40px; top: 50%; height: 0; border-top: 4px dashed rgba(255,229,143,.55); filter: drop-shadow(0 0 6px rgba(255,214,92,.6)); }
+.gpcol { --gs: clamp(46px, 15vh, 64px); position: relative; display: grid; gap: 8px; padding: 8px 6px 6px; border-radius: 20px; }
+.gpcol:nth-child(odd) { transform: translateY(8px); }
+.gpcol:nth-child(even) { transform: translateY(-8px); }
+.gpcol.on { background: rgba(255,214,92,.14); box-shadow: 0 0 0 2px rgba(255,214,92,.75), 0 0 22px rgba(255,214,92,.55); }
+.gpcol.past { opacity: .78; }
+.gpnum { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 12px; color: #ffe58f; font-weight: 900; }
+.gstone { width: var(--gs); height: calc(var(--gs) * .86); border: 0; padding: 0; background: none; perspective: 400px; cursor: pointer; }
+.gsf { position: relative; display: block; width: 100%; height: 100%; transition: transform .55s cubic-bezier(.3,1.4,.5,1); transform-style: preserve-3d; }
+.gstone.open .gsf { transform: rotateY(180deg); }
+.gsq, .gsb { position: absolute; inset: 0; border-radius: 50%; display: grid; place-items: center; align-content: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; border: 3px solid #3b2a1a; box-shadow: 0 5px 0 #3b2a1a, inset 0 3px 0 rgba(255,255,255,.45); }
+.gsq { background: radial-gradient(circle at 38% 28%, #f5efe3, #a39c8c 70%, #8a8274); }
+.gsq em { font-style: normal; font-size: calc(var(--gs) * .5); font-weight: 900; color: #ffd44d; text-shadow: 0 0 10px rgba(255,214,92,.9); }
+.gpcol.on .gsq { animation: gpGlow 1.3s ease-in-out infinite alternate; }
+@keyframes gpGlow { from { box-shadow: 0 5px 0 #3b2a1a, 0 0 8px rgba(255,214,92,.4), inset 0 3px 0 rgba(255,255,255,.45); } to { box-shadow: 0 5px 0 #3b2a1a, 0 0 24px rgba(255,214,92,.95), inset 0 3px 0 rgba(255,255,255,.45); } }
+.calm .gpcol.on .gsq { animation: none; box-shadow: 0 5px 0 #3b2a1a, 0 0 18px rgba(255,214,92,.8); }
+.gsb { transform: rotateY(180deg); gap: 0; line-height: 1; }
+.gsb img { width: 46%; height: 46%; object-fit: contain; filter: drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
+.gsb b { font-size: calc(var(--gs) * .22); color: #fff; text-shadow: 0 1px 0 #3b2a1a, 0 0 4px #3b2a1a; }
+.gstone.tix .gsb { background: radial-gradient(circle at 38% 28%, #fff6b0, #f0b31c 70%, #c98a08); }
+.gstone.hop .gsb { background: radial-gradient(circle at 38% 28%, #e0ffd8, #4cc46a 70%, #2c9a4a); }
+.gstone.splash .gsb { background: radial-gradient(circle at 38% 28%, #d8f5ff, #29b6d8 70%, #1a8fb0); }
+.gstone.splash:not(.dim) .gsb { animation: gpRipple .7s .5s ease-out; }
+@keyframes gpRipple { 0% { box-shadow: 0 5px 0 #3b2a1a, 0 0 0 0 rgba(120,220,255,.9); } 100% { box-shadow: 0 5px 0 #3b2a1a, 0 0 0 26px rgba(120,220,255,0); } }
+.gstone.dim { opacity: .45; }
+.gstone:disabled { cursor: default; }
+.gazebo { position: relative; flex: none; display: grid; justify-items: center; width: clamp(120px, 34vh, 170px); margin-left: 10px; filter: drop-shadow(0 0 18px rgba(255,214,92,.45)); }
+.gazebo svg { width: 100%; height: auto; display: block; position: relative; }
+.gazebo .bsrays { z-index: -1; opacity: .7; }
+.gzprize { position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 1px; padding: 6px 8px; border-radius: 12px; background: linear-gradient(180deg, rgba(20,28,60,.92), rgba(40,22,70,.92)); border: 2px solid #f6c64a; box-shadow: 0 0 14px rgba(255,214,92,.6); white-space: nowrap; animation: gpPrize 1.6s ease-in-out infinite alternate; }
+.gzprize b { font-size: 10px; letter-spacing: .08em; color: #ffe58f; }
+.gzprize span { display: flex; align-items: center; gap: 4px; font-size: 13px; color: #fff; }
+.gzprize img { width: 18px; height: 18px; }
+@keyframes gpPrize { to { transform: translate(-50%, -52%) scale(1.05); box-shadow: 0 0 26px rgba(255,214,92,.95); } }
+.calm .gzprize { animation: none; }
+.gazebo.won { animation: gpWin .8s cubic-bezier(.2,1.5,.4,1); }
+@keyframes gpWin { 0% { transform: scale(1); } 50% { transform: scale(1.12) rotate(-2deg); } 100% { transform: none; } }
+.gpcordie { position: absolute; top: 0; width: clamp(44px, 14vh, 70px); height: auto; transform: translateX(-50%); transition: left .5s cubic-bezier(.3,1.2,.5,1); pointer-events: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,.45)); z-index: 2; }
+.gpcordie.hop { animation: gpHop .5s ease-out; }
+@keyframes gpHop { 0% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-26px) rotate(-6deg); } 100% { transform: translateX(-50%) translateY(0); } }
+.gpbar { position: relative; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 6px 12px; border-radius: 16px; background: rgba(10,14,34,.72); border: 2px solid rgba(255,214,92,.6); }
+.gpwon { background: linear-gradient(180deg, #ffe58f, #f0b31c); color: #3b2a1a; font-size: 16px; }
+.gpbar #gpMsg { flex: 1; min-width: 160px; font-size: 13px; font-weight: 600; color: #fff; }
+.gpbar #gpMsg b { color: #ffe58f; }
+.gpbar .b3 { margin-left: auto; }
+@media (max-height: 360px) { .goal svg { width: 22px; height: 22px; } .goal { padding-right: 8px; } .gphead small { display: none; } .gpscene { padding-top: 44px; } }
 
 /* get ready, lucky card, ball timer, auto boost, round complete */
 .ready { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 5; pointer-events: none; }
@@ -2633,7 +2677,7 @@ var KEY = 'bingoBloom.v1';
 function fresh() {
   return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 0, alertMin: 60, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 0, bet: 1, xp: 0, level: 1, items: { bee: 1, headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
-    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', keepSpare: true, quest: {}, league: {}, raffle: {}, guide: {}, newCards: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
+    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', keepSpare: true, quest: {}, league: {}, raffle: {}, guide: {}, newCards: {}, freeGift: 0, seen: {}, sentReq: {}, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'slow', assist: false, lite: false, autoAlert: true } };
 }
 function merge(saved) {
@@ -3624,7 +3668,7 @@ function settings() {
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="slowest" aria-pressed="' + (st.speed === 'slowest') + '">Slowest</button><button data-s="slow" aria-pressed="' + (st.speed === 'slow') + '">Slow</button><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
     '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button><button class="b3 plum" id="bFb2">💬 Send feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">📥 Feedback inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 gold" id="bTour" style="padding:6px 12px">Show me around</button><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
-    '<button class="b3 cream" id="bReset" style="padding:8px">Start over (clear my progress)</button>', 'small', function (v) {
+    '<div class="resetbox"><small>Only if you want to wipe everything and begin again:</small><button class="b3 cream" id="bReset">Start over (clear my progress)</button></div>', 'small', function (v) {
       $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; give('alert', 5); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
@@ -5378,31 +5422,63 @@ function gardenPath(bet, room) {
   var cols = 7, steps = [], pos = 0, won = 0, over = false, grand = 150 * bet;
   function stone(c) { return Math.random() < .18 && c < cols - 2 ? { t: 'hop' } : { t: 'tix', n: (5 + c * 5) * bet }; }
   for (var c = 0; c < cols; c++) { var a = stone(c), b = c > 1 && Math.random() < .3 ? { t: 'splash' } : stone(c); steps.push(Math.random() < .5 ? [a, b] : [b, a]); }
-  function lbl(st) { return st.t === 'splash' ? '<small>Splash!</small>' : st.t === 'hop' ? '<small>Hop</small><b>+2</b>' : '<b>' + st.n + '</b><small>tickets</small>'; }
-  function draw(v) {
-    $('#gpPath', v).innerHTML = steps.map(function (s, ci) {
-      return '<div class="pcol' + (ci === pos && !over ? ' on' : '') + (ci < pos ? ' past' : '') + '">' + s.map(function (st, j) {
-        return '<button class="stone' + (st.open ? ' open ' + st.t : '') + (st.dim ? ' dim' : '') + '" data-c="' + ci + '" data-j="' + j + '"' + (ci !== pos || over || st.open ? ' disabled' : '') + '>' + (st.open ? lbl(st) : '<b>?</b>') + '</button>';
-      }).join('') + '</div>';
-    }).join('') + '<div class="fountain' + (pos >= cols ? ' won' : '') + '"><svg viewBox="0 0 40 40"><use href="#i-drop"/></svg><b>Grand Prize</b><small>' + grand + ' tickets<br>+ a gold card</small></div>';
-    $('#gpWon', v).textContent = won;
+  function face(st) {
+    return st.t === 'splash' ? '<img src="art/icon-drop-ball.webp" alt=""><b>Splash</b>' : st.t === 'hop' ? '<img src="art/icon-butterfly.webp" alt=""><b>Hop +2</b>' : '<img src="art/icon-ticket.webp" alt=""><b>+' + st.n + '</b>';
   }
-  panel('<h3>Garden Path</h3><p>Pick a stone in each row: tickets, a Hop ahead, or a Splash that ends the walk (you keep your tickets). The first two rows are safe. Reach the Wishing Gazebo for the Grand Prize!</p>' +
-    '<div class="gpath" id="gpPath"></div><div class="res-btns" style="align-items:center"><span class="pill2">' + icon('i-ticket') + '<b id="gpWon">0</b></span><span id="gpMsg" style="font-weight:600"></span><button class="b3 gold" id="gpDone" hidden>Collect</button></div>', '', function (v) {
-      v.querySelector('[data-x]').remove();
-      draw(v);
-      v.addEventListener('click', function (e) {
-        var b = e.target.closest('.stone'); if (!b || b.disabled || over) return;
-        var ci = +b.dataset.c, j = +b.dataset.j, st = steps[ci][j], other = steps[ci][1 - j];
-        st.open = true; other.open = true; other.dim = true;
-        if (st.t === 'splash') { over = true; SFX.no(); var cons = 10 * bet; won += cons; S.tickets += cons; $('#gpMsg', v).textContent = 'Splash! The walk is over. +' + cons + ' tickets for the walk.'; }
-        else if (st.t === 'hop') { pos = Math.min(cols, pos + 2); SFX.boost(); }
-        else { won += st.n; S.tickets += st.n; pos++; SFX.coin(); }
-        if (pos >= cols && !over) { over = true; won += grand; S.tickets += grand; var gc = grant({ t: 'gcard', n: 1 }); SFX.set(); sparkle(innerWidth * .8, innerHeight / 2, 140); $('#gpMsg', v).textContent = 'You reached the fountain! Grand Prize and ' + gc.replace(/^\+/, '') + '.'; }
-        logEvent({ t: 'gardenPath', step: ci, prize: st.t }); save(); draw(v); refreshTop();
-        if (over) { var dn = $('#gpDone', v); dn.hidden = false; dn.onclick = function () { closeVeil(); }; }
+  var o = document.createElement('div'); o.className = 'gpz';
+  o.innerHTML = '<i class="gpstars"></i><div class="gphead"><div class="sribbon gprib"><span class="outl">Garden Path</span></div><small>Pick a stone in each row. The first two rows are always safe. Reach the <b>Wishing Gazebo</b> for the Grand Prize!</small></div>' +
+    '<div class="gpscene"><div class="gptrail">' + steps.map(function (s, ci) {
+      return '<div class="gpcol" style="--i:' + ci + '"><i class="gpnum outl">' + (ci + 1) + '</i>' + s.map(function (st, j) {
+        return '<button class="gstone" data-c="' + ci + '" data-j="' + j + '" aria-label="Stone ' + (ci + 1) + '"><span class="gsf"><span class="gsq"><em class="outl">?</em></span><span class="gsb"></span></span></button>';
+      }).join('') + '</div>';
+    }).join('') + '</div>' +
+    '<div class="gazebo" id="gpGaz"><i class="bsrays" hidden></i><svg viewBox="0 0 120 112" aria-hidden="true"><defs><linearGradient id="gzr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0b5"/><stop offset="1" stop-color="#e2a21b"/></linearGradient><linearGradient id="gzp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff7dd"/><stop offset="1" stop-color="#d9b86a"/></linearGradient></defs>' +
+    '<ellipse cx="60" cy="104" rx="54" ry="7" fill="rgba(0,0,0,.35)"/><rect x="14" y="92" width="92" height="10" rx="4" fill="url(#gzp)" stroke="#5a3e12" stroke-width="2"/>' +
+    '<rect x="22" y="48" width="7" height="46" fill="url(#gzp)" stroke="#5a3e12" stroke-width="1.5"/><rect x="91" y="48" width="7" height="46" fill="url(#gzp)" stroke="#5a3e12" stroke-width="1.5"/><rect x="42" y="48" width="5" height="46" fill="url(#gzp)" stroke="#5a3e12" stroke-width="1.5"/><rect x="73" y="48" width="5" height="46" fill="url(#gzp)" stroke="#5a3e12" stroke-width="1.5"/>' +
+    '<path d="M60 6 L112 48 L8 48 Z" fill="url(#gzr)" stroke="#5a3e12" stroke-width="2.5" stroke-linejoin="round"/><path d="M60 14 L100 46 L20 46 Z" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2"/><circle cx="60" cy="6" r="4" fill="#fff3b8" stroke="#5a3e12" stroke-width="1.5"/>' +
+    '<rect x="14" y="46" width="92" height="7" rx="3" fill="#f6c64a" stroke="#5a3e12" stroke-width="2"/></svg>' +
+    '<div class="gzprize"><b class="outl">GRAND PRIZE</b><span><img src="art/icon-ticket.webp" alt=""><strong>' + grand + '</strong></span><span><img src="art/icon-card-pack.webp" alt=""><strong>Gold card</strong></span></div></div>' +
+    '<img class="gpcordie" id="gpCor" src="art/mascot-stand.webp" alt=""></div>' +
+    '<div class="gpbar"><span class="pill2 gpwon">' + icon('i-ticket') + '<b id="gpWon">0</b></span><span id="gpMsg">Tap a glowing stone to start your walk.</span><button class="b3 gold shine" id="gpDone" hidden>Collect</button></div>';
+  document.body.appendChild(o); SFX.tap && SFX.tap();
+  var cor = $('#gpCor', o), scene = o.querySelector('.gpscene'), colEls = o.querySelectorAll('.gpcol');
+  function placeCordie(pose) {
+    if (pose) cor.src = 'art/mascot-' + pose + '.webp';
+    var t = pos >= cols ? $('#gpGaz', o) : colEls[pos], r = t.getBoundingClientRect(), sr = scene.getBoundingClientRect();
+    cor.style.left = (r.left - sr.left + scene.scrollLeft + r.width / 2 - (pose === 'wow' ? r.width * .95 : 0)) + 'px';
+    cor.style.top = Math.max(0, r.top - sr.top - (cor.getBoundingClientRect().height || 64) + 6) + 'px';
+    cor.classList.remove('hop'); void cor.offsetWidth; cor.classList.add('hop');
+    if (t.scrollIntoView) t.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+  function draw() {
+    colEls.forEach(function (ce, ci) {
+      ce.classList.toggle('on', ci === pos && !over); ce.classList.toggle('past', ci < pos);
+      ce.querySelectorAll('.gstone').forEach(function (b, j) {
+        var st = steps[ci][j];
+        b.disabled = ci !== pos || over || !!st.open;
+        if (st.open && !b.classList.contains('open')) { b.querySelector('.gsb').innerHTML = face(st); b.classList.add('open', st.t); if (st.dim) b.classList.add('dim'); }
       });
     });
+    $('#gpWon', o).textContent = won;
+  }
+  function msg(h) { $('#gpMsg', o).innerHTML = h; }
+  o.addEventListener('click', function (e) {
+    var b = e.target.closest('.gstone'); if (!b || b.disabled || over) return;
+    var ci = +b.dataset.c, j = +b.dataset.j, st = steps[ci][j], other = steps[ci][1 - j], r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    st.open = true; other.open = true; other.dim = true;
+    if (st.t === 'splash') { over = true; SFX.no(); var cons = 10 * bet; won += cons; S.tickets += cons; sparkle(x, y, 24); msg('<b>Splash!</b> The walk ends here, but you keep every ticket, plus <b>' + cons + '</b> for the stroll.'); placeCordie('wow'); }
+    else if (st.t === 'hop') { pos = Math.min(cols, pos + 2); SFX.boost(); petalBurst(x, y, 18); msg('<b>A butterfly carries you ahead!</b> Hop +2.'); placeCordie('cheer'); }
+    else { won += st.n; S.tickets += st.n; pos++; SFX.coin(); coinBurst(x, y, 10, 'ticket'); flyPrize(x, y, $('#gpWon', o), 6, 'ticket'); msg('<b>+' + st.n + ' tickets!</b> Keep going or you\'re safe to stop anytime… well, almost.'); placeCordie('stand'); }
+    if (pos >= cols && !over) {
+      over = true; won += grand; S.tickets += grand; var gc = grant({ t: 'gcard', n: 1 }); SFX.set(); SFX.bingo && SFX.bingo();
+      var gz = $('#gpGaz', o); gz.classList.add('won'); gz.querySelector('.bsrays').hidden = false;
+      var gr = gz.getBoundingClientRect(); sparkle(gr.left + gr.width / 2, gr.top + gr.height / 2, 140); prizeRain(40, 'ticket');
+      msg('<b>You reached the Wishing Gazebo!</b> Grand Prize: <b>' + grand + ' tickets</b> and ' + gc.replace(/^\+/, '') + '!'); placeCordie('cheer');
+    }
+    logEvent({ t: 'gardenPath', step: ci, prize: st.t }); save(); draw(); refreshTop();
+    if (over) { var dn = $('#gpDone', o); dn.hidden = false; dn.onclick = function () { o.classList.add('out'); setTimeout(function () { o.remove(); }, 300); }; }
+  });
+  draw(); requestAnimationFrame(function () { cor.style.transition = 'none'; placeCordie(); void cor.offsetWidth; cor.style.transition = ''; });
 }
 
 /* ---------- premium wheel and prize reveal ---------- */
@@ -6218,19 +6294,26 @@ function findPlayers() {
 }
 function showSearch() {
   var r = $('#frRes'); if (!r) return; var fr = ON.friends.map(function (f) { return f.id; });
-  r.innerHTML = SOC.search.length ? SOC.search.map(function (p) { return personRow(p, fr.indexOf(p.id) >= 0 ? '<span class="ok">Friends ✓</span>' : '<button class="b3 gold sm" data-add="' + p.id + '">Add</button>'); }).join('') : '<p class="note">No players found with that name.</p>';
+  r.innerHTML = SOC.search.length ? SOC.search.map(function (p) { return personRow(p, fr.indexOf(p.id) >= 0 ? '<span class="ok">Friends ✓</span>' : S.sentReq && S.sentReq[p.id] ? '<span class="ok">Request sent</span>' : '<button class="b3 gold sm" data-add="' + p.id + '">Add</button>'); }).join('') : '<p class="note">No players found with that name.</p>';
   bindSocialButtons(r);
 }
 function addFriend(id, btn) {
+  if (!S.sentReq) S.sentReq = {};
+  if (ON.friends.some(function (f) { return f.id === id; })) { btn.outerHTML = '<span class="ok">Friends ✓</span>'; return; }
   uref(id).collection('requests').doc(ON.user.uid).set({ name: myName(), level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, at: Date.now() })
-    .then(function () { btn.outerHTML = '<span class="ok">Request sent</span>'; SFX.coin(); }).catch(function () { toast('Couldn\'t send the request. Try again.'); });
+    .then(function () { S.sentReq[id] = Date.now(); save(); btn.outerHTML = '<span class="ok">Request sent</span>'; SFX.coin(); })
+    .catch(function (e) {
+      // a request you already sent is still sitting in their list: re-sending counts as an edit, which the rules refuse
+      if (e && e.code === 'permission-denied') { S.sentReq[id] = S.sentReq[id] || Date.now(); save(); btn.outerHTML = '<span class="ok">Request sent</span>'; toast('You already sent them a request. They\'ll see it on their Team screen and can accept it there.', 3600); }
+      else toast('Couldn\'t send the request' + (e && e.code ? ' (' + e.code + ')' : '') + '. Check your connection and try again.', 3200);
+    });
 }
 function acceptFriend(id) {
   var r = ON.requests.filter(function (x) { return x.id === id; })[0] || {}, b = ON.db.batch(), now = Date.now();
   b.set(uref().collection('friends').doc(id), { name: r.name || 'Friend', level: r.level || 1, frame: r.frame || 'gold', avatar: r.avatar || 'initial', at: now });
   b.set(uref(id).collection('friends').doc(ON.user.uid), { name: myName(), level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, at: now });
   b.delete(uref().collection('requests').doc(id));
-  b.commit().then(function () { SFX.set(); toast('You and ' + (r.name || 'your new friend') + ' are now friends!'); }).catch(function () { toast('Couldn\'t accept right now. Try again.'); });
+  b.commit().then(function () { if (S.sentReq) { delete S.sentReq[id]; save(); } SFX.set(); toast('You and ' + (r.name || 'your new friend') + ' are now friends!'); }).catch(function () { toast('Couldn\'t accept right now. Try again.'); });
 }
 function sendGift(id, btn) {
   var d = ON.daily || {}, g = d.giftTo || [];
