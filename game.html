@@ -2263,6 +2263,20 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .beefly.away { transition-duration: .7s; }
 @keyframes beeBuzz { to { transform: translateY(-3px) rotate(4deg); } }
 @keyframes beeBuzzB { from { transform: scaleX(-1); } to { transform: scaleX(-1) translateY(-3px) rotate(-4deg); } }
+
+/* the guide: a spotlight ring with the rest of the screen dimmed, Cordie, and a speech bubble */
+.coach { position: fixed; inset: 0; z-index: 96; cursor: pointer; animation: fade .25s both; }
+.coach.out { opacity: 0; transition: opacity .25s; }
+.cring { position: fixed; border-radius: 18px; box-shadow: 0 0 0 4px #ffd447, 0 0 0 9999px rgba(20,6,40,.66); transition: all .4s cubic-bezier(.3,1.2,.4,1); pointer-events: auto; }
+.coach.nohole .cring { box-shadow: 0 0 0 9999px rgba(20,6,40,.66); }
+.cbub2 { position: fixed; padding: 12px 14px 10px; border-radius: 18px; color: #3d1a4f; background: #fffaf0; box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px var(--ol), 0 10px 22px rgba(10,2,20,.5); cursor: default; }
+.cbub2.pop { animation: popIn .35s cubic-bezier(.2,1.4,.4,1) both; }
+.cbub2 p { margin: 0 0 8px; font: 600 15px/1.35 var(--ui); } .cbub2 b { color: #8a2fc7; }
+.cbtns { display: flex; justify-content: flex-end; gap: 8px; } .cbtns .b3 { padding: 5px 14px; font-size: 14px; }
+.cstep { position: absolute; left: 14px; bottom: 12px; font: 700 11px var(--ui); color: #9a7ab8; }
+.ccordie { position: fixed; bottom: 0; height: min(42vh, 200px); pointer-events: none; filter: drop-shadow(0 6px 10px rgba(10,2,20,.5)); animation: hudBob 2.6s ease-in-out infinite; }
+.ccordie.l { left: 8px; } .ccordie.r { right: 8px; }
+@media (max-height: 300px) { .cbub2 p { font-size: 13px; } .ccordie { height: 34vh; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2409,7 +2423,7 @@ var KEY = 'bingoBloom.v1';
 function fresh() {
   return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 0, alertMin: 60, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 0, bet: 1, xp: 0, level: 1, items: { bee: 1, headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
-    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', quest: {}, league: {}, raffle: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
+    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', quest: {}, league: {}, raffle: {}, guide: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'slow', assist: false, lite: false, autoAlert: true } };
 }
 function merge(saved) {
@@ -3145,7 +3159,8 @@ function lobby() {
   app.querySelectorAll('.ftile').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
   featSpotlight();
   $('#bGift').onclick = function () { SFX.tap(); calendar(); };
-  if (!(giftReady && S.calShown !== dayKey())) cordieHello(); else CORDIE_HI = true;
+  if (!guideDone('map')) { CORDIE_HI = true; setTimeout(function wait() { if (!$('#lobby')) return; if (veil || document.querySelector('.rwd, .story, .csweep, .gcol')) { setTimeout(wait, 800); return; } mapTour(); }, 1500); }
+  else if (!(giftReady && S.calShown !== dayKey())) cordieHello(); else CORDIE_HI = true;
   if (giftReady && S.calShown !== dayKey()) { S.calShown = dayKey(); save(); setTimeout(function () { if ($('#lobby') && !veil) calendar(); }, 900); }
   $('#bAlbum').onclick = function () { album(null); };
   $('#bKitchen').onclick = kitchen;
@@ -3389,7 +3404,7 @@ function settings() {
     '<div class="opt"><span>Battery saver <small style="color:var(--mist)">fewer moving effects, keeps your phone cool</small></span><button class="sw" id="swLite" aria-pressed="' + !!st.lite + '" aria-label="Battery saver"></button></div>' +
     '<div class="opt"><span>Mark numbers for me <small style="color:var(--mist)">for players who find tapping hard · Perfect Card rewards pause while it is on</small></span><button class="sw" id="swAssist" aria-pressed="' + !!st.assist + '" aria-label="Mark numbers for me"></button></div>' +
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="slowest" aria-pressed="' + (st.speed === 'slowest') + '">Slowest</button><button data-s="slow" aria-pressed="' + (st.speed === 'slow') + '">Slow</button><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
-    '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button><button class="b3 plum" id="bFb2">💬 Send feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">📥 Feedback inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
+    '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button><button class="b3 plum" id="bFb2">💬 Send feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">📥 Feedback inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 gold" id="bTour" style="padding:6px 12px">Show me around</button><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
     '<button class="b3 cream" id="bReset" style="padding:8px">Start over (clear my progress)</button>', 'small', function (v) {
       $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; give('alert', 5); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
@@ -3403,6 +3418,7 @@ function settings() {
       v.querySelectorAll('#spd button').forEach(function (b) { b.onclick = function () { st.speed = b.dataset.s; save(); v.querySelectorAll('#spd button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
       $('#bAcct', v).onclick = accountPanel;
       $('#bFb2', v).onclick = function () { feedback('Settings'); };
+      $('#bTour', v).onclick = function () { S.guide = {}; save(); closeVeil(); lobby(); };
       if ($('#bFbIn', v)) $('#bFbIn', v).onclick = feedbackInbox;
       $('#bHow', v).onclick = howTo; $('#bFair', v).onclick = fairPlay;
       var armed = false;
@@ -3470,7 +3486,7 @@ function startRound(arm, room) {
   var n = 3, P = R.players, T = R.total;
   (function tick() {
     if (!R || !ready.isConnected) { ready.remove(); return; }
-    if (n === 0) { ready.remove(); $('#sLeft').textContent = R.left; R.active = true; autoAlertOn(); callNext(); if (R.mode === 'shape') setTimeout(function () { toast('Bonus shape: ' + R.shape.name + '. Every line still wins a bingo; finishing the shape pays a big extra prize!', 4200); }, 3400); return; }
+    if (n === 0) { ready.remove(); var go = function () { if (!R || R.ended) return; $('#sLeft').textContent = R.left; R.active = true; autoAlertOn(); callNext(); if (R.mode === 'shape') setTimeout(function () { toast('Bonus shape: ' + R.shape.name + '. Every line still wins a bingo; finishing the shape pays a big extra prize!', 4200); }, 3400); }; if (!guideDone('round')) roundTour(go); else go(); return; }
     var f = (4 - n) / 3;
     $('#sLeft').textContent = Math.max(1, Math.round(T * f)); var pl = $('#sPlayers'); if (pl) pl.textContent = Math.round(P * f) + ' players';
     ready.innerHTML = '<div><b class="outl">Get ready!</b><span>Starts in ' + n + ' · players joining…</span><span class="rdfeat">Featured power-ups: ' + R.feat.map(function (id) { return pupById(id).name; }).join(' & ') + '</span>' + (n === 5 ? '' : '') + '</div>';
@@ -4456,7 +4472,7 @@ function kitchen() {
   function draw(v) { $('#kOv', v).innerHTML = ovens(); $('#kRec', v).innerHTML = recipes(); }
   panel('<h3>Kitchen</h3><p>Bake treats with the ingredients you win in bingo. Each treat gives you tickets to play.</p>' +
     '<div class="ovens" id="kOv"></div><div class="recipes" id="kRec"></div>', '', function (v) {
-      draw(v);
+      draw(v); if (!guideDone('kitchen')) setTimeout(function () { if (v.isConnected) kitchenTour(); }, 500);
       timer = setInterval(function () { if (!v.isConnected) { clearInterval(timer); return; } var kb = $('#kOv', v), sig = S.ovens.map(function (o) { return !o ? 'e' : (o.done > Date.now() ? 'b' : 'r') + o.r; }).join();
         if (kb.dataset.sig !== sig) { kb.innerHTML = ovens(); kb.dataset.sig = sig; }
         else { var tmp = document.createElement('div'); tmp.innerHTML = ovens(); kb.querySelectorAll('.oven').forEach(function (o, i) { var n = tmp.children[i]; if (!n) return; var a = o.querySelector('small'), b = n.querySelector('small'); if (a && b) a.textContent = b.textContent; var x = o.querySelector('.pbar i'), y = n.querySelector('.pbar i'); if (x && y) x.style.width = y.style.width; }); } var anyReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); }); if (anyReady && !v.dataset.r) { v.dataset.r = 1; $('#kRec', v).innerHTML = recipes(); } }, 1000);
@@ -5425,6 +5441,78 @@ function treatServed(r) {
   d.innerHTML = '<i class="bsrays"></i><div class="gcbox"><svg viewBox="0 0 48 40"><use href="#' + r.art + '"/></svg></div><div class="gcin"><div class="sribbon gcrib"><span class="outl">Treat Served!</span></div><b class="trname outl">' + esc(r.name) + '</b><div class="gcprz"><span class="gcp">' + icon('i-ticket') + '<b class="outl">+' + r.tickets + '</b></span></div></div>';
   document.body.appendChild(d); d.onclick = function () { d.remove(); };
   setTimeout(function () { if (d.isConnected) { d.classList.add('out'); setTimeout(function () { d.remove(); }, 350); } }, 2200);
+}
+/* ---------- step-by-step guide: Cordie shows new players around (Sandy: "guide us through to begin with") ---------- */
+function guideDone(k) { return !!(S.guide && S.guide[k]); }
+function guideSet(k) { if (!S.guide) S.guide = {}; S.guide[k] = 1; save(); }
+function coach(steps, done) {
+  var i = 0, o = document.createElement('div'); o.className = 'coach';
+  o.innerHTML = '<div class="cring"></div><img class="ccordie" alt=""><div class="cbub2"><p></p><div class="cbtns"><button class="b3 plum" data-cs>Skip</button><button class="b3 gold" data-cn>Next ›</button></div><small class="cstep"></small></div>';
+  document.body.appendChild(o);
+  var ring = o.querySelector('.cring'), bub = o.querySelector('.cbub2'), cor = o.querySelector('.ccordie');
+  function el(st) { var t = typeof st.sel === 'function' ? st.sel() : st.sel ? document.querySelector(st.sel) : null; return t && t.getBoundingClientRect().width ? t : null; }
+  function showStep() {
+    var st = steps[i], t = el(st);
+    bub.querySelector('p').innerHTML = st.text; o.querySelector('.cstep').textContent = (i + 1) + ' of ' + steps.length;
+    o.querySelector('[data-cn]').textContent = i === steps.length - 1 ? (st.last || 'Let\'s play!') : 'Next ›';
+    cor.src = 'art/mascot-' + (st.pose || (t ? 'point' : 'cheer')) + '.webp';
+    o.classList.toggle('nohole', !t);
+    var bw = Math.min(360, innerWidth - 40);
+    if (t) {
+      var r = t.getBoundingClientRect(), pad = 6;
+      ring.style.left = (r.left - pad) + 'px'; ring.style.top = (r.top - pad) + 'px'; ring.style.width = (r.width + pad * 2) + 'px'; ring.style.height = (r.height + pad * 2) + 'px';
+      var below = r.top + r.height / 2 < innerHeight / 2, cx = r.left + r.width / 2;
+      var bx = Math.max(12, Math.min(innerWidth - bw - 12, cx - bw / 2));
+      bub.style.left = bx + 'px'; bub.style.width = bw + 'px';
+      bub.style.top = below ? Math.min(innerHeight - 150, r.bottom + 14) + 'px' : 'auto';
+      bub.style.bottom = below ? 'auto' : Math.min(innerHeight - 150, innerHeight - r.top + 14) + 'px';
+      var left = cx > innerWidth / 2; cor.className = 'ccordie ' + (left ? 'l' : 'r');
+    } else {
+      ring.style.width = ring.style.height = '0px'; ring.style.left = innerWidth / 2 + 'px'; ring.style.top = innerHeight / 2 + 'px';
+      bub.style.width = bw + 'px'; bub.style.left = (innerWidth - bw) / 2 + 'px'; bub.style.top = 'auto'; bub.style.bottom = Math.round(innerHeight * .28) + 'px';
+      cor.className = 'ccordie l';
+    }
+    bub.classList.remove('pop'); void bub.offsetWidth; bub.classList.add('pop'); SFX.tap && SFX.tap();
+  }
+  function end() { o.classList.add('out'); setTimeout(function () { o.remove(); }, 250); if (done) done(); }
+  o.querySelector('[data-cs]').onclick = function (e) { e.stopPropagation(); end(); };
+  o.querySelector('[data-cn]').onclick = function (e) { e.stopPropagation(); if (++i >= steps.length) end(); else showStep(); };
+  o.addEventListener('click', function (e) { if (e.target === o || e.target === ring) { if (++i >= steps.length) end(); else showStep(); } });
+  showStep();
+}
+function mapTour() {
+  if (!$('#lobby') || veil || document.querySelector('.coach')) return;
+  var cp = document.querySelector('.cordie-pop'); if (cp) cp.remove();
+  var w = $('#worldWrap'); if (w) w.scrollTop = 0;
+  function lmEl(id) { return function () { var g = [].slice.call(document.querySelectorAll('#mapSvg .lm')).filter(function (x) { return LANDMARKS[+x.dataset.lm].id === id && x.querySelector('rect'); })[0]; return g; }; }
+  coach([
+    { text: '<b>Bonjour, I\'m Cordie!</b> Welcome to Bingo Bloom. Let me show you around. It only takes a minute.', pose: 'wow' },
+    { sel: lmEl('patisserie'), text: 'This is <b>Paris</b>. Each building is a bingo room. <b>Start here at Rose Patisserie!</b> Tap a room to play in it.' },
+    { sel: '.hud-feat', text: 'These are the <b>featured rooms</b>. Each has its own special game: blackout, butterflies, recipes, bonus shapes and mystery gifts.' },
+    { sel: '.hud-top .cur', text: '<b>Tickets</b> play bingo. <b>Coins</b> buy power-ups and card packs. <b>Petals</b> grow blossoms on the map. <b>Amethysts</b> are rare gems.' },
+    { sel: lmEl('patisserie'), text: 'Win petals in bingo, then tap the room and press <b>Grow</b>. Your <b>first blossom opens the next room</b>, and 3 blossoms complete it!', pose: 'cheer' },
+    { sel: '#bKitchen', text: 'The <b>Kitchen</b>: bake treats with the ingredients you win in bingo, and they turn into tickets.' },
+    { sel: '#bGift', text: 'A <b>free gift</b> every day. Come back daily to fill your Bloom Calendar!' },
+    { sel: '#bEv', text: '<b>Events</b>: free daily challenges, a weekly league and a daily raffle. All won by playing.' },
+    { sel: '#bSet', text: '<b>Settings</b>: slower ball speeds, <b>Clear view</b> for bigger numbers, <b>Calm mode</b> and more. You can replay this tour there too.' },
+    { text: 'That\'s it! Tap <b>Rose Patisserie</b> to play your first round. I\'ll show you how bingo works when you get there.', pose: 'cheer' }
+  ], function () { guideSet('map'); if (w) mapToGoal(); });
+}
+function roundTour(done) {
+  coach([
+    { sel: '.bcard', text: 'This is your <b>bingo card</b>. When a number is called, <b>tap it on your card</b> to mark it.' },
+    { sel: '.ballwrap', text: 'Here\'s the <b>ball just called</b>. Earlier balls roll along beside it.' },
+    { sel: '.bcard', text: 'Get <b>5 in a row</b> across, down, corner to corner, or the 4 corners. <b>BINGO is called for you</b> automatically!', pose: 'wow' },
+    { sel: '#pq', text: '<b>Power-ups</b> load into this bar. As you mark numbers it fills, and with <b>AUTO</b> on they fire all by themselves.' },
+    { sel: '#bQuit', text: 'Need to leave? This arrow goes back. Have fun, and good luck!', pose: 'cheer' }
+  ], function () { guideSet('round'); done(); });
+}
+function kitchenTour() {
+  coach([
+    { sel: '#kOv', text: 'These are your <b>ovens</b>. Two treats can bake at once.' },
+    { sel: '#kRec .recipe', text: 'Each <b>recipe</b> lists the ingredients it needs. You win ingredients in bingo rounds.' },
+    { sel: '#kRec [data-bake]', text: 'When you have enough, press <b>Bake</b>. When the timer finishes, collect your <b>tickets</b>!', pose: 'cheer' }
+  ], function () { guideSet('kitchen'); });
 }
 function localTime(t) { try { return new Date(t).toLocaleString([], { weekday: 'short', hour: 'numeric', minute: '2-digit' }); } catch (e) { return ''; } }
 
