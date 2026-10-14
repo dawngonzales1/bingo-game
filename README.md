@@ -59,8 +59,8 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
   - **Bloom Alert:** called numbers glow for the whole round.
   - **Boost:** its ring fills as you mark numbers; when full it marks 2 squares on every card.
 - **Auto** marks numbers for you; you still tap BINGO!
-- **Treasure squares:** coins, tickets, petals, album cards, ingredients, drop balls or a Bloom Alert.
-- **Each bingo gives:** coins, petals, an album card, 2 ingredients, 2 drop balls and 1 seed (sometimes a Bloom Alert).
+- **Treasure squares:** coins, tickets, petals, album cards, ingredients, pearls or a Bloom Alert.
+- **Each bingo gives:** coins, petals, an album card, 2 ingredients, 2 pearls and 1 seed (sometimes a Bloom Alert).
 
 - **Hot room of the day:** one featured room each day has a flaming HOT badge on the map and pays double petals.
 - **Room screen extras:** fireflies drift over the painting, a Grand Jackpot banner counts up to the top prize for your bet, and POPULAR / BEST VALUE flags wiggle on the card choices.
@@ -87,7 +87,7 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
   - the first two rows are safe;
   - Hops move you ahead;
   - a Splash ends the walk with a small prize;
-  - the fountain gives 150 tickets and a gold card.
+  - the Wishing Gazebo gives 150 tickets and a gold card.
 - **Gold cards outside bingo:**
   - Daily Wheel (5%)
   - Scratch Cards
@@ -123,7 +123,7 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
   - Gold: 8 cards, 25% gold, at least 1 gold card guaranteed, 1,200 coins
 
 ### Side games
-- **Petal Drop:** drop balls down a pegboard into prize cups (tickets, coins, an ingredient or seeds).
+- **Petal Drop:** pearls down a pegboard into prize cups (tickets, coins, an ingredient or seeds).
 - **Daily Wheel:** one free spin a day, with the odds of every prize shown.
 - **Scratch Cards:** find 3 of the same picture to win it. About half of all cards win.
 - **Macaron Match:** swap macarons to match 3. 20 moves, 3 free plays a day, and stars win tickets and seeds.
@@ -139,6 +139,15 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
 - All odds are shown.
 - The game never gets stingier.
 - No real-money prizes.
+
+### Album Grand Prize (grows each time)
+| Completion | Tickets | Coins | Amethysts | Each power-up + Bloom Alerts |
+|---|---|---|---|---|
+| 1st | 3,000 | 5,000 | 100 | 5 (plus the Golden Bloom frame and dauber) |
+| 2nd | 4,500 | 7,500 | 150 | 8 |
+| 3rd and after | 6,000 | 10,000 | 200 | 10 |
+
+After a completion, "Collect & start again" (or ↻ Start again in the album) starts a fresh album; spare cards turn into stars. The second album tab is the **Golden Atelier** (coming soon).
 
 ### Album
 8 sets of 9 cards (72 in total), with 2 gold cards per set. A finished set gives 250 coins and the whole album gives 3,000. It has a 60-day timer, like Cordelle's main album.
