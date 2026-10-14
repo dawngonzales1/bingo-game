@@ -2008,7 +2008,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .lite .rlife, .lite #mapFx .mlife, .lite #mapFx .pring, .lite .gull, .lite .flyer2, .lite .cloudz, .lite .fmov, .lite .fflash, .lite .bubs, .lite .ffly, .lite .ftile .fspk { display: none !important; }
 .lite .ftile .fpic, .lite .ftile.ft2, .lite .ftile::after, .lite #lobby .round .c, .lite #lobby .round .c svg, .lite .round .c img, .lite .hud-top .cur > svg, .lite .hud-top .cur .plus, .lite #mapFx .pbob, .lite .cityban b, .lite .tier .tplay, .lite #play .bcard::after, .lite #play .cell.free, .lite .round .dot, .lite .fcordie { animation: none !important; }
 
-.fblang { display: flex; justify-content: center; gap: 6px; margin: -2px 0 4px; }
+.fblang { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin: -2px 34px 4px; direction: ltr; }
 .fblang button { padding: 3px 10px; border-radius: 999px; font: 800 12px var(--ui); color: #fff; background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,243,184,.5); cursor: pointer; }
 .fblang button[aria-pressed="true"] { color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #f6c64a); border-color: #fff; }
 .fbtag.fblg { background: #e9dcff; color: #3d1a4f; }
@@ -4851,10 +4851,14 @@ var FB_L = {
   es: { pill: 'Español', title: 'Enviar comentarios', sub: '¡Sé sincero, ayuda mucho! Llega directo a Dawn.', label: '¿Qué pasó o qué lo haría mejor?', ph: 'Escribe aquí…', shot: '📷 Agregar captura', about: 'Sobre:', send: 'Enviar', short: 'Cuéntanos un poco más primero.', sending: 'Enviando…', thanks: '¡Gracias! Tus comentarios llegaron a Dawn. 💖', savedOff: '¡Guardado! Se envía cuando juegues la versión web con internet.', saved: '¡Guardado! Se enviará la próxima vez que abras el juego.', adding: 'Agregando…', badpic: 'No se pudo leer esa imagen',
     types: [['🐞 Error', 'Algo falló o se ve mal'], ['🎨 Aspecto', 'Simple, barato, difícil de leer'], ['💖 Diversión', 'Lo que te encantó'], ['🐢 Muy lento', 'Esperas, bingos lentos'], ['💡 Idea', 'Algo para agregar']] },
   el: { pill: 'Ελληνικά', title: 'Στείλε σχόλια', sub: 'Πες μας ειλικρινά, βοηθάει! Πάει κατευθείαν στην Dawn.', label: 'Τι συνέβη ή τι θα το έκανε καλύτερο;', ph: 'Γράψε εδώ…', shot: '📷 Πρόσθεσε στιγμιότυπο', about: 'Σχετικά με:', send: 'Αποστολή', short: 'Πες μας λίγα περισσότερα πρώτα.', sending: 'Αποστολή…', thanks: 'Ευχαριστούμε! Τα σχόλιά σου στάλθηκαν στην Dawn. 💖', savedOff: 'Αποθηκεύτηκε! Θα σταλεί όταν παίξεις την έκδοση web με σύνδεση.', saved: 'Αποθηκεύτηκε! Θα σταλεί την επόμενη φορά που θα ανοίξεις το παιχνίδι.', adding: 'Προσθήκη…', badpic: 'Δεν ήταν δυνατό να διαβαστεί η εικόνα',
-    types: [['🐞 Σφάλμα', 'Κάτι χάλασε ή φαίνεται λάθος'], ['🎨 Εμφάνιση', 'Απλό, φτηνό, δυσανάγνωστο'], ['💖 Διασκέδαση', 'Τι σου άρεσε'], ['🐢 Πολύ αργό', 'Αναμονή, αργά μπίνγκο'], ['💡 Ιδέα', 'Κάτι να προστεθεί']] }
+    types: [['🐞 Σφάλμα', 'Κάτι χάλασε ή φαίνεται λάθος'], ['🎨 Εμφάνιση', 'Απλό, φτηνό, δυσανάγνωστο'], ['💖 Διασκέδαση', 'Τι σου άρεσε'], ['🐢 Πολύ αργό', 'Αναμονή, αργά μπίνγκο'], ['💡 Ιδέα', 'Κάτι να προστεθεί']] },
+  ar: { pill: 'العربية', rtl: true, title: 'أرسل ملاحظاتك', sub: 'كن صريحًا، فهذا يساعد! تصل مباشرة إلى Dawn.', label: 'ماذا حدث، أو ما الذي يجعلها أفضل؟', ph: 'اكتب هنا…', shot: '📷 أضف لقطة شاشة', about: 'حول:', send: 'إرسال', short: 'أخبرنا بالمزيد أولاً.', sending: 'جارٍ الإرسال…', thanks: 'شكرًا لك! وصلت ملاحظاتك إلى Dawn. 💖', savedOff: 'تم الحفظ! ستُرسل عندما تلعب نسخة الويب وأنت متصل بالإنترنت.', saved: 'تم الحفظ! ستُرسل في المرة القادمة التي تفتح فيها اللعبة.', adding: 'جارٍ الإضافة…', badpic: 'تعذّرت قراءة هذه الصورة',
+    types: [['🐞 خطأ', 'شيء تعطّل أو يبدو خاطئًا'], ['🎨 المظهر', 'بسيط، رخيص، صعب القراءة'], ['💖 المتعة', 'ما أحببته'], ['🐢 بطيء جدًا', 'انتظار، بينغو بطيء'], ['💡 فكرة', 'شيء يمكن إضافته']] },
+  ja: { pill: '日本語', title: 'フィードバックを送る', sub: '正直な意見が助けになります！Dawnに直接届きます。', label: '何が起きましたか？どうすればもっと良くなりますか？', ph: 'ここに入力…', shot: '📷 スクリーンショットを追加', about: '場所：', send: '送信', short: 'もう少し詳しく教えてください。', sending: '送信中…', thanks: 'ありがとうございます！フィードバックがDawnに届きました。💖', savedOff: '保存しました！オンラインでWeb版をプレイすると送信されます。', saved: '保存しました！次にゲームを開いたときに送信されます。', adding: '追加中…', badpic: 'その画像を読み込めませんでした',
+    types: [['🐞 バグ', '壊れている・おかしく見える'], ['🎨 見た目', '地味・安っぽい・読みにくい'], ['💖 楽しさ', '気に入ったところ'], ['🐢 遅すぎる', '待ち時間・ビンゴが遅い'], ['💡 アイデア', '追加してほしいもの']] }
 };
 var fbLang = (function () { var k = ''; try { k = localStorage.getItem('bingoBloom.fbLang') || ''; } catch (e) { /* fine */ } if (FB_L[k]) return k; var nl = (navigator.language || 'en').slice(0, 2).toLowerCase(); return FB_L[nl] ? nl : 'en'; })();
-var FB_LANG_TAG = { es: '🇪🇸 Spanish', el: '🇬🇷 Greek' };
+var FB_LANG_TAG = { es: ['🇪🇸', 'Spanish'], el: ['🇬🇷', 'Greek'], ar: ['🌐', 'Arabic'], ja: ['🇯🇵', 'Japanese'] };
 var FB_TYPES = [['bug', '🐞 Bug', 'Something broke or looks wrong'], ['looks', '🎨 Looks', 'Plain, cheap, hard to read'], ['fun', '💖 Fun', 'What you loved'], ['slow', '🐢 Too slow', 'Waiting, slow bingos'], ['idea', '💡 Idea', 'Something to add']];
 function whereNow() {
   var sc = app.firstElementChild, id = sc ? sc.id : '', h = veil && veil.querySelector('h3');
@@ -4888,13 +4892,14 @@ function fbFlush() { // feedback written while offline goes out on the next visi
 function feedback(from, keep) {
   keep = keep || {};
   var where = from || whereNow(), type = keep.type || 'bug', shot = keep.shot || null, L = FB_L[fbLang] || FB_L.en;
-  panel('<div class="fblang typehide">' + ['en', 'es', 'el'].map(function (k) { return '<button data-lg="' + k + '" aria-pressed="' + (k === fbLang) + '">' + FB_L[k].pill + '</button>'; }).join('') + '</div>' +
+  panel('<div class="fblang typehide">' + ['en', 'es', 'el', 'ar', 'ja'].map(function (k) { return '<button data-lg="' + k + '" aria-pressed="' + (k === fbLang) + '">' + FB_L[k].pill + '</button>'; }).join('') + '</div>' +
     '<h3>' + L.title + '</h3><p class="fbsub typehide">' + L.sub + '</p>' +
     '<div class="fbtypes typehide">' + FB_TYPES.map(function (t, i) { return '<button data-ft="' + t[0] + '" aria-pressed="' + (t[0] === type) + '"><b>' + L.types[i][0] + '</b><small>' + L.types[i][1] + '</small></button>'; }).join('') + '</div>' +
-    '<div class="pinf"><label>' + L.label + '<textarea id="fbText" rows="3" maxlength="2000" placeholder="' + L.ph + '"></textarea></label></div>' +
+    '<div class="pinf"><label>' + L.label + '<textarea id="fbText" dir="auto" rows="3" maxlength="2000" placeholder="' + L.ph + '"></textarea></label></div>' +
     '<div class="fbrow typehide"><label class="b3 cream fbshot"><input type="file" id="fbFile" accept="image/*" hidden>' + L.shot + '</label><span id="fbThumb">' + (shot ? '<img src="' + shot + '" alt="">' : '') + '</span><small class="fbwhere">' + L.about + ' <b>' + esc(where) + '</b></small></div>' +
     '<div class="res-btns"><button class="b3 gold" id="fbGo">' + L.send + '</button></div><p class="status" id="fbMsg"></p>', 'small', function (v) {
       formVeil(v);
+      var pn = v.querySelector('.panel'); if (pn) { pn.dir = L.rtl ? 'rtl' : 'ltr'; pn.lang = fbLang; }
       if (keep.text) $('#fbText', v).value = keep.text;
       v.querySelectorAll('[data-lg]').forEach(function (b) { b.onclick = function () { fbLang = b.dataset.lg; try { localStorage.setItem('bingoBloom.fbLang', fbLang); } catch (e) { /* fine */ } SFX.tap(); feedback(where, { type: type, shot: shot, text: $('#fbText', v).value }); }; });
       v.querySelectorAll('[data-ft]').forEach(function (b) { b.onclick = function () { type = b.dataset.ft; v.querySelectorAll('[data-ft]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); SFX.tap(); }; });
@@ -4921,7 +4926,7 @@ function feedbackInbox(filter) {
         items = snap.docs.map(function (d) { var x = d.data(); x.id = d.id; return x; }).filter(function (x) { return filter === 'all' || !x.done; });
         var T = {}; FB_TYPES.forEach(function (t) { T[t[0]] = t[1]; });
         $('#fbList', v).innerHTML = items.length ? items.map(function (x) {
-          return '<div class="fbitem' + (x.done ? ' done' : '') + '"><div class="fbhd"><span class="fbtag t-' + x.type + '">' + (T[x.type] || x.type) + '</span>' + (FB_LANG_TAG[x.lang] ? '<span class="fbtag fblg">' + FB_LANG_TAG[x.lang] + '</span>' : '') + '<b>' + esc(x.name || 'Player') + '</b><small>' + new Date(x.at).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '</small></div>' +
+          return '<div class="fbitem' + (x.done ? ' done' : '') + '"><div class="fbhd"><span class="fbtag t-' + x.type + '">' + (T[x.type] || x.type) + '</span>' + (FB_LANG_TAG[x.lang] ? '<span class="fbtag fblg">' + FB_LANG_TAG[x.lang].join(' ') + '</span>' : '') + '<b>' + esc(x.name || 'Player') + '</b><small>' + new Date(x.at).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '</small></div>' +
             '<p>' + esc(x.text) + '</p><small class="fbmeta">' + esc(x.screen || '') + ' · ' + esc(x.device || '') + ' · ' + esc(x.size || '') + ' · LV ' + (x.level || '?') + '</small>' +
             (x.shot ? '<img class="fbimg" src="' + x.shot + '" alt="Screenshot">' : '') + (x.done ? '' : '<button class="b3 cream fbdone" data-done="' + x.id + '">✓ Done</button>') + '</div>';
         }).join('') : '<p class="note">' + (filter === 'open' ? 'No new feedback. 🎉' : 'No feedback yet.') + '</p>';
@@ -4929,7 +4934,7 @@ function feedbackInbox(filter) {
         v.querySelectorAll('.fbimg').forEach(function (im) { im.onclick = function () { im.classList.toggle('big'); }; });
       }).catch(function () { $('#fbList', v).innerHTML = '<p class="note">Only Dawn can open the inbox.</p>'; });
       $('#fbCopy', v).onclick = function () {
-        var txt = items.map(function (x) { return '[' + x.type + (FB_LANG_TAG[x.lang] ? ', in ' + FB_LANG_TAG[x.lang].slice(5) : '') + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text; }).join('\n');
+        var txt = items.map(function (x) { return '[' + x.type + (FB_LANG_TAG[x.lang] ? ', in ' + FB_LANG_TAG[x.lang][1] : '') + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text; }).join('\n');
         try { navigator.clipboard.writeText(txt).then(function () { $('#fbMsg', v).textContent = 'Copied ' + items.length + ' notes. Paste them to Claude.'; }); } catch (e) { $('#fbMsg', v).textContent = 'Copy is not available here.'; }
       };
     });
