@@ -2433,6 +2433,39 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .panel .gtile b.outl { font-size: 20px; }
 .kpan:not(.trade) { opacity: .75; } .kpan.trade { box-shadow: inset 0 0 0 2px #7dff9a, 0 0 12px rgba(125,255,154,.4); }
 .ktag { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 0 6px; border-radius: 999px; font: 900 8.5px var(--ui); color: #fff; background: linear-gradient(180deg, #3fd46a, #1f8a3e); }
+
+/* room screen, premium: navy glass tiles, mini bingo cards, chip prizes, bet steps, labelled power-ups */
+#room .tier { background: linear-gradient(180deg, rgba(36,56,106,.94), rgba(18,28,58,.96)) !important; border: 0 !important; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4.5px #1a1030, 0 8px 16px rgba(0,0,0,.45) !important; color: #fff; padding-top: 26px; }
+#room .tier.sel { box-shadow: 0 0 0 3px #fff3b8, 0 0 0 5.5px #1a1030, 0 0 30px 8px rgba(255,214,92,.6) !important; }
+#room .tier::before { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(ellipse at 50% 0, rgba(255,214,92,.22), transparent 60%); }
+#room .trib { background: linear-gradient(180deg, #ffe58f, #e9a81c) !important; color: #2a1640 !important; text-shadow: none !important; box-shadow: 0 0 0 2px #1a1030 !important; }
+.tcards { height: clamp(40px, 13vh, 58px) !important; gap: 0 !important; }
+.tcards i { position: relative; height: 100%; aspect-ratio: .82; border-radius: 5px; overflow: hidden;
+  background: linear-gradient(180deg, #f6c64a 0 22%, transparent 22%), repeating-linear-gradient(90deg, transparent 0 calc(20% - 1px), rgba(42,22,64,.25) calc(20% - 1px) 20%), repeating-linear-gradient(180deg, #fffdf6 0 calc(15.6% - 1px), rgba(42,22,64,.25) calc(15.6% - 1px) 15.6%) !important;
+  box-shadow: 0 0 0 1.5px #1a1030, 0 3px 6px rgba(0,0,0,.4) !important; }
+.tcards i em { position: absolute; left: 0; right: 0; top: 2%; font: 900 clamp(6px, 1.8vh, 9px)/1 var(--ui); font-style: normal; letter-spacing: .08em; color: #2a1640; text-align: center; }
+.tcards.n2 i:nth-child(1) { transform: rotate(-8deg) translateX(4px); } .tcards.n2 i:nth-child(2) { transform: rotate(8deg) translateX(-4px); }
+.tcards.n4 i { margin: 0 -5px; } .tcards.n4 i:nth-child(1) { transform: rotate(-12deg) translateY(4px); } .tcards.n4 i:nth-child(2) { transform: rotate(-4deg); } .tcards.n4 i:nth-child(3) { transform: rotate(4deg); } .tcards.n4 i:nth-child(4) { transform: rotate(12deg) translateY(4px); }
+#room .twin { gap: 5px; font-size: 13px; }
+#room .twin span { padding: 2px 7px 2px 3px; border-radius: 999px; background: rgba(0,0,0,.3); box-shadow: inset 0 0 0 1px rgba(246,198,74,.45); color: #fff; }
+#room .twin svg { width: 20px; height: 20px; }
+#room .rpups { gap: 10px; }
+#room .rpups button { width: 52px !important; height: 52px !important; background: radial-gradient(circle at 40% 30%, #3a5596, #172a55) !important; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4px #1a1030, 0 4px 8px rgba(0,0,0,.4) !important; overflow: visible; }
+#room .rpups button svg { width: 80% !important; height: 80% !important; }
+#room .rpups button b { background: linear-gradient(180deg, #ff8a5c, #d8402a) !important; }
+#room .rpups .pul { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 3px; white-space: nowrap; font: 800 9.5px var(--ui); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
+#room .rpups button:disabled { opacity: .5; }
+#room .rfeat { background: linear-gradient(180deg, rgba(36,56,106,.94), rgba(18,28,58,.96)) !important; box-shadow: 0 0 0 2px #f6c64a, 0 0 0 3.5px #1a1030 !important; }
+#room .rfeat small { color: #ffe58f; }
+.betsl { background: linear-gradient(180deg, rgba(36,56,106,.96), rgba(18,28,58,.98)) !important; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4px #1a1030, 0 6px 12px rgba(0,0,0,.4) !important; }
+.betsl .btrack { display: none; }
+.betl { font: 900 11px var(--ui); color: #ffe58f; letter-spacing: .08em; padding-left: 4px; }
+.bsteps { display: flex; gap: 4px; }
+.bsteps button { min-width: 42px; padding: 5px 8px; border: 0; border-radius: 999px; cursor: pointer; font: 900 15px var(--ui); color: #c9d6f2; background: rgba(0,0,0,.35); box-shadow: inset 0 0 0 1.5px rgba(246,198,74,.35); }
+.bsteps button[aria-pressed="true"] { color: #2a1640; background: linear-gradient(180deg, #fff3b8, #f6c64a); box-shadow: 0 0 0 2px #1a1030, 0 0 12px rgba(255,214,92,.7); transform: scale(1.08); }
+@media (max-height: 420px) { .bsteps button { min-width: 34px; padding: 3px 6px; font-size: 13px; } #room .rpups button { width: 42px !important; height: 42px !important; } .tcards { height: 36px !important; } }
+@media (max-height: 300px) { .tcards { height: 20px !important; } #room .tier { padding-top: 14px !important; gap: 2px !important; } #room .twin { gap: 3px; font-size: 10px; } #room .twin span { padding: 0 5px 0 2px; } #room .twin svg { width: 13px; height: 13px; } .tcards i em { display: none; }
+  #room .rpups .pul, .betl, #room .rnote { display: none; } #room .rpups { gap: 6px; } #room .rpups button { width: 32px !important; height: 32px !important; } .bsteps button { min-width: 26px; padding: 2px 4px; font-size: 11px; } .betsl { gap: 4px; padding: 2px 6px; } .betsl .bstep { width: 26px; height: 26px; } #room .tier .b3 { padding: 2px 8px; font-size: 14px; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3492,14 +3525,14 @@ function roomScreen(room) {
     roomLife(room) + '<div class="ffly">' + range(1, 14).map(function (i) { return '<i style="left:' + rand(100) + '%;top:' + (20 + rand(75)) + '%;animation-delay:-' + rand(8) + 's;animation-duration:' + (6 + rand(6)) + 's"></i>'; }).join('') + '</div>' +
     '<div class="tiers">' + [1, 2, 4].map(function (n, i) {
       return '<div class="tier' + (S.cards === n ? ' sel' : '') + '" data-n="' + n + '" style="animation-delay:' + (i * .08) + 's"><span class="trib">' + n + ' card' + (n > 1 ? 's' : '') + '</span>' + (n === 2 ? '<span class="tflag">POPULAR</span>' : n === 4 ? '<span class="tflag best">BEST VALUE</span>' : '') +
-        '<span class="tcards">' + '<i></i>'.repeat(n) + '</span>' +
+        '<span class="tcards n' + n + '">' + '<i><em>BINGO</em></i>'.repeat(n) + '</span>' +
         '<span class="twin"><span>' + icon('i-coin') + '<b data-tc="' + n + '"></b></span><span>' + icon('i-petal') + '<b data-tp="' + n + '"></b></span><span>' + icon('i-card') + '<b>×' + n + '</b></span></span>' +
         '<button class="b3 gold shine tplay" data-play="' + n + '">' + icon('i-ticket') + '<b data-tk="' + n + '"></b></button></div>';
     }).join('') + '</div>' +
-    '<div class="rbottom"><div class="rpups">' + PRE_PUPS.map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<b>' + owned(id) + '</b></button>'; }).join('') +
+    '<div class="rbottom"><div class="rpups">' + PRE_PUPS.map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<b>' + owned(id) + '</b><span class="pul">' + p.name.replace('Double ', '2× ') + '</span></button>'; }).join('') +
       '<button class="pinfo" id="bPinfo" aria-label="What do power-ups do?">?</button></div>' +
-      '<span class="rfeat" title="Featured power-ups come up twice as often in this room today"><small>TODAY<br>HERE</small>' + roomFeat(room).map(function (id) { var t = pupTier(id); return '<span class="rfo r-' + t.id + '">' + icon(pupById(id).icon) + '</span>'; }).join('') + '<small>2×</small></span>' +
-      '<div class="betsl"><button class="bstep" id="bMinus" aria-label="Lower bet">−</button><div class="btrack"><i id="bFill"></i><span id="bKnob">×1</span></div><button class="bstep" id="bPlus" aria-label="Raise bet">+</button></div>' +
+      '<span class="rfeat" title="Featured power-ups come up twice as often in this room today"><small>TODAY\'S<br>FEATURED</small>' + roomFeat(room).map(function (id) { var t = pupTier(id); return '<span class="rfo r-' + t.id + '">' + icon(pupById(id).icon) + '</span>'; }).join('') + '<small>2×</small></span>' +
+      '<div class="betsl"><small class="betl">BET</small><button class="bstep" id="bMinus" aria-label="Lower bet">−</button><div class="btrack"><i id="bFill"></i><span id="bKnob">×1</span></div><div class="bsteps">' + [1, 2, 3, 5].map(function (b) { return '<button data-bet="' + b + '">×' + b + '</button>'; }).join('') + '</div><button class="bstep" id="bPlus" aria-label="Raise bet">+</button></div>' +
       '<span class="rnote">' + (fair ? '<b>Fair Play:</b> free Head Start this round' : 'Bet ×' + '<b id="bTxt"></b> · wins more') + '</span></div>' +
     '</div>');
   var BETS = [1, 2, 3, 5];
@@ -3510,6 +3543,7 @@ function roomScreen(room) {
     var k = BETS.indexOf(S.bet); if (k < 0) { k = 0; S.bet = 1; }
     $('#bFill').style.width = (k / 3 * 100) + '%'; $('#bKnob').style.left = (k / 3 * 100) + '%'; $('#bKnob').textContent = '×' + S.bet;
     if ($('#bTxt')) $('#bTxt').textContent = S.bet;
+    app.querySelectorAll('[data-bet]').forEach(function (x) { x.setAttribute('aria-pressed', +x.dataset.bet === S.bet); });
     countTo($('#jackN'), 500 * S.bet);
   }
   function setBet(d) { var k = Math.max(0, Math.min(3, BETS.indexOf(S.bet) + d)); if (BETS[k] === S.bet) { SFX.no(); return; } S.bet = BETS[k]; save(); SFX.tap(); upd(); var kn = $('#bKnob'); kn.classList.remove('bump'); void kn.offsetWidth; kn.classList.add('bump'); }
@@ -3517,6 +3551,7 @@ function roomScreen(room) {
   if ($('#bBake')) $('#bBake').onclick = function () { doBake(room); };
   if ($('#bGrow')) $('#bGrow').onclick = function () { SFX.tap(); buildSheet(LANDMARKS.map(function (l) { return l.id; }).indexOf(room.lm), function () { roomScreen(room); }); };
   $('#bMinus').onclick = function () { setBet(-1); }; $('#bPlus').onclick = function () { setBet(1); };
+  app.querySelectorAll('[data-bet]').forEach(function (x) { x.onclick = function () { var d = BETS.indexOf(+x.dataset.bet) - BETS.indexOf(S.bet); if (d) setBet(d); }; });
   app.querySelectorAll('.tier').forEach(function (t) { t.onclick = function (e) { if (e.target.closest('[data-play]')) return; S.cards = +t.dataset.n; save(); SFX.tap(); app.querySelectorAll('.tier').forEach(function (x) { x.classList.toggle('sel', x === t); }); }; });
   app.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function (e) { var id = b.dataset.arm; arm[id] = !arm[id]; b.setAttribute('aria-pressed', !!arm[id]); SFX.tap(); if (arm[id]) { var r = b.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 22); b.classList.remove('armpop'); void b.offsetWidth; b.classList.add('armpop'); toast(pupById(id).name + ' on: ' + pupById(id).desc, 2600); } else toast(pupById(id).name + ' off'); }; });
   $('#bPinfo').onclick = function () { SFX.tap(); pupGuide(); };
@@ -5438,7 +5473,7 @@ function prizeReveal(iconId, title, sub, done) {
    Runs only in the web version (dawngonzales1.github.io/bingo-game), where the Firebase library is loaded. ---------- */
 var ON = { ok: false, user: null, profile: null, db: null, auth: null, subs: [], inbox: [], friends: [], requests: [], daily: {}, team: null, saveT: null };
 // daily limits keep trading fair and the game a challenge (Dawn); they reset at 8:00 AM Central
-var GIFT_TIX = 10, GIFT_SEND_MAX = 10, GIFT_RECV_MAX = 10, CARD_SEND_MAX = 5, CARD_RECV_MAX = 5, ING_SEND_MAX = 10, ING_RECV_MAX = 10, GOLD_SEND_MAX = 2, GOLD_RECV_MAX = 2, TEAM_MAX = 30;
+var GIFT_TIX = 10, GIFT_SEND_MAX = 10, GIFT_RECV_MAX = 10, CARD_SEND_MAX = 5, CARD_RECV_MAX = 5, ING_SEND_MAX = 10, ING_RECV_MAX = 10, GOLD_SEND_MAX = 2, GOLD_RECV_MAX = 2, TEAM_MAX = 40;
 var GOLD_SAT0 = Date.UTC(2026, 9, 17); // the first Gold Trading Saturday (Oct 17, 2026); then every other Saturday
 var FV = function () { return firebase.firestore.FieldValue; };
 function onlineInit() {
