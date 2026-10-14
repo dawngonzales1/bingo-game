@@ -65,6 +65,13 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
 - **Hot room of the day:** one featured room each day has a flaming HOT badge on the map and pays double petals.
 - **Room screen extras:** fireflies drift over the painting, a Grand Jackpot banner counts up to the top prize for your bet, and POPULAR / BEST VALUE flags wiggle on the card choices.
 
+- **Power-up tray:** the **More** button on the bingo screen opens every power-up with what it does; the game pauses while it is open. The **?** on the room screen explains all power-ups.
+  - Before the round (room screen): Head Start, Double Coins, Double Petals, Double XP.
+  - During the round: Wild Petal, Instant Bingo, All ×2, +5 Balls, Bloom Alert, Single / Double / Triple Daub (1, 2 or 3 free marks), Coin Squares (3 squares worth 4× coins), Treasure Chest (2 squares with a mystery prize), Supercharger (fills the Boost), Time Freeze (no new balls for 10 seconds).
+- **4 cards:** with 4 cards, **⊞ All 4** shows all four at once; **⊟ 2 big** goes back to two big cards and Swap.
+- **Swipe between rooms** (or use the ‹ › arrows) on the room screen, and between sets inside the album.
+- **Petal Drop:** each prize pops up over the cup it landed in, with rays; the gold cup gets a full celebration.
+
 ### Rooms
 | Room | Kind | How it plays |
 |---|---|---|

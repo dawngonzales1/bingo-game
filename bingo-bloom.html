@@ -1448,6 +1448,46 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .sscroll::-webkit-scrollbar { display: none; }
 .sbtns { position: static; background: none; padding-top: 4px; margin-top: 0; }
 @media (max-height: 300px) { #lobby .hud-left { top: calc(62px + env(safe-area-inset-top, 0px)); } }
+/* ===== Phase 2 ===== */
+.dropcv { position: relative; }
+.drev { position: absolute; bottom: 60px; transform: translateX(-50%); display: grid; justify-items: center; gap: 2px; pointer-events: none; z-index: 3; animation: drevUp 2.2s cubic-bezier(.2,.9,.3,1.2) forwards; }
+.drev svg { position: relative; width: 52px; height: 52px; filter: drop-shadow(0 0 10px rgba(255,214,92,.9)); }
+.drev b { position: relative; white-space: nowrap; font-size: 15px; color: #ffe58f; padding: 1px 10px; border-radius: 10px; background: rgba(42,13,61,.85); box-shadow: 0 0 0 1.5px #ffd45c; }
+.drev.gold svg { width: 70px; height: 70px; }
+.drays { position: absolute; top: -30px; width: 110px; height: 110px; border-radius: 50%; background: repeating-conic-gradient(rgba(255,229,143,.55) 0 10deg, transparent 10deg 20deg); -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 65%); mask-image: radial-gradient(circle, #000 20%, transparent 65%); animation: spinRays 3s linear infinite; }
+@keyframes drevUp { 0% { transform: translate(-50%, 30px) scale(.3); opacity: 0; } 18% { transform: translate(-50%, -10px) scale(1.15); opacity: 1; } 30% { transform: translate(-50%, 0) scale(1); } 80% { opacity: 1; } 100% { transform: translate(-50%, -60px); opacity: 0; } }
+.ptray { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.pti { display: flex; align-items: center; gap: 10px; text-align: left; padding: 6px 10px 6px 6px; border-radius: 14px; border: 0; cursor: pointer; color: #fbefff; background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); box-shadow: inset 0 0 0 1.5px rgba(255,214,92,.4); transition: transform .14s; }
+.pti:active { transform: scale(.96); }
+.pti.none { opacity: .5; }
+.pti.info { cursor: default; }
+.pto { position: relative; flex: none; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 40% 30%, #fff 0 10%, rgba(255,255,255,0) 30%), radial-gradient(circle, #f6edff, #cdb2f2 70%, #9c79d6); box-shadow: 0 0 0 2.5px #e9a81c, 0 0 0 4px #3d1a4f; }
+.pto svg { width: 80%; height: 80%; }
+.pto b { position: absolute; top: -5px; right: -6px; min-width: 18px; height: 18px; border-radius: 9px; display: grid; place-items: center; font-size: 10.5px; background: linear-gradient(180deg, #ff6f9d, #d63a6a); color: #fff; border: 2px solid #fff; box-sizing: border-box; }
+.ptt { display: grid; gap: 1px; min-width: 0; }
+.ptt b { font-size: 14px; color: #ffe58f; }
+.ptt small { font-size: 11.5px; line-height: 1.25; color: #e6d4ff; }
+#play .pmore .orb { background: radial-gradient(circle at 40% 30%, #fff 0 10%, rgba(255,255,255,0) 30%), radial-gradient(circle, #fff3c4, #ffd45c 70%, #e9a81c); }
+.cell .tr.big { width: 46%; height: 46%; filter: drop-shadow(0 0 1.6cqw rgba(255,214,92,1)); }
+.frost { position: absolute; inset: 0; z-index: 8; pointer-events: none; display: grid; place-items: center; background: radial-gradient(ellipse at center, rgba(217,242,255,.05), rgba(150,210,255,.45)); box-shadow: inset 0 0 60px 20px rgba(200,235,255,.8); animation: fade .4s; }
+.frost b { font-size: clamp(40px, 22vh, 110px); color: #d9f2ff; opacity: .85; animation: pulse 1s ease-in-out infinite; }
+#cards.all4 .bigs.four { display: grid; grid-template-columns: repeat(2, auto); justify-content: center; align-content: center; gap: 12px; position: relative; }
+#cards.all4 .bigs.four #bView4 { position: absolute; right: 0; bottom: 0; z-index: 3; padding: 3px 9px; font-size: 12px; }
+#cards.all4 { grid-template-columns: 1fr; }
+.minis .swap { padding: 3px 8px; font-size: 12px; }
+.pinfo { width: 34px; height: 34px; border-radius: 50%; border: 0; font: 700 18px var(--ui); color: #3d1a4f; background: radial-gradient(circle at 40% 30%, #fff8d6, #ffd45c 55%, #e9a81c); box-shadow: 0 0 0 2px #3d1a4f, 0 3px 0 2px #3d1a4f; align-self: center; }
+#room .rpups button.armpop { animation: armPop .5s cubic-bezier(.2,.9,.3,1.6); }
+@keyframes armPop { 40% { transform: scale(1.3) rotate(-8deg); } }
+.rnav { position: absolute; top: 50%; z-index: 3; width: 40px; height: 64px; transform: translateY(-50%); border: 0; border-radius: 14px; font: 700 34px/1 var(--ui); color: #fff; background: rgba(42,13,61,.55); box-shadow: 0 0 0 2px rgba(255,214,92,.7); text-shadow: 0 2px 0 #3d1a4f; cursor: pointer; }
+.rnav.l { left: 4px; } .rnav.r { right: 4px; }
+.rnav:active { transform: translateY(-50%) scale(.9); }
+#room { position: absolute; }
+#room .tiers { padding: 0 40px; }
+.setnav { width: 36px; height: 36px; border-radius: 50%; border: 0; font: 700 24px/1 var(--ui); color: #3d1a4f; background: radial-gradient(circle at 40% 30%, #fff8d6, #ffd45c 55%, #e9a81c); box-shadow: 0 0 0 2px #3d1a4f, 0 3px 0 2px #3d1a4f; cursor: pointer; flex: none; }
+.set-view h3 { text-align: center; }
+@media (max-height: 300px) { .rnav { width: 30px; height: 50px; font-size: 26px; } #room .tiers { padding: 0 30px; } .pinfo { width: 28px; height: 28px; font-size: 15px; } }
+#room > .rnav { position: absolute; }
+#play > .frost { position: absolute; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1471,6 +1511,16 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
     <radialGradient id="gDrop" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#ffb3cf"/><stop offset="1" stop-color="#d9608f"/></radialGradient>
   </defs>
   <symbol id="i-gem" viewBox="0 0 40 40"><path d="M11 6h18l8 10-17 20L3 16z" fill="url(#gGem)" stroke="#3d1a4f" stroke-width="2.4" stroke-linejoin="round"/><path d="M3 16h34M11 6l4 10 5 20 5-20 4-10M15 16l5-10 5 10" fill="none" stroke="#3d1a4f" stroke-width="1.3" stroke-linejoin="round" opacity=".55"/><path d="M12 8.5l2.6 6H6.6z" fill="#fff" opacity=".55"/><path d="M33 3l1 2.5 2.5 1-2.5 1L33 10l-1-2.5-2.5-1 2.5-1z" fill="#ffd45c"/></symbol>
+  <symbol id="i-daub1" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2.4"/><circle cx="20" cy="20" r="12" fill="url(#gStamp)"/><ellipse cx="15" cy="14" rx="5" ry="2.6" fill="#fff" opacity=".55" transform="rotate(-30 15 14)"/><text x="20" y="26" text-anchor="middle" font-family="Fredoka,system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff" stroke="#3d1a4f" stroke-width="3" paint-order="stroke">1</text></symbol>
+  <symbol id="i-daub2" viewBox="0 0 40 40"><circle cx="15" cy="17" r="11" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2"/><circle cx="15" cy="17" r="8" fill="url(#gStamp)"/><circle cx="25" cy="23" r="12" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2.2"/><circle cx="25" cy="23" r="9" fill="url(#gStamp)"/><text x="25" y="28.5" text-anchor="middle" font-family="Fredoka,system-ui,sans-serif" font-weight="700" font-size="14" fill="#fff" stroke="#3d1a4f" stroke-width="3" paint-order="stroke">2</text></symbol>
+  <symbol id="i-daub3" viewBox="0 0 40 40"><circle cx="12" cy="14" r="9" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2"/><circle cx="12" cy="14" r="6.5" fill="url(#gStamp)"/><circle cx="28" cy="13" r="9" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2"/><circle cx="28" cy="13" r="6.5" fill="url(#gStamp)"/><circle cx="20" cy="26" r="11" fill="url(#gStampRim)" stroke="#3d1a4f" stroke-width="2.2"/><circle cx="20" cy="26" r="8" fill="url(#gStamp)"/><text x="20" y="31" text-anchor="middle" font-family="Fredoka,system-ui,sans-serif" font-weight="700" font-size="13" fill="#fff" stroke="#3d1a4f" stroke-width="3" paint-order="stroke">3</text></symbol>
+  <symbol id="i-coinsq" viewBox="0 0 40 40"><rect x="5" y="7" width="30" height="28" rx="7" fill="#fff9ee" stroke="#3d1a4f" stroke-width="2.4"/><rect x="8" y="10" width="24" height="7" rx="3" fill="#fff" opacity=".7"/><use href="#i-coin" x="9" y="11" width="22" height="22"/><path d="M33 3l1 2.5 2.5 1-2.5 1L33 10l-1-2.5-2.5-1 2.5-1z" fill="#ffd45c" stroke="#3d1a4f" stroke-width=".8"/></symbol>
+  <symbol id="i-chest" viewBox="0 0 40 40"><path d="M6 18q0-11 14-11t14 11z" fill="#c9773f" stroke="#3d1a4f" stroke-width="2.4" stroke-linejoin="round"/><rect x="6" y="18" width="28" height="16" rx="3" fill="#a85a2a" stroke="#3d1a4f" stroke-width="2.4"/><path d="M6 18h28M13 8v26M27 8v26" stroke="#ffd45c" stroke-width="3"/><path d="M6 18h28" stroke="#3d1a4f" stroke-width="1.2"/><rect x="16" y="15" width="8" height="9" rx="2" fill="url(#gBolt)" stroke="#3d1a4f" stroke-width="1.8"/><path d="M8 6l1 2.4 2.4 1-2.4 1L8 13l-1-2.6L4.6 9.4 7 8.4z" fill="#fff"/></symbol>
+  <symbol id="i-super" viewBox="0 0 40 40"><rect x="9" y="7" width="22" height="29" rx="6" fill="#3d1a4f"/><rect x="11.5" y="9.5" width="17" height="24" rx="4" fill="url(#gOrbP)"/><rect x="16" y="3.5" width="8" height="4.5" rx="1.5" fill="#3d1a4f"/><rect x="11.5" y="17" width="17" height="16.5" rx="4" fill="#7fe0a8"/><path d="M22 11l-6 11h4l-2 9 7-12h-4.5z" fill="url(#gBolt)" stroke="#3d1a4f" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-freeze" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="#d9f2ff" stroke="#3d1a4f" stroke-width="2.4"/><g stroke="#3a80ea" stroke-width="3" stroke-linecap="round"><path d="M20 7v26M8.7 13.5l22.6 13M8.7 26.5l22.6-13"/><path d="M16 9l4 4 4-4M16 31l4-4 4 4" fill="none" stroke-width="2.2"/></g><circle cx="20" cy="20" r="3.5" fill="#fff" stroke="#3a80ea" stroke-width="2"/><ellipse cx="13" cy="11" rx="5" ry="2.5" fill="#fff" opacity=".7" transform="rotate(-35 13 11)"/></symbol>
+  <symbol id="i-xp2" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="url(#gOrbP)" stroke="#3d1a4f" stroke-width="2.4"/><ellipse cx="13" cy="11" rx="5.5" ry="3" fill="#fff" opacity=".4" transform="rotate(-35 13 11)"/><text x="20" y="19" text-anchor="middle" font-family="Fredoka,system-ui,sans-serif" font-weight="700" font-size="11" fill="#7fe0a8" stroke="#3d1a4f" stroke-width="2.6" paint-order="stroke">XP</text><text x="20" y="31" text-anchor="middle" font-family="Fredoka,system-ui,sans-serif" font-weight="700" font-size="11" fill="#ffe58f" stroke="#3d1a4f" stroke-width="2.6" paint-order="stroke">×2</text></symbol>
+  <symbol id="i-more" viewBox="0 0 40 40"><g fill="#fff" stroke="#3d1a4f" stroke-width="2"><rect x="7" y="7" width="11" height="11" rx="3"/><rect x="22" y="7" width="11" height="11" rx="3"/><rect x="7" y="22" width="11" height="11" rx="3"/><rect x="22" y="22" width="11" height="11" rx="3" fill="#ffd45c"/></g></symbol>
+  <symbol id="t-chest" viewBox="0 0 40 40"><use href="#i-chest"/></symbol>
   <symbol id="i-instant" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="url(#gOrbP)" stroke="#3d1a4f" stroke-width="2.5"/><ellipse cx="13.5" cy="11.5" rx="6" ry="3.2" fill="#fff" opacity=".4" transform="rotate(-35 13.5 11.5)"/><path d="M23 5 10.5 22.5h7.5L14.5 35 30 16.5h-8.2z" fill="url(#gBolt)" stroke="#3d1a4f" stroke-width="2" stroke-linejoin="round"/><path d="M21 9.5 14.8 19" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".8"/></symbol>
   <symbol id="i-allx2" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="url(#gHeart)" stroke="#3d1a4f" stroke-width="2.5"/><circle cx="20" cy="20" r="13" fill="none" stroke="#fff3c4" stroke-width="1.6" opacity=".9"/><ellipse cx="13" cy="11.5" rx="5.5" ry="3" fill="#fff" opacity=".5" transform="rotate(-35 13 11.5)"/><text x="20" y="26" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="700" font-size="16" fill="#fff" stroke="#3d1a4f" stroke-width="3.2" paint-order="stroke" stroke-linejoin="round">×2</text><path d="M32 4l1.2 3 3 1.2-3 1.2L32 12.4l-1.2-3-3-1.2 3-1.2z" fill="#fff"/></symbol>
   <symbol id="i-ticket" viewBox="0 0 40 40"><image href="art/icon-ticket.webp" x="1" y="1" width="38" height="38"/></symbol>
@@ -1581,7 +1631,7 @@ var LINES = (function () {
 /* ---------- saved progress (this phone only, for now) ---------- */
 var KEY = 'bingoBloom.v1';
 function fresh() {
-  return { v: 3, bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1 },
+  return { v: 3, bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'classic', auto: false, autoAlert: true } };
@@ -1636,6 +1686,7 @@ function floatText(el, text) {
 var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function xpNeed() { return 60 + S.level * 40; }
 function addXp(n) {
+  if (R && R.xp2 && !R.ended) n *= 2;
   S.xp += n;
   while (S.xp >= xpNeed()) { S.xp -= xpNeed(); S.level++; S.coins += 100; S.tickets += 20; S.alerts++; S.gems += 2; toast('Level ' + S.level + '! +20 tickets, +100 coins, 2 amethysts and a Bloom Alert'); SFX.set(); }
 }
@@ -1940,7 +1991,7 @@ var ALBUM_TIERS = [
   { tickets: 4500, coins: 7500, gems: 150, pups: 8 },
   { tickets: 6000, coins: 10000, gems: 200, pups: 10 }
 ];
-var PUP_IDS = ['headstart', 'wild', 'balls5', 'dcoins', 'dpetals', 'instant', 'allx2'];
+var PUP_IDS = ['headstart', 'wild', 'balls5', 'dcoins', 'dpetals', 'instant', 'allx2', 'daub1', 'daub2', 'daub3', 'coinsq', 'chest', 'super', 'freeze', 'dxp'];
 function albumTier() { return ALBUM_TIERS[Math.min(2, S.albumTimes || 0)]; }
 function albumComplete(delay) {
   var t = albumTier(); S.albumDone = true; S.albumTimes = (S.albumTimes || 0) + 1;
@@ -2167,6 +2218,17 @@ function countTo(el, to) {
   if (!el) return; var from = +(el.dataset.v || 0), t0 = performance.now(); el.dataset.v = to;
   (function step(t) { var k = Math.min(1, (t - t0) / 700), v = Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))); el.textContent = v.toLocaleString(); if (k < 1 && el.isConnected) requestAnimationFrame(step); })(t0);
 }
+function swipe(el, fn) {
+  var x0 = null, y0 = 0;
+  el.addEventListener('touchstart', function (e) { if (e.target.closest('.betsl, canvas')) return; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  el.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null; if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) { SFX.tap(); fn(dx); } }, { passive: true });
+}
+function pupGuide() {
+  function row(id) { var p = pupById(id); return '<div class="pti info"><span class="pto">' + icon(p.icon) + '<b>' + owned(id) + '</b></span><span class="ptt"><b>' + p.name + '</b><small>' + p.desc + '</small></span></div>'; }
+  panel('<h3>Power-ups</h3><p><b>Before the round:</b> tap them on the room screen to switch them on. They glow when they are on and are used when you press PLAY.</p><div class="ptray">' + PRE_PUPS.map(row).join('') + '</div>' +
+    '<p><b>During the round:</b> tap them on the right side of the bingo screen, or tap <b>More</b> for the full list. Each one plays its own show when it works.</p><div class="ptray">' + IN_PUPS.map(row).join('') + '</div>' +
+    '<p class="note">Your <b>Boost</b> ring fills as you mark numbers; when it glows, tap it to mark 2 squares on every card.</p>', 'mid');
+}
 function roomScreen(room) {
   stopRound();
   room = room || ROOMS[0];
@@ -2174,6 +2236,7 @@ function roomScreen(room) {
   var top = featured ? '<div class="bake"><span class="dish" style="background-image:url(' + room.img + ')"></span><div class="bk"><b>' + (MODE_INFO[room.mode].how) + '</b><small>Garden Path bonus ' + bonusPct(room.id) + '%</small><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div></div>' : bakeBar(room);
   show('<div class="screen" id="room" style="background-image:linear-gradient(180deg, rgba(40,15,70,.15), rgba(40,15,70,.45)), url(' + room.img + ');background-position:center, ' + room.pos + ' center">' +
     roomTop('Map', esc(room.name)) +
+    '<button class="rnav l" id="rPrev" aria-label="Previous room">‹</button><button class="rnav r" id="rNext" aria-label="Next room">›</button>' +
     '<div class="rtopband">' + top + (featured ? '' : roomGrow(room)) + '<div class="jack"><span class="jrays"></span><small>GRAND JACKPOT</small><b id="jackN">0</b><span>' + icon('i-ticket') + 'tickets</span></div></div>' +
     '<div class="ffly">' + range(1, 14).map(function (i) { return '<i style="left:' + rand(100) + '%;top:' + (20 + rand(75)) + '%;animation-delay:-' + rand(8) + 's;animation-duration:' + (6 + rand(6)) + 's"></i>'; }).join('') + '</div>' +
     '<div class="tiers">' + [1, 2, 4].map(function (n, i) {
@@ -2182,7 +2245,8 @@ function roomScreen(room) {
         '<span class="twin"><span>' + icon('i-coin') + '<b data-tc="' + n + '"></b></span><span>' + icon('i-petal') + '<b data-tp="' + n + '"></b></span><span>' + icon('i-card') + '<b>×' + n + '</b></span></span>' +
         '<button class="b3 gold shine tplay" data-play="' + n + '">' + icon('i-ticket') + '<b data-tk="' + n + '"></b></button></div>';
     }).join('') + '</div>' +
-    '<div class="rbottom"><div class="rpups">' + ['headstart', 'dcoins', 'dpetals'].map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<b>' + owned(id) + '</b></button>'; }).join('') + '</div>' +
+    '<div class="rbottom"><div class="rpups">' + PRE_PUPS.map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<b>' + owned(id) + '</b></button>'; }).join('') +
+      '<button class="pinfo" id="bPinfo" aria-label="What do power-ups do?">?</button></div>' +
       '<div class="betsl"><button class="bstep" id="bMinus" aria-label="Lower bet">−</button><div class="btrack"><i id="bFill"></i><span id="bKnob">×1</span></div><button class="bstep" id="bPlus" aria-label="Raise bet">+</button></div>' +
       '<span class="rnote">' + (fair ? '<b>Fair Play:</b> free Head Start this round' : 'Bet ×' + '<b id="bTxt"></b> · wins more') + '</span></div>' +
     '</div>');
@@ -2202,7 +2266,12 @@ function roomScreen(room) {
   if ($('#bGrow')) $('#bGrow').onclick = function () { SFX.tap(); buildSheet(LANDMARKS.map(function (l) { return l.id; }).indexOf(room.lm), function () { roomScreen(room); }); };
   $('#bMinus').onclick = function () { setBet(-1); }; $('#bPlus').onclick = function () { setBet(1); };
   app.querySelectorAll('.tier').forEach(function (t) { t.onclick = function (e) { if (e.target.closest('[data-play]')) return; S.cards = +t.dataset.n; save(); SFX.tap(); app.querySelectorAll('.tier').forEach(function (x) { x.classList.toggle('sel', x === t); }); }; });
-  app.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function () { arm[b.dataset.arm] = !arm[b.dataset.arm]; b.setAttribute('aria-pressed', !!arm[b.dataset.arm]); SFX.tap(); }; });
+  app.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function (e) { var id = b.dataset.arm; arm[id] = !arm[id]; b.setAttribute('aria-pressed', !!arm[id]); SFX.tap(); if (arm[id]) { var r = b.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 22); b.classList.remove('armpop'); void b.offsetWidth; b.classList.add('armpop'); toast(pupById(id).name + ' on: ' + pupById(id).desc, 2600); } else toast(pupById(id).name + ' off'); }; });
+  $('#bPinfo').onclick = function () { SFX.tap(); pupGuide(); };
+  var ri = ROOMS.indexOf(room);
+  $('#rPrev').onclick = function () { SFX.tap(); roomScreen(ROOMS[(ri + ROOMS.length - 1) % ROOMS.length]); };
+  $('#rNext').onclick = function () { SFX.tap(); roomScreen(ROOMS[(ri + 1) % ROOMS.length]); };
+  swipe($('#room'), function (d) { roomScreen(ROOMS[(ri + (d > 0 ? ROOMS.length - 1 : 1)) % ROOMS.length]); });
   app.querySelectorAll('[data-play]').forEach(function (b) {
     b.onclick = function () {
       S.cards = +b.dataset.play; save();
@@ -2250,7 +2319,7 @@ function settings() {
     '<div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
     '<button class="b3 cream" id="bReset" style="padding:8px">Start over (clear my progress)</button>', 'small', function (v) {
-      $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; S.alerts += 5; ['headstart', 'wild', 'balls5', 'dcoins', 'dpetals', 'instant', 'allx2'].forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
+      $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; S.alerts += 5; PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
       $('#swVoice', v).onclick = function () { st.voice = !st.voice; this.setAttribute('aria-pressed', st.voice); save(); say('B 7'); };
@@ -2296,12 +2365,13 @@ function startRound(arm, room) {
   if (useHS) S.items.headstart--;
   if (arm.dcoins && S.items.dcoins > 0) { S.items.dcoins--; dc = 2; }
   if (arm.dpetals && S.items.dpetals > 0) { S.items.dpetals--; dp = 2; }
+  var dxp = !!(arm.dxp && S.items.dxp > 0); if (dxp) S.items.dxp--;
   if (fairHS) S.dry = 0;
   save();
   var total = blackout ? 6 + rand(3) : 14 + rand(5);
   R = { roomObj: room, room: room.id, mode: room.mode, boostAt: (blackout ? 4 : 6) + 4 * S.cards, bet: S.bet, dc: dc, dp: dp, wild: false, players: total * 4 + rand(20), focus: 0, alert: false, els: [], cards: [], seq: shuffle(range(1, 75)).slice(0, blackout ? 65 : BALLS), idx: 0, called: {}, recent: [], active: false, paused: false, timer: null,
     total: total, left: total, meter: 0, bingos: 0, lucky: rand(S.cards), usedAuto: !!S.settings.auto, earned: { coins: 0, petals: 0, alerts: 0, tickets: 0, drops: 0, seeds: 0, cards: [], ings: [], sets: [] } };
-  modeSetup();
+  modeSetup(); R.xp2 = dxp; if (dxp) setTimeout(function () { toast('Double XP is on for this round'); }, 2600);
   for (var k = 0; k < S.cards; k++) { var nc = makeCard(); nc.lines = {}; nc.n = 0; R.cards.push(nc); }
   R.seq = kindSeq(R.seq.length, R.cards[R.lucky], blackout ? .64 : .68);
   renderPlay();
@@ -2343,9 +2413,10 @@ function renderPlay() {
         '<button class="pu" id="bAllx2" aria-label="All ×2"><span class="orb">' + icon('i-allx2') + '<b id="nAllx2">' + (S.items.allx2 || 0) + '</b></span><span class="pl">All ×2</span></button>' +
         '<button class="pu" id="bBalls" aria-label="+5 Balls"><span class="orb">' + icon('i-plus5') + '<b id="nBalls">' + S.items.balls5 + '</b></span><span class="pl">+5 Balls</span></button>' +
         '<button class="pu" id="bAlert" aria-label="Alert"><span class="orb">' + icon('i-bulb') + '<b id="nAlert">' + S.alerts + '</b></span><span class="pl">Alert</span></button>' +
+        '<button class="pu pmore" id="bMore" aria-label="All power-ups"><span class="orb">' + icon('i-more') + '<b id="nMore">' + IN_PUPS.reduce(function (a, k) { return a + owned(k); }, 0) + '</b></span><span class="pl">More</span></button>' +
       '</div>' +
       '<span hidden><b id="sBalls"></b><b id="sCoins"></b><b id="sPetals"></b><i id="meter"></i></span></div>' +
-    '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap">⇄ Swap</button></div></div></div>');
+    '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap">⇄ Swap</button><button class="b3 plum swap" id="bView4">⊞ All 4</button></div></div></div>');
   R.els = R.cards.map(function (k, ci) { var t = document.createElement('div'); t.innerHTML = cardHtml(k, ci); return t.firstChild; });
   placeCards();
   $('#cards').addEventListener('click', onCardTap);
@@ -2353,7 +2424,9 @@ function renderPlay() {
   $('#bAutoB').onclick = function () { S.settings.autoBoost = S.settings.autoBoost === false; save(); this.setAttribute('aria-pressed', S.settings.autoBoost); SFX.tap(); toast(S.settings.autoBoost ? 'Auto Boost on: Boost fires by itself when full' : 'Auto Boost off: tap Boost yourself'); meterUi(); };
   $('#bPause').onclick = togglePause;
   $('#bSwap').onclick = swapCards;
+  $('#bView4').onclick = function () { S.settings.view4 = !S.settings.view4; save(); SFX.tap(); placeCards(); };
   $('#bAlert').onclick = useAlert;
+  $('#bMore').onclick = pupTray;
   $('#bInstant').onclick = useInstant;
   $('#bAllx2').onclick = useAllx2;
   $('#strip').onclick = calledBoard;
@@ -2392,12 +2465,16 @@ function calledBoard() {
   }).join('') + '</div><button class="b3 gold" data-x style="padding:6px;font-size:17px">Back to my cards</button>');
 }
 function placeCards() {
-  var big = $('.bigs'), mini = $('.minis'), swap = $('#bSwap');
-  if (R.els.length <= 2) { R.els.forEach(function (e) { big.appendChild(e); }); $('#cards').classList.remove('has-minis'); }
-  else {
-    $('#cards').classList.add('has-minis');
+  var big = $('.bigs'), mini = $('.minis'), swap = $('#bSwap'), v4 = $('#bView4'), cards = $('#cards');
+  big.classList.remove('four'); cards.classList.remove('all4');
+  if (R.els.length <= 2) { R.els.forEach(function (e) { big.appendChild(e); }); cards.classList.remove('has-minis'); }
+  else if (S.settings.view4) {
+    cards.classList.remove('has-minis'); cards.classList.add('all4'); big.classList.add('four');
+    R.els.forEach(function (e) { big.appendChild(e); }); big.appendChild(v4); v4.textContent = '⊟ 2 big';
+  } else {
+    cards.classList.add('has-minis');
     R.els.forEach(function (e, i) { (Math.floor(i / 2) === R.focus ? big : mini).appendChild(e); });
-    mini.appendChild(swap);
+    mini.appendChild(swap); mini.appendChild(v4); v4.textContent = '⊞ All 4';
   }
   fitCards(); updateMinis(); requestAnimationFrame(fitCards);
 }
@@ -2432,7 +2509,7 @@ function autoDaub(n) {
 }
 function fitCards() {
   var area = $('.bigs'); if (!area || !R) return;
-  var n = Math.min(2, R.cards.length), gap = 12, W = area.clientWidth, H = area.clientHeight - 8;
+  var four = area.classList.contains('four'), n = four ? 2 : Math.min(2, R.cards.length), gap = 12, W = area.clientWidth, H = (four ? (area.clientHeight - 8 - gap) / 2 : area.clientHeight - 8);
   var cw = Math.floor((W - gap * (n - 1)) / n);
   area.style.setProperty('--cw', cw + 'px');
   var one = area.querySelector('.bcard'); // fill the width, then shrink until the card fits the height
@@ -2506,7 +2583,8 @@ function collect(c, cell) {
   if (c.t === 'ticket') { S.tickets += 5; R.earned.tickets += 5; floatText(cell, '+5 tickets'); SFX.coin(); }
   if (c.t === 'drop') { S.drops++; R.earned.drops++; floatText(cell, '+1 pearl'); SFX.coin(); }
   if (c.t === 'seed') { addSeeds(2); R.earned.seeds += 2; floatText(cell, '+2 seeds'); SFX.coin(); }
-  if (c.t === 'coins') { var cc = 10 * R.bet * R.dc; S.coins += cc; R.earned.coins += cc; floatText(cell, '+' + cc + ' coins'); SFX.coin(); }
+  if (c.t === 'chest') { var opts = [{ t: 'tickets', n: 20 * R.bet }, { t: 'drops', n: 3 }, { t: 'card', n: 1 }, { t: 'gcard', n: 1 }, { t: PUP_IDS[rand(PUP_IDS.length)], n: 1 }], pk = Math.random() < .1 ? opts[3] : opts[[0, 1, 2, 4][rand(4)]], tx = grant(pk); if (pk.t === 'tickets') R.earned.tickets += pk.n; if (pk.t === 'drops') R.earned.drops += pk.n; floatText(cell, 'Chest: ' + tx); pupFx(prizeIcon(pk.t), 'Treasure Chest!', tx); }
+  if (c.t === 'coins') { var cc = 10 * R.bet * R.dc * (c.big ? 4 : 1); S.coins += cc; R.earned.coins += cc; floatText(cell, '+' + cc + ' coins'); SFX.coin(); }
   if (c.t === 'alert') { S.alerts++; R.earned.alerts++; floatText(cell, 'Bloom Alert!'); SFX.coin(); var na = $('#nAlert'); if (na) na.textContent = S.alerts; }
   if (c.t === 'petal') { var pp = 2 * R.dp; S.petals += pp; R.earned.petals += pp; floatText(cell, '+' + pp + ' petals'); SFX.coin(); }
   if (c.t === 'card') { var d = dropCard(); R.earned.cards.push(d); R.earned.sets = R.earned.sets.concat(d.sets); floatText(cell, 'Album card!'); }
@@ -2666,6 +2744,58 @@ function buyCardSheet(id, setIdx) {
         save(); SFX.set(); closeVeil(); album(setIdx);
       };
     });
+}
+
+function pupCount(id) { var e = document.getElementById('n' + ({ wild: 'Wild', instant: 'Instant', allx2: 'Allx2', balls5: 'Balls', alert: 'Alert' }[id] || '')); if (e) e.textContent = owned(id); var m = $('#nMore'); if (m) m.textContent = IN_PUPS.reduce(function (a, k) { return a + owned(k); }, 0); }
+function openSquares(onlyCalled) {
+  var list = []; R.cards.forEach(function (k, ci) { if (k.won) return; k.cells.forEach(function (c, i) { if (!c.d && i !== 12 && (!onlyCalled || R.called[c.n])) list.push([ci, i]); }); });
+  return list;
+}
+function spend(id) { if (owned(id) < 1) { SFX.no(); toast('You have no ' + pupById(id).name + ' left. Get more in the Shop with coins.', 3000); return false; } if (id === 'alert') S.alerts--; else S.items[id]--; save(); pupCount(id); return true; }
+function useDaub(n, id) {
+  if (!R || !R.active) { toast('Wait for the first ball.'); return; }
+  var pool = shuffle(openSquares(false)); if (!pool.length) { toast('No open squares left.'); return; }
+  if (!spend(id)) return;
+  var info = pupById(id); pupFx(info.icon, info.name + '!', n + ' free mark' + (n > 1 ? 's' : ''));
+  pool.slice(0, n).forEach(function (q, j) {
+    setTimeout(function () { if (!R || R.ended) return; var k = R.cards[q[0]]; if (k.cells[q[1]].d) return; var el = R.els[q[0]].querySelector('[data-i="' + q[1] + '"]'); if (el) flyTo($('#bMore'), el, info.icon, function () { if (R && !k.cells[q[1]].d) { daub(q[0], q[1], el, true); el.classList.add('zap'); } }); }, 700 + j * 260);
+  });
+}
+function plantTreasure(id, kind, n) {
+  if (!R || !R.active) { toast('Wait for the first ball.'); return; }
+  var pool = shuffle(openSquares(false).filter(function (q) { return !R.cards[q[0]].cells[q[1]].t; })); if (!pool.length) { toast('No open squares left.'); return; }
+  if (!spend(id)) return;
+  var info = pupById(id); pupFx(info.icon, info.name + '!', kind === 'chest' ? 'Mark the chests for a mystery prize' : 'Mark the coin squares for bonus coins');
+  pool.slice(0, n).forEach(function (q, j) {
+    setTimeout(function () { if (!R) return; var c = R.cards[q[0]].cells[q[1]]; c.t = kind; c.big = true; var el = R.els[q[0]].querySelector('[data-i="' + q[1] + '"]'); if (el) { el.insertAdjacentHTML('beforeend', '<svg class="tr big" viewBox="0 0 40 40"><use href="#t-' + kind + '"/></svg>'); el.classList.add('zap'); } }, 700 + j * 240);
+  });
+}
+function useSuper() {
+  if (!R || !R.active) { toast('Wait for the first ball.'); return; }
+  if (R.meter >= R.boostAt) { toast('Your Boost is already full. Tap it!'); return; }
+  if (!spend('super')) return;
+  pupFx('i-super', 'Supercharger!', 'Your Boost is full'); setTimeout(function () { if (R) { R.meter = R.boostAt; meterUi(); } }, 600);
+}
+function useFreeze() {
+  if (!R || !R.active || R.paused) { toast('Use Time Freeze while balls are being called.'); return; }
+  if (R.frozen) { toast('Time is already frozen.'); return; }
+  if (!spend('freeze')) return;
+  pupFx('i-freeze', 'Time Freeze!', 'No new balls for 10 seconds');
+  R.frozen = true; clearTimeout(R.timer); var n = 10, fr = document.createElement('div'); fr.className = 'frost'; fr.innerHTML = '<b class="outl" id="frN">10</b>'; $('#play').appendChild(fr);
+  var t = setInterval(function () { n--; var e = $('#frN'); if (e) e.textContent = n; if (n <= 0 || !R || R.ended) { clearInterval(t); fr.remove(); if (R) { R.frozen = false; if (R.active && !R.paused) R.timer = setTimeout(callNext, 600); } } }, 1000);
+}
+var PUP_USE = { wild: function () { $('#bWild').click(); }, instant: useInstant, allx2: useAllx2, balls5: function () { $('#bBalls').click(); }, alert: function () { useAlert.call($('#bAlert')); },
+  daub1: function () { useDaub(1, 'daub1'); }, daub2: function () { useDaub(2, 'daub2'); }, daub3: function () { useDaub(3, 'daub3'); },
+  coinsq: function () { plantTreasure('coinsq', 'coins', 3); }, chest: function () { plantTreasure('chest', 'chest', 2); }, super: useSuper, freeze: useFreeze };
+function pupTray() {
+  if (!R) return; var wasPaused = R.paused; if (!wasPaused && R.active) { R.paused = true; clearTimeout(R.timer); }
+  panel('<h3>Power-ups</h3><p class="note">Use these during the round. The game is paused while this is open.</p><div class="ptray">' + IN_PUPS.map(function (id) {
+    var p = pupById(id), n = owned(id); return '<button class="pti' + (n ? '' : ' none') + '" data-use="' + id + '"><span class="pto">' + icon(p.icon) + '<b>' + n + '</b></span><span class="ptt"><b>' + p.name + '</b><small>' + p.desc + '</small></span></button>';
+  }).join('') + '</div><p class="note">Before the round you can also pick Head Start, Double Coins, Double Petals and Double XP on the room screen. Buy more power-ups in the Shop.</p>', 'mid', function (v) {
+    function resume() { if (R && !wasPaused && R.paused) { R.paused = false; if (R.active && !R.frozen && R.idx < R.seq.length) R.timer = setTimeout(callNext, 700); } }
+    var x = v.querySelector('[data-x]'); var oc = veil.onclick; veil.onclick = function (e) { if (e.target === veil || e.target.closest('[data-x]')) { resume(); } oc(e); };
+    v.querySelectorAll('[data-use]').forEach(function (b) { b.onclick = function () { var id = b.dataset.use; if (!owned(id)) { SFX.no(); toast('You have no ' + pupById(id).name + ' left. Get more in the Shop.', 2800); return; } closeVeil(); resume(); setTimeout(function () { PUP_USE[id](); }, 150); }; });
+  });
 }
 
 /* power-ups used during a round, each with its own show */
@@ -2919,7 +3049,7 @@ function album(setIdx) {
     }).join('') + '</div>';
   } else {
     var set = SETS[setIdx], own = ownedIn(set);
-    body = '<div class="set-view"><div class="hd"><button class="b3 cream" id="bSets" style="padding:4px 14px">‹ Sets</button><h3 class="outl">' + set.name + ' · ' + own + '/9</h3></div>' +
+    body = '<div class="set-view"><div class="hd"><button class="b3 cream" id="bSets" style="padding:4px 14px">‹ Sets</button><button class="setnav" id="sPrev" aria-label="Previous set">‹</button><h3 class="outl">' + set.name + ' · ' + own + '/9</h3><button class="setnav" id="sNext" aria-label="Next set">›</button></div>' +
       '<div class="cards9">' + set.cards.map(function (n, i) { return '<button data-id="' + set.id + '|' + (i + 1) + '">' + cardFace(set.id + '|' + (i + 1)) + '</button>'; }).join('') + '</div>' +
       '<p class="set-note">' + (S.setsDone[set.id] ? 'Set complete! Extra copies (+1, +2) can be sent to teammates in the team version.' : 'Finish this set for ' + SET_REWARD + ' coins. ★ Gold cards are rarer.') + '</p></div>';
   }
@@ -2930,6 +3060,11 @@ function album(setIdx) {
   if ($('#bRestart')) $('#bRestart').onclick = function () { restartAlbum(); album(null); toast('A fresh album! Your extra cards were turned into stars.', 3200); };
   app.querySelectorAll('.medal').forEach(function (b) { b.onclick = function () { SFX.tap(); album(+b.dataset.s); }; });
   if ($('#bSets')) $('#bSets').onclick = function () { album(null); };
+  if (setIdx !== null) {
+    $('#sPrev').onclick = function () { SFX.tap(); album((setIdx + SETS.length - 1) % SETS.length); };
+    $('#sNext').onclick = function () { SFX.tap(); album((setIdx + 1) % SETS.length); };
+    swipe($('#album'), function (d) { album((setIdx + (d > 0 ? SETS.length - 1 : 1)) % SETS.length); });
+  }
   app.querySelectorAll('.cards9 button').forEach(function (b) {
     b.onclick = function () {
       var id = b.dataset.id, n = S.album[id] || 0, ci = cardInfo(id);
@@ -2949,8 +3084,18 @@ var POWERUPS = [
   { id: 'dpetals', name: 'Double Petals', icon: 'i-x2p', price: 120, desc: 'Doubles the petals you win in one round.' },
   { id: 'alert', name: 'Bloom Alert', icon: 'i-bulb', price: 80, desc: 'Called numbers on your cards glow for the whole round.' },
   { id: 'instant', name: 'Instant Bingo', icon: 'i-instant', price: 350, desc: 'Finishes your closest line for an instant bingo.' },
-  { id: 'allx2', name: 'All ×2', icon: 'i-allx2', price: 250, desc: 'Doubles every coin and petal prize for the rest of the round.' }
+  { id: 'allx2', name: 'All ×2', icon: 'i-allx2', price: 250, desc: 'Doubles every coin and petal prize for the rest of the round.' },
+  { id: 'daub1', name: 'Single Daub', icon: 'i-daub1', price: 60, desc: 'Marks 1 random square on one of your cards.' },
+  { id: 'daub2', name: 'Double Daub', icon: 'i-daub2', price: 110, desc: 'Marks 2 random squares on your cards.' },
+  { id: 'daub3', name: 'Triple Daub', icon: 'i-daub3', price: 160, desc: 'Marks 3 random squares on your cards.' },
+  { id: 'coinsq', name: 'Coin Squares', icon: 'i-coinsq', price: 90, desc: 'Turns 3 squares into coin squares. Mark them for bonus coins.' },
+  { id: 'chest', name: 'Treasure Chest', icon: 'i-chest', price: 140, desc: 'Hides 2 treasure chests on your cards. Mark them for a mystery prize.' },
+  { id: 'super', name: 'Supercharger', icon: 'i-super', price: 150, desc: 'Fills your Boost meter right away.' },
+  { id: 'freeze', name: 'Time Freeze', icon: 'i-freeze', price: 130, desc: 'Stops the ball caller for 10 seconds so you can catch up.' },
+  { id: 'dxp', name: 'Double XP', icon: 'i-xp2', price: 120, desc: 'Doubles the XP you earn in one round.' }
 ];
+var PRE_PUPS = ['headstart', 'dcoins', 'dpetals', 'dxp'];
+var IN_PUPS = ['wild', 'instant', 'allx2', 'balls5', 'alert', 'daub1', 'daub2', 'daub3', 'coinsq', 'chest', 'super', 'freeze'];
 function pupById(id) { return POWERUPS.filter(function (p) { return p.id === id; })[0]; }
 function owned(id) { return id === 'alert' ? S.alerts : (S.items[id] || 0); }
 function give(id, n) { if (id === 'alert') S.alerts += n; else S.items[id] = (S.items[id] || 0) + n; }
@@ -3132,6 +3277,13 @@ function games() {
 function backToGames(v) { var b = v.querySelector('[data-games]'); if (b) b.onclick = function () { SFX.tap(); games(); }; }
 
 var DROP_CUPS = [{ t: 'gcard', n: 1, c: '#f7b924' }, { t: 'seeds', n: 2, c: '#7fe0a8' }, { t: 'ing', n: 1, c: '#ffd45c' }, { t: 'seeds', n: 5, c: '#3fb43a' }, { t: 'coins', n: 80, c: '#ffd45c' }, { t: 'seeds', n: 2, c: '#7fe0a8' }, { t: 'tickets', n: 15, c: '#ff8fb1' }];
+function dropReveal(v, cup, txt, fx) {
+  var box = $('.dropcv', v); if (!box) return;
+  var r = document.createElement('div'); r.className = 'drev' + (cup.t === 'gcard' ? ' gold' : '');
+  r.style.left = (fx * 100) + '%'; r.innerHTML = '<span class="drays"></span>' + icon(prizeIcon(cup.t)) + '<b class="outl">' + esc(txt.replace(/^\+/, '+')) + '</b>';
+  box.appendChild(r); setTimeout(function () { r.remove(); }, 2200);
+  if (cup.t === 'gcard') pupFx('i-card', 'Gold cup!', txt);
+}
 function petalDrop() {
   var W = 300, H = 380, balls = [], pegs = [], won = [];
   for (var r = 0; r < 8; r++) { var odd = r % 2, n = odd ? 7 : 8; for (var c = 0; c < n; c++) pegs.push({ x: (odd ? 37.5 : 18.75) + c * 37.5, y: 80 + r * 30 }); }
@@ -3167,7 +3319,7 @@ function petalDrop() {
           if (b.y > cupTop) for (var k = 1; k < DROP_CUPS.length; k++) { var wx = k * binW; if (Math.abs(b.x - wx) < 8) { b.x = wx + (b.x < wx ? -8 : 8); b.vx = -b.vx * .5; } }
           if (b.y >= H - 14) {
             b.done = true; var cup = DROP_CUPS[Math.min(DROP_CUPS.length - 1, Math.floor(b.x / binW))];
-            var txt = grant(cup); won.push(txt); SFX.coin();
+            var txt = grant(cup); won.push(txt); SFX.coin(); dropReveal(v, cup, txt, b.x / W);
             $('#dWon', v).innerHTML = won.slice(-6).reverse().map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('');
             var rc = cv.getBoundingClientRect(); sparkle(rc.left + b.x / W * rc.width, rc.top + rc.height - 30, 24);
           }
