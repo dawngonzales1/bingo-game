@@ -2471,6 +2471,12 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 /* in-round power-up bar: bigger, glowing slots */
 #play .pqbar { background: linear-gradient(180deg, rgba(36,56,106,.95), rgba(18,28,58,.97)) !important; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4px #1a1030, 0 4px 10px rgba(0,0,0,.4) !important; }
 #play .pqo { --z: calc(var(--tb) - 14px) !important; box-shadow: 0 0 0 2px #f6c64a, 0 0 10px rgba(255,214,92,.45) !important; }
+#play > .rfeed { position: absolute; z-index: 8; left: 6px; top: calc(var(--tb, 60px) + 64px); width: calc(var(--lc, 80px) + 8px); display: grid; gap: 5px; pointer-events: none; grid-area: auto; }
+.rfi { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 5px; padding: 4px 6px; border-radius: 12px; font: 700 11px/1.15 var(--ui); color: #fff; background: linear-gradient(90deg, rgba(20,32,63,.95), rgba(20,32,63,.8)); box-shadow: 0 0 0 1.5px #f6c64a, 0 3px 8px rgba(0,0,0,.4); animation: rfIn .4s cubic-bezier(.2,1.3,.4,1) both; }
+.rfi i { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font: 900 12px var(--ui); font-style: normal; color: #fff; box-shadow: 0 0 0 1.5px #fff; }
+.rfi b { color: #ffe58f; } .rfi em { font-style: normal; font-size: 10px; padding: 0 6px; border-radius: 999px; background: rgba(255,255,255,.15); }
+.rfi.out { animation: rfOut .4s ease-in forwards; }
+@keyframes rfIn { from { transform: translateX(-110%); opacity: 0; } } @keyframes rfOut { to { transform: translateX(-110%); opacity: 0; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3865,6 +3871,18 @@ function callNext() {
   if (R.idx >= R.seq.length) { R.lastBall = true; toast('Last ball! Mark your numbers and call your bingos.' + (S.items.balls5 ? ' Or use +5 Balls.' : '')); R.timer = setTimeout(function () { endRound('balls'); }, 7000); }
   else R.timer = setTimeout(callNext, speedMs());
 }
+// a little live feed of other players winning, so rounds feel shared (friends' names mixed in when signed in)
+var RIV_COLORS = ['#3f86ec', '#2fae55', '#e9a81c', '#d8402a', '#7b44d8', '#16a3a3'];
+function rivalWin() {
+  var host = $('#play'); if (!host) return;
+  var pool = LEAGUE_NAMES.concat((ON.friends || []).map(function (f) { return f.name; }).filter(Boolean));
+  var nm = pool[rand(pool.length)], what = R.mode === 'blackout' ? 'BLACKOUT' : ['BINGO', 'BINGO', 'BINGO', 'Double Bloom'][rand(4)];
+  var feed = host.querySelector('.rfeed'); if (!feed) { feed = document.createElement('div'); feed.className = 'rfeed'; host.appendChild(feed); }
+  var it = document.createElement('div'); it.className = 'rfi';
+  it.innerHTML = '<i style="background:' + RIV_COLORS[rand(RIV_COLORS.length)] + '">' + esc(nm.charAt(0)) + '</i><span><b>' + esc(nm) + '</b> got ' + what + '!</span><em>' + R.left + ' left</em>';
+  feed.appendChild(it); while (feed.children.length > 2) feed.firstChild.remove();
+  setTimeout(function () { it.classList.add('out'); setTimeout(function () { it.remove(); }, 400); }, 3200);
+}
 function bumpLeft() { var w = $('#sLeftW'); if (!w) return; w.classList.remove('bump'); void w.offsetWidth; w.classList.add('bump'); }
 function rivals() {
   var startAt = R.mode === 'blackout' ? 30 : 12;
@@ -3873,6 +3891,7 @@ function rivals() {
   if (Math.random() < p) {
     R.left--; $('#sLeft').textContent = R.left; bumpLeft();
     $('#sLeftW').classList.toggle('hot', R.left <= 3);
+    rivalWin();
     if (R.left === 0) { toast('All bingos have been claimed'); R.active = false; clearTimeout(R.timer); setTimeout(function () { endRound('claimed'); }, 1600); }
   }
 }
