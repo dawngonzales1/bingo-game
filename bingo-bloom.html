@@ -2111,6 +2111,101 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .scordie { position: absolute; z-index: 3; left: 4px; top: 0; height: clamp(54px, 19vh, 92px); pointer-events: none; animation: bsCordie .6s .3s cubic-bezier(.2,1.4,.4,1) both, hudBob 2.6s 1s ease-in-out infinite; filter: drop-shadow(0 4px 6px rgba(20,5,35,.45)); }
 @media (prefers-reduced-motion: reduce) { .bsl b { animation: popIn .4s both; } .bsrays { display: none; } }
 .lite .bsrays, .lite .srays { display: none; } .lite .o2g, .lite .scordie { animation: none !important; }
+
+/* Events: pill, hub, season, league, raffle, challenge banner */
+.evpill { position: relative; display: inline-flex; align-items: center; gap: 5px; margin-right: 8px; padding: 4px 12px 4px 5px; border: 0; border-radius: 999px; cursor: pointer; font: 800 13px var(--ui); color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #f6c64a); box-shadow: 0 0 0 2.5px #fff, 0 0 0 4px var(--ol), 0 4px 0 3px var(--ol); }
+.evpill img { width: 28px; height: 28px; margin: -6px 0; animation: hudBob 2.6s ease-in-out infinite; }
+.evpill.hot::after { content: ''; position: absolute; top: -3px; right: -3px; width: 12px; height: 12px; border-radius: 50%; background: #ff4d6d; box-shadow: 0 0 0 2px #fff; animation: dotPop 1.4s ease-in-out infinite; }
+@media (max-height: 300px) { .evpill span { display: none; } .evpill { padding: 3px; } }
+.evhub { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.evcard { position: relative; display: grid; justify-items: center; align-content: start; gap: 4px; padding: 12px 10px; border: 0; border-radius: 20px; cursor: pointer; color: #fff; text-align: center; box-shadow: 0 0 0 2.5px #e9a81c, 0 0 0 4.5px var(--ol), 0 6px 0 4.5px var(--ol); animation: tierIn .45s cubic-bezier(.2,.9,.3,1.3) both; animation-delay: calc(var(--d) * .08s); }
+.ev-season { background: linear-gradient(180deg, #ff9fc4, #d0478c 70%, #9a2766); }
+.ev-league { background: linear-gradient(180deg, #ffd27a, #e08a1c 70%, #a85a08); }
+.ev-raffle { background: linear-gradient(180deg, #a98cff, #6a3fd6 70%, #4b22a0); }
+.evcard b { font-size: 17px; } .evcard small { font-size: 11.5px; opacity: .92; } .evcard em { font-style: normal; font-size: 12px; font-weight: 700; }
+.evart { height: 62px; display: grid; place-items: center; }
+.evart img { height: 62px; animation: vFloat 3s ease-in-out infinite; filter: drop-shadow(0 3px 4px rgba(20,5,35,.4)); }
+.evcard .dot { position: absolute; top: -4px; right: -4px; width: 14px; height: 14px; border-radius: 50%; background: #ff4d6d; box-shadow: 0 0 0 2px #fff; animation: dotPop 1.4s ease-in-out infinite; }
+.evbar { position: relative; display: block; width: 100%; height: 10px; border-radius: 999px; background: rgba(20,5,35,.35); overflow: hidden; }
+.evbar i { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: linear-gradient(90deg, #fff3b8, #ffd447); }
+.evrank { font: 900 34px/1 var(--ui); color: #fff3b8; }
+.rballs { display: flex; gap: 4px; }
+.rballs i, .rball { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font: 800 13px var(--ui); font-style: normal; color: #3d1a4f; background: radial-gradient(circle at 35% 30%, #fff, #e9dcff 50%, #a98cff); box-shadow: 0 0 0 2px #3d1a4f; }
+.rballs i:not(.on) { opacity: .45; }
+.rball { animation: popIn .4s both; animation-delay: calc(var(--d) * .12s); }
+.rball.empty { opacity: .4; } .rball.win { background: radial-gradient(circle at 35% 30%, #fff, #fff3b8 50%, #f6c64a); } .rball.hit { background: radial-gradient(circle at 35% 30%, #fff, #b8ffcf 50%, #3fb43a); box-shadow: 0 0 0 2px #3d1a4f, 0 0 12px 3px rgba(120,255,140,.8); }
+.sphead { display: flex; align-items: center; gap: 10px; margin-right: 44px; }
+.sphead > img { height: 58px; animation: vFloat 3s ease-in-out infinite; }
+.sphead h3 { margin: 0; } .sphead small { opacity: .9; }
+.rfbig { font-size: 42px; }
+.spts { margin-left: auto; display: grid; justify-items: end; gap: 3px; min-width: 150px; } .spts b { font-size: 22px; color: #fff3b8; }
+.sptabs { margin: 8px 0; }
+.qcols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.qcol h4 { margin: 0 0 6px; font-size: 13px; color: #ffe58f; }
+.qrow { display: grid; grid-template-columns: 1fr 70px auto auto; align-items: center; gap: 8px; padding: 7px 10px; margin-bottom: 6px; border-radius: 12px; background: rgba(255,255,255,.1); font-size: 13px; }
+.qrow.done { background: linear-gradient(90deg, rgba(120,255,140,.25), rgba(255,255,255,.08)); }
+.qrow .qn { font-weight: 800; } .qrow .qp { font-weight: 800; color: #fff3b8; }
+.sptrack { overflow-x: auto; padding: 14px 4px 8px; scrollbar-width: thin; }
+.sptiers { display: flex; gap: 10px; width: max-content; }
+.sptier { position: relative; display: grid; justify-items: center; gap: 4px; width: 104px; padding: 10px 6px 8px; border-radius: 16px; background: rgba(255,255,255,.1); border: 2px solid rgba(255,243,184,.35); text-align: center; animation: tierIn .4s both; animation-delay: calc(var(--d) * .04s); }
+.sptier > small { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); padding: 0 8px; border-radius: 999px; font: 800 11px var(--ui); color: #3d1a4f; background: #fff3b8; }
+.sptier svg { width: 38px; height: 38px; } .sptier b { font-size: 12px; min-height: 30px; }
+.sptier.big { background: linear-gradient(180deg, rgba(255,214,92,.35), rgba(255,255,255,.08)); border-color: #f6c64a; }
+.sptier.can { border-color: #7dff9a; box-shadow: 0 0 14px rgba(125,255,154,.5); } .sptier.can svg { animation: hudBob 1.8s ease-in-out infinite; }
+.sptier.got { opacity: .55; } .sptier.lock { opacity: .8; }
+.spok { font-size: 20px; color: #7dff9a; } .splock { font-size: 11px; font-weight: 800; color: #ffe58f; }
+.sptier .b3 { padding: 3px 12px; font-size: 13px; }
+.lgprize, .rfres { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 12px; margin: 8px 0; border-radius: 16px; background: linear-gradient(90deg, rgba(255,214,92,.3), rgba(255,255,255,.08)); }
+.lgprize img { height: 46px; } .lgprize .b3, .rfres .b3 { margin-left: auto; }
+.lgtable { display: grid; gap: 5px; margin: 6px 0; }
+.lgrow { display: grid; grid-template-columns: 34px 1fr 70px 90px; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 12px; background: rgba(255,255,255,.08); font-size: 13.5px; animation: tierIn .35s both; animation-delay: calc(var(--d) * .03s); }
+.lgrow.me { background: linear-gradient(90deg, rgba(125,255,154,.35), rgba(255,255,255,.1)); box-shadow: 0 0 0 2px #7dff9a; font-weight: 800; }
+.lgrow .lgr { font-weight: 900; text-align: center; } .lgrow.r1 .lgr { color: #ffd447; } .lgrow.r2 .lgr { color: #e3ecf7; } .lgrow.r3 .lgr { color: #ffb27a; }
+.lgrow .lgp { text-align: right; font-weight: 800; } .lgrow .lgz { display: flex; align-items: center; gap: 3px; font-size: 12px; } .lgrow .lgz svg { width: 16px; height: 16px; }
+.rfrow { display: flex; align-items: center; gap: 6px; margin: 6px 0; } .rfrow small { min-width: 96px; } .rfres h4 { width: 100%; margin: 0; } .rfres b { width: 100%; }
+.qdone { position: fixed; z-index: 75; top: 10px; left: 50%; display: flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border-radius: 999px; color: #3d1a4f; background: linear-gradient(180deg, #fffaf0, #ffe9b8); box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px var(--ol), 0 8px 18px rgba(20,5,35,.4); transform: translateX(-50%); animation: qIn .5s cubic-bezier(.2,1.4,.4,1) both; pointer-events: none; }
+.qdone img { height: 40px; } .qdone small { display: block; font-size: 11px; font-weight: 800; color: #b8780a; } .qdone b { font-size: 14px; } .qdone span { font: 900 18px var(--ui); color: #ff6fae; }
+.qdone.out { animation: qOut .4s ease-in forwards; }
+@keyframes qIn { from { transform: translate(-50%, -120%); } } @keyframes qOut { to { transform: translate(-50%, -140%); opacity: 0; } }
+@media (max-height: 420px) { .evhub { gap: 8px; } .evart, .evart img { height: 46px; } .evcard { padding: 8px; } .qcols { grid-template-columns: 1fr 1fr; } .qrow { padding: 5px 8px; font-size: 12px; } .sphead > img { height: 44px; } }
+
+/* free Shop gift, Gift Collected / Treat Served reveal, room stories */
+.fgift { display: flex; align-items: center; gap: 10px; margin: 2px 0 8px; padding: 6px 12px 6px 6px; border-radius: 18px; background: linear-gradient(90deg, rgba(255,255,255,.12), rgba(255,255,255,.04)); border: 2px solid rgba(255,243,184,.35); }
+.fgift img { height: 52px; margin: -8px 0; }
+.fgift b { font-size: 17px; color: #fff3b8; } .fgift small { display: block; font-size: 12px; opacity: .9; }
+.fgift > :last-child { margin-left: auto; }
+.fgift.fgon { background: linear-gradient(90deg, rgba(125,255,154,.35), rgba(255,214,92,.18)); border-color: #7dff9a; box-shadow: 0 0 16px rgba(125,255,154,.45); }
+.fgift.fgon img { animation: actShake 3.5s ease-in-out infinite; }
+.fgift.fgon .b3 { animation: playPulse 1.4s ease-in-out infinite; }
+.fgtime svg { width: 30px; height: 30px; opacity: .6; }
+.gcol { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; align-content: center; gap: 10px; background: radial-gradient(circle at 50% 45%, rgba(110,40,170,.7), rgba(25,8,45,.88)); overflow: hidden; animation: fade .25s both; }
+.gcol.out { opacity: 0; transition: opacity .3s; }
+.gcbox { position: relative; animation: gcBox .9s cubic-bezier(.2,1.5,.4,1) both; }
+.gcbox img, .gcbox svg { width: clamp(90px, 32vh, 160px); height: clamp(90px, 32vh, 160px); filter: drop-shadow(0 8px 14px rgba(20,5,35,.5)); }
+.gcol:not(.treat) .gcbox { animation: gcBox .9s cubic-bezier(.2,1.5,.4,1) both, gcPop .35s 1s ease-in forwards; }
+@keyframes gcBox { 0% { transform: scale(0) rotate(-20deg); } 60% { transform: scale(1.15) rotate(6deg); } 75% { transform: rotate(-6deg); } 100% { transform: none; } }
+@keyframes gcPop { to { transform: scale(1.5); opacity: 0; } }
+.gcin { position: relative; display: grid; justify-items: center; gap: 8px; }
+.gcol:not(.treat) .gcin { position: absolute; animation: popIn .4s 1.05s both; }
+.gcrib { position: relative; top: 0; left: 0; transform: none; font-size: clamp(20px, 7vh, 30px); }
+.gcprz { display: flex; gap: 14px; }
+.gcp { display: grid; justify-items: center; gap: 2px; animation: popIn .4s both; animation-delay: calc(1.15s + var(--d, 0) * .1s); }
+.treat .gcp { animation-delay: .5s; }
+.gcp svg { width: 54px; height: 54px; filter: drop-shadow(0 3px 4px rgba(20,5,35,.5)); }
+.gcp b { font-size: 15px; color: #fff3b8; }
+.trname { font-size: 20px; color: #fff; }
+.story { position: fixed; inset: 0; z-index: 85; display: grid; grid-template-rows: 1fr auto; gap: 8px; padding: 12px max(12px, env(safe-area-inset-right)) 10px max(12px, env(safe-area-inset-left)); background: radial-gradient(circle at 50% 40%, #4a1f86, #1d0838); animation: fade .3s both; }
+.story.out { opacity: 0; transition: opacity .3s; }
+.stframes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; min-height: 0; }
+.stf { position: relative; overflow: hidden; border-radius: 18px; background-size: cover; border: 4px solid #fff3b8; box-shadow: 0 0 0 3px var(--ol), 0 8px 16px rgba(10,2,20,.5); animation: stIn .55s cubic-bezier(.2,1.4,.4,1) both; animation-delay: calc(var(--d) * .9s); }
+.stf:nth-child(2) { transform: rotate(1deg); } .stf:nth-child(1) { transform: rotate(-1deg); }
+@keyframes stIn { from { opacity: 0; transform: translateY(40px) scale(.85) rotate(-4deg); } }
+.stf img { position: absolute; left: 4%; bottom: -4%; height: 70%; filter: drop-shadow(0 4px 6px rgba(20,5,35,.5)); animation: bsCordie .6s cubic-bezier(.2,1.4,.4,1) both; animation-delay: calc(var(--d) * .9s + .25s); }
+.stf p { position: absolute; top: 8%; right: 6%; left: 30%; margin: 0; padding: 8px 11px; border-radius: 14px; font: 700 clamp(11px, 3.6vh, 15px)/1.3 var(--ui); color: #3d1a4f; background: #fffaf0; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4px var(--ol); animation: popIn .4s both; animation-delay: calc(var(--d) * .9s + .45s); }
+.stbar { display: flex; align-items: center; gap: 10px; }
+.stbar b { margin-right: auto; font-size: clamp(18px, 6vh, 26px); color: #fff3b8; }
+#stGo { animation: popIn .4s 2.4s both, playPulse 1.4s 2.8s ease-in-out infinite; }
+.lite .gcol .bsrays { display: none; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2256,7 +2351,7 @@ var KEY = 'bingoBloom.v1';
 function fresh() {
   return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
-    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', stats: { rounds: 0, bingos: 0 }, events: [],
+    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', quest: {}, league: {}, raffle: {}, freeGift: 0, seen: {}, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'classic', assist: false, lite: false, autoAlert: true } };
 }
 function merge(saved) {
@@ -2646,6 +2741,7 @@ function cardFace(id, opts) {
     '<div class="nm">' + (miss ? '?' : esc(ci.name)) + '</div>' + (ci.gold ? '<span class="star">★</span>' : '') + '</div>';
 }
 function dropCard(gp) {
+  qEv('card', 1);
   var gold = Math.random() < (gp === undefined ? .12 : gp), set = SETS[rand(SETS.length)], idx = gold ? GOLD_FROM + rand(9 - GOLD_FROM) : rand(GOLD_FROM);
   var id = set.id + '|' + (idx + 1), isNew = !S.album[id];
   S.album[id] = (S.album[id] || 0) + 1;
@@ -2873,14 +2969,14 @@ function lobby() {
       '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + (SWEPT ? '' : '<div class="csweep"><b class="outl">PARIS</b><small>City of Blossoms</small></div>') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>' +
       '<div class="cityban"><b class="outl">PARIS</b><small>' + stars + '/12 blossoms · finish all 4 rooms for a big prize</small></div></div>' +
       '<div class="nextsec"><div class="cityban soon"><b class="outl">NEXT CITY</b><small>Finish Paris to travel on · coming soon</small></div></div></div>' +
-    topBar('<div class="spacer"></div><button class="fbpill" id="bFb" aria-label="Send feedback">' + icon('i-chat') + '<span>Feedback</span></button><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
+    topBar('<div class="spacer"></div><button class="evpill' + (eventsHot() ? ' hot' : '') + '" id="bEv" aria-label="Events"><img src="art/art-trophy.webp" alt=""><span>Events</span></button><button class="fbpill" id="bFb" aria-label="Send feedback">' + icon('i-chat') + '<span>Feedback</span></button><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       (giftReady ? rb('bGift', 'i-gift', 'pk', 'Day ' + (calState().day + 1) + '!', true) : '<button class="round cordnap" id="bGift"><span class="c pk"><img src="art/mascot-sleep.webp" alt=""><i class="zz">z</i><i class="zz z2">z</i></span><span class="lb">' + untilText(nextReset()) + '</span></button>') +
       rb('bAlbum', 'i-album', 'gd', 'Album ' + ownedAll() + '/72') +
       rb('bKitchen', 'i-chef', 'pk', ovenReady ? 'Ready!' : 'Kitchen', ovenReady) +
     '</div>' +
     '<div class="hud hud-right">' +
-      rb('bShop', 'i-bag', 'gd', 'Shop') +
+      rb('bShop', 'i-bag', 'gd', 'Shop', freeGiftReady()) +
       rb('bGames', 'i-games', 'pl', 'Games', gamesHot) +
       rb('bTeam', 'i-team', '', 'Team', gardenReady()) +
     '</div>' +
@@ -2912,6 +3008,8 @@ function lobby() {
   setTimeout(teamDot, 0);
   $('#bSet').onclick = settings;
   $('#bFb').onclick = function () { SFX.tap(); feedback(); };
+  $('#bEv').onclick = function () { SFX.tap(); eventsHub(); };
+  setTimeout(leagueRankUp, 1200);
   $('#bGems').onclick = function () { SFX.tap(); shop('gems'); };
   $('#bTixPlus').onclick = function () { SFX.tap(); kitchen(); };
   $('#bMe').onclick = function () { SFX.tap(); studio('avatar'); };
@@ -3047,6 +3145,8 @@ function pupGuide() {
 function roomScreen(room) {
   stopRound();
   room = room || ROOMS[0];
+  if (!S.seen) S.seen = {};
+  if (!S.seen[room.id] && STORIES[room.id]) { S.seen[room.id] = 1; save(); roomStory(room, function () { roomScreen(room); }); return; }
   var arm = {}, fair = S.dry >= 3, mi = MODE_INFO[room.mode], featured = room.mode !== 'multi';
   var top = featured ? '<div class="bake"><span class="dish" style="background-image:url(' + room.img + ')"></span><div class="bk"><b>' + (MODE_INFO[room.mode].how) + '</b><small>Garden Path bonus ' + bonusPct(room.id) + '%</small><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div></div>' : bakeBar(room);
   show('<div class="screen" id="room" style="background-image:linear-gradient(180deg, rgba(40,15,70,.15), rgba(40,15,70,.45)), url(' + room.img + ');background-position:center, ' + room.pos + ' center">' +
@@ -3180,6 +3280,7 @@ function kindSeq(len, oneCard, p) {
 }
 function startRound(arm, room) {
   arm = arm || {}; room = room || ROOMS[0];
+  qEv('round', 1); qEv('room', 1, room.id); leagueAdd(3);
   var blackout = room.mode === 'blackout';
   var cost = S.cards * CARD_COST * S.bet;
   if (S.tickets < cost) { toast('Not enough tickets. Bake treats in the Kitchen to earn more!'); return; }
@@ -3393,7 +3494,7 @@ function onCardTap(e) {
   daub(ci, +cell.dataset.i, cell);
 }
 function daub(ci, i, cell, fromBoost) {
-  var c = R.cards[ci].cells[i]; c.d = true;
+  var c = R.cards[ci].cells[i]; c.d = true; qEv('daub', 1); if (c.n % 2) qEv('odd', 1);
   cell.classList.add('d'); cell.classList.remove('hint');
   var tr = cell.querySelector('.tr'); if (tr) tr.remove();
   cell.insertAdjacentHTML('afterbegin', roomDaub() + '<i class="burst"></i>');
@@ -3486,7 +3587,7 @@ function pqDeploy() {
   if (id === 'bloom') { if (slot) slot.classList.add('fire'); R.pq.shift(); setTimeout(function () { if (R && R.pq) { pqDraw(); pqFill(); } }, 900); return false; }
   if (owned(id) < 1) { R.pq.shift(); pqFill(); return R.pq.length ? pqDeploy() : false; }
   if (slot) { slot.classList.add('fire'); var r = slot.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 30); }
-  pqFrom = slot; R.pq.shift();
+  pqFrom = slot; R.pq.shift(); qEv('pup', 1);
   if (pupTier(id) && pupTier(id).id === 'super') { var bar = $('#pq'); if (bar) { bar.insertAdjacentHTML('beforeend', '<b class="pqsr outl">✦ SUPER RARE ✦</b>'); setTimeout(function () { var t = $('.pqsr'); if (t) t.remove(); }, 1800); } }
   if (id === 'wild') autoWild(); else PUP_USE[id]();
   setTimeout(function () { if (!R || !R.pq) return; var keep = pqFrom; pqFrom = null; pqDraw(); pqFill(); pqFrom = keep; }, 900);
@@ -3859,7 +3960,7 @@ function claimLine(ci, line) {
   var base = blackout ? 300 + 500 * (R.left / R.total) : 30 + 90 * (R.left / R.total);
   var coins = Math.round(base * R.bet * R.dc * luck * lb.m), petals = (blackout ? 10 + 3 * R.bet : 2 + R.bet) * R.dp * luck * lb.m * (R.room === hotRoom() ? 2 : 1);
   R.left = Math.max(0, R.left - 1); $('#sLeft').textContent = R.left; bumpLeft(); $('#sLeftW').classList.toggle('hot', R.left <= 3);
-  R.bingos++; S.coins += coins; R.earned.coins += coins; S.petals += petals; R.earned.petals += petals;
+  R.bingos++; qEv('bingo', 1); leagueAdd(10); raffleToken(); S.coins += coins; R.earned.coins += coins; S.petals += petals; R.earned.petals += petals;
   var d = dropCard(blackout ? .4 : undefined); R.earned.cards.push(d); R.earned.sets = R.earned.sets.concat(d.sets);
   if (blackout) { var d2 = dropCard(); R.earned.cards.push(d2); R.earned.sets = R.earned.sets.concat(d2.sets); }
   R.earned.ings.push(dropIng(), dropIng()); addXp(blackout ? 80 : 25);
@@ -4176,13 +4277,13 @@ function kitchen() {
           var r = RECIPES.filter(function (x) { return x.id === b.dataset.bake; })[0], fo = freeOven();
           if (fo < 0 || !canBake(r)) return;
           Object.keys(r.need).forEach(function (k) { S.ing[k] -= r.need[k]; });
-          S.ovens[fo] = { r: r.id, done: Date.now() + r.secs * 1000 }; save(); SFX.tap(); draw(v); toast(r.name + ' is in the oven!');
+          S.ovens[fo] = { r: r.id, done: Date.now() + r.secs * 1000 }; qEv('bake', 1); save(); SFX.tap(); draw(v); toast(r.name + ' is in the oven!');
         }
         if (c) {
           var i = +c.dataset.collect, o = S.ovens[i]; if (!o || o.done > Date.now()) return;
           var rr = RECIPES.filter(function (x) { return x.id === o.r; })[0];
           S.ovens[i] = null; S.tickets += rr.tickets; (rr.extra || []).forEach(grant); addXp(10); save();
-          SFX.set(); var rc = c.getBoundingClientRect(); sparkle(rc.left + rc.width / 2, rc.top, 60);
+          SFX.set(); var rc = c.getBoundingClientRect(); sparkle(rc.left + rc.width / 2, rc.top, 60); treatServed(rr);
           toast('+' + rr.tickets + ' tickets' + (rr.extra ? ', a Scratch Card, a Head Start and a gold album card' : '') + '!', 3400); refreshTop(); delete v.dataset.r; draw(v);
         }
       });
@@ -4220,10 +4321,11 @@ function shop(tab) {
     }).join('') + '</div>';
   }
   panel('<div class="tabs shead">' + (tab === 'gems' ? '<img class="vaultart" src="art/art-vault.webp" alt="">' : '') + '<b class="stitle outl">' + ({ power: 'Power-ups', packs: 'Card Packs', gems: 'Amethyst Vault' }[tab]) + '</b>' +
-    '<span class="spacer"></span>' + (tab === 'power' ? curPill('i-gem', S.gems) : '') + (tab === 'gems' ? curPill('i-gem', S.gems) : curPill('i-coin', S.coins)) + '<button class="pinfo" id="bInfo" aria-label="How it works">i</button></div>' + body +
+    '<span class="spacer"></span>' + (tab === 'power' ? curPill('i-gem', S.gems) : '') + (tab === 'gems' ? curPill('i-gem', S.gems) : curPill('i-coin', S.coins)) + '<button class="pinfo" id="bInfo" aria-label="How it works">i</button></div>' + freeGiftRow() + body +
     '<p class="note">' + (tab === 'gems' ? 'Amethysts are rare gems. Earn them from level-ups, finished rooms and cities, and album sets.' : 'Everything here is bought with coins you win in bingo. All odds are shown.') + '</p>' +
     '<div class="stabs">' + [['power', 'i-super', 'Power-ups'], ['packs', 'i-card', 'Card packs'], ['gems', 'i-gem', 'Vault']].map(function (t) { return '<button data-t="' + t[0] + '" aria-pressed="' + (tab === t[0]) + '"><span class="sto">' + icon(t[1]) + '</span><small>' + t[2] + '</small></button>'; }).join('') + '</div>', 'store', function (v) {
       v.classList.add('vstore');
+      if ($('#fgGo', v)) $('#fgGo', v).onclick = function () { openFreeGift(tab); };
       v.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { SFX.tap(); shop(b.dataset.t); }; });
       $('#bInfo', v).onclick = function () { SFX.tap(); infoTour(0, function () { shop(tab); }); };
       v.querySelectorAll('[data-bund]').forEach(function (b) {
@@ -4292,7 +4394,7 @@ function games() {
     tile('scratch', 'Scratch Cards', '<svg viewBox="0 0 40 40"><use href="#i-scratch"/></svg>', S.scratch + ' card' + (S.scratch === 1 ? '' : 's'), S.scratch > 0) +
     tile('match', 'Macaron Match', '<span class="mstack"><img src="art/mm-mint.webp" alt=""><img src="art/mm-lavender.webp" alt=""><img src="art/mm-pink.webp" alt=""></span>', S.mm ? 'Saved game · tap to finish' : S.mmPlays + ' free game' + (S.mmPlays === 1 ? '' : 's') + ' today', S.mmPlays > 0 || !!S.mm) +
     '</div><p class="note">Win pearls in bingo, scratch cards from the wheel and the kitchen, and seeds for your Team Garden.</p>', '', function (v) {
-      v.querySelectorAll('[data-g]').forEach(function (b) { b.onclick = function () { SFX.tap(); ({ drop: petalDrop, wheel: wheel, scratch: scratchCard, match: macaronMatch })[b.dataset.g](); }; });
+      v.querySelectorAll('[data-g]').forEach(function (b) { b.onclick = function () { SFX.tap(); qEv('side', 1); ({ drop: petalDrop, wheel: wheel, scratch: scratchCard, match: macaronMatch })[b.dataset.g](); }; });
     });
 }
 function backToGames(v) { var b = v.querySelector('[data-games]'); if (b) b.onclick = function () { SFX.tap(); games(); }; }
@@ -4641,7 +4743,7 @@ function modeDaub(ci, i, cell) {
   if (R.mode === 'butterfly') { var b = R.bfs.filter(function (x) { return x.ci === ci && x.i === i; })[0]; if (b) catchBf(b, cell); }
 }
 function openGift(ci, i, cell) {
-  var c = R.cards[ci].cells[i], r = Math.random(); R.gifts++;
+  var c = R.cards[ci].cells[i], r = Math.random(); R.gifts++; qEv('gift', 1);
   if (r < .45) { c.mult = 2; } else if (r < .6) { c.mult = 3; }
   if (c.mult) { cell.insertAdjacentHTML('beforeend', '<b class="mult outl">×' + c.mult + '</b>'); floatText(cell, 'Gift: ×' + c.mult + ' bingo!'); SFX.boost(); }
   else { var pr = [{ t: 'tickets', n: 8 * R.bet }, { t: 'drops', n: 1 }, { t: 'card', n: 1, gold: .3 }, { t: 'coins', n: 40 * R.bet }][rand(4)]; var txt = grant(pr); if (pr.t === 'tickets') R.earned.tickets += pr.n; if (pr.t === 'coins') R.earned.coins += pr.n; if (pr.t === 'drops') R.earned.drops += pr.n; floatText(cell, 'Gift: ' + txt.replace(/^\+/, '+')); SFX.coin(); }
@@ -4862,6 +4964,268 @@ function nextReset(ms) {
 function isGoldDay(ms) { var d = tradeDayStart(ms || Date.now()); return new Date(d).getUTCDay() === 6 && Math.round((d - GOLD_SAT0) / 864e5) % 14 === 0; }
 function nextGoldDay() { for (var i = 0; i < 15; i++) { var t = Date.now() + i * 864e5; if (isGoldDay(t)) { var d = tradeDayStart(t), wall = d + 8 * 3600e3; return wall - chiOffset(wall + 6 * 3600e3); } } return null; }
 function untilText(t) { var m = Math.max(0, t - Date.now()), h = Math.floor(m / 3600e3); return (h >= 24 ? Math.floor(h / 24) + 'd ' + (h % 24) + 'h' : h + 'h ' + Math.floor(m % 3600e3 / 60000) + 'm'); }
+/* ---------- Events: Bloom Season (free challenges + reward path), Bloom League, Daily Raffle ---------- */
+// all free: no paid pass, no paid unlocks (Dawn: fair play, no greedy tactics)
+var QDAILY = [
+  { id: 'bingo3', t: 'Call 3 bingos', ev: 'bingo', n: 3, p: 60 },
+  { id: 'round4', t: 'Play 4 rounds', ev: 'round', n: 4, p: 50 },
+  { id: 'daub60', t: 'Mark 60 numbers', ev: 'daub', n: 60, p: 50 },
+  { id: 'odd30', t: 'Mark 30 odd numbers', ev: 'odd', n: 30, p: 60 },
+  { id: 'pup5', t: 'Use 5 power-ups', ev: 'pup', n: 5, p: 60 },
+  { id: 'bake1', t: 'Bake a treat in the Kitchen', ev: 'bake', n: 1, p: 40 },
+  { id: 'side2', t: 'Play 2 side games', ev: 'side', n: 2, p: 40 },
+  { id: 'gift4', t: 'Open 4 gift squares', ev: 'gift', n: 4, p: 50 },
+  { id: 'rooms2', t: 'Play in 2 different rooms', ev: 'room', n: 2, p: 50 },
+  { id: 'card3', t: 'Win 3 album cards', ev: 'card', n: 3, p: 50 }
+];
+var QWEEK = [
+  { id: 'wbingo25', t: 'Call 25 bingos', ev: 'bingo', n: 25, p: 300 },
+  { id: 'wround30', t: 'Play 30 rounds', ev: 'round', n: 30, p: 250 },
+  { id: 'wdaub500', t: 'Mark 500 numbers', ev: 'daub', n: 500, p: 250 },
+  { id: 'wpup40', t: 'Use 40 power-ups', ev: 'pup', n: 40, p: 300 },
+  { id: 'wbake8', t: 'Bake 8 treats', ev: 'bake', n: 8, p: 250 },
+  { id: 'wcard20', t: 'Win 20 album cards', ev: 'card', n: 20, p: 250 }
+];
+var SEASON_NAMES = ['Autumn in Paris', 'Winter Lights', 'Spring Blossoms', 'Summer Picnic'];
+var SEASON_TIERS = 30, SEASON_STEP = 250, SEASON0 = Date.UTC(2026, 0, 5);
+function seedNum(str) { var h = 2166136261; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function seeded(str) { var x = seedNum(str) || 1; return function () { x ^= x << 13; x >>>= 0; x ^= x >>> 17; x ^= x << 5; x >>>= 0; return x / 4294967296; }; }
+function seedPick(arr, k, key) { var r = seeded(key), a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a.slice(0, k); }
+function weekStart(ms) { var d = tradeDayStart(ms || Date.now()), dow = new Date(d).getUTCDay(); return d - ((dow + 6) % 7) * 864e5; }
+function weekKey(ms) { return new Date(weekStart(ms)).toISOString().slice(0, 10); }
+function wallReset(day) { var wall = day + 8 * 3600e3; return wall - chiOffset(wall + 6 * 3600e3); }
+function nextWeekReset() { return wallReset(weekStart() + 7 * 864e5); }
+function seasonIdx(ms) { return Math.max(0, Math.floor((weekStart(ms) - SEASON0) / (28 * 864e5))); }
+function seasonEnd() { return wallReset(SEASON0 + (seasonIdx() + 1) * 28 * 864e5); }
+function seasonName() { var m = new Date(weekStart() + 14 * 864e5).getUTCMonth(); return SEASON_NAMES[m >= 8 && m <= 10 ? 0 : m === 11 || m <= 1 ? 1 : m <= 4 ? 2 : 3]; }
+function todaysDaily() { return seedPick(QDAILY, 4, 'd' + dayKey()); }
+function thisWeekly() { return seedPick(QWEEK, 3, 'w' + weekKey()); }
+function qEnsure() {
+  var q = S.quest || (S.quest = {});
+  if (q.day !== dayKey()) { q.day = dayKey(); q.dprog = {}; q.ddone = {}; q.rooms = {}; }
+  if (q.week !== weekKey()) { q.week = weekKey(); q.wprog = {}; q.wdone = {}; }
+  if (q.season !== seasonIdx()) { q.season = seasonIdx(); q.pts = 0; q.claimed = {}; }
+  ['dprog', 'ddone', 'rooms', 'wprog', 'wdone', 'claimed'].forEach(function (k) { if (!q[k]) q[k] = {}; });
+  q.pts = q.pts || 0;
+  return q;
+}
+// the game reports what you did; finished challenges pay season points
+function qEv(ev, n, extra) {
+  var q = qEnsure(), done = [];
+  if (ev === 'room') { q.rooms[extra] = 1; }
+  function tick(list, prog, fin) {
+    list.forEach(function (c) {
+      if (c.ev !== ev || fin[c.id]) return;
+      prog[c.id] = ev === 'room' ? Object.keys(q.rooms).length : (prog[c.id] || 0) + (n || 1);
+      if (prog[c.id] >= c.n) { fin[c.id] = 1; q.pts += c.p; done.push(c); }
+    });
+  }
+  tick(todaysDaily(), q.dprog, q.ddone); tick(thisWeekly(), q.wprog, q.wdone);
+  if (done.length) { save(); done.forEach(function (c, i) { setTimeout(function () { challengeDone(c); }, i * 1400); }); }
+}
+function challengeDone(c) {
+  var host = document.body, d = document.createElement('div'); d.className = 'qdone';
+  d.innerHTML = '<img src="art/art-trophy.webp" alt=""><div><small>Challenge complete!</small><b>' + esc(c.t) + '</b></div><span class="outl">+' + c.p + ' ✿</span>';
+  host.appendChild(d); SFX.boost && SFX.boost(); setTimeout(function () { d.classList.add('out'); setTimeout(function () { d.remove(); }, 400); }, 2600);
+  var p = document.getElementById('bEv'); if (p) p.classList.add('hot');
+}
+function seasonTier() { return Math.min(SEASON_TIERS, Math.floor(qEnsure().pts / SEASON_STEP)); }
+// tier rewards climb as you go; every 10th is a big one
+function seasonReward(i) {
+  var n = i + 1;
+  if (n === SEASON_TIERS) return { k: 'gpack', n: 1, gems: 25, label: 'Gold Pack + 25 amethysts', ic: 'i-card', big: 1 };
+  if (n % 10 === 0) return { k: 'gems', n: 15, label: '15 amethysts', ic: 'i-gem', big: 1 };
+  var c = [{ k: 'coins', n: 200 + n * 10, ic: 'i-coin' }, { k: 'tickets', n: 30 + n * 2, ic: 'i-ticket' }, { k: 'pupR', n: 2, ic: 'i-daub1' }, { k: 'bpack', n: 1, ic: 'i-card' },
+    { k: 'coins', n: 300 + n * 10, ic: 'i-coin' }, { k: 'pupRare', n: 1, ic: 'i-wild' }, { k: 'tickets', n: 50 + n * 2, ic: 'i-ticket' }, { k: 'gems', n: 5, ic: 'i-gem' }, { k: 'spack', n: 1, ic: 'i-card' }][i % 9];
+  c.label = { coins: c.n + ' coins', tickets: c.n + ' tickets', pupR: c.n + ' power-ups', pupRare: 'Rare power-up', bpack: 'Bronze Pack', spack: 'Silver Pack', gems: c.n + ' amethysts' }[c.k];
+  return c;
+}
+function grantSeason(r) {
+  if (r.k === 'coins') S.coins += r.n; else if (r.k === 'tickets') S.tickets += r.n; else if (r.k === 'gems') S.gems += r.n;
+  else if (r.k === 'pupR') { for (var i = 0; i < r.n; i++) give(PQ_TIERS[2].ids[rand(PQ_TIERS[2].ids.length)], 1); }
+  else if (r.k === 'pupRare') give(PQ_TIERS[1].ids[rand(PQ_TIERS[1].ids.length)], 1);
+  else if (r.k === 'bpack') { save(); openPack(PACKS[0], 'Bloom Season'); return; }
+  else if (r.k === 'spack') { save(); openPack(PACKS[1], 'Bloom Season'); return; }
+  else if (r.k === 'gpack') { S.gems += r.gems || 0; save(); openPack(PACKS[2], 'Bloom Season'); return; }
+  save(); refreshTop();
+}
+
+/* Bloom League: a small weekly group; bingos and rounds earn points */
+var LEAGUE_NAMES = ['Rosie', 'Marguerite', 'Theo', 'Lulu', 'Amara', 'Sofia', 'Nikos', 'Yuki', 'Layla', 'Pierre', 'Mateo', 'Hana', 'Elena', 'Omar', 'Clara', 'Juno', 'Maeve', 'Ines'];
+function leagueEnsure() {
+  var L = S.league || (S.league = {});
+  if (L.week !== weekKey()) {
+    if (L.week && (L.pts || 0) > 0) { var fin = leagueTable(L.week, L.pts, 1), me = fin.filter(function (x) { return x.me; })[0]; L.prize = { week: L.week, rank: me.rank, pts: L.pts }; }
+    L.week = weekKey(); L.pts = 0; L.best = 0;
+  }
+  return L;
+}
+// the other players are simulated for now: their points grow steadily through the week
+function leagueTable(wk, myPts, final) {
+  var r = seeded('lg' + wk), names = seedPick(LEAGUE_NAMES, 14, 'ln' + wk), frac = final ? 1 : Math.min(1, Math.max(.02, (Date.now() - weekStart()) / (7 * 864e5)));
+  var rows = names.map(function (nm) { var target = 120 + Math.floor(r() * 1300), wob = .75 + r() * .5; return { name: nm, pts: Math.round(target * Math.min(1, frac * wob)) }; });
+  rows.push({ name: myName(), pts: myPts, me: 1 });
+  rows.sort(function (a, b) { return b.pts - a.pts || (a.me ? -1 : 1); });
+  rows.forEach(function (x, i) { x.rank = i + 1; });
+  return rows;
+}
+function myLeagueRank() { var L = leagueEnsure(); return leagueTable(L.week, L.pts).filter(function (x) { return x.me; })[0].rank; }
+function leaguePrize(rank) { return rank === 1 ? { coins: 2000, gems: 30, tickets: 150 } : rank <= 3 ? { coins: 1200, gems: 15, tickets: 100 } : rank <= 7 ? { coins: 600, gems: 5, tickets: 50 } : { coins: 250, gems: 0, tickets: 30 }; }
+function leagueAdd(n) {
+  var L = leagueEnsure(), before = myLeagueRank(); L.pts += n; var after = myLeagueRank();
+  if (after < before && (!L.best || after < L.best)) { L.best = after; L.up = after; }
+}
+function leagueRankUp() { var L = leagueEnsure(); if (L.up) { var r = L.up; L.up = 0; save(); reward('art-trophy', 'Ranked up!', 'You are now #' + r + ' in your Bloom League', 'cheer'); } }
+
+/* Daily Raffle: each bingo earns a raffle ball (up to 5 a day); tomorrow 3 winning balls are drawn */
+var RAFFLE_MAX = 5, RAFFLE_TOP = 20;
+function raffleWin(day) { return seedPick(range(1, RAFFLE_TOP), 3, 'rf' + day).sort(function (a, b) { return a - b; }); }
+function raffleEnsure() {
+  var F = S.raffle || (S.raffle = {});
+  if (F.day !== dayKey()) {
+    if (F.day && F.toks && F.toks.length) { var win = raffleWin(F.day), hits = F.toks.filter(function (t) { return win.indexOf(t) >= 0; }).length; F.res = { day: F.day, toks: F.toks, win: win, hits: hits, coins: 25 * F.toks.length + 150 * hits, tickets: 40 * hits, gems: hits >= 2 ? 5 : 0 }; }
+    F.day = dayKey(); F.toks = [];
+  }
+  return F;
+}
+function raffleToken() {
+  var F = raffleEnsure(); if (F.toks.length >= RAFFLE_MAX) return;
+  var t; do { t = 1 + rand(RAFFLE_TOP); } while (F.toks.indexOf(t) >= 0);
+  F.toks.push(t); toast('Raffle ball #' + t + '! Tomorrow\'s draw could win it big. (' + F.toks.length + '/' + RAFFLE_MAX + ' today)', 2600);
+}
+function eventsHot() { var q = qEnsure(), F = raffleEnsure(), L = leagueEnsure(); return !!(F.res || L.prize || seasonClaimable()); }
+function seasonClaimable() { var q = qEnsure(), t = seasonTier(); for (var i = 0; i < t; i++) if (!q.claimed[i]) return true; return false; }
+
+/* the Events hub */
+function eventsHub() {
+  var q = qEnsure(), L = leagueEnsure(), F = raffleEnsure(), t = seasonTier(), rank = myLeagueRank();
+  var dl = todaysDaily(), dn = dl.filter(function (c) { return q.ddone[c.id]; }).length;
+  panel('<h3>Events</h3><div class="evhub">' +
+    '<button class="evcard ev-season" id="evS" style="--d:0"><span class="evart"><img src="art/art-mega-bouquet.webp" alt=""></span><b class="outl">Bloom Season</b><small>' + esc(seasonName()) + ' · ends in ' + untilText(seasonEnd()) + '</small>' +
+      '<span class="evbar"><i style="width:' + Math.round((q.pts % SEASON_STEP) / SEASON_STEP * 100) + '%"></i></span><em>Tier ' + t + '/' + SEASON_TIERS + ' · today ' + dn + '/' + dl.length + ' challenges</em>' + (seasonClaimable() ? '<span class="dot"></span>' : '') + '</button>' +
+    '<button class="evcard ev-league" id="evL" style="--d:1"><span class="evart"><img src="art/art-trophy.webp" alt=""></span><b class="outl">Bloom League</b><small>Ends in ' + untilText(nextWeekReset()) + '</small>' +
+      '<span class="evrank outl">#' + rank + '</span><em>' + L.pts + ' league points</em>' + (L.prize ? '<span class="dot"></span>' : '') + '</button>' +
+    '<button class="evcard ev-raffle" id="evR" style="--d:2"><span class="evart rballs">' + range(0, RAFFLE_MAX - 1).map(function (i) { var tk = F.toks[i]; return '<i class="' + (tk ? 'on' : '') + '">' + (tk || '?') + '</i>'; }).join('') + '</span><b class="outl">Daily Raffle</b><small>Draw in ' + untilText(nextReset()) + '</small>' +
+      '<em>' + F.toks.length + '/' + RAFFLE_MAX + ' balls today · 1 per bingo</em>' + (F.res ? '<span class="dot"></span>' : '') + '</button>' +
+    '</div><p class="note">Everything in Events is free. Play bingo to fill them up.</p>', 'evpanel', function (v) {
+      $('#evS', v).onclick = function () { SFX.tap(); seasonPanel('ch'); };
+      $('#evL', v).onclick = function () { SFX.tap(); leaguePanel(); };
+      $('#evR', v).onclick = function () { SFX.tap(); rafflePanel(); };
+    });
+}
+function seasonPanel(tab) {
+  var q = qEnsure(), t = seasonTier();
+  function row(c, prog, fin) { var p = Math.min(c.n, prog[c.id] || 0); return '<div class="qrow' + (fin[c.id] ? ' done' : '') + '"><span class="qt">' + esc(c.t) + '</span><span class="evbar"><i style="width:' + Math.round(p / c.n * 100) + '%"></i></span><span class="qn">' + (fin[c.id] ? '✓' : p + '/' + c.n) + '</span><span class="qp">+' + c.p + ' ✿</span></div>'; }
+  var body = tab === 'rw' ?
+    '<div class="sptrack"><div class="sptiers">' + range(0, SEASON_TIERS - 1).map(function (i) {
+      var r = seasonReward(i), got = q.claimed[i], can = i < t && !got;
+      return '<div class="sptier' + (got ? ' got' : can ? ' can' : i >= t ? ' lock' : '') + (r.big ? ' big' : '') + '" style="--d:' + Math.min(i, 12) + '"><small>' + (i + 1) + '</small>' + icon(r.ic) + '<b>' + r.label + '</b>' +
+        (got ? '<span class="spok">✓</span>' : can ? '<button class="b3 green" data-tier="' + i + '">Claim</button>' : '<span class="splock">' + ((i + 1) * SEASON_STEP) + ' ✿</span>') + '</div>';
+    }).join('') + '</div></div>' :
+    '<div class="qcols"><div class="qcol"><h4>Today · new in ' + untilText(nextReset()) + '</h4>' + todaysDaily().map(function (c) { return row(c, q.dprog, q.ddone); }).join('') + '</div>' +
+    '<div class="qcol"><h4>This week · new in ' + untilText(nextWeekReset()) + '</h4>' + thisWeekly().map(function (c) { return row(c, q.wprog, q.wdone); }).join('') + '</div></div>';
+  panel('<div class="sphead"><img src="art/art-mega-bouquet.webp" alt=""><div><h3>Bloom Season</h3><small>' + esc(seasonName()) + ' · ends in ' + untilText(seasonEnd()) + '</small></div>' +
+    '<div class="spts"><b class="outl">' + q.pts.toLocaleString() + ' ✿</b><span class="evbar"><i style="width:' + (t >= SEASON_TIERS ? 100 : Math.round((q.pts % SEASON_STEP) / SEASON_STEP * 100)) + '%"></i></span><small>Tier ' + t + ' of ' + SEASON_TIERS + '</small></div></div>' +
+    '<div class="seg sptabs"><button data-st="ch" aria-pressed="' + (tab !== 'rw') + '">Challenges</button><button data-st="rw" aria-pressed="' + (tab === 'rw') + '">Rewards' + (seasonClaimable() ? ' <span class="dot"></span>' : '') + '</button></div>' + body +
+    '<div class="res-btns"><button class="b3 plum" id="spBack">‹ Events</button></div>', 'evpanel', function (v) {
+      v.querySelectorAll('[data-st]').forEach(function (b) { b.onclick = function () { SFX.tap(); seasonPanel(b.dataset.st); }; });
+      $('#spBack', v).onclick = function () { SFX.tap(); eventsHub(); };
+      v.querySelectorAll('[data-tier]').forEach(function (b) {
+        b.onclick = function () {
+          var i = +b.dataset.tier, r = seasonReward(i); if (q.claimed[i] || i >= seasonTier()) return;
+          q.claimed[i] = 1; var rc = b.getBoundingClientRect(); sparkle(rc.left + rc.width / 2, rc.top, 40); SFX.coin();
+          if (/pack/.test(r.k)) { grantSeason(r); return; }
+          grantSeason(r); toast(r.label + ' collected!'); seasonPanel('rw');
+        };
+      });
+      var cur = v.querySelector('.sptier.can') || v.querySelector('.sptier.lock'); if (cur) cur.scrollIntoView({ block: 'nearest', inline: 'center' });
+    });
+}
+function leaguePanel() {
+  var L = leagueEnsure(), rows = leagueTable(L.week, L.pts);
+  var prize = L.prize ? '<div class="lgprize"><img src="art/art-trophy.webp" alt=""><div><b>Last week you finished #' + L.prize.rank + '!</b><small>' + (function (p) { return p.coins + ' coins · ' + p.tickets + ' tickets' + (p.gems ? ' · ' + p.gems + ' amethysts' : ''); })(leaguePrize(L.prize.rank)) + '</small></div><button class="b3 green" id="lgClaim">Collect</button></div>' : '';
+  panel('<div class="sphead"><img src="art/art-trophy.webp" alt=""><div><h3>Bloom League</h3><small>Ends in ' + untilText(nextWeekReset()) + ' · 10 points a bingo, 3 a round</small></div></div>' + prize +
+    '<div class="lgtable">' + rows.map(function (x) { var pz = leaguePrize(x.rank); return '<div class="lgrow' + (x.me ? ' me' : '') + (x.rank <= 3 ? ' top r' + x.rank : '') + '" style="--d:' + Math.min(x.rank, 10) + '"><span class="lgr">' + x.rank + '</span><span class="lgn">' + esc(x.name) + (x.me ? ' (you)' : '') + '</span><span class="lgp">' + x.pts + '</span><span class="lgz">' + icon('i-coin') + pz.coins + '</span></div>'; }).join('') + '</div>' +
+    '<p class="note">Everyone who plays wins a prize. This is a practice league: the other players are simulated until online leagues open.</p>' +
+    '<div class="res-btns"><button class="b3 plum" id="lgBack">‹ Events</button></div>', 'evpanel', function (v) {
+      $('#lgBack', v).onclick = function () { SFX.tap(); eventsHub(); };
+      if ($('#lgClaim', v)) $('#lgClaim', v).onclick = function () { var p = leaguePrize(L.prize.rank); S.coins += p.coins; S.tickets += p.tickets; S.gems += p.gems; L.prize = null; save(); refreshTop(); SFX.coin(); fireworks(900); leaguePanel(); };
+      var me = v.querySelector('.lgrow.me'); if (me) me.scrollIntoView({ block: 'nearest' });
+    });
+}
+function rafflePanel() {
+  var F = raffleEnsure();
+  function balls(list, win, cls) { return list.map(function (t, i) { return '<i class="rball ' + (cls || '') + (win && win.indexOf(t) >= 0 ? ' hit' : '') + '" style="--d:' + i + '">' + t + '</i>'; }).join(''); }
+  var res = F.res ? '<div class="rfres"><h4>Results for ' + F.res.day + '</h4><div class="rfrow"><small>Winning balls</small>' + balls(F.res.win, null, 'win') + '</div><div class="rfrow"><small>Your balls</small>' + balls(F.res.toks, F.res.win) + '</div>' +
+    '<b>' + (F.res.hits ? F.res.hits + ' match' + (F.res.hits > 1 ? 'es' : '') + '! ' : 'No matches, but every ball pays. ') + F.res.coins + ' coins' + (F.res.tickets ? ' · ' + F.res.tickets + ' tickets' : '') + (F.res.gems ? ' · ' + F.res.gems + ' amethysts' : '') + '</b><button class="b3 green" id="rfClaim">Collect</button></div>' : '';
+  panel('<div class="sphead"><span class="rfbig">🎟️</span><div><h3>Daily Raffle</h3><small>Each bingo earns a raffle ball, up to ' + RAFFLE_MAX + ' a day. 3 winning balls are drawn when the day resets.</small></div></div>' + res +
+    '<div class="rfrow today"><small>Today</small>' + range(0, RAFFLE_MAX - 1).map(function (i) { var t = F.toks[i]; return '<i class="rball' + (t ? '' : ' empty') + '" style="--d:' + i + '">' + (t || '?') + '</i>'; }).join('') + '</div>' +
+    '<p class="note">Every ball pays 25 coins. A match pays 150 coins and 40 tickets, and 2 matches add 5 amethysts. Draw in ' + untilText(nextReset()) + '.</p>' +
+    '<div class="res-btns"><button class="b3 plum" id="rfBack">‹ Events</button></div>', 'evpanel', function (v) {
+      $('#rfBack', v).onclick = function () { SFX.tap(); eventsHub(); };
+      if ($('#rfClaim', v)) $('#rfClaim', v).onclick = function () { S.coins += F.res.coins; S.tickets += F.res.tickets; S.gems += F.res.gems; var h = F.res.hits; F.res = null; save(); refreshTop(); SFX.coin(); if (h) fireworks(900); rafflePanel(); };
+    });
+}
+/* ---------- free Shop gift every 3 hours ---------- */
+var GIFT_EVERY = 3 * 3600e3;
+function freeGiftReady() { return Date.now() >= (S.freeGift || 0); }
+function freeGiftRow() {
+  var ok = freeGiftReady();
+  return '<div class="fgift' + (ok ? ' fgon' : '') + '"><img src="art/mascot-gift.webp" alt=""><div><b class="outl">' + (ok ? 'Free gift!' : 'Next free gift') + '</b><small>' + (ok ? 'A little something from Cordie, every 3 hours' : 'Ready in ' + untilText(S.freeGift)) + '</small></div>' +
+    (ok ? '<button class="b3 green" id="fgGo">Open</button>' : '<span class="fgtime">' + icon('i-gift') + '</span>') + '</div>';
+}
+function openFreeGift(tab) {
+  if (!freeGiftReady()) return;
+  var pr = [{ ic: 'i-coin', n: 100 + rand(101), k: 'coins' }], pid = PQ_TIERS[2].ids[rand(PQ_TIERS[2].ids.length)];
+  pr.push({ ic: pupById(pid).icon, n: 1, k: 'pup', id: pid });
+  if (Math.random() < .4) pr.push({ ic: 'i-ticket', n: 20, k: 'tickets' });
+  if (Math.random() < .12) pr.push({ ic: 'i-gem', n: 2, k: 'gems' });
+  pr.forEach(function (x) { if (x.k === 'pup') give(x.id, 1); else S[x.k] += x.n; });
+  S.freeGift = Date.now() + GIFT_EVERY; save(); SFX.boost && SFX.boost();
+  var d = document.createElement('div'); d.className = 'gcol';
+  d.innerHTML = '<i class="bsrays"></i><div class="gcbox"><img src="art/art-pupack.webp" alt=""></div><div class="gcin"><div class="sribbon gcrib"><span class="outl">Gift Collected!</span></div><div class="gcprz">' +
+    pr.map(function (x, i) { return '<span class="gcp" style="--d:' + i + '">' + icon(x.ic) + '<b class="outl">' + (x.k === 'pup' ? pupById(x.id).name : '×' + x.n) + '</b></span>'; }).join('') + '</div></div>';
+  document.body.appendChild(d);
+  setTimeout(function () {
+    var to = document.querySelector('.veil .shead .pill2') || document.getElementById('coins');
+    d.querySelectorAll('.gcp').forEach(function (el, i) { setTimeout(function () { flyTo(el.querySelector('svg'), to, pr[i].ic, function () {}); }, i * 120); });
+  }, 1500);
+  setTimeout(function () { d.classList.add('out'); setTimeout(function () { d.remove(); refreshTop(); shop(tab); }, 350); }, 2300);
+}
+
+/* ---------- room stories: the first visit to a room opens with a little comic starring Cordie ---------- */
+var STORIES = {
+  patisserie: ['Bonjour! Welcome to Rose Patisserie, the sweetest corner of Paris.', 'Grow 3 blossoms here and Paris shines a little brighter!'],
+  cafe: ['Café du Parc! The best hot chocolate in all of Paris.', 'Every bingo fills the café with friends. Grow 3 blossoms to light up the park!'],
+  carousel: ['The Grand Carousel is spinning just for you!', 'Each bingo adds a painted horse and twinkle lights. Grow 3 blossoms and the music plays!'],
+  boutique: ['Ooh, the Silk Boutique! Ribbons, hats and sparkle everywhere.', 'Bingos dress the windows in silk and lace. Grow 3 blossoms for the grand display!'],
+  garden: ['Shh… the Midnight Garden only blooms at night.', 'Moonflowers glow for every number you mark. Ready to light it up?'],
+  meadow: ['Welcome to Butterfly Meadow! Hear the wings?', 'Catch the butterflies on your card for big prizes!'],
+  carnival: ['Step right up to Candy Carnival!', 'Collect the sweets on your card and bake a prize!'],
+  coast: ['The Gold Coast sparkles in the sun!', 'Finish the bonus shape for a big extra prize!'],
+  market: ['Lanterns, music and mystery gifts at Lantern Market!', 'Open the gift squares to see what is inside!']
+};
+function roomStory(room, done) {
+  var st = STORIES[room.id]; if (!st) { done(); return; }
+  var how = (MODE_INFO[room.mode] || {}).how || '';
+  var frames = [['point', st[0], '20%'], ['wow', 'How it works: ' + how + '.', '50%'], ['cheer', st[1], '80%']];
+  var d = document.createElement('div'); d.className = 'story';
+  d.innerHTML = '<div class="stframes">' + frames.map(function (f, i) {
+    return '<div class="stf" style="--d:' + i + ';background-image:url(' + room.img + ');background-position:' + f[2] + ' center"><img src="art/mascot-' + f[0] + '.webp" alt=""><p>' + esc(f[1]) + '</p></div>';
+  }).join('') + '</div><div class="stbar"><b class="outl">' + esc(room.name) + '</b><button class="b3 plum" id="stSkip">Skip</button><button class="b3 gold shine" id="stGo">Let\'s Bingo!</button></div>';
+  document.body.appendChild(d); SFX.tap && SFX.tap();
+  function close() { d.classList.add('out'); setTimeout(function () { d.remove(); }, 300); done(); }
+  d.querySelector('#stGo').onclick = function () { SFX.tap(); close(); };
+  d.querySelector('#stSkip').onclick = function () { SFX.tap(); close(); };
+}
+
+/* ---------- Treat Served! when an oven's treat is collected ---------- */
+function treatServed(r) {
+  var d = document.createElement('div'); d.className = 'gcol treat';
+  d.innerHTML = '<i class="bsrays"></i><div class="gcbox"><svg viewBox="0 0 48 40"><use href="#' + r.art + '"/></svg></div><div class="gcin"><div class="sribbon gcrib"><span class="outl">Treat Served!</span></div><b class="trname outl">' + esc(r.name) + '</b><div class="gcprz"><span class="gcp">' + icon('i-ticket') + '<b class="outl">+' + r.tickets + '</b></span></div></div>';
+  document.body.appendChild(d); d.onclick = function () { d.remove(); };
+  setTimeout(function () { if (d.isConnected) { d.classList.add('out'); setTimeout(function () { d.remove(); }, 350); } }, 2200);
+}
 function localTime(t) { try { return new Date(t).toLocaleString([], { weekday: 'short', hour: 'numeric', minute: '2-digit' }); } catch (e) { return ''; } }
 
 function uref(uid) { return ON.db.collection('users').doc(uid || ON.user.uid); }
