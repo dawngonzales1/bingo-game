@@ -636,7 +636,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 
 /* ---------- misc ---------- */
 #toast { position: fixed; left: 50%; top: calc(10px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); z-index: 60; max-width: min(520px, 86vw); padding: 8px 16px; border-radius: 14px; background: linear-gradient(180deg, var(--plum1), var(--plum2)); border: 3px solid var(--ol); box-shadow: 0 4px 0 var(--ol); color: #fff; font-weight: 600; text-align: center; animation: popIn .25s; }
-#fx { position: fixed; inset: 0; pointer-events: none; z-index: 55; width: 100%; height: 100%; }
+#fx { position: fixed; inset: 0; pointer-events: none; z-index: 90; width: 100%; height: 100%; }
 .float { position: fixed; z-index: 56; pointer-events: none; font-weight: 700; font-size: 17px; animation: floatUp 1s ease-out forwards; }
 @keyframes floatUp { to { transform: translateY(-46px); opacity: 0; } }
 #rotate { position: fixed; inset: 0; z-index: 100; display: none; place-items: center; text-align: center; padding: 24px; background: radial-gradient(70% 60% at 50% 30%, #fff6d8, #ffd1e0 50%, #b78cf2); }
@@ -2468,8 +2468,91 @@ function say(text) {
 
 /* ---------- gold sparkle ---------- */
 var fx = document.getElementById('fx'), fxc = fx.getContext('2d'), parts = [], fxOn = false;
-function sizeFx() { var d = window.devicePixelRatio || 1; fx.width = innerWidth * d; fx.height = innerHeight * d; fxc.setTransform(d, 0, 0, d, 0, 0); }
+function sizeFx() { var d = Math.min(2, window.devicePixelRatio || 1); fx.width = innerWidth * d; fx.height = innerHeight * d; fxc.setTransform(d, 0, 0, d, 0, 0); }
 addEventListener('resize', sizeFx); sizeFx();
+/* ---------- particle engine: sparkles, coin fountains, petal flurries, prizes flying to their counter ----------
+   one canvas, sprites drawn once into small offscreen images, everything stops when nothing is moving */
+var FXS = {}, FX_MAX = 240, fxLast = 0;
+function fxSprite(key, src, px) {
+  var im = new Image(); im.onload = function () { var c = document.createElement('canvas'); c.width = c.height = px; var g = c.getContext('2d'), s = Math.min(px / im.width, px / im.height); g.drawImage(im, (px - im.width * s) / 2, (px - im.height * s) / 2, im.width * s, im.height * s); FXS[key] = c; }; im.src = src;
+}
+fxSprite('coin', 'art/icon-coin.webp', 64); fxSprite('petal', 'art/icon-petal.webp', 64); fxSprite('gem', 'art/icon-amethyst.webp', 64); fxSprite('ticket', 'art/icon-ticket.webp', 64);
+function fxLite() { return document.documentElement.classList.contains('lite'); }
+function fxN(n) { return Math.max(1, Math.round(n * (fxLite() ? .3 : 1))); }
+function fxAdd(p) { if (parts.length >= FX_MAX) parts.shift(); parts.push(p); if (!fxOn) { fxOn = true; fxLast = performance.now(); requestAnimationFrame(stepFx); } }
+function sparkle(x, y, n) {
+  if (reduceMotion) return;
+  for (var i = 0, m = fxN(n || 40); i < m; i++) {
+    var a = Math.random() * Math.PI * 2, s = 2 + Math.random() * 5;
+    fxAdd({ k: 'spark', x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 2, g: .12, life: 1, dec: .016, r: 2 + Math.random() * 3, c: ['#ffe58f', '#f7b924', '#ff8fb1', '#b996ff', '#fff'][rand(5)] });
+  }
+}
+// coins (or gems, tickets) leap up in a fountain, spin, and rain down
+function coinBurst(x, y, n, kind) {
+  if (reduceMotion) return;
+  for (var i = 0, m = fxN(n || 20); i < m; i++) {
+    var a = -Math.PI / 2 + (Math.random() - .5) * 1.6, s = 5 + Math.random() * 6;
+    fxAdd({ k: kind || 'coin', x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, g: .28, life: 1, dec: .011, r: 11 + Math.random() * 7, rot: Math.random() * 6, vr: (Math.random() - .5) * .2, ph: Math.random() * 6, fs: .15 + Math.random() * .1 });
+  }
+}
+// petals flutter out and drift down, swaying
+function petalBurst(x, y, n) {
+  if (reduceMotion) return;
+  for (var i = 0, m = fxN(n || 14); i < m; i++) {
+    var a = Math.random() * Math.PI * 2, s = 1.5 + Math.random() * 4;
+    fxAdd({ k: 'petal', x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 2.5, g: .05, drag: .96, sway: 1, life: 1, dec: .009, r: 8 + Math.random() * 7, rot: Math.random() * 6, vr: (Math.random() - .5) * .16, ph: Math.random() * 6 });
+  }
+}
+// prizes fly in an arc from a point to a counter, then sparkle there
+function flyPrize(x, y, el, n, kind) {
+  if (reduceMotion || !el) return;
+  var r = el.getBoundingClientRect(); if (!r.width) return;
+  var tx = r.left + Math.min(r.width, r.height) / 2 + 4, ty = r.top + r.height / 2;
+  for (var i = 0, m = fxN(n || 8); i < m; i++) {
+    var sx = x + (Math.random() - .5) * 60, sy = y + (Math.random() - .5) * 40;
+    fxAdd({ k: kind || 'coin', fly: 1, x: sx, y: sy, x0: sx, y0: sy, cx: (sx + tx) / 2 + (Math.random() - .5) * 160, cy: Math.min(sy, ty) - 60 - Math.random() * 90, tx: tx, ty: ty, t: -i * .06, dur: .75 + Math.random() * .2, life: 1, r: 13, rot: 0, vr: .25 });
+  }
+}
+// rain from the top of the screen, for big wins
+function prizeRain(n, kind) {
+  if (reduceMotion) return;
+  for (var i = 0, m = fxN(n || 30); i < m; i++) fxAdd({ k: kind || 'coin', x: Math.random() * innerWidth, y: -20 - Math.random() * innerHeight * .6, vx: (Math.random() - .5) * 1.2, vy: 2 + Math.random() * 3, g: .12, life: 1, dec: .006, r: 10 + Math.random() * 8, rot: Math.random() * 6, vr: (Math.random() - .5) * .15, ph: Math.random() * 6, fs: .15 + Math.random() * .1 });
+}
+function stepFx(now) {
+  var dt = Math.min(2.5, Math.max(.5, (now - fxLast) / 16.7)); fxLast = now;
+  fxc.clearRect(0, 0, innerWidth, innerHeight);
+  var keep = [];
+  for (var i = 0; i < parts.length; i++) {
+    var p = parts[i];
+    if (p.fly) {
+      p.t += dt / 60 / p.dur; if (p.t < 0) { keep.push(p); continue; }
+      var t = Math.min(1, p.t), e = t * t * (3 - 2 * t), u = 1 - e;
+      p.x = u * u * p.x0 + 2 * u * e * p.cx + e * e * p.tx; p.y = u * u * p.y0 + 2 * u * e * p.cy + e * e * p.ty; p.rot += p.vr * dt;
+      if (t >= 1) { sparkleLite(p.tx, p.ty); continue; }
+      drawPart(p, 1, 1 - e * .35);
+    } else {
+      if (p.drag) { p.vx *= Math.pow(p.drag, dt); p.vy *= Math.pow(p.drag, dt); }
+      else p.vx *= Math.pow(.99, dt);
+      p.vy += p.g * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.life -= p.dec * dt;
+      if (p.sway) p.x += Math.sin(now / 260 + p.ph) * .9 * dt;
+      if (p.rot !== undefined) p.rot += p.vr * dt;
+      if (p.life <= 0 || p.y > innerHeight + 40) continue;
+      drawPart(p, Math.min(1, p.life * 1.6), 1);
+    }
+    keep.push(p);
+  }
+  parts = keep; fxc.globalAlpha = 1;
+  if (parts.length) requestAnimationFrame(stepFx); else { fxOn = false; fxc.clearRect(0, 0, innerWidth, innerHeight); }
+}
+function drawPart(p, alpha, scale) {
+  fxc.globalAlpha = Math.max(0, alpha);
+  if (p.k === 'spark') { fxc.fillStyle = p.c; fxc.beginPath(); fxc.moveTo(p.x, p.y - p.r * 2); fxc.lineTo(p.x + p.r * .6, p.y); fxc.lineTo(p.x, p.y + p.r * 2); fxc.lineTo(p.x - p.r * .6, p.y); fxc.fill(); return; }
+  var img = FXS[p.k]; if (!img) return;
+  var r = p.r * scale, flip = p.fs ? Math.cos(performance.now() * p.fs / 16 + p.ph) : 1;
+  fxc.save(); fxc.translate(p.x, p.y); fxc.rotate(p.rot || 0); fxc.scale(Math.abs(flip) < .15 ? .15 : flip, 1);
+  fxc.drawImage(img, -r, -r, r * 2, r * 2); fxc.restore();
+}
+function sparkleLite(x, y) { for (var i = 0; i < 4; i++) { var a = Math.random() * 6.28; parts.push({ k: 'spark', x: x, y: y, vx: Math.cos(a) * 2.5, vy: Math.sin(a) * 2.5, g: 0, life: .6, dec: .03, r: 2, c: '#fff3b8' }); } }
 
 /* ---------- bubbly layer: tap bursts, jelly presses, floating bubbles ---------- */
 function bubbles(host, n) {
@@ -2491,25 +2574,6 @@ function bubbles(host, n) {
   // pop-ups get a few bubbles drifting up behind them
   new MutationObserver(function (ms) { ms.forEach(function (m) { m.addedNodes.forEach(function (nd) { if (nd.classList && nd.classList.contains('veil')) bubbles(nd, 10); }); }); }).observe(document.body, { childList: true });
 })();
-function sparkle(x, y, n) {
-  if (reduceMotion) return;
-  for (var i = 0; i < (n || 40); i++) {
-    var a = Math.random() * Math.PI * 2, s = 2 + Math.random() * 5;
-    parts.push({ x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 2, life: 1, r: 2 + Math.random() * 3, c: ['#ffe58f', '#f7b924', '#ff8fb1', '#b996ff', '#fff'][rand(5)] });
-  }
-  if (!fxOn) { fxOn = true; requestAnimationFrame(stepFx); }
-}
-function stepFx() {
-  fxc.clearRect(0, 0, innerWidth, innerHeight);
-  parts = parts.filter(function (p) { return p.life > 0; });
-  parts.forEach(function (p) {
-    p.x += p.vx; p.y += p.vy; p.vy += .12; p.vx *= .98; p.life -= .016;
-    fxc.globalAlpha = Math.max(0, p.life); fxc.fillStyle = p.c; fxc.beginPath();
-    fxc.moveTo(p.x, p.y - p.r * 2); fxc.lineTo(p.x + p.r * .6, p.y); fxc.lineTo(p.x, p.y + p.r * 2); fxc.lineTo(p.x - p.r * .6, p.y); fxc.fill();
-  });
-  fxc.globalAlpha = 1;
-  if (parts.length) requestAnimationFrame(stepFx); else { fxOn = false; fxc.clearRect(0, 0, innerWidth, innerHeight); }
-}
 
 /* ---------- logo blossom made of bingo balls ---------- */
 function drawLogoBloom(cv) {
@@ -2940,7 +3004,7 @@ function rewardNext() {
   var r = REWQ.shift(), o = document.createElement('div'); o.className = 'rwd';
   o.innerHTML = '<div class="prays"></div><div class="rwin"><img class="rwart" src="art/' + r[0] + '.webp" alt=""><b class="rwt outl">' + r[1] + '</b><span class="rws">' + r[2] + '</span><button class="b3 gold" id="rwGo">Yay!</button></div>' +
     (r[3] ? '<img class="rwcordie" src="art/mascot-' + r[3] + '.webp" alt="">' : '');
-  document.body.appendChild(o); SFX.set && SFX.set(); setTimeout(function () { sparkle(innerWidth / 2, innerHeight * .4, 120); fireworks && fireworks(1600); }, 250);
+  document.body.appendChild(o); SFX.set && SFX.set(); setTimeout(function () { sparkle(innerWidth / 2, innerHeight * .4, 70); petalBurst(innerWidth / 2, innerHeight * .4, 26); coinBurst(innerWidth / 2, innerHeight * .5, 14); fireworks && fireworks(1600); }, 250);
   $('#rwGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (r[4]) r[4](); setTimeout(rewardNext, 300); }, 300); };
 }
 
@@ -3526,7 +3590,7 @@ function daub(ci, i, cell, fromBoost) {
   var tr = cell.querySelector('.tr'); if (tr) tr.remove();
   cell.insertAdjacentHTML('afterbegin', roomDaub() + '<i class="burst"></i>');
   setTimeout(function () { var bu = cell.querySelector('.burst'); if (bu) bu.remove(); }, 700);
-  if (!reduceMotion) { var cr = cell.getBoundingClientRect(); if (cr.width) sparkle(cr.left + cr.width / 2, cr.top + cr.height / 2, 10); }
+  if (!reduceMotion) { var cr = cell.getBoundingClientRect(); if (cr.width) { sparkle(cr.left + cr.width / 2, cr.top + cr.height / 2, 6); petalBurst(cr.left + cr.width / 2, cr.top + cr.height / 2, 3); } }
   SFX.daub(); addXp(2); if (!fromBoost && Math.random() < .7) floatText(cell, '+2 xp');
   if (c.t) collect(c, cell);
   modeDaub(ci, i, cell);
@@ -4009,7 +4073,7 @@ function claimLine(ci, line) {
   oneToGo(ci);
   if (k.won) el.classList.add('done'); else setTimeout(function () { burst.remove(); }, 1700);
   SFX.bingo(); say(name.replace('!', ''));
-  var r = el.getBoundingClientRect(); if (r.width) sparkle(r.left + r.width / 2, r.top + r.height / 2, 70);
+  var r = el.getBoundingClientRect(); if (r.width) { sparkle(r.left + r.width / 2, r.top + r.height / 2, 30); coinBurst(r.left + r.width / 2, r.top + r.height * .45, 22); petalBurst(r.left + r.width / 2, r.top + r.height * .45, 12); }
   if (R.cards.every(function (x) { return x.won; })) { R.active = false; clearTimeout(R.timer); setTimeout(function () { endRound('done'); }, 1800); }
   else if (R.left === 0) { R.active = false; clearTimeout(R.timer); toast('All bingos have been claimed'); setTimeout(function () { endRound('claimed'); }, 1800); }
 }
@@ -4091,6 +4155,7 @@ function results() {
   function totals() { var parts = [E.coins ? E.coins.toLocaleString() + ' coins' : '', (tix + wheelTix) ? (tix + wheelTix).toLocaleString() + ' tickets' : '', E.petals ? E.petals + ' petals' : '', E.cards.length ? E.cards.length + ' cards' : ''].filter(Boolean); $('#sumTot').textContent = parts.length ? parts.join(' · ') : 'nothing this time'; }
   totals();
   var lastRoom = R.roomObj, lastBet = bet; R = null;
+  if (E.coins) setTimeout(function () { prizeRain(Math.min(36, 12 + Math.round(E.coins / 40))); }, 500);
   $('#bAgain').onclick = function () { roomScreen(lastRoom); };
   if ($('#bPath')) $('#bPath').onclick = function () { this.remove(); gardenPath(lastBet, lastRoom.id); };
   $('#bLobby').onclick = lobby; $('#bAlb').onclick = function () { album(null); };
@@ -4265,7 +4330,7 @@ function grant(p) {
 function fmt(ms) { var s = Math.max(0, Math.ceil(ms / 1000)), m = Math.floor(s / 60); return m + ':' + ('0' + s % 60).slice(-2); }
 function hoursLeftToday() { var d = new Date(), m = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d; return Math.floor(m / 3600000) + 'h ' + Math.floor(m % 3600000 / 60000) + 'm'; }
 function curPill(id, n, extra) { return '<span class="pill2">' + icon(id) + '<b' + (extra ? ' id="' + extra + '"' : '') + '>' + n.toLocaleString() + '</b></span>'; }
-function refreshTop() { ['tickets', 'coins', 'petals', 'gems'].forEach(function (k) { var e = document.getElementById(k); if (!e) return; var v = S[k].toLocaleString(); if (e.textContent !== v) { var up = +e.textContent.replace(/\D/g, '') < S[k]; e.textContent = v; e.classList.remove('tick'); void e.offsetWidth; e.classList.add('tick'); if (up) { var r = e.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 18); } } }); }
+function refreshTop() { ['tickets', 'coins', 'petals', 'gems'].forEach(function (k) { var e = document.getElementById(k); if (!e) return; var v = S[k].toLocaleString(); if (e.textContent !== v) { var up = +e.textContent.replace(/\D/g, '') < S[k]; e.textContent = v; e.classList.remove('tick'); void e.offsetWidth; e.classList.add('tick'); if (up) { var pill = e.closest('.cur') || e; flyPrize(innerWidth / 2, innerHeight * .55, pill, 6, { tickets: 'ticket', coins: 'coin', petals: 'petal', gems: 'gem' }[k]); } } }); }
 
 function kitchen() {
   var timer;
