@@ -152,7 +152,7 @@ Progress is saved on the phone only.
 
 ## Playing without Claude (GitHub Pages)
 
-`index.html` is the same game as a normal web page, built from `bingo-bloom.html` by `build-site.sh` (run it after every change). With GitHub Pages turned on, anyone can play at https://dawngonzales1.github.io/bingo-game/ with no Claude account. Progress saves in each phone's browser.
+`game.html` is the same game as a normal web page and `index.html` frames it, both built from `bingo-bloom.html` by `build-site.sh` (run it after every change). When a phone is held upright, the frame turns the game sideways by itself, so iPhones work even with rotation lock on. With GitHub Pages turned on, anyone can play at https://dawngonzales1.github.io/bingo-game/ with no Claude account. Progress saves in each phone's browser.
 
 ## Ideas saved for later
 
