@@ -1979,6 +1979,26 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #lobby .hud-top .cur:nth-child(3) > svg { animation-delay: -1.2s; } #lobby .hud-top .cur:nth-child(4) > svg { animation-delay: -2.4s; } #lobby .hud-top .cur:nth-child(5) > svg { animation-delay: -3.6s; }
 @keyframes curGlint { 0%, 86%, 100% { filter: none; transform: none; } 92% { filter: brightness(1.5) drop-shadow(0 0 6px #fff7c0); transform: scale(1.14) rotate(-8deg); } }
 @media (prefers-reduced-motion: reduce) { #mapSvg .mlife, #mapSvg .pring, .citysec .gull, .citysec .csweep { display: none; } #mapSvg .pbob, #lobby .round .c, #lobby .hud-top .cur > svg { animation: none !important; } }
+
+/* room life: each room's own effect plays full size behind the room and bingo screens */
+#room, #play { isolation: isolate; }
+.rlife { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.rlife .fmov { position: absolute; inset: 0; }
+#play > .rlife, #room > .rlife { grid-area: 1 / 1 / -1 / -1; position: absolute; inset: 0; width: auto; height: auto; margin: 0; padding: 0; }
+#play .rlife { opacity: .85; }
+.rlife .ff { width: 8px; height: 8px; box-shadow: 0 0 10px 5px rgba(255,236,120,.8); }
+.rlife .bloomup { width: clamp(70px, 22vh, 120px); right: 3%; bottom: 6%; }
+.rlife .fly { width: clamp(34px, 11vh, 60px); animation-duration: 14s, .28s; }
+.rlife .cfz { width: 8px; height: 13px; animation-duration: 6s; }
+.rlife .cfz:nth-child(odd) { animation-duration: 7.5s; }
+.rlife .lolly { width: clamp(60px, 20vh, 110px); left: 2%; bottom: 5%; }
+.rlife .sunf { width: 45vw; right: -10%; top: -25%; }
+.rlife .wave { height: 10%; bottom: 3%; }
+.rlife .shellb { width: clamp(54px, 17vh, 96px); left: 2%; bottom: 4%; }
+.rlife .lant { width: clamp(30px, 10vh, 56px); animation-duration: 11s; }
+.rlife .petalf, .fmov .petalf { width: clamp(16px, 5vh, 28px); aspect-ratio: 1; top: -10%; animation: petalF 8s linear infinite; }
+@keyframes petalF { 0% { top: -10%; transform: translateX(0) rotate(0); opacity: 0; } 10% { opacity: 1; } 50% { transform: translateX(30px) rotate(200deg); } 90% { opacity: 1; } 100% { top: 105%; transform: translateX(-10px) rotate(400deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .rlife { display: none; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2700,8 +2720,11 @@ function fmovHtml(id) {
   else if (id === 'carnival') { var cc = ['#ff6fae', '#ffd447', '#7fe0ff', '#b98cff', '#7dffb0']; for (k = 0; k < 10; k++) h += '<i class="cfz" style="left:' + (4 + k * 9.5) + '%;background:' + cc[k % 5] + ';animation-delay:-' + (k * .37).toFixed(2) + 's"></i>'; h += '<b class="fmi lolly" style="background-image:url(art/daub-candy.webp)"></b>'; }
   else if (id === 'coast') { h += '<i class="sunf"></i><i class="wave"></i><b class="fmi shellb" style="background-image:url(art/daub-shell.webp)"></b>'; }
   else if (id === 'market') { for (k = 0; k < 4; k++) h += '<b class="fmi lant" style="background-image:url(art/daub-lantern.webp);left:' + (10 + k * 22) + '%;animation-delay:-' + (k * 1.6) + 's"></b>'; h += '<i class="glowf"></i>'; }
+  else { for (k = 0; k < 8; k++) h += '<b class="fmi petalf" style="background-image:url(art/icon-petal.webp);left:' + (4 + k * 12) + '%;animation-delay:-' + (k * 1.15).toFixed(2) + 's;animation-duration:' + (7 + k % 3 * 1.5) + 's"></b>'; }
   return '<span class="fmov">' + h + '</span>';
 }
+// the same room effects, full size, behind the room screen and the bingo screen
+function roomLife(room) { return room ? '<div class="rlife" aria-hidden="true">' + fmovHtml(room.id) + '</div>' : ''; }
 function featSpotlight() {
   clearInterval(FEAT_T);
   var tiles = [].slice.call(app.querySelectorAll('.ftile.ft2')); if (!tiles.length) return;
@@ -2917,7 +2940,7 @@ function roomScreen(room) {
     roomTop('Map', esc(room.name)) +
     '<button class="rnav l" id="rPrev" aria-label="Previous room">‹</button><button class="rnav r" id="rNext" aria-label="Next room">›</button>' +
     '<div class="rtopband">' + top + (featured ? '' : roomGrow(room)) + '<div class="jack"><span class="jrays"></span><small>GRAND JACKPOT</small><b id="jackN">0</b><span>' + icon('i-ticket') + 'tickets</span></div></div>' +
-    '<div class="ffly">' + range(1, 14).map(function (i) { return '<i style="left:' + rand(100) + '%;top:' + (20 + rand(75)) + '%;animation-delay:-' + rand(8) + 's;animation-duration:' + (6 + rand(6)) + 's"></i>'; }).join('') + '</div>' +
+    roomLife(room) + '<div class="ffly">' + range(1, 14).map(function (i) { return '<i style="left:' + rand(100) + '%;top:' + (20 + rand(75)) + '%;animation-delay:-' + rand(8) + 's;animation-duration:' + (6 + rand(6)) + 's"></i>'; }).join('') + '</div>' +
     '<div class="tiers">' + [1, 2, 4].map(function (n, i) {
       return '<div class="tier' + (S.cards === n ? ' sel' : '') + '" data-n="' + n + '" style="animation-delay:' + (i * .08) + 's"><span class="trib">' + n + ' card' + (n > 1 ? 's' : '') + '</span>' + (n === 2 ? '<span class="tflag">POPULAR</span>' : n === 4 ? '<span class="tflag best">BEST VALUE</span>' : '') +
         '<span class="tcards">' + '<i></i>'.repeat(n) + '</span>' +
@@ -3083,7 +3106,7 @@ function startRound(arm, room) {
   setTimeout(function () { if (R && R.els[R.lucky]) { R.els[R.lucky].classList.add('is-lucky'); var fc = R.els[R.lucky].querySelector('.cell.free'); if (fc) fc.textContent = '×2'; toast('Lucky Bloom: card ' + (R.lucky + 1) + ' wins double on a bingo!'); SFX.boost(); } }, 1600);
 }
 function renderPlay() {
-  show('<div class="screen" id="play">' +
+  show('<div class="screen" id="play"' + (R.mode === 'multi' && R.roomObj ? ' style="background-image:linear-gradient(180deg, rgba(255,240,246,.18), rgba(255,240,246,.32)), url(' + R.roomObj.img + ')"' : '') + '>' + roomLife(R.roomObj) +
     '<div class="lcol"><div class="lbtns"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button></div>' +
       '<div class="bleft" id="sLeftW"><small>BINGOS</small><b id="sLeft">0</b><small id="sPlayers">0 players</small></div>' +
       '</div>' +
