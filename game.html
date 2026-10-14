@@ -2354,6 +2354,43 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .calm .mxshine, .lite .mxshine { display: none; }
 #album { background: radial-gradient(ellipse at 50% 0, rgba(255,214,92,.18), transparent 55%), linear-gradient(180deg, #24386a, #14203f) !important; }
 .al-body { border-top: 3px solid #f6c64a !important; }
+
+/* kitchen, rebuilt: your Firefly treats on gold plates, ingredient pictures, a pantry you can share from */
+.panel.kitchen { background: radial-gradient(ellipse at 50% 0, rgba(255,214,92,.16), transparent 55%), linear-gradient(180deg, #24386a, #14203f) !important; }
+.khead { display: flex; align-items: center; gap: 12px; margin-right: 46px; }
+.khead img { height: 64px; margin: -10px 0 -6px; animation: hudBob 3s ease-in-out infinite; }
+.khead h3 { margin: 0; } .khead p { margin: 2px 0 0; font-size: 13px; opacity: .9; }
+.kplate { position: relative; flex: none; display: grid; place-items: center; width: 56px; aspect-ratio: 1; border-radius: 50%; background: center 40% / 125% no-repeat, radial-gradient(circle at 40% 35%, #fffaf0, #f3e3c0); box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px #2a1640, 0 4px 8px rgba(0,0,0,.4); }
+.kplate { height: 56px; } .kplate.big { width: 66px; height: 66px; } .kplate.empty { background: radial-gradient(circle at 40% 35%, #2c3d63, #121a33); } .kplate.empty svg { width: 60%; height: 60%; opacity: .45; }
+.kpantry { margin: 8px 0 10px; padding: 8px 10px; border-radius: 16px; background: rgba(0,0,0,.25); box-shadow: inset 0 0 0 1.5px rgba(246,198,74,.45); }
+.ksub { display: block; margin-bottom: 6px; font: 800 12px var(--ui); color: #ffe58f; }
+.kpans { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.kpan { position: relative; display: grid; justify-items: center; gap: 1px; padding: 6px 2px 5px; border: 0; border-radius: 14px; cursor: pointer; color: #fff; background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); box-shadow: inset 0 0 0 1.5px rgba(255,243,184,.35); }
+.kpan:active { transform: scale(.94); }
+.kip { display: block; width: 40px; height: 40px; background: center / contain no-repeat; filter: drop-shadow(0 3px 3px rgba(0,0,0,.4)); }
+.kpan b { font: 900 16px var(--ui); color: #ffe58f; } .kpan small { font-size: 10.5px; opacity: .9; }
+.panel.kitchen .ovens { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.panel.kitchen .oven { display: grid; grid-template-columns: auto 1fr; column-gap: 12px; align-items: center; min-height: 74px; padding: 8px 12px; border-radius: 18px; border: 0 !important; background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.03)) !important; box-shadow: inset 0 0 0 2px rgba(246,198,74,.5); color: #fff; }
+.panel.kitchen .oven > .kplate, .panel.kitchen .oven .ovart { grid-row: 1 / span 3; }
+.panel.kitchen .oven.oready { box-shadow: inset 0 0 0 2px #7dff9a, 0 0 18px rgba(125,255,154,.45); }
+.panel.kitchen .oven.oready .kplate { animation: hudBob 1.6s ease-in-out infinite; box-shadow: 0 0 0 3px #7dff9a, 0 0 0 5px #2a1640, 0 0 16px rgba(125,255,154,.8); }
+.panel.kitchen .oven .ovart .kplate { animation: ovWob 1.6s ease-in-out infinite; }
+.panel.kitchen .oven b { font-size: 16px; } .panel.kitchen .oven small { color: #e2e8f6; }
+.krec { display: grid !important; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 12px; padding: 10px 14px !important; margin-top: 10px; border-radius: 20px !important; border: 0 !important; background: linear-gradient(180deg, #fffaf0, #f6e6c4) !important; color: #3d1a4f !important; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4.5px #2a1640, 0 6px 12px rgba(0,0,0,.35) !important; }
+.krec.royal { background: linear-gradient(180deg, #fff6d0, #f6d77a) !important; }
+.krec .rinfo b { font-size: 18px; color: #3d1a4f; text-shadow: none; }
+.kneeds { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.kneed { display: flex; align-items: center; gap: 3px; padding: 2px 8px 2px 3px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 2px #7fd68a; }
+.kneed .kip { width: 30px; height: 30px; }
+.kneed b { font: 900 14px var(--ui); color: #3d1a4f; } .kneed small { font: 800 11px var(--ui); padding: 0 6px; border-radius: 999px; color: #fff; background: #2fae55; }
+.kneed.short { box-shadow: 0 0 0 2px #ff9a7a; } .kneed.short small { background: #d8402a; }
+.kwin { display: grid; justify-items: center; gap: 2px; text-align: center; } .kwin small { font-size: 11px; font-weight: 700; color: #6b5a7a; }
+.kpay { display: flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; background: linear-gradient(180deg, #ffe58f, #f6c64a); box-shadow: 0 0 0 2px #2a1640; } .kpay svg { width: 26px; height: 26px; } .kpay b { font: 900 18px var(--ui); color: #3d1a4f; }
+.krec [data-bake] { min-width: 96px; }
+.krec.can .kplate { animation: hudBob 2.4s ease-in-out infinite; }
+.ibing { background: center / 80% no-repeat, #fff !important; }
+.limits small { flex-basis: 100%; font-weight: 800; opacity: .8; } .limits .full b { color: #ff9a7a; }
+@media (max-height: 420px) { .kpans { grid-template-columns: repeat(6, 1fr); } .kip { width: 32px; height: 32px; } .kplate.big { width: 54px; height: 54px; } .krec { gap: 8px; padding: 8px 10px !important; } .khead img { height: 48px; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4589,15 +4626,15 @@ function refreshTop() { ['tickets', 'coins', 'petals', 'gems'].forEach(function 
 function kitchen() {
   var timer;
   function needChips(r) {
-    return Object.keys(r.need).map(function (k) { var g = ingById(k), have = S.ing[k] || 0, ok = have >= r.need[k]; return '<span class="chip' + (ok ? '' : ' short') + '"><i style="background:' + g.c + '"></i>' + r.need[k] + ' ' + g.name + ' <small class="hv">(you have ' + have + ')</small></span>'; }).join('');
+    return Object.keys(r.need).map(function (k) { var g = ingById(k), have = S.ing[k] || 0, ok = have >= r.need[k]; return '<span class="kneed' + (ok ? ' ok' : ' short') + '" title="' + g.name + '"><i class="kip" style="background-image:url(art/ing-' + k + '.webp)"></i><b>×' + r.need[k] + '</b><small>' + have + '</small></span>'; }).join('');
   }
   function canBake(r) { return Object.keys(r.need).every(function (k) { return (S.ing[k] || 0) >= r.need[k]; }); }
   function freeOven() { for (var i = 0; i < S.ovens.length; i++) if (!S.ovens[i]) return i; return -1; }
   function ovens() {
     return S.ovens.map(function (o, i) {
-      if (!o) return '<div class="oven"><svg viewBox="0 0 40 40"><use href="#i-chef"/></svg><b>Oven ' + (i + 1) + '</b><small>Empty. Bake a recipe below.</small></div>';
+      if (!o) return '<div class="oven kempty"><span class="kplate empty">' + icon('i-chef') + '</span><b>Oven ' + (i + 1) + '</b><small>Ready for a recipe</small></div>';
       var r = RECIPES.filter(function (x) { return x.id === o.r; })[0], left = o.done - Date.now();
-      var art = '<svg viewBox="0 0 48 40"><use href="#' + r.art + '"/></svg>';
+      var art = '<span class="kplate" style="background-image:url(art/card-' + TREAT_PIC[r.id] + '.webp)"></span>';
       if (left > 0) return '<div class="oven baking"><span class="ovart">' + art + '<i class="steam s1"></i><i class="steam s2"></i><i class="steam s3"></i></span><b>' + r.name + '</b><small>Ready in ' + fmt(left) + '</small><div class="pbar"><i style="width:' + Math.min(100, 100 - left / (r.secs * 1000) * 100) + '%"></i></div></div>';
       return '<div class="oven oready">' + art + '<b>' + r.name + '</b><button class="b3 green" data-collect="' + i + '">Collect ' + r.tickets + ' tickets</button></div>';
     }).join('');
@@ -4605,20 +4642,24 @@ function kitchen() {
   function recipes() {
     var fo = freeOven();
     return RECIPES.map(function (r) {
-      return '<div class="recipe' + (canBake(r) && fo >= 0 ? ' can' : '') + '"><svg class="rart" viewBox="0 0 48 40"><use href="#' + r.art + '"/></svg><div class="rinfo"><b>' + r.name + '</b><div class="chips">' + needChips(r) + '</div></div>' +
-        '<div class="rwin">' + icon('i-ticket') + '<b>' + r.tickets + '</b>' + (r.extra ? '<small>+ Scratch Card<br>+ Head Start<br>+ gold card</small>' : '') + '<small>' + (r.secs >= 60 ? r.secs / 60 + ' min' : r.secs + ' s') + '</small></div>' +
-        '<button class="b3 gold" data-bake="' + r.id + '"' + (canBake(r) && fo >= 0 ? '' : ' disabled') + '>Bake</button></div>';
+      var ok = canBake(r);
+      return '<div class="recipe krec' + (ok && fo >= 0 ? ' can' : '') + (r.extra ? ' royal' : '') + '"><span class="kplate big rart" style="background-image:url(art/card-' + TREAT_PIC[r.id] + '.webp)"></span><div class="rinfo"><b class="outl">' + r.name + '</b><div class="kneeds">' + needChips(r) + '</div></div>' +
+        '<div class="kwin"><span class="kpay">' + icon('i-ticket') + '<b>' + r.tickets + '</b></span>' + (r.extra ? '<small>+ Scratch Card, Head Start<br>and a gold album card</small>' : '') + '<small class="ktime">⏱ ' + (r.secs >= 60 ? r.secs / 60 + ' min' : r.secs + ' s') + '</small></div>' +
+        '<button class="b3 ' + (ok ? 'gold' : 'cream') + '" data-bake="' + r.id + '"' + (ok && fo >= 0 ? '' : ' disabled') + '>' + (!ok ? 'Need more' : fo < 0 ? 'Ovens full' : 'Bake') + '</button></div>';
     }).join('');
   }
-  function draw(v) { $('#kOv', v).innerHTML = ovens(); $('#kRec', v).innerHTML = recipes(); }
-  panel('<h3>Kitchen</h3><p>Bake treats with the ingredients you win in bingo. Each treat gives you tickets to play.</p>' +
-    '<div class="ovens" id="kOv"></div><div class="recipes" id="kRec"></div>', '', function (v) {
+  function pantry() { return INGS.map(function (g) { var n = S.ing[g.id] || 0; return '<button class="kpan" data-ing="' + g.id + '"><i class="kip" style="background-image:url(art/ing-' + g.id + '.webp)"></i><b>' + n + '</b><small>' + g.name + '</small></button>'; }).join(''); }
+  function draw(v) { $('#kOv', v).innerHTML = ovens(); $('#kRec', v).innerHTML = recipes(); $('#kPan', v).innerHTML = pantry(); }
+  panel('<div class="khead"><img src="art/mascot-gift.webp" alt=""><div><h3>Kitchen</h3><p>Bake treats with ingredients you win in bingo. Each treat turns into tickets.</p></div></div>' +
+    '<div class="kpantry"><span class="ksub">Your pantry · tap one to send it to a friend</span><div class="kpans" id="kPan"></div></div>' +
+    '<div class="ovens" id="kOv"></div><div class="recipes" id="kRec"></div>', 'kitchen', function (v) {
       draw(v); if (!guideDone('kitchen')) setTimeout(function () { if (v.isConnected) kitchenTour(); }, 500);
       timer = setInterval(function () { if (!v.isConnected) { clearInterval(timer); return; } var kb = $('#kOv', v), sig = S.ovens.map(function (o) { return !o ? 'e' : (o.done > Date.now() ? 'b' : 'r') + o.r; }).join();
         if (kb.dataset.sig !== sig) { kb.innerHTML = ovens(); kb.dataset.sig = sig; }
         else { var tmp = document.createElement('div'); tmp.innerHTML = ovens(); kb.querySelectorAll('.oven').forEach(function (o, i) { var n = tmp.children[i]; if (!n) return; var a = o.querySelector('small'), b = n.querySelector('small'); if (a && b) a.textContent = b.textContent; var x = o.querySelector('.pbar i'), y = n.querySelector('.pbar i'); if (x && y) x.style.width = y.style.width; }); } var anyReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); }); if (anyReady && !v.dataset.r) { v.dataset.r = 1; $('#kRec', v).innerHTML = recipes(); } }, 1000);
       v.addEventListener('click', function (e) {
-        var b = e.target.closest('[data-bake]'), c = e.target.closest('[data-collect]');
+        var b = e.target.closest('[data-bake]'), c = e.target.closest('[data-collect]'), gi = e.target.closest('[data-ing]');
+        if (gi) { sendIngredient(gi.dataset.ing); return; }
         if (b && !b.disabled) {
           var r = RECIPES.filter(function (x) { return x.id === b.dataset.bake; })[0], fo = freeOven();
           if (fo < 0 || !canBake(r)) return;
@@ -4636,6 +4677,28 @@ function kitchen() {
     });
 }
 
+// the Firefly picture of each treat (from the Patisserie album set)
+var TREAT_PIC = { macarons: 'S1-1', eclair: 'S1-3', tart: 'S1-5', gateau: 'S1-8' };
+function sendIngredient(id) {
+  var g = ingById(id), n = S.ing[id] || 0, d = ON.daily || {};
+  if (!ON.ok || !ON.user) { toast('Sign in to send ingredients to friends.', 2600); return; }
+  if (!ON.friends.length) { toast('Add a friend first in Team & Friends.', 2600); return; }
+  if (n < 1) { toast('You have no ' + g.name + ' to send. Win more in bingo!', 2600); return; }
+  if ((d.ingSent || 0) >= ING_SEND_MAX) { toast('You\'ve sent all ' + ING_SEND_MAX + ' ingredients for today. More at the 8:00 AM Central reset.', 3200); return; }
+  panel('<div class="sendc"><span class="kplate big" style="background-image:url(art/ing-' + id + '.webp);background-size:80%"></span><div><h3>Send 1 ' + esc(g.name) + '?</h3><p>You have ' + n + '. Sent today: ' + (d.ingSent || 0) + '/' + ING_SEND_MAX + '.</p>' +
+    '<p><select id="igTo">' + ON.friends.map(function (f) { return '<option value="' + f.id + '"' + (SOC.tradeTo === f.id ? ' selected' : '') + '>' + esc(f.name || 'Friend') + '</option>'; }).join('') + '</select></p>' +
+    '<div class="res-btns"><button class="b3 gold" id="igGo">Send</button><button class="b3 cream" id="igBack">Back</button></div></div></div>', 'small', function (v) {
+      $('#igBack', v).onclick = kitchen;
+      $('#igGo', v).onclick = function () {
+        var to = $('#igTo', v).value, f = ON.friends.filter(function (x) { return x.id === to; })[0] || {}; SOC.tradeTo = to; this.disabled = true;
+        S.ing[id]--; save();
+        uref(to).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'ing', ing: id, n: 1, at: Date.now() })
+          .then(function () { return dailyRef().set({ ingSent: FV().increment(1) }, { merge: true }); })
+          .then(function () { SFX.set(); toast(g.name + ' sent to ' + (f.name || 'your friend') + '!'); kitchen(); })
+          .catch(function () { S.ing[id]++; save(); toast('Couldn\'t send it. It\'s still yours.'); kitchen(); });
+      };
+    });
+}
 function shop(tab) {
   tab = tab || 'power';
   var body;
@@ -5296,7 +5359,8 @@ function prizeReveal(iconId, title, sub, done) {
 /* ---------- online play: accounts, cloud saves, friends, gifts, card trading and teams.
    Runs only in the web version (dawngonzales1.github.io/bingo-game), where the Firebase library is loaded. ---------- */
 var ON = { ok: false, user: null, profile: null, db: null, auth: null, subs: [], inbox: [], friends: [], requests: [], daily: {}, team: null, saveT: null };
-var GIFT_TIX = 10, GIFT_SEND_MAX = 20, GIFT_RECV_MAX = 20, CARD_SEND_MAX = 20, CARD_RECV_MAX = 20, TEAM_MAX = 30;
+// daily limits keep trading fair and the game a challenge (Dawn); they reset at 8:00 AM Central
+var GIFT_TIX = 10, GIFT_SEND_MAX = 10, GIFT_RECV_MAX = 10, CARD_SEND_MAX = 5, CARD_RECV_MAX = 5, ING_SEND_MAX = 10, ING_RECV_MAX = 10, GOLD_SEND_MAX = 2, GOLD_RECV_MAX = 2, TEAM_MAX = 30;
 var GOLD_SAT0 = Date.UTC(2026, 9, 17); // the first Gold Trading Saturday (Oct 17, 2026); then every other Saturday
 var FV = function () { return firebase.firestore.FieldValue; };
 function onlineInit() {
@@ -5953,7 +6017,10 @@ function social(tab) {
 function socialRefresh() { if ($('#socBody') && SOC.tab !== 'team') socialBody(); var ib = document.querySelector('[data-st="inbox"]'); if (ib) ib.innerHTML = 'Inbox' + (ON.inbox.length ? '<i class="tbadge">' + ON.inbox.length + '</i>' : ''); var fb = document.querySelector('[data-st="friends"]'); if (fb) fb.innerHTML = 'Friends' + (ON.requests.length ? '<i class="tbadge">' + ON.requests.length + '</i>' : ''); }
 function limitsLine() {
   var d = ON.daily || {};
-  return '<div class="limits"><span>Gifts sent <b>' + ((d.giftTo || []).length) + '/' + GIFT_SEND_MAX + '</b></span><span>Gifts collected <b>' + (d.giftsRecv || 0) + '/' + GIFT_RECV_MAX + '</b></span><span>Cards sent <b>' + (d.cardsSent || 0) + '/' + CARD_SEND_MAX + '</b></span><span>Cards collected <b>' + (d.cardsRecv || 0) + '/' + CARD_RECV_MAX + '</b></span><span class="rs">Resets in <b>' + untilText(nextReset()) + '</b> · 8:00 AM Central (' + localTime(nextReset()) + ' your time)</span></div>';
+  function L(t, a, b) { return '<span' + (a >= b ? ' class="full"' : '') + '>' + t + ' <b>' + a + '/' + b + '</b></span>'; }
+  return '<div class="limits"><small>Today\'s limits · reset 8:00 AM Central</small>' + L('Gifts sent', (d.giftTo || []).length, GIFT_SEND_MAX) + L('Gifts collected', d.giftsRecv || 0, GIFT_RECV_MAX) +
+    L('Cards sent', d.cardsSent || 0, CARD_SEND_MAX) + L('Cards collected', d.cardsRecv || 0, CARD_RECV_MAX) + L('Ingredients sent', d.ingSent || 0, ING_SEND_MAX) + L('Ingredients collected', d.ingRecv || 0, ING_RECV_MAX) +
+    (isGoldDay() ? L('★ Gold sent', d.goldSent || 0, GOLD_SEND_MAX) + L('★ Gold collected', d.goldRecv || 0, GOLD_RECV_MAX) : '') + '</div>';
 }
 function personRow(p, right) {
   var av = p.avatar && p.avatar.indexOf('|') > 0 ? '<span class="pav" style="background-image:url(art/card-' + p.avatar.replace('|', '-') + '.webp)"></span>' : '<span class="pav ini">' + esc((p.name || '?').charAt(0).toUpperCase()) + '</span>';
@@ -5971,8 +6038,8 @@ function socialBody() {
   } else if (t === 'inbox') {
     var gR = d.giftsRecv || 0, cR = d.cardsRecv || 0;
     b.innerHTML = (ON.inbox.length ? '<div class="res-btns"><button class="b3 gold" id="ibAll">Collect all</button></div>' + ON.inbox.map(function (g) {
-      var isCard = g.type === 'card', blocked = isCard ? cR >= CARD_RECV_MAX : gR >= GIFT_RECV_MAX;
-      return '<div class="prow ib">' + (isCard ? '<span class="ibcard" style="background-image:url(art/card-' + String(g.card).replace('|', '-') + '.webp)"></span>' : '<span class="ibic">' + icon('i-ticket') + '</span>') + '<span class="pnm"><b>' + (isCard ? esc(cardInfo(g.card).name) + (cardInfo(g.card).gold ? ' ★' : '') : g.n + ' tickets') + '</b><small>from ' + esc(g.fromName || 'a friend') + '</small></span><span class="pbtn"><button class="b3 gold sm" data-col="' + g.id + '"' + (blocked ? ' disabled' : '') + '>' + (blocked ? 'Daily limit' : 'Collect') + '</button></span></div>';
+      var isCard = g.type === 'card', isIng = g.type === 'ing', blocked = giftBlocked(g);
+      return '<div class="prow ib">' + (isCard ? '<span class="ibcard" style="background-image:url(art/card-' + String(g.card).replace('|', '-') + '.webp)"></span>' : isIng ? '<span class="ibic ibing" style="background-image:url(art/ing-' + esc(g.ing) + '.webp)"></span>' : '<span class="ibic">' + icon('i-ticket') + '</span>') + '<span class="pnm"><b>' + (isCard ? esc(cardInfo(g.card).name) + (cardInfo(g.card).gold ? ' ★' : '') : isIng ? (g.n || 1) + ' ' + esc((ingById(g.ing) || {}).name || 'ingredient') : g.n + ' tickets') + '</b><small>from ' + esc(g.fromName || 'a friend') + '</small></span><span class="pbtn"><button class="b3 gold sm" data-col="' + g.id + '"' + (blocked ? ' disabled' : '') + '>' + (blocked ? 'Daily limit' : 'Collect') + '</button></span></div>';
     }).join('') : '<p class="note">Your inbox is empty. Gifts and cards from friends show up here.</p>') + limitsLine();
     if ($('#ibAll')) $('#ibAll').onclick = function () { ON.inbox.slice().forEach(function (g) { collectGift(g, true); }); };
   } else if (t === 'trade') {
@@ -6034,11 +6101,12 @@ function sendCard(id, to) {
   if ((S.album[id] || 0) < 2) { toast('You need a spare copy to send this card.'); return; }
   if (ci.gold && !isGoldDay()) { toast('Gold cards can only be traded on Gold Saturday.', 3000); return; }
   if ((d.cardsSent || 0) >= CARD_SEND_MAX) { toast('You\'ve sent all ' + CARD_SEND_MAX + ' cards for today. More at the 8:00 AM Central reset.', 3200); return; }
+  if (ci.gold && (d.goldSent || 0) >= GOLD_SEND_MAX) { toast('You\'ve sent your ' + GOLD_SEND_MAX + ' gold cards for this Gold Saturday.', 3200); return; }
   panel('<div class="sendc">' + cardFace(id) + '<div><h3>Send ' + esc(ci.name) + '?</h3><p>To <b>' + esc(f.name || 'your friend') + '</b>. You\'ll keep ' + (S.album[id] - 1) + ' cop' + (S.album[id] - 1 === 1 ? 'y' : 'ies') + '.</p><div class="res-btns"><button class="b3 gold" id="scGo">Send</button><button class="b3 cream" data-x>Cancel</button></div></div></div>', 'small', function (v) {
     $('#scGo', v).onclick = function () {
       this.disabled = true; S.album[id]--; save();
       uref(to).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'card', card: id, gold: !!ci.gold, at: Date.now() })
-        .then(function () { return dailyRef().set({ cardsSent: FV().increment(1) }, { merge: true }); })
+        .then(function () { var u = { cardsSent: FV().increment(1) }; if (ci.gold) u.goldSent = FV().increment(1); return dailyRef().set(u, { merge: true }); })
         .then(function () {
           var face = v.querySelector('.cf'), r = face && face.getBoundingClientRect();
           if (face) { face.classList.add('flyaway'); }
@@ -6048,15 +6116,23 @@ function sendCard(id, to) {
     };
   });
 }
+function giftKind(g) { return g.type === 'card' ? (g.gold || (g.card && cardInfo(g.card).gold) ? 'gold' : 'card') : g.type === 'ing' ? 'ing' : 'gift'; }
+function giftBlocked(g) {
+  var d = ON.daily || {}, k = giftKind(g);
+  if (k === 'gold') return (d.goldRecv || 0) >= GOLD_RECV_MAX || (d.cardsRecv || 0) >= CARD_RECV_MAX;
+  return k === 'card' ? (d.cardsRecv || 0) >= CARD_RECV_MAX : k === 'ing' ? (d.ingRecv || 0) >= ING_RECV_MAX : (d.giftsRecv || 0) >= GIFT_RECV_MAX;
+}
 function collectGift(g, quiet) {
-  var d = ON.daily || {}, isCard = g.type === 'card';
-  if (isCard ? (d.cardsRecv || 0) >= CARD_RECV_MAX : (d.giftsRecv || 0) >= GIFT_RECV_MAX) { if (!quiet) toast('Daily limit reached. Collect more after the 8:00 AM Central reset.', 3000); return; }
-  var inc = {}; inc[isCard ? 'cardsRecv' : 'giftsRecv'] = FV().increment(1);
-  d[isCard ? 'cardsRecv' : 'giftsRecv'] = (d[isCard ? 'cardsRecv' : 'giftsRecv'] || 0) + 1;
+  var d = ON.daily || {}, k = giftKind(g), isCard = k === 'card' || k === 'gold';
+  if (giftBlocked(g)) { if (!quiet) toast(k === 'gold' ? 'You\'ve collected your ' + GOLD_RECV_MAX + ' gold cards for today.' : 'Daily limit reached. Collect more after the 8:00 AM Central reset.', 3000); return; }
+  var inc = {}, f = isCard ? 'cardsRecv' : k === 'ing' ? 'ingRecv' : 'giftsRecv';
+  inc[f] = FV().increment(1); d[f] = (d[f] || 0) + 1;
+  if (k === 'gold') { inc.goldRecv = FV().increment(1); d.goldRecv = (d.goldRecv || 0) + 1; }
   uref().collection('inbox').doc(g.id).delete().then(function () { return dailyRef().set(inc, { merge: true }); }).then(function () {
-    if (isCard) { var had = S.album[g.card] || 0; S.album[g.card] = had + 1; if (!had) { if (!S.newCards) S.newCards = {}; S.newCards[g.card] = 1; } var set = cardInfo(g.card).set; if (ownedIn(set) === 9 && !S.setsDone[set.id]) { S.setsDone[set.id] = true; S.coins += SET_REWARD; S.gems += 5; toast(set.name + ' set complete!', 3000); } if (!S.albumDone && ownedAll() === SETS.length * 9) albumComplete(400); if (!quiet) pupFx('i-card', had ? 'Card collected' : 'New card!', cardInfo(g.card).name + ' from ' + (g.fromName || 'a friend')); }
+    if (isCard) { var had = S.album[g.card] || 0; S.album[g.card] = had + 1; if (!had) { if (!S.newCards) S.newCards = {}; S.newCards[g.card] = 1; } var set = cardInfo(g.card).set; if (ownedIn(set) === 9 && !S.setsDone[set.id]) { S.setsDone[set.id] = true; S.coins += SET_REWARD; S.gems += 5; toast(set.name + ' set complete!', 3000); } else if (!quiet) { SFX.coin(); toast(cardInfo(g.card).name + ' added to your album!'); } }
+    else if (k === 'ing') { var gi = ingById(g.ing); S.ing[g.ing] = (S.ing[g.ing] || 0) + (g.n || 1); if (!quiet) { SFX.coin(); toast('+' + (g.n || 1) + ' ' + (gi ? gi.name : 'ingredient') + ' from ' + (g.fromName || 'a friend') + '!'); } }
     else { S.tickets += g.n || GIFT_TIX; refreshTop(); if (!quiet) { SFX.coin(); toast('+' + (g.n || GIFT_TIX) + ' tickets from ' + (g.fromName || 'a friend') + '!'); } }
-    save();
+    save(); socialRefresh();
   }).catch(function () { toast('Couldn\'t collect right now. Try again.'); });
 }
 function teamBody(b) {
