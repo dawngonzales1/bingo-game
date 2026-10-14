@@ -682,54 +682,54 @@ Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gol
 # Still to make (October 2026)
 
 ## 1. Cordie, the Bingo Bloom mascot
-Make the character sheet first and generate until you love her. Then upload that picture as a Style reference (Reference → Style) for every other Cordie picture so she looks the same each time. Keep the mint-green background: send them to Claude as they are and the background gets cut out for you. Rename her if you like. Shape: **Square (1:1)**.
+You already made her: use your favorite front view (crop it to just the front bunny in your Photos app) as the Style reference (Reference → Style) for every Cordie picture below. Leave the mint-green background; send them to Claude as they are and the background gets cut out for you. Take the best of the first batch: Claude can fix small color or edge problems. Shape: **Square (1:1)**.
 
-**Character sheet (make first)** (save as `mascot-sheet.png`)
+**Character sheet (done ✓, skip unless redoing)** (save as `mascot-sheet.png`)
 
 ```
-Character design sheet of a cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Shown three times side by side: front view, side view, back view, standing, full body. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Character design sheet of a cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Shown three times side by side: front view, side view, back view, standing, full body. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 **Welcome back (waving)** (save as `mascot-wave.png`)
 
 ```
-Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Waving hello with one paw and a big happy smile, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Waving hello with one paw and a big happy smile, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 **Giving a gift** (save as `mascot-gift.png`)
 
 ```
-Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Holding out a pink gift box with a big gold ribbon toward the viewer, excited and smiling, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Holding out a pink gift box with a big gold ribbon toward the viewer, excited and smiling, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 **Explaining (tips and new features)** (save as `mascot-point.png`)
 
 ```
-Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Pointing up and to the side with one paw, other paw on her hip, cheerful, as if explaining something, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Pointing up and to the side with one paw, other paw on her hip, cheerful, as if explaining something, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 **Celebrating** (save as `mascot-cheer.png`)
 
 ```
-Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Jumping in the air with both arms raised, overjoyed, eyes closed with a huge smile, full body, centered, no confetti. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Jumping in the air with both arms raised, overjoyed, eyes closed with a huge smile, full body, centered, no confetti. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 **Wow! (jackpots)** (save as `mascot-wow.png`)
 
 ```
-Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Both paws on her cheeks, mouth open in delighted surprise, ears standing straight up, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Both paws on her cheeks, mouth open in delighted surprise, ears standing straight up, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 **Sleeping (come back tomorrow)** (save as `mascot-sleep.png`)
 
 ```
-Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Curled up asleep hugging a small plum pillow, peaceful smile, eyes closed, full body, centered, no letters. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Curled up asleep hugging a small plum pillow, peaceful smile, eyes closed, full body, centered, no letters. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 **Head and shoulders (for speech bubbles)** (save as `mascot-face.png`)
 
 ```
-Cute 3D cartoon mobile game mascot portrait, head and shoulders: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Warm friendly smile, looking at the viewer, centered. Glossy soft Pixar-style render, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Cute 3D cartoon mobile game mascot portrait, head and shoulders: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Warm friendly smile, looking at the viewer, centered. Glossy soft Pixar-style render, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 ## 2. Loading screen
@@ -738,7 +738,7 @@ The big picture behind the logo and loading bar when the game opens. Upload your
 **Opening scene** (save as `splash-paris.png`)
 
 ```
-Glossy 3D cartoon mobile game key art: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear, standing happily in front of a charming pink Parisian pastry shop on a cobblestone street at golden hour, holding a gold whisk, pink blossom petals drifting in the air, a bunch of pastel bingo-ball balloons tied to a lamp post, warm magical light, rich detail. Empty open sky at the top center for a logo. No text, no logos.
+Glossy 3D cartoon mobile game key art: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear, standing happily in front of a charming pink Parisian pastry shop on a cobblestone street at golden hour, holding a gold whisk, pink blossom petals drifting in the air, a bunch of pastel bingo-ball balloons tied to a lamp post, warm magical light, rich detail. Empty open sky at the top center for a logo. No text, no logos.
 ```
 
 ## 3. Paris city rooms
