@@ -5763,7 +5763,7 @@ function fbAdminCheck() { if (!ON.ok || !ON.user) { ON.admin = false; return; } 
 function feedbackInbox(filter) {
   filter = filter || 'open';
   panel('<h3>Feedback inbox</h3><div class="seg" id="fbF"><button data-f="open" aria-pressed="' + (filter === 'open') + '">New</button><button data-f="all" aria-pressed="' + (filter === 'all') + '">All</button></div><div class="fblist" id="fbList"><p class="note">Loading…</p></div>' +
-    '<div class="res-btns"><button class="b3 plum" id="fbCopy">Copy all for Claude</button></div><p class="status" id="fbMsg"></p>', 'mid', function (v) {
+    '<div class="res-btns"><button class="b3 plum" id="fbCopy">' + (filter === 'open' ? 'Copy new for Claude' : 'Copy all for Claude') + '</button><button class="b3 gold" id="fbRead" hidden>✓ Mark these as read</button></div><p class="status" id="fbMsg"></p>', 'mid', function (v) {
       v.querySelectorAll('[data-f]').forEach(function (b) { b.onclick = function () { feedbackInbox(b.dataset.f); }; });
       var items = [];
       ON.db.collection('feedback').orderBy('at', 'desc').limit(200).get().then(function (snap) {
@@ -5777,9 +5777,13 @@ function feedbackInbox(filter) {
         v.querySelectorAll('[data-done]').forEach(function (b) { b.onclick = function () { ON.db.collection('feedback').doc(b.dataset.done).update({ done: true }).then(function () { b.closest('.fbitem').classList.add('done'); b.remove(); SFX.tap(); }); }; });
         v.querySelectorAll('.fbimg').forEach(function (im) { im.onclick = function () { im.classList.toggle('big'); }; });
       }).catch(function () { $('#fbList', v).innerHTML = '<p class="note">Only Dawn can open the inbox.</p>'; });
+      $('#fbRead', v).onclick = function () {
+        var btn = this, b = ON.db.batch(); items.forEach(function (x) { if (!x.done) b.update(ON.db.collection('feedback').doc(x.id), { done: true }); });
+        btn.disabled = true; b.commit().then(function () { SFX.set(); toast('Marked ' + items.length + ' notes as read. New notes will show up in New.', 3000); feedbackInbox('open'); }).catch(function () { btn.disabled = false; toast('Couldn\'t mark them right now. Try again.'); });
+      };
       $('#fbCopy', v).onclick = function () {
         var txt = items.map(function (x) { return '[' + x.type + (FB_LANG_TAG[x.lang] ? ', in ' + FB_LANG_TAG[x.lang][1] : '') + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text; }).join('\n');
-        try { navigator.clipboard.writeText(txt).then(function () { $('#fbMsg', v).textContent = 'Copied ' + items.length + ' notes. Paste them to Claude.'; }); } catch (e) { $('#fbMsg', v).textContent = 'Copy is not available here.'; }
+        try { navigator.clipboard.writeText(txt).then(function () { $('#fbMsg', v).textContent = 'Copied ' + items.length + ' notes. Paste them to Claude, then mark them as read so next time only new ones are copied.'; var rb2 = $('#fbRead', v); if (rb2 && items.some(function (x) { return !x.done; })) rb2.hidden = false; }); } catch (e) { $('#fbMsg', v).textContent = 'Copy is not available here.'; }
       };
     });
 }
