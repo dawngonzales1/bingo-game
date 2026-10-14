@@ -1568,6 +1568,63 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #play .pqcharge { position: absolute; left: 14px; right: 14px; bottom: -5px; height: 5px; border-radius: 999px; background: rgba(30,8,45,.85); box-shadow: 0 0 0 1px rgba(255,229,143,.6); overflow: hidden; }
 #play .pqcharge i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #ff9cc4, #ffd45c, #fff3b8); transition: width .35s ease; }
 @media (max-height: 300px) { #play .pqbar { gap: 3px; padding: 0 5px 0 3px; } #play .pqauto { padding: 0 5px; font-size: 8.5px; } #play .pqslots { gap: 3px; } }
+
+/* Power-ups store */
+.pstore { display: grid; grid-template-columns: minmax(170px, 30%) 1fr; gap: 12px; align-items: start; }
+.pinv { position: sticky; top: 0; padding: 10px; border-radius: 18px; background: linear-gradient(180deg, #4a1a6e, #2e0d48); box-shadow: 0 0 0 2px #f6c64a, 0 4px 10px rgba(10,2,20,.35); color: #fff; display: grid; gap: 8px; }
+.pinv h4 { margin: 0; text-align: center; color: #ffe58f; font-size: 15px; }
+.pinvt { display: grid; gap: 3px; }
+.pinvt .rtag { justify-self: start; }
+.pinvr { display: grid; grid-template-columns: 24px 1fr auto; align-items: center; gap: 6px; padding: 2px 8px 2px 4px; border-radius: 10px; background: rgba(255,255,255,.08); font-size: 12px; }
+.pinvr svg { width: 22px; height: 22px; }
+.pinvr b { min-width: 26px; text-align: center; padding: 0 6px; border-radius: 999px; background: #ffe58f; color: #3d1a4f; font-size: 12px; }
+.bundles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.bund { position: relative; display: grid; justify-items: center; gap: 4px; padding: 14px 6px 8px; border-radius: 18px; text-align: center; background: linear-gradient(180deg, #fff7e2, #ffe9b8); box-shadow: 0 0 0 2px #f6c64a, 0 3px 0 #c98a1a; }
+.bund.flagged { background: linear-gradient(180deg, #fff3fb, #ffd6ec); box-shadow: 0 0 0 2px #ff7ab6, 0 3px 0 #c2457e; }
+.bund .bn { font-size: 16px; color: #fff; }
+.bund small { font-size: 10.5px; font-weight: 700; color: #7a3f8a; min-height: 2.4em; }
+.bund .buy { font-size: 13px; padding: 4px 10px; }
+.bflag { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 1px 8px; border-radius: 999px; font-size: 9.5px; font-weight: 800; color: #fff; background: linear-gradient(90deg, #ff7ab6, #c48bff); box-shadow: 0 0 0 1.5px var(--ol); }
+.borbs { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; max-width: 70px; }
+.borbs i { width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff 0 12%, transparent 30%), radial-gradient(circle, #b98cff, #6a32d0 65%, #3d1680); box-shadow: 0 0 0 1.5px #f6c64a; }
+.borbs i:nth-child(3n+2) { background: radial-gradient(circle at 35% 30%, #fff 0 12%, transparent 30%), radial-gradient(circle, #8fe3ff, #3a80ea 65%, #1d3f8a); }
+.pstore h4.pick { margin: 12px 0 6px; color: var(--ink); }
+@media (max-height: 480px) { .pstore { grid-template-columns: 170px 1fr; } .bundles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+#bInfo { margin-left: 6px; }
+/* pack reveal */
+.brev { text-align: center; }
+.srbig { display: inline-block; margin-bottom: 8px; padding: 3px 14px; border-radius: 999px; color: #fff; font-size: 15px; background: linear-gradient(90deg, #ff7ab6, #c48bff, #79c6ff); box-shadow: 0 0 0 2px var(--ol), 0 0 20px rgba(255,214,92,.9); animation: pulse 1s ease-in-out infinite; }
+.brgrid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 6px 0 12px; }
+.brit { display: grid; justify-items: center; gap: 2px; width: 84px; animation: pqDrop .55s cubic-bezier(.2,.9,.3,1.4) both; }
+.brit .bro { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 38% 28%, #fff 0 8%, rgba(255,255,255,0) 26%), radial-gradient(circle, #b98cff, #6a32d0 62%, #3d1680); box-shadow: 0 0 0 2.5px #f6c64a; }
+.brit .bro svg { width: 70%; height: 70%; }
+.brit.r-rare .bro { box-shadow: 0 0 0 2.5px #8fe3ff, 0 0 12px 3px rgba(120,210,255,.8); }
+.brit.r-super .bro { box-shadow: 0 0 0 3px #fff3b8, 0 0 18px 6px rgba(255,214,92,.95); }
+.brit b { font-size: 15px; } .brit small { font-size: 11px; line-height: 1.15; }
+/* info pages */
+.itour h3 { text-align: center; } .itour .rtag { font-size: 15px; padding: 3px 14px; }
+.irows { display: grid; gap: 8px; margin: 10px 0; }
+.irow { display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 14px; background: #fff7e8; box-shadow: 0 0 0 1.5px #ead6b2; text-align: left; font-size: 14px; color: #3d1a4f; }
+.irow b { color: #6a2a9a; }
+.irow svg { width: 36px; height: 36px; }
+.inav { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.inav .b3 { min-width: 72px; min-height: 38px; padding: 6px 18px; font-size: 18px; line-height: 1; }
+.idots { display: flex; gap: 6px; } .idots i { width: 9px; height: 9px; border-radius: 50%; background: #e2d2ea; } .idots i.on { background: #f6b91f; box-shadow: 0 0 0 1.5px var(--ol); }
+/* room: today's featured power-ups */
+.rfeat { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 3px 8px; border-radius: 999px; background: rgba(30,8,45,.7); box-shadow: 0 0 0 1.5px #f6c64a, 0 0 12px rgba(255,214,92,.45); color: #ffe58f; }
+.rfeat { white-space: nowrap; flex: none; }
+.rfeat small { font-size: 9.5px; font-weight: 800; letter-spacing: .05em; line-height: 1.05; }
+.rfo { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle, #b98cff, #6a32d0 62%, #3d1680); box-shadow: 0 0 0 1.5px #f6c64a; }
+.rfo.r-rare { box-shadow: 0 0 0 1.5px #8fe3ff, 0 0 8px rgba(120,210,255,.8); }
+.rfo.r-super { box-shadow: 0 0 0 2px #fff3b8, 0 0 10px 3px rgba(255,214,92,.9); }
+.rfo svg { width: 72%; height: 72%; }
+.rdfeat { display: block; margin-top: 4px; font-size: 12px; color: #ffe58f; }
+/* title loading bar */
+.tload { display: grid; justify-items: center; gap: 6px; width: min(320px, 70vw); margin: 6px auto 0; }
+.tbar { width: 100%; height: 14px; border-radius: 999px; background: rgba(30,8,45,.75); box-shadow: 0 0 0 2px #f6c64a, 0 0 0 3.5px var(--ol), inset 0 2px 4px rgba(0,0,0,.4); overflow: hidden; }
+.tbar i { display: block; height: 100%; width: 8%; border-radius: inherit; background: linear-gradient(90deg, #ff9cc4, #ffd45c, #fff3b8); box-shadow: 0 0 10px rgba(255,214,92,.9); transition: width .35s ease; }
+.tload small { color: #fff; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+#bStart.popin { animation: pqDrop .6s cubic-bezier(.2,.9,.3,1.4); }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2118,9 +2175,11 @@ function title() {
     '<div class="in"><img class="tball" src="art/icon-bingo-ball.webp" alt="">' +
     '<h1 class="logo" data-t="Bingo Bloom"><span>Bingo Bloom</span></h1>' +
     '<div class="by"><span>by Cordelle</span></div>' +
-    '<button class="b3 gold shine" id="bStart">PLAY</button>' +
+    '<div class="tload" id="tLoad"><div class="tbar"><i id="tBar"></i></div><small id="tMsg">Preparing recipes…</small></div>' +
+    '<button class="b3 gold shine" id="bStart" hidden>PLAY</button>' +
     '<p class="tfoot">Fair bingo · every odd shown · no real-money prizes</p></div></div>');
   setTimeout(refreshTitle, 0);
+  titleLoad();
   $('#bStart').onclick = function () {
     ac(); SFX.coin();
     fsWanted = true; goFull();
@@ -2128,6 +2187,24 @@ function title() {
   };
 }
 
+/* loading bar: fetches the map, room and icon art before PLAY appears, so the lobby opens fully drawn */
+var LOADED = false;
+function titleLoad() {
+  var bar = $('#tBar'), msg = $('#tMsg'), btn = $('#bStart'), box = $('#tLoad');
+  function done() { if (!btn || !btn.isConnected) return; LOADED = true; if (box) box.remove(); btn.hidden = false; btn.classList.add('popin'); }
+  if (LOADED) { done(); return; }
+  var urls = ['art/lobby-paris-map.webp'].concat(ROOMS.map(function (r) { return r.img; }), CITY_ROOMS.map(function (id) { return 'art/landmark-' + id + '.webp'; }), ['art/icon-ticket.webp', 'art/icon-coin.webp', 'art/icon-petal.webp', 'art/icon-kitchen.webp', 'art/icon-album.webp', 'art/icon-shop.webp', 'art/icon-team.webp']);
+  urls = urls.filter(function (u, i) { return u && urls.indexOf(u) === i; });
+  var MSG = ['Preparing recipes…', 'Warming the ovens…', 'Polishing the bingo balls…', 'Arranging the flowers…', 'Start your bingo time!'], got = 0, t0 = Date.now(), fin = false;
+  function step() {
+    var f = got / urls.length; if (bar) bar.style.width = Math.round(8 + f * 92) + '%';
+    if (msg) msg.textContent = MSG[Math.min(MSG.length - 1, Math.floor(f * (MSG.length - 1)))];
+    if (got >= urls.length && !fin) { fin = true; setTimeout(done, Math.max(250, 1400 - (Date.now() - t0))); }
+  }
+  urls.forEach(function (u) { var im = new Image(); im.onload = im.onerror = function () { got++; step(); }; im.src = u; });
+  setTimeout(function () { if (!fin) { fin = true; got = urls.length; step(); done(); } }, 6000);
+  step();
+}
 function nextGiftText() { var d = new Date(), m = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d, h = Math.floor(m / 3600000); return h + 'h ' + Math.floor(m % 3600000 / 60000) + 'm'; }
 function rb(id, ic, cls, label, dot) { return '<button class="round" id="' + id + '"><span class="c ' + cls + '">' + icon(ic) + (dot ? '<span class="dot"></span>' : '') + '</span><span class="lb">' + label + '</span></button>'; }
 function topBar(extra) {
@@ -2330,6 +2407,7 @@ function roomScreen(room) {
     }).join('') + '</div>' +
     '<div class="rbottom"><div class="rpups">' + PRE_PUPS.map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<b>' + owned(id) + '</b></button>'; }).join('') +
       '<button class="pinfo" id="bPinfo" aria-label="What do power-ups do?">?</button></div>' +
+      '<span class="rfeat" title="Featured power-ups come up twice as often in this room today"><small>TODAY<br>HERE</small>' + roomFeat(room).map(function (id) { var t = pupTier(id); return '<span class="rfo r-' + t.id + '">' + icon(pupById(id).icon) + '</span>'; }).join('') + '<small>2×</small></span>' +
       '<div class="betsl"><button class="bstep" id="bMinus" aria-label="Lower bet">−</button><div class="btrack"><i id="bFill"></i><span id="bKnob">×1</span></div><button class="bstep" id="bPlus" aria-label="Raise bet">+</button></div>' +
       '<span class="rnote">' + (fair ? '<b>Fair Play:</b> free Head Start this round' : 'Bet ×' + '<b id="bTxt"></b> · wins more') + '</span></div>' +
     '</div>');
@@ -2455,7 +2533,7 @@ function startRound(arm, room) {
   var total = blackout ? 6 + rand(3) : 14 + rand(5);
   R = { roomObj: room, room: room.id, mode: room.mode, boostAt: (blackout ? 4 : 6) + 4 * S.cards, bet: S.bet, dc: dc, dp: dp, wild: false, players: total * 4 + rand(20), focus: 0, alert: false, els: [], cards: [], seq: shuffle(range(1, 75)).slice(0, blackout ? 65 : BALLS), idx: 0, called: {}, recent: [], active: false, paused: false, timer: null,
     total: total, left: total, meter: 0, bingos: 0, lucky: rand(S.cards), usedAuto: !!S.settings.auto, earned: { coins: 0, petals: 0, alerts: 0, tickets: 0, drops: 0, seeds: 0, cards: [], ings: [], sets: [] } };
-  modeSetup(); R.xp2 = dxp; if (dxp) setTimeout(function () { toast('Double XP is on for this round'); }, 2600);
+  R.feat = roomFeat(room); modeSetup(); R.xp2 = dxp; if (dxp) setTimeout(function () { toast('Double XP is on for this round'); }, 2600);
   for (var k = 0; k < S.cards; k++) { var nc = makeCard(); nc.lines = {}; nc.n = 0; R.cards.push(nc); }
   R.seq = kindSeq(R.seq.length, R.cards[R.lucky], blackout ? .64 : .68);
   renderPlay();
@@ -2476,7 +2554,7 @@ function startRound(arm, room) {
     if (n === 0) { ready.remove(); $('#sLeft').textContent = R.left; R.active = true; autoAlertOn(); callNext(); if (R.mode === 'shape') setTimeout(function () { toast('Bonus shape: ' + R.shape.name + '. Every line still wins a bingo; finishing the shape pays a big extra prize!', 4200); }, 3400); return; }
     var f = (4 - n) / 3;
     $('#sLeft').textContent = Math.max(1, Math.round(T * f)); var pl = $('#sPlayers'); if (pl) pl.textContent = Math.round(P * f) + ' players';
-    ready.innerHTML = '<div><b class="outl">Get ready!</b><span>Starts in ' + n + ' · players joining…</span>' + (n === 5 ? '' : '') + '</div>';
+    ready.innerHTML = '<div><b class="outl">Get ready!</b><span>Starts in ' + n + ' · players joining…</span><span class="rdfeat">Featured power-ups: ' + R.feat.map(function (id) { return pupById(id).name; }).join(' & ') + '</span>' + (n === 5 ? '' : '') + '</div>';
     tone(660 + (5 - n) * 70, 0, .2, 'sine', .06); n--; setTimeout(tick, 1000);
   })();
   setTimeout(function () { if (R && R.els[R.lucky]) { R.els[R.lucky].classList.add('is-lucky'); var fc = R.els[R.lucky].querySelector('.cell.free'); if (fc) fc.textContent = '×2'; toast('Lucky Bloom: card ' + (R.lucky + 1) + ' wins double on a bingo!'); SFX.boost(); } }, 1600);
@@ -2717,7 +2795,7 @@ function pqPick() {
   var r = Math.random(), start = r < PQ_TIERS[0].p ? 0 : r < PQ_TIERS[0].p + PQ_TIERS[1].p ? 1 : 2;
   for (var t = start; t < PQ_TIERS.length; t++) {
     var ok = PQ_TIERS[t].ids.filter(function (id) { return owned(id) - R.pq.filter(function (q) { return q === id; }).length > 0 && !(id === 'allx2' && (R.allx2 || R.pq.indexOf('allx2') >= 0)) && !(id === 'freeze' && S.settings.auto); });
-    if (ok.length) return ok[rand(ok.length)];
+    if (ok.length) { var fe = ok.filter(function (id) { return R.feat && R.feat.indexOf(id) >= 0; }); return fe.length && Math.random() < .5 ? fe[rand(fe.length)] : ok[rand(ok.length)]; }
   }
   return 'bloom';
 }
@@ -2775,6 +2853,55 @@ function autoWild() {
     var el = R.els[best.ci].querySelector('[data-i="' + best.i + '"]');
     if (el) flyTo(pqSrc() || $('#bWild'), el, 'i-wild', function () { if (R && !k.cells[best.i].d) { daub(best.ci, best.i, el, true); el.classList.add('zap'); } });
   }, 700);
+}
+
+/* ---------- power-up packs: every power-up drawn with the same tier odds as a round ---------- */
+var BUNDLES = [{ n: 3, coins: 250 }, { n: 6, coins: 480 }, { n: 12, coins: 900, rare: true, flag: 'POPULAR' }, { n: 25, gems: 30, rare: true }, { n: 48, gems: 55, sure: true, flag: 'BEST VALUE' }];
+function drawBundle(k) {
+  var out = [];
+  for (var i = 0; i < k.n; i++) { var r = Math.random(), t = r < PQ_TIERS[0].p ? 0 : r < PQ_TIERS[0].p + PQ_TIERS[1].p ? 1 : 2, ids = PQ_TIERS[t].ids; out.push(ids[rand(ids.length)]); }
+  function has(t) { return out.some(function (id) { return PQ_TIERS[t].ids.indexOf(id) >= 0; }); }
+  if (k.sure && !has(0)) out[0] = PQ_TIERS[0].ids[rand(PQ_TIERS[0].ids.length)];
+  if (k.rare && !has(0) && !has(1)) out[1] = PQ_TIERS[1].ids[rand(PQ_TIERS[1].ids.length)];
+  return out;
+}
+function bundleReveal(k, got) {
+  var order = { super: 0, rare: 1, regular: 2 }, counts = {};
+  got.forEach(function (id) { counts[id] = (counts[id] || 0) + 1; });
+  var ids = Object.keys(counts).sort(function (a, b) { return order[pupTier(a).id] - order[pupTier(b).id]; });
+  var best = pupTier(ids[0]).id;
+  panel('<div class="brev"><h3>' + k.n + ' pack opened!</h3>' + (best === 'super' ? '<b class="srbig outl">✦ SUPER RARE ✦</b>' : '') + '<div class="brgrid">' + ids.map(function (id, i) {
+      var q = pupById(id), t = pupTier(id);
+      return '<div class="brit r-' + t.id + '" style="animation-delay:' + (.15 + i * .12) + 's"><span class="bro">' + icon(q.icon) + '</span><b>×' + counts[id] + '</b><small>' + q.name + '</small></div>';
+    }).join('') + '</div><div class="res-btns"><button class="b3 gold" id="brOk">Collect</button></div></div>', 'mid', function (v) {
+      SFX.coin(); setTimeout(function () { SFX.boost(); }, 300); fireworks && best !== 'regular' && fireworks();
+      $('#brOk', v).onclick = function () { SFX.coin(); shop('power'); };
+    });
+}
+/* how-it-works pages, opened from the Shop */
+function infoTour(i, back) {
+  var P = [
+    { h: 'Your currencies', rows: [['i-ticket', '<b>Tickets</b> buy bingo cards. Win them from bingos, baking, rooms and daily gifts.'], ['i-coin', '<b>Coins</b> buy power-ups and card packs. You win them in every round.'], ['i-petal', '<b>Petals</b> grow your rooms on the map.'], ['i-gem', '<b>Amethysts</b> are rare gems for big packs and the Amethyst Vault. Earn them from levels, rooms, cities and album sets.']] },
+    { h: 'Power-ups play themselves', rows: [['i-blossom', 'Your power-ups load into the bar at the top of the round by themselves.'], ['i-super', 'As you mark numbers the glow line fills. When it is full, the next power-up fires and every card gets 2 free marks.'], ['i-plus5', '+5 Balls kicks in on the last ball, and Bloom Alert at the start of a round.'], ['i-gift', 'Each room features 2 power-ups that come up twice as often there. They change every day.']] },
+    { h: 'Regular power-ups', tag: 'regular', note: 'Show up in 3 out of 4 draws' },
+    { h: 'Rare power-ups', tag: 'rare', note: 'Show up in about 1 in 5 draws' },
+    { h: 'Super rare power-ups', tag: 'super', note: 'Show up in only about 1 in 20 draws' }
+  ], p = P[i];
+  var rows = p.tag ? PQ_TIERS.filter(function (t) { return t.id === p.tag; })[0].ids.map(function (id) { var q = pupById(id); return [q.icon, '<b>' + q.name + '</b> · ' + q.desc]; }) : p.rows;
+  panel('<div class="itour"><h3>' + (p.tag ? '<span class="rtag rt-' + p.tag + '">' + p.h + '</span>' : p.h) + '</h3>' + (p.note ? '<p class="note">' + p.note + '</p>' : '') +
+    '<div class="irows">' + rows.map(function (r) { return '<div class="irow">' + icon(r[0]) + '<span>' + r[1] + '</span></div>'; }).join('') + '</div>' +
+    '<div class="inav"><button class="b3 cream" id="iPrev"' + (i ? '' : ' disabled') + '>‹</button><span class="idots">' + P.map(function (x, j) { return '<i' + (j === i ? ' class="on"' : '') + '></i>'; }).join('') + '</span><button class="b3 gold" id="iNext">' + (i < P.length - 1 ? '›' : 'Done') + '</button></div></div>', 'mid', function (v) {
+      $('#iPrev', v).onclick = function () { SFX.tap(); infoTour(i - 1, back); };
+      $('#iNext', v).onclick = function () { SFX.tap(); if (i < P.length - 1) infoTour(i + 1, back); else if (back) back(); else closeVeil(); };
+      swipe(v.querySelector('.itour'), function (d) { if (d > 0 && i) infoTour(i - 1, back); else if (d < 0 && i < P.length - 1) infoTour(i + 1, back); });
+    });
+}
+/* each room features 2 power-ups that come up twice as often there; they change every day at 8 AM Central */
+function roomFeat(room) {
+  var all = PQ_TIERS[0].ids.concat(PQ_TIERS[1].ids, PQ_TIERS[2].ids.filter(function (x) { return x !== 'freeze'; })), h = 0, key = room.id + dayKey();
+  for (var i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+  var a = all[h % all.length], b = all[(h >>> 7) % all.length]; if (b === a) b = all[(all.indexOf(a) + 3) % all.length];
+  return [a, b];
 }
 /* ---------- Style Studio: avatar, frame and dauber you win as you play ---------- */
 var STYLE_DROP = .05, STAR_REG = 8, STAR_GOLD = 30;
@@ -3365,10 +3492,18 @@ function shop(tab) {
         '<button class="b3 plum buy" data-gem="' + g.id + '">' + icon('i-gem') + g.price + '</button></div>';
     }).join('') + '</div>';
   } else if (tab === 'power') {
-    body = '<div class="shopgrid">' + POWERUPS.map(function (p) {
+    body = '<div class="pstore"><aside class="pinv"><h4>My power-ups</h4>' + PQ_TIERS.map(function (t) {
+        return '<div class="pinvt t-' + t.id + '"><span class="rtag rt-' + t.id + '">' + t.name + '</span>' + t.ids.map(function (id) { var q = pupById(id); return '<div class="pinvr">' + icon(q.icon) + '<span>' + q.name + '</span><b>' + owned(id) + '</b></div>'; }).join('') + '</div>';
+      }).join('') + '<div class="pinvt"><span class="rtag">Before the round</span>' + PRE_PUPS.concat(['balls5', 'alert']).map(function (id) { var q = pupById(id); return '<div class="pinvr">' + icon(q.icon) + '<span>' + q.name + '</span><b>' + owned(id) + '</b></div>'; }).join('') + '</div></aside>' +
+      '<div class="pbund"><div class="bundles">' + BUNDLES.map(function (k) {
+        return '<div class="bund' + (k.flag ? ' flagged' : '') + '">' + (k.flag ? '<span class="bflag">' + k.flag + '</span>' : '') + '<b class="bn outl">' + k.n + ' pack</b><span class="borbs">' + '<i></i>'.repeat(Math.min(k.n, 6)) + '</span>' +
+          '<small>' + (k.sure ? 'At least 1 super rare' : k.rare ? 'At least 1 rare' : 'Random mix') + '</small>' +
+          '<button class="b3 ' + (k.gems ? 'plum' : 'gold') + ' buy" data-bund="' + k.n + '">' + icon(k.gems ? 'i-gem' : 'i-coin') + (k.gems || k.coins).toLocaleString() + '</button></div>';
+      }).join('') + '</div><p class="note">Each power-up in a pack is drawn with the same odds as in a round: regular 75%, rare 20%, super rare 5%.</p>' +
+      '<h4 class="pick">Pick your own</h4><div class="shopgrid">' + POWERUPS.map(function (p) {
       return '<div class="sitem"><svg viewBox="0 0 40 40"><use href="#' + p.icon + '"/></svg><b>' + p.name + '</b>' + (pupTier(p.id) ? '<span class="rtag rt-' + pupTier(p.id).id + '">' + pupTier(p.id).name + '</span>' : '') + '<small>' + p.desc + '</small><span class="own">You have ' + owned(p.id) + '</span>' +
         '<button class="b3 gold buy" data-buy="' + p.id + '">' + icon('i-coin') + p.price + '</button></div>';
-    }).join('') + '</div>';
+    }).join('') + '</div></div></div>';
   } else {
     body = '<div class="packs">' + PACKS.map(function (k) {
       return '<div class="pack"><div class="pk" style="background:linear-gradient(160deg,' + k.col[0] + ',' + k.col[1] + ')"><svg viewBox="0 0 40 40"><use href="#i-card"/></svg><b class="outl">' + k.cards + ' cards</b></div><b>' + k.name + '</b>' +
@@ -3377,9 +3512,18 @@ function shop(tab) {
     }).join('') + '</div>';
   }
   panel('<div class="tabs"><button data-t="power" aria-pressed="' + (tab === 'power') + '">Power-ups</button><button data-t="packs" aria-pressed="' + (tab === 'packs') + '">Card packs</button><button data-t="gems" aria-pressed="' + (tab === 'gems') + '">Amethyst Vault</button>' +
-    '<span class="spacer"></span>' + (tab === 'gems' ? curPill('i-gem', S.gems) : curPill('i-coin', S.coins)) + '</div>' + body +
+    '<span class="spacer"></span>' + (tab === 'power' ? curPill('i-gem', S.gems) : '') + (tab === 'gems' ? curPill('i-gem', S.gems) : curPill('i-coin', S.coins)) + '<button class="pinfo" id="bInfo" aria-label="How it works">i</button></div>' + body +
     '<p class="note">' + (tab === 'gems' ? 'Amethysts are rare gems. Earn them from level-ups, finished rooms and cities, and album sets.' : 'Everything here is bought with coins you win in bingo. All odds are shown.') + '</p>', '', function (v) {
       v.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { SFX.tap(); shop(b.dataset.t); }; });
+      $('#bInfo', v).onclick = function () { SFX.tap(); infoTour(0, function () { shop(tab); }); };
+      v.querySelectorAll('[data-bund]').forEach(function (b) {
+        b.onclick = function () {
+          var k = BUNDLES.filter(function (x) { return x.n === +b.dataset.bund; })[0];
+          if (k.gems ? S.gems < k.gems : S.coins < k.coins) { SFX.no(); toast(k.gems ? 'You need ' + (k.gems - S.gems) + ' more amethysts. Finish rooms, sets and level up to earn them.' : 'You need ' + (k.coins - S.coins) + ' more coins. Win them in bingo.', 3200); return; }
+          if (k.gems) S.gems -= k.gems; else S.coins -= k.coins;
+          var got = drawBundle(k); got.forEach(function (id) { give(id, 1); }); save(); refreshTop(); bundleReveal(k, got);
+        };
+      });
       v.querySelectorAll('[data-buy]').forEach(function (b) {
         b.onclick = function () {
           var p = pupById(b.dataset.buy);
