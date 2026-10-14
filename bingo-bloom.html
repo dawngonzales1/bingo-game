@@ -1294,7 +1294,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .x:hover, .panel .x:hover { transform: rotate(90deg) scale(1.08); }
 .x:active { transform: rotate(90deg) scale(.9); }
 /* popups: shimmering gold titles, drifting sparkle pattern, bouncy entrance */
-.panel { animation: panelIn .42s cubic-bezier(.2,.9,.3,1.35), panelDrift 18s linear infinite; }
+.panel { animation: panelIn .42s cubic-bezier(.2,.9,.3,1.35); }
 @keyframes panelIn { 0% { transform: scale(.7) translateY(20px); opacity: 0; } 100% { transform: none; opacity: 1; } }
 @keyframes panelDrift { to { background-position: 0 0, 22px 66px, 0 0, 0 0; } }
 .panel h3 { background: linear-gradient(90deg, #ffe58f 0%, #fff 20%, #ffd45c 40%, #ffe58f 100%) 0 0 / 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; filter: drop-shadow(0 2px 0 #3d1a4f) drop-shadow(1px 0 0 #3d1a4f) drop-shadow(-1px 0 0 #3d1a4f); animation: titleShim 3.5s linear infinite; }
@@ -1779,7 +1779,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #toast:not([hidden]) { animation: toastPop .5s cubic-bezier(.2,.9,.3,1.5) both; }
 @keyframes toastPop { 0% { transform: translateX(-50%) translateY(-24px) scale(.6); opacity: 0; } 60% { transform: translateX(-50%) scale(1.06, .94); opacity: 1; } 100% { transform: translateX(-50%) scale(1); } }
 /* pop-ups land with a squash and stretch */
-.panel { animation: panelJelly .55s cubic-bezier(.2,.9,.3,1.3), panelDrift 18s linear infinite !important; }
+.panel { animation: panelJelly .55s cubic-bezier(.2,.9,.3,1.3) !important; }
 @keyframes panelJelly { 0% { transform: scale(.6) translateY(30px); opacity: 0; } 55% { transform: scale(1.04, .96); opacity: 1; } 75% { transform: scale(.98, 1.02); } 100% { transform: none; } }
 .veil.typing .panel { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { .round .c, .round .c svg, .round .c img, .round .dot { animation: none !important; } }
@@ -2010,6 +2010,36 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .fblang button { padding: 3px 10px; border-radius: 999px; font: 800 12px var(--ui); color: #fff; background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,243,184,.5); cursor: pointer; }
 .fblang button[aria-pressed="true"] { color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #f6c64a); border-color: #fff; }
 .fbtag.fblg { background: #e9dcff; color: #3d1a4f; }
+
+/* Shop comes alive (cheap motion only: moves, spins and fades) */
+.panel .pack, .panel .sitem.vault { animation: tierIn .5s cubic-bezier(.2,.9,.3,1.3) both; animation-delay: calc(var(--d, 0) * .08s); position: relative; }
+.panel .pack.p-bronze { background: radial-gradient(ellipse at 50% 22%, rgba(255,186,130,.38), transparent 62%), rgba(255,255,255,.06); border-color: #e7a46e; }
+.panel .pack.p-silver { background: radial-gradient(ellipse at 50% 22%, rgba(225,238,255,.4), transparent 62%), rgba(255,255,255,.06); border-color: #c9d4e6; }
+.panel .pack.p-gold { background: radial-gradient(ellipse at 50% 22%, rgba(255,222,110,.5), transparent 64%), rgba(255,255,255,.08); border-color: #f6c64a; box-shadow: 0 0 0 2px rgba(246,198,74,.35), 0 0 22px rgba(255,214,92,.35); }
+.pkwrap { position: relative; display: grid; place-items: center; padding: 6px 18px; isolation: isolate; }
+.pkray { position: absolute; z-index: -1; width: 170px; aspect-ratio: 1; border-radius: 50%; background: repeating-conic-gradient(rgba(255,240,180,.5) 0 9deg, transparent 9deg 30deg); -webkit-mask: radial-gradient(circle, #000 25%, transparent 68%); mask: radial-gradient(circle, #000 25%, transparent 68%); animation: pkSpin 16s linear infinite; }
+.p-silver .pkray { background: repeating-conic-gradient(rgba(235,245,255,.55) 0 9deg, transparent 9deg 30deg); animation-duration: 13s; }
+.p-gold .pkray { width: 200px; background: repeating-conic-gradient(rgba(255,230,120,.75) 0 10deg, transparent 10deg 26deg); animation-duration: 10s; }
+@keyframes pkSpin { to { transform: rotate(360deg); } }
+.pack .pk { position: relative; overflow: hidden; animation: pkBob 3s ease-in-out infinite; animation-delay: calc(var(--d, 0) * -1s); }
+@keyframes pkBob { 50% { transform: translateY(-6px) rotate(-2deg); } }
+.pkshine { position: absolute; inset: -30% -60%; pointer-events: none; background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.8) 50%, transparent 58%); transform: translateX(-70%); animation: pkSweep 4.2s ease-in-out infinite; animation-delay: calc(var(--d, 0) * -1.4s); }
+@keyframes pkSweep { 0%, 55% { transform: translateX(-70%); } 85%, 100% { transform: translateX(70%); } }
+.pkwrap .tw { position: absolute; width: 11px; height: 11px; background: #fff; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: twk 2.2s ease-in-out infinite; opacity: 0; }
+.pkwrap .t1 { left: 4px; top: 14%; } .pkwrap .t2 { right: 2px; top: 46%; animation-delay: -.8s; } .pkwrap .t3 { left: 10px; bottom: 6%; animation-delay: -1.5s; width: 8px; height: 8px; }
+.pkflag { position: absolute; z-index: 3; top: -11px; left: 50%; transform: translateX(-50%) rotate(-2deg); white-space: nowrap; padding: 2px 10px; border-radius: 999px; font: 800 10.5px var(--ui); letter-spacing: .04em; color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #f6c64a); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--ol); }
+.vgem { position: relative; display: grid; place-items: center; width: 70px; height: 62px; isolation: isolate; }
+.vgem svg { position: relative; width: 54px !important; height: 54px !important; animation: vFloat 3.2s ease-in-out infinite; animation-delay: calc(var(--d, 0) * -.55s); }
+.vglow { position: absolute; z-index: -1; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(255,230,140,.75), rgba(200,140,255,.28) 48%, transparent 70%); animation: vGlow 3.2s ease-in-out infinite; animation-delay: calc(var(--d, 0) * -.55s); }
+@keyframes vFloat { 50% { transform: translateY(-6px) rotate(4deg); } }
+@keyframes vGlow { 50% { transform: scale(1.22); opacity: .55; } }
+.vaultart { height: 54px; margin: -10px 4px -10px -4px; animation: vFloat 3s ease-in-out infinite; filter: drop-shadow(0 3px 4px rgba(20,5,35,.45)); }
+.stabs button[aria-pressed="true"] .sto svg { animation: stoBounce 2.6s ease-in-out infinite; }
+@keyframes stoBounce { 0%, 70%, 100% { transform: none; } 78% { transform: translateY(-4px) rotate(-10deg) scale(1.1); } 86% { transform: rotate(8deg); } 93% { transform: rotate(-3deg); } }
+.bund.hero .btray { isolation: isolate; }
+.bund.hero .btray::before { content: ''; position: absolute; z-index: -1; left: 50%; top: 50%; width: 260px; aspect-ratio: 1; margin: -130px 0 0 -130px; border-radius: 50%; background: repeating-conic-gradient(rgba(255,230,140,.32) 0 9deg, transparent 9deg 28deg); -webkit-mask: radial-gradient(circle, #000 20%, transparent 66%); mask: radial-gradient(circle, #000 20%, transparent 66%); animation: pkSpin 18s linear infinite; }
+.lite .pkray, .lite .pkshine, .lite .vglow, .lite .pkwrap .tw, .lite .bund.hero .btray::before { display: none; }
+.lite .pack .pk, .lite .vgem svg, .lite .vaultart, .lite .stabs .sto svg { animation: none !important; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4064,8 +4094,8 @@ function shop(tab) {
   tab = tab || 'power';
   var body;
   if (tab === 'gems') {
-    body = '<div class="shopgrid">' + VAULT.map(function (g) {
-      return '<div class="sitem vault"><svg viewBox="0 0 40 40"><use href="#' + g.icon + '"/></svg><b>' + g.name + '</b><small>' + g.desc + '</small>' +
+    body = '<div class="shopgrid">' + VAULT.map(function (g, i) {
+      return '<div class="sitem vault" style="--d:' + i + '"><span class="vgem"><i class="vglow"></i><svg viewBox="0 0 40 40"><use href="#' + g.icon + '"/></svg></span><b>' + g.name + '</b><small>' + g.desc + '</small>' +
         '<button class="b3 plum buy" data-gem="' + g.id + '">' + icon('i-gem') + g.price + '</button></div>';
     }).join('') + '</div>';
   } else if (tab === 'power') {
@@ -4084,13 +4114,13 @@ function shop(tab) {
         '<button class="b3 gold buy" data-buy="' + p.id + '">' + icon('i-coin') + p.price + '</button></div>';
     }).join('') + '</div></div></div>';
   } else {
-    body = '<div class="packs">' + PACKS.map(function (k) {
-      return '<div class="pack"><div class="pk" style="background:linear-gradient(160deg,' + k.col[0] + ',' + k.col[1] + ')"><svg viewBox="0 0 40 40"><use href="#i-card"/></svg><b class="outl">' + k.cards + ' cards</b></div><b>' + k.name + '</b>' +
+    body = '<div class="packs">' + PACKS.map(function (k, i) {
+      return '<div class="pack p-' + k.id + '" style="--d:' + i + '">' + (k.sure ? '<span class="pkflag">1 GOLD GUARANTEED</span>' : '') + '<div class="pkwrap"><i class="pkray"></i><div class="pk" style="background:linear-gradient(160deg,' + k.col[0] + ',' + k.col[1] + ')"><i class="pkshine"></i><svg viewBox="0 0 40 40"><use href="#i-card"/></svg><b class="outl">' + k.cards + ' cards</b></div><i class="tw t1"></i><i class="tw t2"></i><i class="tw t3"></i></div><b>' + k.name + '</b>' +
         '<small>Odds for each card: ' + Math.round((1 - k.gold) * 100) + '% regular, ' + Math.round(k.gold * 100) + '% gold' + (k.sure ? '. At least 1 gold card guaranteed.' : '.') + '</small>' +
         '<button class="b3 gold buy" data-pack="' + k.id + '">' + icon('i-coin') + k.price.toLocaleString() + '</button></div>';
     }).join('') + '</div>';
   }
-  panel('<div class="tabs shead"><b class="stitle outl">' + ({ power: 'Power-ups', packs: 'Card Packs', gems: 'Amethyst Vault' }[tab]) + '</b>' +
+  panel('<div class="tabs shead">' + (tab === 'gems' ? '<img class="vaultart" src="art/art-vault.webp" alt="">' : '') + '<b class="stitle outl">' + ({ power: 'Power-ups', packs: 'Card Packs', gems: 'Amethyst Vault' }[tab]) + '</b>' +
     '<span class="spacer"></span>' + (tab === 'power' ? curPill('i-gem', S.gems) : '') + (tab === 'gems' ? curPill('i-gem', S.gems) : curPill('i-coin', S.coins)) + '<button class="pinfo" id="bInfo" aria-label="How it works">i</button></div>' + body +
     '<p class="note">' + (tab === 'gems' ? 'Amethysts are rare gems. Earn them from level-ups, finished rooms and cities, and album sets.' : 'Everything here is bought with coins you win in bingo. All odds are shown.') + '</p>' +
     '<div class="stabs">' + [['power', 'i-super', 'Power-ups'], ['packs', 'i-card', 'Card packs'], ['gems', 'i-gem', 'Vault']].map(function (t) { return '<button data-t="' + t[0] + '" aria-pressed="' + (tab === t[0]) + '"><span class="sto">' + icon(t[1]) + '</span><small>' + t[2] + '</small></button>'; }).join('') + '</div>', 'store', function (v) {
