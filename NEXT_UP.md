@@ -14,6 +14,10 @@ Ideas to build with the new art:
 - Motion: tiles gently bob, sparkles, a shine sweep, the HOT room glowing and pulsing, new rooms with a NEW ribbon that wiggles.
 - Room-themed daubs shown on each tile (butterfly, lollipop, lantern, shell, moonflower).
 
+## Pictures Claude makes (Dawn skips these in Firefly)
+- Cordie head-and-shoulders (`mascot-face`): crop from `mascot-wave`.
+- Loading screen (`splash-paris`): `room-paris` background + cut-out `mascot-wave`, with animated petals and balloons in the game.
+
 ## Art to swap in when it arrives
 - Cordie mascot: welcome back, Bloom Calendar presenter, tips, celebrations, sleeping on the gift button.
 - Loading screen key art.
