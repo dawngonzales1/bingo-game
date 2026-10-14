@@ -150,6 +150,10 @@ Progress is saved on the phone only.
 - **Tester notes page:** https://claude.ai/artifact/WXUyBLLbQHRRmLTcdhmYW5 (share it with each admin as a Contributor). Testers pick a part of the game, how it feels, and write a note; everyone sees all notes and Dawn can mark them fixed.
 - **Tester boost:** Settings → Tester boost gives 2,000 tickets, 5,000 coins, 100 amethysts and 5 of every power-up, so testers can try everything quickly.
 
+## Playing without Claude (GitHub Pages)
+
+`index.html` is the same game as a normal web page, built from `bingo-bloom.html` by `build-site.sh` (run it after every change). With GitHub Pages turned on, anyone can play at https://dawngonzales1.github.io/bingo-game/ with no Claude account. Progress saves in each phone's browser.
+
 ## Ideas saved for later
 
 - More rooms and cities.
