@@ -2333,6 +2333,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 #room .rtopband, #room .tiers, #room .rbottom, #room .rtop, #room .rnav { position: relative; z-index: 2; }
 #room .rnav { position: absolute; }
 #room .bake { background: linear-gradient(180deg, rgba(74,26,120,.94), rgba(46,14,84,.94)) !important; }
+.fbsave { display: block; margin: 6px 0 0; padding: 4px 12px; font-size: 13px; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -5838,9 +5839,18 @@ function feedbackInbox(filter) {
         $('#fbList', v).innerHTML = items.length ? items.map(function (x) {
           return '<div class="fbitem' + (x.done ? ' done' : '') + '"><div class="fbhd"><span class="fbtag t-' + x.type + '">' + (T[x.type] || x.type) + '</span>' + (FB_LANG_TAG[x.lang] ? '<span class="fbtag fblg">' + FB_LANG_TAG[x.lang].join(' ') + '</span>' : '') + '<b>' + esc(x.name || 'Player') + '</b><small>' + new Date(x.at).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '</small></div>' +
             '<p>' + esc(x.text) + '</p><small class="fbmeta">' + esc(x.screen || '') + ' · ' + esc(x.device || '') + ' · ' + esc(x.size || '') + ' · LV ' + (x.level || '?') + '</small>' +
-            (x.shot ? '<img class="fbimg" src="' + x.shot + '" alt="Screenshot">' : '') + (x.done ? '' : '<button class="b3 cream fbdone" data-done="' + x.id + '">✓ Done</button>') + '</div>';
+            (x.shot ? '<img class="fbimg" src="' + x.shot + '" alt="Screenshot"><button class="b3 cream fbsave" data-shot="' + x.id + '">📷 Save picture for Claude</button>' : '') + (x.done ? '' : '<button class="b3 cream fbdone" data-done="' + x.id + '">✓ Done</button>') + '</div>';
         }).join('') : '<p class="note">' + (filter === 'open' ? 'No new feedback. 🎉' : 'No feedback yet.') + '</p>';
         v.querySelectorAll('[data-done]').forEach(function (b) { b.onclick = function () { ON.db.collection('feedback').doc(b.dataset.done).update({ done: true }).then(function () { b.closest('.fbitem').classList.add('done'); b.remove(); SFX.tap(); }); }; });
+        v.querySelectorAll('[data-shot]').forEach(function (b) { b.onclick = function () {
+          var x = items.filter(function (y) { return y.id === b.dataset.shot; })[0]; if (!x) return;
+          var nm = 'feedback-' + (x.name || 'player').replace(/[^a-z0-9]+/gi, '-') + '-' + new Date(x.at).toISOString().slice(0, 10) + '.jpg';
+          fetch(x.shot).then(function (r) { return r.blob(); }).then(function (bl) {
+            var f = new File([bl], nm, { type: bl.type || 'image/jpeg' });
+            if (navigator.canShare && navigator.canShare({ files: [f] })) return navigator.share({ files: [f], title: nm });
+            var a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = nm; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+          }).then(function () { b.textContent = '✓ Saved'; }).catch(function () {});
+        }; });
         v.querySelectorAll('.fbimg').forEach(function (im) { im.onclick = function () { im.classList.toggle('big'); }; });
       }).catch(function () { $('#fbList', v).innerHTML = '<p class="note">Only Dawn can open the inbox.</p>'; });
       $('#fbRead', v).onclick = function () {
@@ -5848,7 +5858,7 @@ function feedbackInbox(filter) {
         btn.disabled = true; b.commit().then(function () { SFX.set(); toast('Marked ' + items.length + ' notes as read. New notes will show up in New.', 3000); feedbackInbox('open'); }).catch(function () { btn.disabled = false; toast('Couldn\'t mark them right now. Try again.'); });
       };
       $('#fbCopy', v).onclick = function () {
-        var txt = items.map(function (x) { return '[' + x.type + (FB_LANG_TAG[x.lang] ? ', in ' + FB_LANG_TAG[x.lang][1] : '') + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text; }).join('\n');
+        var txt = items.map(function (x) { return '[' + x.type + (FB_LANG_TAG[x.lang] ? ', in ' + FB_LANG_TAG[x.lang][1] : '') + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text + (x.shot ? '  [📷 has a screenshot in the inbox]' : ''); }).join('\n');
         try { navigator.clipboard.writeText(txt).then(function () { $('#fbMsg', v).textContent = 'Copied ' + items.length + ' notes. Paste them to Claude, then mark them as read so next time only new ones are copied.'; var rb2 = $('#fbRead', v); if (rb2 && items.some(function (x) { return !x.done; })) rb2.hidden = false; }); } catch (e) { $('#fbMsg', v).textContent = 'Copy is not available here.'; }
       };
     });
