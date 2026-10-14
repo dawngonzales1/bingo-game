@@ -1886,6 +1886,50 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @keyframes fcHop { 40% { transform: translateX(-35%) translateY(-14px) rotate(-6deg); } }
 @media (max-height: 300px) { .fxtra .fpu { display: none; } .ftile.ft2.hero { max-height: clamp(52px, 28vh, 80px); } .fcordie { height: 70px; } }
 @media (prefers-reduced-motion: reduce) { .ftile.ft2 { animation: none !important; } }
+
+/* featured tiles as tiny movies (Dawn: "even the featured room thumbnails are animated") */
+.ftile.ft2 .fclip { position: absolute; inset: 4px; border-radius: 12px; overflow: hidden; z-index: 0; }
+.ftile.ft2 .fclip .fpic { inset: 0; border-radius: 0; }
+.ftile.ft2 .fmov, .ftile.ft2 .fflash { position: absolute; inset: 4px; border-radius: 12px; overflow: hidden; pointer-events: none; z-index: 1; }
+.ftile.ft2 .fpic { animation: fScene 12s linear infinite; }
+.ftile.ft2:nth-child(2) .fpic, .ftile.ft2:nth-child(2) .fflash { animation-delay: -2.4s; }
+.ftile.ft2:nth-child(3) .fpic, .ftile.ft2:nth-child(3) .fflash { animation-delay: -4.8s; }
+.ftile.ft2:nth-child(4) .fpic, .ftile.ft2:nth-child(4) .fflash { animation-delay: -7.2s; }
+.ftile.ft2:nth-child(5) .fpic, .ftile.ft2:nth-child(5) .fflash { animation-delay: -9.6s; }
+@keyframes fScene {
+  0% { transform: scale(1.06) translate(0, 0); } 33.2% { transform: scale(1.16) translate(-3%, -2%); }
+  33.3% { transform: scale(1.55) translate(14%, 8%); } 66.5% { transform: scale(1.62) translate(10%, 5%); }
+  66.6% { transform: scale(1.5) translate(-15%, -6%); } 100% { transform: scale(1.38) translate(-11%, -3%); } }
+.ftile.ft2 .fflash { z-index: 3; background: radial-gradient(circle at 50% 45%, #fff, rgba(255,250,230,.6) 45%, transparent 75%); opacity: 0; animation: fFlash 12s linear infinite; }
+@keyframes fFlash { 0%, 32.6%, 36%, 65.9%, 69.3%, 99.3% { opacity: 0; } 33.3%, 66.6%, 100% { opacity: .85; } }
+.fmov .fmi { position: absolute; display: block; background: center / contain no-repeat; filter: drop-shadow(0 2px 3px rgba(20,5,35,.45)); }
+/* Midnight Garden: fireflies and a moonflower that blooms */
+.fmov .ff { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #fff8b0; box-shadow: 0 0 6px 3px rgba(255,236,120,.85); animation: ffly 6.3s ease-in-out infinite; }
+@keyframes ffly { 0%, 100% { transform: translate(0, 0); opacity: .2; } 25% { opacity: 1; } 50% { transform: translate(14px, -10px); opacity: .5; } 75% { transform: translate(-8px, -16px); opacity: 1; } }
+.fmov .bloomup { width: 34%; aspect-ratio: 1; right: 6%; bottom: 14%; animation: bloomUp 4s ease-in-out infinite; }
+@keyframes bloomUp { 0%, 12% { transform: scale(0) rotate(-40deg); opacity: 0; } 30%, 75% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(1.1) rotate(6deg); } 100% { transform: scale(.2) rotate(30deg); opacity: 0; } }
+/* Butterfly Meadow: butterflies flutter across */
+.fmov .fly { width: 24%; aspect-ratio: 1; left: -26%; animation: flyX 7s linear infinite, flap .28s ease-in-out infinite alternate; }
+@keyframes flyX { 0% { left: -26%; transform: translateY(0) rotate(8deg); } 25% { transform: translateY(-12px) rotate(-6deg); } 50% { transform: translateY(6px) rotate(8deg); } 75% { transform: translateY(-8px) rotate(-6deg); } 100% { left: 104%; transform: translateY(0) rotate(8deg); } }
+@keyframes flap { to { scale: .55 1; } }
+/* Candy Carnival: confetti rain and a spinning lollipop */
+.fmov .cfz { position: absolute; top: -10%; width: 5px; height: 8px; border-radius: 2px; animation: cfFall 3.7s linear infinite; }
+@keyframes cfFall { 0% { transform: translateY(0) rotate(0); } 100% { transform: translateY(1400%) rotate(540deg); } }
+.fmov .lolly { width: 30%; aspect-ratio: 1; left: 6%; bottom: 14%; animation: lolly 3s ease-in-out infinite; }
+@keyframes lolly { 0%, 100% { transform: rotate(-14deg) scale(.95); } 50% { transform: rotate(14deg) scale(1.08) translateY(-6%); } }
+/* Gold Coast: sun flare, shimmering waves and a bobbing shell */
+.fmov .sunf { position: absolute; right: -14%; top: -30%; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,230,.95), rgba(255,214,110,.55) 25%, rgba(255,190,90,.15) 50%, transparent 70%); mix-blend-mode: screen; animation: sunP 3.2s ease-in-out infinite; }
+@keyframes sunP { 50% { transform: scale(1.18); opacity: .7; } }
+.fmov .wave { position: absolute; left: -50%; right: -50%; bottom: 8%; height: 18%; background: repeating-linear-gradient(100deg, transparent 0 18px, rgba(255,255,255,.55) 20px 24px, transparent 26px 44px); opacity: .7; animation: waveX 3s linear infinite; -webkit-mask: linear-gradient(transparent, #000 40%, #000 60%, transparent); mask: linear-gradient(transparent, #000 40%, #000 60%, transparent); }
+@keyframes waveX { to { transform: translateX(44px); } }
+.fmov .shellb { width: 28%; aspect-ratio: 1; left: 8%; bottom: 12%; animation: shellB 2.6s ease-in-out infinite; }
+@keyframes shellB { 50% { transform: translateY(-14%) rotate(-10deg); } }
+/* Lantern Market: lanterns float up through a warm flicker */
+.fmov .lant { width: 18%; aspect-ratio: 1; bottom: -30%; animation: lantUp 6.4s ease-in infinite; }
+@keyframes lantUp { 0% { bottom: -30%; transform: rotate(-6deg); opacity: 0; } 15% { opacity: 1; } 50% { transform: rotate(6deg) translateX(6px); } 85% { opacity: 1; } 100% { bottom: 100%; transform: rotate(-4deg); opacity: 0; } }
+.fmov .glowf { position: absolute; inset: 0; background: radial-gradient(circle at 50% 70%, rgba(255,170,70,.35), transparent 65%); animation: glowF 1.7s steps(3) infinite; }
+@keyframes glowF { 0% { opacity: .5; } 33% { opacity: .9; } 66% { opacity: .65; } }
+@media (prefers-reduced-motion: reduce) { .ftile.ft2 .fmov, .ftile.ft2 .fflash { display: none; } .ftile.ft2 .fpic { animation: none; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2575,6 +2619,16 @@ function rewardNext() {
 
 /* featured rooms showcase: one room at a time grows into a spotlight card, with Cordie pointing at it */
 var FEAT_T = null;
+// each featured tile plays like a tiny movie: scene cuts plus a live effect for its room
+function fmovHtml(id) {
+  var h = '', k;
+  if (id === 'garden') { for (k = 0; k < 7; k++) h += '<i class="ff" style="left:' + (8 + rand(84)) + '%;top:' + (15 + rand(60)) + '%;animation-delay:-' + (k * .9).toFixed(1) + 's"></i>'; h += '<b class="fmi bloomup" style="background-image:url(art/daub-moonflower.webp)"></b>'; }
+  else if (id === 'meadow') { for (k = 0; k < 3; k++) h += '<b class="fmi fly" style="background-image:url(art/icon-butterfly.webp);top:' + (14 + k * 24) + '%;animation-delay:-' + (k * 2.3) + 's"></b>'; }
+  else if (id === 'carnival') { var cc = ['#ff6fae', '#ffd447', '#7fe0ff', '#b98cff', '#7dffb0']; for (k = 0; k < 10; k++) h += '<i class="cfz" style="left:' + (4 + k * 9.5) + '%;background:' + cc[k % 5] + ';animation-delay:-' + (k * .37).toFixed(2) + 's"></i>'; h += '<b class="fmi lolly" style="background-image:url(art/daub-candy.webp)"></b>'; }
+  else if (id === 'coast') { h += '<i class="sunf"></i><i class="wave"></i><b class="fmi shellb" style="background-image:url(art/daub-shell.webp)"></b>'; }
+  else if (id === 'market') { for (k = 0; k < 4; k++) h += '<b class="fmi lant" style="background-image:url(art/daub-lantern.webp);left:' + (10 + k * 22) + '%;animation-delay:-' + (k * 1.6) + 's"></b>'; h += '<i class="glowf"></i>'; }
+  return '<span class="fmov">' + h + '</span>';
+}
 function featSpotlight() {
   clearInterval(FEAT_T);
   var tiles = [].slice.call(app.querySelectorAll('.ftile.ft2')); if (!tiles.length) return;
@@ -2623,7 +2677,7 @@ function lobby() {
     '</div>' +
     '<div class="hud hud-feat">' + feat.map(function (r) {
       var th = FEAT_THEME[r.id] || FEAT_THEME.garden, hot = r.id === hotRoom();
-      return '<button class="ftile ft2' + (hot ? ' is-hot' : '') + '" data-r="' + ROOMS.indexOf(r) + '" style="--c1:' + th[0] + ';--c2:' + th[1] + ';--fb:' + th[2] + '"><span class="fpic" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span>' +
+      return '<button class="ftile ft2' + (hot ? ' is-hot' : '') + '" data-r="' + ROOMS.indexOf(r) + '" style="--c1:' + th[0] + ';--c2:' + th[1] + ';--fb:' + th[2] + '"><span class="fclip"><span class="fpic" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span></span>' + fmovHtml(r.id) + '<i class="fflash"></i>' +
         '<span class="frib">' + MODE_INFO[r.mode].tag + '</span>' + (hot ? '<span class="fhot" title="2× petals here today">🔥<b>HOT</b><small>2× petals</small></span>' : '') +
         '<span class="fnm">' + esc(r.name) + '</span><i class="fspk s1"></i><i class="fspk s2"></i><i class="fspk s3"></i>' +
         '<span class="fxtra"><span class="fpl"><i class="live"></i><b data-pl="' + r.id + '">' + (40 + rand(60)) + '</b> playing</span><span class="fpu">' + roomFeat(r).map(function (id) { return icon(pupById(id).icon); }).join('') + '<small>2×</small></span><span class="fgo">PLAY ▶</span></span></button>';
