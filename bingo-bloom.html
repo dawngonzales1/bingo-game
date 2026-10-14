@@ -2318,6 +2318,20 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .fr-checker { background: repeating-conic-gradient(#1c1c24 0 25%, #f6f6f6 0 50%) 0 0 / calc(var(--av) * .18) calc(var(--av) * .18) !important; }
 .fr-fire { background: conic-gradient(from 200deg, #ffd447, #ff7a2a, #d8402a, #ff7a2a, #ffd447) !important; box-shadow: 0 0 0 calc(var(--av) * .035) var(--ol), 0 0 calc(var(--av) * .2) rgba(255,122,42,.75) !important; }
 .fr-sapphire { background: linear-gradient(145deg, #c8e8ff, #2f8ef0 40%, #0f3f9a) !important; box-shadow: 0 0 0 calc(var(--av) * .035) var(--ol), 0 0 calc(var(--av) * .2) rgba(80,160,255,.75) !important; }
+
+/* Bake to Win: the treat itself on a gold plate, a ring that fills with your ingredients */
+.treat { position: relative; flex: none; width: clamp(56px, 17vh, 82px); aspect-ratio: 1; padding: 0; border: 0; background: none; cursor: pointer; isolation: isolate; }
+.treat .tring { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(#ffd447 calc(var(--p) * 1%), rgba(255,255,255,.18) 0); box-shadow: 0 0 0 2.5px var(--ol), 0 4px 10px rgba(20,5,35,.4); }
+.treat .tplate { position: absolute; inset: 9%; border-radius: 50%; background: center / 128% no-repeat, radial-gradient(circle at 40% 35%, #fffaf0, #f3e3c0); box-shadow: inset 0 0 0 3px #fff3b8, inset 0 -6px 10px rgba(120,70,0,.25), 0 0 0 2px var(--ol); }
+.treat .tpct { position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%); padding: 1px 8px; border-radius: 999px; white-space: nowrap; font: 900 12px var(--ui); color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #f6c64a); box-shadow: 0 0 0 2px var(--ol); }
+.treat .trays { position: absolute; z-index: -1; inset: -40%; border-radius: 50%; background: repeating-conic-gradient(rgba(255,229,143,.45) 0 9deg, transparent 9deg 24deg); -webkit-mask: radial-gradient(circle, #000 30%, transparent 68%); mask: radial-gradient(circle, #000 30%, transparent 68%); opacity: 0; }
+.bake.bready .treat .trays { opacity: 1; animation: pkSpin 9s linear infinite; }
+.bake.bready .treat .tplate { animation: hudBob 1.6s ease-in-out infinite; }
+.bake.bready .treat .tpct { background: linear-gradient(180deg, #8ff07a, #3fb43a); color: #fff; text-shadow: 0 1px 0 #1d5a1a; animation: playPulse 1.2s ease-in-out infinite; }
+.bake .bakego { display: none; }
+/* the room's drifting effects stay behind its panels */
+#room .rtopband, #room .tiers, #room .rbottom { position: relative; z-index: 2; }
+#room .bake { background: linear-gradient(180deg, rgba(74,26,120,.94), rgba(46,14,84,.94)) !important; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3328,7 +3342,8 @@ function bakeBar(room) {
   var id = room.id, b = bakeState(id);
   if (b.star >= 3) return '<div class="bake done"><span class="dish" style="background-image:url(art/card-' + BAKES[id][2][0].replace('|', '-') + '.webp)"></span><div class="bk"><b>All 3 pastries baked!</b><small>This room is a star bakery</small></div></div>';
   var d = BAKES[id][b.star], need = bakeNeed(id), ready = bakeReady(id);
-  return '<div class="bake' + (ready ? ' bready' : '') + '"><button class="cloche" id="bBake" aria-label="Bake"><span class="dish" style="background-image:url(art/card-' + d[0].replace('|', '-') + '.webp)"></span><span class="lid"></span>' + (ready ? '<span class="bakego">BAKE!</span>' : '') + '</button>' +
+  var tot = 0, got = 0; need.forEach(function (n) { tot += n[1]; got += Math.min(n[1], b.have[n[0]] || 0); });
+  return '<div class="bake' + (ready ? ' bready' : '') + '"><button class="treat" id="bBake" aria-label="' + (ready ? 'Bake now' : 'Bake to Win progress') + '" style="--p:' + Math.round(got / tot * 100) + '"><i class="trays"></i><span class="tring"></span><span class="tplate" style="background-image:url(art/card-' + d[0].replace('|', '-') + '.webp)"></span><b class="tpct">' + (ready ? 'BAKE!' : Math.round(got / tot * 100) + '%') + '</b></button>' +
     '<div class="bk"><b>Bake to Win · ' + d[1] + ' <span class="stars">' + [0, 1, 2].map(function (k) { return k < b.star ? '★' : '☆'; }).join('') + '</span></b>' +
     '<div class="ings">' + need.map(function (n) { var h = Math.min(n[1], b.have[n[0]] || 0); return '<span class="ing">' + ingDot(n[0]) + '<span class="ibar"><i style="width:' + (h / n[1] * 100) + '%"></i><em>' + h + '/' + n[1] + '</em></span></span>'; }).join('') + '</div>' +
     '<small>Win ingredients with bingos in this room. Prize: ' + icon('i-ticket') + (150 * (b.star + 1)) + ' ' + icon('i-gem') + (5 * (b.star + 1)) + ' ' + icon('i-card') + ['Bronze', 'Silver', 'Gold'][b.star] + ' pack</small></div></div>';
