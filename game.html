@@ -201,7 +201,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--rose), var(--gold2)); transition: width .3s; }
 .boost .b3 { font-size: 15px; padding: 6px; border-radius: 14px; }
 .boost .b3:not(:disabled) { animation: pulse 1.2s ease-in-out infinite; }
-@keyframes pulse { 50% { filter: brightness(1.18); } }
+@keyframes pulse { 50% { opacity: .78; } }
 #cards { display: grid; grid-template-columns: 1fr auto; gap: 10px; min-width: 0; min-height: 0; height: 100%; }
 .bigs { display: flex; justify-content: center; align-items: center; gap: 10px; min-width: 0; min-height: 0; height: 100%; }
 .minis { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 8px; }
@@ -1130,19 +1130,19 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .ftile:nth-child(2)::after { animation-delay: 1s; } .ftile:nth-child(3)::after { animation-delay: 2s; } .ftile:nth-child(4)::after { animation-delay: 3s; } .ftile:nth-child(5)::after { animation-delay: 4s; }
 .ftile { animation: tierIn .5s cubic-bezier(.2,.9,.3,1.3) both; }
 .ftile:nth-child(2) { animation-delay: .06s; } .ftile:nth-child(3) { animation-delay: .12s; } .ftile:nth-child(4) { animation-delay: .18s; } .ftile:nth-child(5) { animation-delay: .24s; }
-#mapSvg .lm image { transform-box: fill-box; transform-origin: 50% 100%; animation: breathe 4s ease-in-out infinite; }
+#mapSvg .lm image { transform-box: fill-box; transform-origin: 50% 100%; }
 #mapSvg .lm:nth-of-type(2n) image { animation-delay: -1.3s; } #mapSvg .lm:nth-of-type(3n) image { animation-delay: -2.6s; }
 @keyframes breathe { 50% { transform: scale(1.025, 1.035); } }
-.citysec .flyer2 { position: absolute; z-index: 2; width: clamp(22px, 5vh, 34px); height: clamp(22px, 5vh, 34px); pointer-events: none; animation: flyAcross 18s linear infinite; filter: drop-shadow(0 4px 4px rgba(20,5,30,.3)); }
+.citysec .flyer2 { position: absolute; left: 0; top: 0; z-index: 2; width: clamp(22px, 5vh, 34px); height: clamp(22px, 5vh, 34px); pointer-events: none; animation: flyAcross 18s linear infinite; filter: drop-shadow(0 4px 4px rgba(20,5,30,.3)); }
 .citysec .flyer2 svg { width: 100%; height: 100%; animation: flap .35s ease-in-out infinite alternate; }
 .citysec .flyer2.b2 { animation-duration: 24s; animation-delay: -9s; }
-@keyframes flyAcross { 0% { left: -6%; top: 40%; } 25% { top: 22%; } 50% { top: 38%; } 75% { top: 18%; } 100% { left: 104%; top: 30%; } }
+@keyframes flyAcross { 0% { transform: translate(-6vw, 26vh); } 25% { transform: translate(22vw, 14vh); } 50% { transform: translate(50vw, 25vh); } 75% { transform: translate(78vw, 12vh); } 100% { transform: translate(104vw, 20vh); } }
 @keyframes flap { to { transform: scaleX(.55) rotate(6deg); } }
-.citysec .cloudz { position: absolute; z-index: 2; pointer-events: none; width: 180px; height: 60px; border-radius: 50%; background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,.85), rgba(255,255,255,0) 70%); filter: blur(2px); animation: cloudMove 40s linear infinite; opacity: .8; }
+.citysec .cloudz { position: absolute; left: 0; z-index: 2; pointer-events: none; width: 180px; height: 60px; border-radius: 50%; background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,.85), rgba(255,255,255,0) 70%); filter: blur(2px); animation: cloudMove 40s linear infinite; opacity: .8; }
 .citysec .cloudz.c2 { top: 55%; animation-duration: 55s; animation-delay: -20s; transform: scale(.7); }
-@keyframes cloudMove { from { left: -20%; } to { left: 110%; } }
+@keyframes cloudMove { from { transform: translateX(-20vw); } to { transform: translateX(110vw); } }
 .cityban b { display: inline-block; animation: banGlow 3s ease-in-out infinite; }
-@keyframes banGlow { 50% { text-shadow: 0 0 18px rgba(255,214,92,.9), 0 2px 0 var(--ol); } }
+@keyframes banGlow { 50% { transform: scale(1.04); } }
 #title .logo { animation: logoIn .8s cubic-bezier(.2,.9,.3,1.4) both; }
 #title .by { animation: dropIn .6s .35s both; }
 #title #bStart { animation: tierIn .6s .55s cubic-bezier(.2,.9,.3,1.3) both; }
@@ -1211,7 +1211,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #play .cell:has(.tr):not(.d) { box-shadow: inset 0 0 0 .6cqw rgba(255,214,92,.75), inset 0 -1.1cqw 0 rgba(176,122,18,.3), 0 .9cqw 0 rgba(20,5,30,.55); }
 @keyframes trBob { 50% { transform: translateY(-8%) scale(1.08); } }
 #play .cell.free { background: radial-gradient(circle at 35% 28%, #fffbe0 0 12%, #ffd45c 45%, #d99211); color: #5b2a00; text-shadow: 0 1px 0 rgba(255,255,255,.6); animation: freeGlow 2.4s ease-in-out infinite; }
-@keyframes freeGlow { 50% { box-shadow: 0 0 2cqw .6cqw rgba(255,214,92,.85), inset 0 .7cqw 0 #fff; } }
+@keyframes freeGlow { 50% { transform: scale(1.05); } }
 .bribbon { position: absolute; z-index: 7; left: -6%; right: -6%; top: 38%; display: grid; place-items: center; pointer-events: none; animation: ribIn 1.6s cubic-bezier(.2,.9,.3,1.2) forwards; }
 .bribbon b { position: relative; padding: 1.5cqw 8cqw; font-size: 15cqw; line-height: 1; color: #ffe58f; background: linear-gradient(180deg, #ff6f9d, #c2416b); border-radius: 3cqw; box-shadow: 0 0 0 .8cqw #fff3b8, 0 0 0 1.6cqw #3d1a4f, 0 2cqw 4cqw rgba(10,2,20,.5); }
 .brays { position: absolute; width: 140%; aspect-ratio: 1; background: repeating-conic-gradient(rgba(255,229,143,.5) 0 10deg, transparent 10deg 20deg); border-radius: 50%; -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 65%); mask-image: radial-gradient(circle, #000 20%, transparent 65%); animation: spinRays 3s linear infinite; }
@@ -1240,7 +1240,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .tier.sel .tcards i:nth-child(1):not(:only-child) { transform: rotate(-10deg); } .tier.sel .tcards i:nth-last-child(1):not(:only-child) { transform: rotate(10deg); }
 .tier .tplay { animation: playPulse 1.8s ease-in-out infinite; }
 .tier.sel .tplay { animation-duration: 1s; }
-@keyframes playPulse { 50% { transform: scale(1.05); filter: brightness(1.1); } }
+@keyframes playPulse { 50% { transform: scale(1.05); } }
 .twin span { animation: twinPop 3s ease-in-out infinite; }
 .twin span:nth-child(2) { animation-delay: .2s; } .twin span:nth-child(3) { animation-delay: .4s; }
 @keyframes twinPop { 0%, 85%, 100% { transform: none; } 90% { transform: translateY(-4px) scale(1.15); } }
@@ -1309,7 +1309,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 /* numbers that tick */
 .cur span.tick { display: inline-block; animation: bump .45s cubic-bezier(.2,.9,.3,1.6); color: #ffe58f; }
 .hud-top .cur .plus { animation: plusPulse 2.2s ease-in-out infinite; }
-@keyframes plusPulse { 50% { transform: scale(1.15); box-shadow: 0 0 0 2px var(--ol), 0 0 10px 3px rgba(166,240,122,.8), inset 0 2px 0 rgba(255,255,255,.5); } }
+@keyframes plusPulse { 50% { transform: scale(1.15); } }
 #room .rpups button, #play .pu .orb, .bstep, .mini-btn { transition: transform .14s cubic-bezier(.3,1.7,.5,1); }
 #room .rpups button:active, #play .pu:active .orb, .bstep:active, .mini-btn:active { transform: scale(.88); }
 #play .pu:not(:disabled) .orb { animation: orbIdle 3s ease-in-out infinite; }
@@ -1420,7 +1420,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #rotate .rtips p { font-size: 14px; }
 #rotate .rtips b { font-size: inherit; }
 /* ===== Phase 1 fixes ===== */
-#play .cell.hint { animation: hintSoft 2.6s ease-in-out infinite; box-shadow: 0 0 0 .6cqw rgba(255,214,92,.85), 0 0 2cqw .3cqw rgba(255,214,92,.45), 0 .9cqw 0 rgba(20,5,30,.55); }
+#play .cell.hint { box-shadow: 0 0 0 .6cqw rgba(255,214,92,.85), 0 0 2cqw .3cqw rgba(255,214,92,.45), 0 .9cqw 0 rgba(20,5,30,.55); }
 @keyframes hintSoft { 50% { box-shadow: 0 0 0 .6cqw rgba(255,214,92,.55), 0 0 1cqw 0 rgba(255,214,92,.25), 0 .9cqw 0 rgba(20,5,30,.55); } }
 /* #15 lobby side columns clear the top bar; settings is a free-standing gold gear */
 #lobby .hud-right { top: calc(74px + env(safe-area-inset-top, 0px)); }
@@ -1773,7 +1773,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .round .c svg, .round .c img { animation: iconWiggle 6s ease-in-out infinite; }
 .round:nth-child(2n) .c svg, .round:nth-child(2n) .c img { animation-delay: -3s; }
 @keyframes iconWiggle { 0%, 88%, 100% { transform: rotate(0) scale(1); } 91% { transform: rotate(-12deg) scale(1.12); } 94% { transform: rotate(10deg) scale(1.12); } 97% { transform: rotate(-4deg) scale(1.05); } }
-.round .dot { animation: dotPop 1.4s ease-in-out infinite; } @keyframes dotPop { 50% { transform: scale(1.25); box-shadow: 0 0 10px #ff4d6d; } }
+.round .dot { animation: dotPop 1.4s ease-in-out infinite; } @keyframes dotPop { 50% { transform: scale(1.25); } }
 /* currency pills sparkle when they change */
 .cur span.tick { animation: bumpBig .55s cubic-bezier(.2,.9,.3,1.6) !important; }
 @keyframes bumpBig { 30% { transform: scale(1.35); text-shadow: 0 0 12px #ffe58f; } }
@@ -1892,6 +1892,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 /* featured tiles as tiny movies (Dawn: "even the featured room thumbnails are animated") */
 .ftile.ft2 .fclip { position: absolute; inset: 4px; border-radius: 12px; overflow: hidden; z-index: 0; }
 .ftile.ft2 .fclip .fpic { inset: 0; border-radius: 0; }
+.fmov { container-type: size; }
 .ftile.ft2 .fmov, .ftile.ft2 .fflash { position: absolute; inset: 4px; border-radius: 12px; overflow: hidden; pointer-events: none; z-index: 1; }
 .ftile.ft2 .fpic { animation: fScene 12s linear infinite; }
 .ftile.ft2:nth-child(2) .fpic, .ftile.ft2:nth-child(2) .fflash { animation-delay: -2.4s; }
@@ -1904,15 +1905,15 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
   66.6% { transform: scale(1.5) translate(-15%, -6%); } 100% { transform: scale(1.38) translate(-11%, -3%); } }
 .ftile.ft2 .fflash { z-index: 3; background: radial-gradient(circle at 50% 45%, #fff, rgba(255,250,230,.6) 45%, transparent 75%); opacity: 0; animation: fFlash 12s linear infinite; }
 @keyframes fFlash { 0%, 32.6%, 36%, 65.9%, 69.3%, 99.3% { opacity: 0; } 33.3%, 66.6%, 100% { opacity: .85; } }
-.fmov .fmi { position: absolute; display: block; background: center / contain no-repeat; filter: drop-shadow(0 2px 3px rgba(20,5,35,.45)); }
+.fmov .fmi { position: absolute; display: block; background: center / contain no-repeat; }
 /* Midnight Garden: fireflies and a moonflower that blooms */
 .fmov .ff { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #fff8b0; box-shadow: 0 0 6px 3px rgba(255,236,120,.85); animation: tffly 6.3s ease-in-out infinite; }
 @keyframes tffly { 0%, 100% { transform: translate(0, 0); opacity: .2; } 25% { opacity: 1; } 50% { transform: translate(14px, -10px); opacity: .5; } 75% { transform: translate(-8px, -16px); opacity: 1; } }
 .fmov .bloomup { width: 34%; aspect-ratio: 1; right: 6%; bottom: 14%; animation: bloomUp 4s ease-in-out infinite; }
 @keyframes bloomUp { 0%, 12% { transform: scale(0) rotate(-40deg); opacity: 0; } 30%, 75% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(1.1) rotate(6deg); } 100% { transform: scale(.2) rotate(30deg); opacity: 0; } }
 /* Butterfly Meadow: butterflies flutter across */
-.fmov .fly { width: 24%; aspect-ratio: 1; left: -26%; animation: flyX 7s linear infinite, tflap .28s ease-in-out infinite alternate; }
-@keyframes flyX { 0% { left: -26%; transform: translateY(0) rotate(8deg); } 25% { transform: translateY(-12px) rotate(-6deg); } 50% { transform: translateY(6px) rotate(8deg); } 75% { transform: translateY(-8px) rotate(-6deg); } 100% { left: 104%; transform: translateY(0) rotate(8deg); } }
+.fmov .fly { width: 24%; aspect-ratio: 1; left: 0; animation: flyX 7s linear infinite, tflap .28s ease-in-out infinite alternate; }
+@keyframes flyX { 0% { transform: translate(-30cqw, 0) rotate(8deg); } 25% { transform: translate(4cqw, -12px) rotate(-6deg); } 50% { transform: translate(38cqw, 6px) rotate(8deg); } 75% { transform: translate(72cqw, -8px) rotate(-6deg); } 100% { transform: translate(106cqw, 0) rotate(8deg); } }
 @keyframes tflap { to { scale: .55 1; } }
 /* Candy Carnival: confetti rain and a spinning lollipop */
 .fmov .cfz { position: absolute; top: -10%; width: 5px; height: 8px; border-radius: 2px; animation: cfFall 3.7s linear infinite; }
@@ -1927,33 +1928,33 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .fmov .shellb { width: 28%; aspect-ratio: 1; left: 8%; bottom: 12%; animation: shellB 2.6s ease-in-out infinite; }
 @keyframes shellB { 50% { transform: translateY(-14%) rotate(-10deg); } }
 /* Lantern Market: lanterns float up through a warm flicker */
-.fmov .lant { width: 18%; aspect-ratio: 1; bottom: -30%; animation: lantUp 6.4s ease-in infinite; }
-@keyframes lantUp { 0% { bottom: -30%; transform: rotate(-6deg); opacity: 0; } 15% { opacity: 1; } 50% { transform: rotate(6deg) translateX(6px); } 85% { opacity: 1; } 100% { bottom: 100%; transform: rotate(-4deg); opacity: 0; } }
+.fmov .lant { width: 18%; aspect-ratio: 1; top: 100%; animation: lantUp 6.4s ease-in infinite; }
+@keyframes lantUp { 0% { transform: translateY(0) rotate(-6deg); opacity: 0; } 15% { opacity: 1; } 50% { transform: translate(6px, -65cqh) rotate(6deg); } 85% { opacity: 1; } 100% { transform: translateY(-135cqh) rotate(-4deg); opacity: 0; } }
 .fmov .glowf { position: absolute; inset: 0; background: radial-gradient(circle at 50% 70%, rgba(255,170,70,.35), transparent 65%); animation: glowF 1.7s steps(3) infinite; }
 @keyframes glowF { 0% { opacity: .5; } 33% { opacity: .9; } 66% { opacity: .65; } }
 @media (prefers-reduced-motion: reduce) { .ftile.ft2 .fmov, .ftile.ft2 .fflash { display: none; } .ftile.ft2 .fpic { animation: none; } }
 
 /* living map (Dawn's Frenzy recording: nothing sits still) */
-#mapSvg .wglint { fill: #fff; opacity: 0; transform-box: fill-box; transform-origin: center; animation: wGlint 3.6s ease-in-out infinite; filter: drop-shadow(0 0 4px #fff); }
+#mapFx .wglint { fill: #fff; opacity: 0; transform-box: fill-box; transform-origin: center; animation: wGlint 3.6s ease-in-out infinite; }
 @keyframes wGlint { 0%, 60%, 100% { opacity: 0; scale: .3; } 75% { opacity: .95; scale: 1; rotate: 45deg; } 90% { opacity: 0; scale: .5; rotate: 90deg; } }
-#mapSvg .wripple { fill: none; stroke: rgba(255,255,255,.75); stroke-width: 3.5; stroke-linecap: round; opacity: 0; animation: wRipple 5s ease-in-out infinite; }
+#mapFx .wripple { fill: none; stroke: rgba(255,255,255,.75); stroke-width: 3.5; stroke-linecap: round; opacity: 0; animation: wRipple 5s ease-in-out infinite; }
 @keyframes wRipple { 0% { opacity: 0; translate: -14px 4px; } 40% { opacity: .9; } 100% { opacity: 0; translate: 22px -6px; } }
-#mapSvg .fdrop { fill: #e9fbff; stroke: #8fd8f0; stroke-width: 1; opacity: 0; animation: fDrop 1.5s cubic-bezier(.3,.7,.5,1) infinite; }
+#mapFx .fdrop { fill: #e9fbff; stroke: #8fd8f0; stroke-width: 1; opacity: 0; animation: fDrop 1.5s cubic-bezier(.3,.7,.5,1) infinite; }
 @keyframes fDrop { 0% { opacity: 0; transform: translate(0, 0); } 10% { opacity: 1; } 45% { transform: translate(calc(var(--dx) * .6), -34px); } 100% { opacity: 0; transform: translate(var(--dx), 30px); } }
-#mapSvg .fpool { fill: none; stroke: rgba(255,255,255,.8); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: fPool 2s ease-out infinite; opacity: 0; }
+#mapFx .fpool { fill: none; stroke: rgba(255,255,255,.8); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: fPool 2s ease-out infinite; opacity: 0; }
 @keyframes fPool { 0% { scale: .5; opacity: .9; } 100% { scale: 1.15; opacity: 0; } }
-#mapSvg .pring { fill: none; stroke: #ffd447; stroke-width: 4; transform-box: fill-box; transform-origin: center; animation: pRing 2s ease-out infinite; }
-#mapSvg .pring.r2 { animation-delay: -1s; }
+#mapFx .pring { fill: none; stroke: #ffd447; stroke-width: 4; transform-box: fill-box; transform-origin: center; animation: pRing 2s ease-out infinite; }
+#mapFx .pring.r2 { animation-delay: -1s; }
 @keyframes pRing { 0% { scale: .4; opacity: 1; } 100% { scale: 2.1; opacity: 0; } }
-#mapSvg .pbob { animation: pBob 1.8s ease-in-out infinite; }
+#mapFx .pbob { animation: pBob 1.8s ease-in-out infinite; }
 @keyframes pBob { 50% { transform: translateY(-8px); } }
-#mapSvg .pini { font: 800 26px var(--ui); fill: #fff; }
-.citysec .gull { position: absolute; z-index: 2; width: clamp(18px, 4vh, 28px); pointer-events: none; top: 14%; left: -8%; animation: gullX 26s linear infinite; }
+#mapFx .pini { font: 800 26px var(--ui); fill: #fff; }
+.citysec .gull { position: absolute; z-index: 2; width: clamp(18px, 4vh, 28px); pointer-events: none; top: 14%; left: 0; animation: gullX 26s linear infinite; }
 .citysec .gull svg { display: block; width: 100%; overflow: visible; fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 2px 2px rgba(40,12,64,.35)); animation: gullFlap .5s ease-in-out infinite alternate; transform-origin: 50% 60%; }
 .citysec .gull.g1 { top: 20%; width: clamp(14px, 3vh, 22px); animation-delay: -1.6s; }
 .citysec .gull.g2 { top: 9%; width: clamp(12px, 2.6vh, 19px); animation-delay: -2.8s; }
 .citysec .gull.g1 svg { animation-delay: -.2s; } .citysec .gull.g2 svg { animation-delay: -.35s; }
-@keyframes gullX { 0% { left: -8%; translate: 0 0; } 50% { translate: 0 -18px; } 100% { left: 108%; translate: 0 6px; } }
+@keyframes gullX { 0% { transform: translate(-8vw, 0); } 50% { transform: translate(50vw, -18px); } 100% { transform: translate(108vw, 6px); } }
 @keyframes gullFlap { to { transform: scaleY(-.5); } }
 .citysec .csweep { position: absolute; z-index: 5; left: 0; right: 0; top: 20%; display: grid; justify-items: center; padding: 8px 0 10px; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(58,20,80,.72) 18%, rgba(58,20,80,.72) 82%, transparent); animation: cSweep 3.2s cubic-bezier(.2,.8,.3,1) both; }
 .citysec .csweep b { font: 900 clamp(34px, 11vh, 64px)/1 var(--disp, var(--ui)); letter-spacing: .12em; color: #fff3b8; animation: cSweepT 3.2s cubic-bezier(.2,.8,.3,1) both; }
@@ -1977,8 +1978,8 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 /* gems and coins in the top bar catch the light */
 #lobby .hud-top .cur > svg { animation: curGlint 5s ease-in-out infinite; }
 #lobby .hud-top .cur:nth-child(3) > svg { animation-delay: -1.2s; } #lobby .hud-top .cur:nth-child(4) > svg { animation-delay: -2.4s; } #lobby .hud-top .cur:nth-child(5) > svg { animation-delay: -3.6s; }
-@keyframes curGlint { 0%, 86%, 100% { filter: none; transform: none; } 92% { filter: brightness(1.5) drop-shadow(0 0 6px #fff7c0); transform: scale(1.14) rotate(-8deg); } }
-@media (prefers-reduced-motion: reduce) { #mapSvg .mlife, #mapSvg .pring, .citysec .gull, .citysec .csweep { display: none; } #mapSvg .pbob, #lobby .round .c, #lobby .hud-top .cur > svg { animation: none !important; } }
+@keyframes curGlint { 0%, 86%, 100% { transform: none; } 92% { transform: scale(1.16) rotate(-8deg); } }
+@media (prefers-reduced-motion: reduce) { #mapFx .mlife, #mapFx .pring, .citysec .gull, .citysec .csweep { display: none; } #mapFx .pbob, #lobby .round .c, #lobby .hud-top .cur > svg { animation: none !important; } }
 
 /* room life: each room's own effect plays full size behind the room and bingo screens */
 #room, #play { isolation: isolate; }
@@ -1997,8 +1998,15 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .rlife .shellb { width: clamp(54px, 17vh, 96px); left: 2%; bottom: 4%; }
 .rlife .lant { width: clamp(30px, 10vh, 56px); animation-duration: 11s; }
 .rlife .petalf, .fmov .petalf { width: clamp(16px, 5vh, 28px); aspect-ratio: 1; top: -10%; animation: petalF 8s linear infinite; }
-@keyframes petalF { 0% { top: -10%; transform: translateX(0) rotate(0); opacity: 0; } 10% { opacity: 1; } 50% { transform: translateX(30px) rotate(200deg); } 90% { opacity: 1; } 100% { top: 105%; transform: translateX(-10px) rotate(400deg); opacity: 0; } }
+@keyframes petalF { 0% { transform: translate(0, 0) rotate(0); opacity: 0; } 10% { opacity: 1; } 50% { transform: translate(30px, 58cqh) rotate(200deg); } 90% { opacity: 1; } 100% { transform: translate(-10px, 118cqh) rotate(400deg); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .rlife { display: none; } }
+
+#mapFx { position: absolute; z-index: 1; top: 0; left: var(--side); width: calc(100% - 2 * var(--side)); height: auto; aspect-ratio: 1344 / 768; pointer-events: none; overflow: visible; }
+/* nothing behind an open panel needs to keep moving */
+body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .screen *::after { animation-play-state: paused !important; }
+/* Battery saver: keeps the game, drops the extra moving effects */
+.lite .rlife, .lite #mapFx .mlife, .lite #mapFx .pring, .lite .gull, .lite .flyer2, .lite .cloudz, .lite .fmov, .lite .fflash, .lite .bubs, .lite .ffly, .lite .ftile .fspk { display: none !important; }
+.lite .ftile .fpic, .lite .ftile.ft2, .lite .ftile::after, .lite #lobby .round .c, .lite #lobby .round .c svg, .lite .round .c img, .lite .hud-top .cur > svg, .lite .hud-top .cur .plus, .lite #mapFx .pbob, .lite .cityban b, .lite .tier .tplay, .lite #play .bcard::after, .lite #play .cell.free, .lite .round .dot, .lite .fcordie { animation: none !important; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2145,7 +2153,7 @@ function fresh() {
   return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', stats: { rounds: 0, bingos: 0 }, events: [],
-    settings: { sound: true, voice: false, speed: 'classic', assist: false, autoAlert: true } };
+    settings: { sound: true, voice: false, speed: 'classic', assist: false, lite: false, autoAlert: true } };
 }
 function merge(saved) {
   var s = fresh();
@@ -2243,7 +2251,7 @@ addEventListener('resize', sizeFx); sizeFx();
 
 /* ---------- bubbly layer: tap bursts, jelly presses, floating bubbles ---------- */
 function bubbles(host, n) {
-  if (reduceMotion || !host) return;
+  if (reduceMotion || !host || document.documentElement.classList.contains('lite')) return;
   var box = document.createElement('div'); box.className = 'bubs';
   for (var i = 0; i < n; i++) { var z = 14 + rand(30); box.insertAdjacentHTML('beforeend', '<i style="left:' + rand(100) + '%;width:' + z + 'px;height:' + z + 'px;animation-delay:' + (Math.random() * 1.2).toFixed(2) + 's;animation-duration:' + (2.6 + Math.random() * 2).toFixed(2) + 's;--dx:' + (rand(60) - 30) + 'px"></i>'); }
   host.appendChild(box); setTimeout(function () { box.remove(); }, 5200);
@@ -2482,12 +2490,12 @@ function lmPicture(id, lvl, cx, baseY) {
 }
 var FOOTC = { patisserie: [10, 50, 50], cafe: [0, 50, 50], bridge: [78, 61, 20], carousel: [0, 0, 44], boutique: [0, 45, 45] };
 /* living map: the river sparkles and ripples, the fountain sprays (Dawn's Bingo Frenzy recording) */
-var MAP_WATER = [[110, 470], [250, 560], [330, 395], [470, 330], [575, 270], [700, 165], [860, 140], [990, 95], [70, 610], [180, 650]];
+var MAP_WATER = [[110, 470], [330, 395], [575, 270], [700, 165], [990, 95], [180, 650]];
 function mapLife() {
   var h = '<g class="mlife" pointer-events="none">';
   MAP_WATER.forEach(function (w, i) { h += '<path class="wglint" style="animation-delay:-' + (i * .73).toFixed(2) + 's" transform="translate(' + w[0] + ' ' + w[1] + ')" d="M0 -11 Q1.5 -1.5 11 0 Q1.5 1.5 0 11 Q-1.5 1.5 -11 0 Q-1.5 -1.5 0 -11Z"/>'; });
-  [[150, 520, 0], [420, 360, -2], [640, 220, -4], [930, 120, -1], [90, 640, -3]].forEach(function (w) { h += '<path class="wripple" style="animation-delay:' + w[2] + 's" transform="translate(' + w[0] + ' ' + w[1] + ')" d="M-26 0 Q-13 -7 0 0 Q13 7 26 0"/>'; });
-  for (var k = 0; k < 9; k++) h += '<circle class="fdrop" r="' + (3 + k % 3) + '" cx="676" cy="418" style="--dx:' + ((k - 4) * 9) + 'px;animation-delay:-' + (k * .17).toFixed(2) + 's"/>';
+  [[150, 520, 0], [640, 220, -2.5], [930, 120, -1.2]].forEach(function (w) { h += '<path class="wripple" style="animation-delay:' + w[2] + 's" transform="translate(' + w[0] + ' ' + w[1] + ')" d="M-26 0 Q-13 -7 0 0 Q13 7 26 0"/>'; });
+  for (var k = 0; k < 6; k++) h += '<circle class="fdrop" r="' + (3 + k % 3) + '" cx="676" cy="418" style="--dx:' + ((k - 2.5) * 13) + 'px;animation-delay:-' + (k * .25).toFixed(2) + 's"/>';
   return h + '<ellipse class="fpool" cx="676" cy="472" rx="58" ry="20"/></g>';
 }
 // your picture on a gold pin at the room you played last, with a pulse ring on the ground
@@ -2503,11 +2511,12 @@ function mapPin() {
     '<g class="pbob"><path d="M0 44 L-13 20 A27 27 0 1 1 13 20 Z" fill="#f6c64a" stroke="#3a1450" stroke-width="4" stroke-linejoin="round"/><circle r="21" fill="#7b3fc4"/>' + face +
     '<circle r="21" fill="none" stroke="#fff3b8" stroke-width="2.5"/></g></g>';
 }
+// the moving bits get their own see-through layer on top, so the big map picture never has to be redrawn
+function mapFxSvg() { return '<svg id="mapFx" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + mapLife() + mapPin() + '</svg>'; }
 var SWEPT = false;
 function mapSvg() {
   var s = '<svg id="mapSvg" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The city of Paris that you build">';
   s += '<image href="art/lobby-paris-map.webp" x="0" y="0" width="' + MAP_W + '" height="' + MAP_H + '" preserveAspectRatio="xMidYMid slice"/>';
-  s += mapLife();
   LANDMARKS.slice().sort(function (a, b) { return PLOT[a.id][1] - PLOT[b.id][1]; }).forEach(function (lm) {
     var p = PLOT[lm.id], f = FOOTC[lm.id], i = LANDMARKS.indexOf(lm);
     s += '<g class="lm" data-lm="' + i + '"><ellipse cx="' + p[0] + '" cy="' + p[1] + '" rx="95" ry="60" fill="transparent"/>' +
@@ -2515,7 +2524,7 @@ function mapSvg() {
       '<g transform="translate(' + (p[0] - LM_S * f[0]) + ' ' + (p[1] - LM_S * f[1]) + ') scale(' + LM_S + ')">' + landmarkArt(lm.id, S.build[lm.id] || 0) + '</g>') + '</g>';
   });
   LANDMARKS.forEach(function (lm, i) { s += '<g class="lm" data-lm="' + i + '">' + ribbon(lm, i) + '</g>'; });
-  return s + mapPin() + '</svg>';
+  return s + '</svg>';
 }
 
 /* ---------- album helpers ---------- */
@@ -2756,7 +2765,7 @@ function lobby() {
   var ovenReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); });
   var gamesHot = S.wheelDay !== today() || S.drops > 0 || S.scratch > 0;
   var feat = ROOMS.filter(function (r) { return r.mode !== 'multi'; });
-  show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec">' + mapSvg() +
+  show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec">' + mapSvg() + mapFxSvg() +
       '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + (SWEPT ? '' : '<div class="csweep"><b class="outl">PARIS</b><small>City of Blossoms</small></div>') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>' +
       '<div class="cityban"><b class="outl">PARIS</b><small>' + stars + '/12 blossoms · finish all 4 rooms for a big prize</small></div></div>' +
       '<div class="nextsec"><div class="cityban soon"><b class="outl">NEXT CITY</b><small>Finish Paris to travel on · coming soon</small></div></div></div>' +
@@ -3018,6 +3027,7 @@ function settings() {
     '<div class="opt"><span>Sounds</span><button class="sw" id="swSound" aria-pressed="' + st.sound + '" aria-label="Sounds"></button></div>' +
     '<div class="opt"><span>Caller voice <small style="color:var(--mist)">reads each ball out loud</small></span><button class="sw" id="swVoice" aria-pressed="' + st.voice + '" aria-label="Caller voice"></button></div>' +
     '<div class="opt"><span>Turn on Bloom Alert by itself <small style="color:var(--mist)">uses one at the start of each round</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
+    '<div class="opt"><span>Battery saver <small style="color:var(--mist)">fewer moving effects, keeps your phone cool</small></span><button class="sw" id="swLite" aria-pressed="' + !!st.lite + '" aria-label="Battery saver"></button></div>' +
     '<div class="opt"><span>Mark numbers for me <small style="color:var(--mist)">for players who find tapping hard · Perfect Card rewards pause while it is on</small></span><button class="sw" id="swAssist" aria-pressed="' + !!st.assist + '" aria-label="Mark numbers for me"></button></div>' +
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
     '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button><button class="b3 plum" id="bFb2">💬 Send feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">📥 Feedback inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
@@ -3026,6 +3036,7 @@ function settings() {
       $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; S.alerts += 5; PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
+      $('#swLite', v).onclick = function () { st.lite = !st.lite; this.setAttribute('aria-pressed', st.lite); save(); document.documentElement.classList.toggle('lite', !!st.lite); };
       $('#swAssist', v).onclick = function () { st.assist = !st.assist; this.setAttribute('aria-pressed', st.assist); save(); };
       $('#swVoice', v).onclick = function () { st.voice = !st.voice; this.setAttribute('aria-pressed', st.voice); save(); say('B 7'); };
       v.querySelectorAll('#spd button').forEach(function (b) { b.onclick = function () { st.speed = b.dataset.s; save(); v.querySelectorAll('#spd button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
@@ -5124,6 +5135,7 @@ document.addEventListener('visibilitychange', function () {
 function boot(data) {
   load();
   if (data && data.save) S = merge(data.save);
+  document.documentElement.classList.toggle('lite', !!S.settings.lite);
   save(true);
   title();
   onlineInit(); refreshTitle();
