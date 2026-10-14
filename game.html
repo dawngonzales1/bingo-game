@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Fredoka:wght@500;600;700&display=swap">
-<style>
+<style id="mainCss">
 /* Layout: played sideways. A sunny little Paris you build up (the lobby map), with chunky glossy plum-and-gold buttons laid over it. */
 :root {
   --ol: #3d1a4f;            /* chunky outline, dark plum */
@@ -2332,12 +2332,13 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .bake.bready .treat .tpct { background: linear-gradient(180deg, #8ff07a, #3fb43a); color: #fff; text-shadow: 0 1px 0 #1d5a1a; animation: playPulse 1.2s ease-in-out infinite; }
 .bake .bakego { display: none; }
 /* the room's drifting effects stay behind its panels */
-#room .rtopband, #room .tiers, #room .rbottom { position: relative; z-index: 2; }
+#room .rtopband, #room .tiers, #room .rbottom, #room .rtop, #room .rnav { position: relative; z-index: 2; }
+#room .rnav { position: absolute; }
 #room .bake { background: linear-gradient(180deg, rgba(74,26,120,.94), rgba(46,14,84,.94)) !important; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<svg id="sprite" width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <radialGradient id="gPetal" cx="50%" cy="85%" r="85%"><stop offset="0" stop-color="#c9a2ff"/><stop offset=".6" stop-color="#7b3fe0"/><stop offset="1" stop-color="#4f1fa3"/></radialGradient>
     <radialGradient id="gHeart" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff3c4"/><stop offset=".6" stop-color="#f7b924"/><stop offset="1" stop-color="#b07a12"/></radialGradient>
@@ -3467,6 +3468,7 @@ function settings() {
     '<div class="opt"><span>Sounds</span><button class="sw" id="swSound" aria-pressed="' + st.sound + '" aria-label="Sounds"></button></div>' +
     '<div class="opt"><span>Caller voice <small style="color:var(--mist)">reads each ball out loud</small></span><button class="sw" id="swVoice" aria-pressed="' + st.voice + '" aria-label="Caller voice"></button></div>' +
     '<div class="opt"><span>Use my Bloom Alert time <small style="color:var(--mist)">you have ' + alertText(S.alertMin) + ' · it only counts down while you play</small></span><button class="sw" id="swAA" aria-pressed="' + (st.autoAlert !== false) + '" aria-label="Automatic Bloom Alert"></button></div>' +
+    '<div class="opt"><span>Colors</span><div class="seg" id="pal"><button data-pal="navy" aria-pressed="' + ((st.palette || 'navy') === 'navy') + '">Midnight Navy</button><button data-pal="plum" aria-pressed="' + (st.palette === 'plum') + '">Royal Plum</button></div></div>' +
     '<div class="opt"><span>Calm mode <small style="color:var(--mist)">no flashing or pulsing (kind to migraines)</small></span><button class="sw" id="swCalm" aria-pressed="' + !!st.calm + '" aria-label="Calm mode"></button></div>' +
     '<div class="opt"><span>Clear view <small style="color:var(--mist)">bigger ball numbers, plain text, calmer backgrounds</small></span><button class="sw" id="swClear" aria-pressed="' + !!st.clear + '" aria-label="Clear view"></button></div>' +
     '<div class="opt"><span>Battery saver <small style="color:var(--mist)">fewer moving effects, keeps your phone cool</small></span><button class="sw" id="swLite" aria-pressed="' + !!st.lite + '" aria-label="Battery saver"></button></div>' +
@@ -3478,6 +3480,7 @@ function settings() {
       $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; give('alert', 5); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
+      v.querySelectorAll('[data-pal]').forEach(function (b) { b.onclick = function () { st.palette = b.dataset.pal; save(); applyTheme(); v.querySelectorAll('[data-pal]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); SFX.tap(); }; });
       $('#swCalm', v).onclick = function () { st.calm = !st.calm; this.setAttribute('aria-pressed', st.calm); save(); document.documentElement.classList.toggle('calm', !!st.calm); };
       $('#swClear', v).onclick = function () { st.clear = !st.clear; this.setAttribute('aria-pressed', st.clear); save(); document.documentElement.classList.toggle('clearview', !!st.clear); };
       $('#swLite', v).onclick = function () { st.lite = !st.lite; this.setAttribute('aria-pressed', st.lite); save(); document.documentElement.classList.toggle('lite', !!st.lite); };
@@ -6079,9 +6082,40 @@ document.addEventListener('visibilitychange', function () {
   if (document.hidden && R && R.active && !R.paused) { togglePause(); R.bgPaused = true; }
   else if (!document.hidden && R && R.bgPaused) { R.bgPaused = false; if (R.paused) { togglePause(); toast('Welcome back! The round continues.', 1800); } }
 });
+/* ---------- color themes: Midnight Navy (neutral, the default) or the original Royal Plum ----------
+   every plum shade in the stylesheet and the icons is turned into the matching navy shade; gold and the art stay */
+var THEME_SRC = null;
+function hueShift(r, g, b, toH, satK) {
+  r /= 255; g /= 255; b /= 255; var mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn, h = 0, s = 0;
+  if (d) { s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; }
+  if (!(d && s > .12 && h >= 245 && h <= 305)) return null;
+  h = toH + (h - 270) * .25; s = Math.min(1, s * satK);
+  function f(n) { var k = (n + h / 30) % 12, a = s * Math.min(l, 1 - l); return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))); }
+  return [f(0), f(8), f(4)];
+}
+function themeText(t) {
+  t = t.replace(/#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g, function (m, x) {
+    if (x.length === 3) x = x.replace(/./g, '$&$&');
+    var c = hueShift(parseInt(x.slice(0, 2), 16), parseInt(x.slice(2, 4), 16), parseInt(x.slice(4, 6), 16), 216, .8);
+    return c ? '#' + c.map(function (v) { return ('0' + v.toString(16)).slice(-2); }).join('') : m;
+  });
+  return t.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)/g, function (m, r, g, b) {
+    var c = hueShift(+r, +g, +b, 216, .8); return c ? m.slice(0, m.indexOf('(') + 1) + c.join(',') : m;
+  });
+}
+function applyTheme() {
+  var st = document.getElementById('mainCss'), sp = document.getElementById('sprite'); if (!st) return;
+  if (!THEME_SRC) THEME_SRC = { css: st.textContent, sprite: sp ? sp.innerHTML : '' };
+  var navy = (S.settings.palette || 'navy') === 'navy';
+  st.textContent = navy ? themeText(THEME_SRC.css) : THEME_SRC.css;
+  if (sp) sp.innerHTML = navy ? themeText(THEME_SRC.sprite) : THEME_SRC.sprite;
+  var tc = document.querySelector('meta[name=theme-color]'); if (tc) tc.content = navy ? '#0f1c33' : '#2a0c46';
+  try { if (window.top !== window) window.top.document.body.style.background = navy ? '#0f1c33' : '#2a0c46'; } catch (e) { /* fine */ }
+}
 function boot(data) {
   load();
   if (data && data.save) S = merge(data.save);
+  applyTheme();
   if (S.alerts > 0) { S.alertMin = (S.alertMin || 0) + S.alerts * ALERT_UNIT; S.alerts = 0; save(); }
   document.documentElement.classList.toggle('lite', !!S.settings.lite); document.documentElement.classList.toggle('calm', !!S.settings.calm); document.documentElement.classList.toggle('clearview', !!S.settings.clear);
   save(true);
