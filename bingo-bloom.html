@@ -1625,6 +1625,58 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .tbar i { display: block; height: 100%; width: 8%; border-radius: inherit; background: linear-gradient(90deg, #ff9cc4, #ffd45c, #fff3b8); box-shadow: 0 0 10px rgba(255,214,92,.9); transition: width .35s ease; }
 .tload small { color: #fff; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
 #bStart.popin { animation: pqDrop .6s cubic-bezier(.2,.9,.3,1.4); }
+
+/* ===== store: garden backdrop, jewel tabs, illustrated packs ===== */
+.veil.vstore { background: radial-gradient(ellipse at center, rgba(40,10,64,.15), rgba(25,6,40,.6)), url(art/room-butterfly-meadow.webp) center / cover no-repeat; }
+.veil.vstore::before { content: ''; position: absolute; inset: 0; backdrop-filter: blur(3px) saturate(1.15); -webkit-backdrop-filter: blur(3px) saturate(1.15); pointer-events: none; }
+.veil.vstore::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 12% 88%, rgba(255,140,190,.35), transparent 30%), radial-gradient(circle at 90% 12%, rgba(255,214,92,.3), transparent 28%); }
+.panel.store { z-index: 1; width: min(900px, 100%); padding-bottom: 8px; background: linear-gradient(180deg, rgba(74,26,110,.8), rgba(38,10,60,.86)) !important; }
+.shead .stitle { font-size: 22px; color: #ffe58f; letter-spacing: .02em; }
+.stabs { position: sticky; bottom: -8px; z-index: 3; justify-self: center; display: flex; justify-content: center; gap: 14px; margin: 2px 0 -8px; padding: 6px 18px 4px; border-radius: 22px 22px 0 0; background: linear-gradient(180deg, #5a2590, #2e0d48); box-shadow: 0 0 0 2px #f6c64a, 0 -4px 12px rgba(10,2,20,.45); }
+.stabs button { display: grid; justify-items: center; gap: 1px; border: 0; background: none; color: #e9dcff; cursor: pointer; font: 700 11px Fredoka, system-ui, sans-serif; }
+.stabs .sto { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 38% 28%, #fff 0 8%, rgba(255,255,255,0) 26%), radial-gradient(circle, #8b5cc8, #4a1f86 70%); box-shadow: 0 0 0 2.5px #c9a64a, 0 4px 0 #1d0830; transition: transform .2s; }
+.stabs .sto svg { width: 64%; height: 64%; filter: drop-shadow(0 2px 2px rgba(10,2,20,.5)); }
+.stabs button[aria-pressed="true"] { color: #ffe58f; }
+.stabs button[aria-pressed="true"] .sto { transform: translateY(-5px) scale(1.1); background: radial-gradient(circle at 38% 28%, #fff 0 8%, rgba(255,255,255,0) 26%), radial-gradient(circle, #ffe58f, #f6b91f 60%, #d4840e); box-shadow: 0 0 0 2.5px #fff3b8, 0 0 18px 5px rgba(255,214,92,.75), 0 4px 0 #8a4a06; }
+/* pack cards */
+.bundles { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; gap: 12px 10px !important; }
+.bund { grid-column: span 2; padding: 0 0 10px !important; overflow: visible; background: linear-gradient(180deg, #fffaf0, #ffecc4) !important; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4.5px var(--ol), 0 5px 0 4px #8a4a06 !important; border-radius: 18px !important; }
+.bund.hero { grid-column: span 3; }
+.bund .bhd { width: 100%; box-sizing: border-box; display: flex; align-items: baseline; justify-content: center; gap: 4px; padding: 4px 0 3px; border-radius: 16px 16px 0 0; background: linear-gradient(180deg, #ff9cc4, #e0578f); box-shadow: inset 0 -3px 0 rgba(120,20,60,.35), inset 0 2px 0 rgba(255,255,255,.5); }
+.bund.hero .bhd { background: linear-gradient(180deg, #b98cff, #6a32d0); box-shadow: inset 0 -3px 0 rgba(30,8,70,.4), inset 0 2px 0 rgba(255,255,255,.45); }
+.bund .bhd b { font-size: 24px; color: #fff; line-height: 1; }
+.bund .bhd span { font-size: 14px; font-weight: 800; color: #fff; text-shadow: 0 1px 0 rgba(60,10,40,.6); }
+.btray { position: relative; width: calc(100% - 16px); height: 78px; margin: 6px 8px 0; border-radius: 14px; display: grid; place-items: center; overflow: hidden;
+  background: radial-gradient(ellipse at 50% 85%, rgba(255,214,92,.45), transparent 60%), linear-gradient(180deg, #f6e2b8, #fbefd6); box-shadow: inset 0 3px 6px rgba(140,80,20,.28), inset 0 -2px 0 rgba(255,255,255,.7); }
+.bund.hero .btray { height: 108px; background: radial-gradient(ellipse at 50% 70%, rgba(255,230,140,.85), rgba(255,214,92,.15) 45%, transparent 70%), linear-gradient(180deg, #4a1f86, #2a0c50); box-shadow: inset 0 3px 8px rgba(0,0,0,.45); }
+.pile { display: grid; justify-items: center; gap: 0; margin-top: 2px; }
+.pkrow { display: flex; margin-top: -5px; } .pkrow:first-child { margin-top: 0; }
+.po { width: 24px; height: 24px; margin: 0 -1px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 38% 28%, #fff 0 9%, rgba(255,255,255,0) 28%), radial-gradient(circle, #b98cff, #6a32d0 62%, #3d1680); box-shadow: 0 0 0 1.5px #f6c64a, 0 2px 2px rgba(60,20,0,.35); }
+.po svg { width: 74%; height: 74%; }
+.po.r-rare { box-shadow: 0 0 0 1.5px #8fe3ff, 0 0 6px rgba(120,210,255,.9); }
+.po.r-super { box-shadow: 0 0 0 2px #fff3b8, 0 0 8px 2px rgba(255,214,92,.95); }
+.bund.hero .po { position: absolute; width: 30px; height: 30px; transform: translate(-50%, -50%) rotate(var(--r, 0deg)); }
+.po.pofl { animation: poFloat 3.2s ease-in-out infinite; }
+@keyframes poFloat { 50% { transform: translate(-50%, calc(-50% - 5px)) rotate(calc(var(--r, 0deg) * -1)); } }
+.hchest { position: absolute; left: 50%; bottom: 4px; width: 66px; height: 66px; transform: translateX(-50%); filter: drop-shadow(0 4px 4px rgba(0,0,0,.45)); }
+.hchest svg { width: 100%; height: 100%; }
+.hglow { position: absolute; left: 50%; top: 55%; width: 170px; height: 170px; transform: translate(-50%, -50%); background: repeating-conic-gradient(rgba(255,240,170,.35) 0 10deg, transparent 10deg 24deg); border-radius: 50%; -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 68%); mask-image: radial-gradient(circle, #000 20%, transparent 68%); animation: spinRays 14s linear infinite; }
+.hcoin { position: absolute; width: 26px; bottom: 2px; filter: drop-shadow(0 2px 2px rgba(0,0,0,.4)); } .hcoin.c1 { left: 22%; transform: rotate(-18deg); } .hcoin.c2 { right: 22%; bottom: 8px; width: 22px; transform: rotate(14deg); }
+.hgem { position: absolute; right: 30%; bottom: 0; width: 22px; height: 22px; } .hgem svg { width: 100%; height: 100%; }
+.hx { position: absolute; right: 6px; top: 4px; font-size: 14px; color: #fff; }
+.btray .tw { position: absolute; width: 10px; height: 10px; background: #fff; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: twk 2.2s ease-in-out infinite; opacity: 0; }
+.btray .t1 { left: 12%; top: 18%; } .btray .t2 { right: 14%; top: 50%; animation-delay: -.8s; } .btray .t3 { left: 30%; bottom: 12%; animation-delay: -1.5s; width: 7px; height: 7px; }
+@keyframes twk { 0%, 100% { opacity: 0; transform: scale(.3) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+.bund.hero::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.55) 50%, transparent 60%) -200% 0 / 250% 100% no-repeat; animation: hsheen 4.5s ease-in-out infinite; }
+@keyframes hsheen { 0%, 60% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.bund small { margin-top: 4px; }
+.bflag { z-index: 2; }
+.pinv { background: linear-gradient(180deg, rgba(255,247,226,.97), rgba(255,233,190,.97)) !important; color: #3d1a4f !important; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4.5px var(--ol), 0 5px 0 4px #8a4a06 !important; }
+.pinv h4 { color: #6a2a9a !important; }
+.pinvr { background: rgba(255,255,255,.75) !important; box-shadow: inset 0 0 0 1px #ead6b2; }
+.pinvr b { background: linear-gradient(180deg, #b98cff, #6a32d0) !important; color: #fff !important; }
+@media (max-height: 480px) { .bundles { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; } .btray { height: 64px; } .bund.hero .btray { height: 88px; } .stabs .sto { width: 40px; height: 40px; } }
+@media (max-height: 300px) { .stabs { gap: 10px; padding: 3px 12px 2px; } .stabs .sto { width: 30px; height: 30px; } .stabs small { display: none; } .stabs button[aria-pressed="true"] .sto { transform: translateY(-2px) scale(1.08); } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2855,6 +2907,20 @@ function autoWild() {
   }, 700);
 }
 
+
+/* the little treasure pile drawn in each pack */
+var PACK_SAMPLE = ['daub1', 'coinsq', 'daub2', 'chest', 'wild', 'daub3', 'daub1', 'super', 'coinsq', 'instant', 'daub2', 'allx2'];
+function packArt(k) {
+  function orb(id, cls, st) { var t = pupTier(id); return '<span class="po r-' + (t ? t.id : 'regular') + (cls ? ' ' + cls : '') + '"' + (st ? ' style="' + st + '"' : '') + '>' + icon(pupById(id).icon) + '</span>'; }
+  if (k.gems) {
+    var spots = [[8, 46, -14], [24, 20, 10], [70, 18, -8], [86, 44, 16], [16, 70, 6], [80, 72, -10]], ids = k.sure ? ['instant', 'wild', 'allx2', 'daub3', 'chest', 'super'] : ['daub3', 'coinsq', 'wild', 'daub2', 'chest', 'super'];
+    return '<span class="hglow"></span><span class="hchest">' + icon('i-chest') + '</span>' +
+      spots.map(function (p, i) { return orb(ids[i], 'pofl', 'left:' + p[0] + '%;top:' + p[1] + '%;--r:' + p[2] + 'deg;animation-delay:-' + (i * .45) + 's'); }).join('') +
+      '<img class="hcoin c1" src="art/icon-coin.webp" alt=""><img class="hcoin c2" src="art/icon-coin.webp" alt=""><span class="hgem">' + icon('i-gem') + '</span><b class="hx outl">×' + k.n + '</b>';
+  }
+  var rows = k.n >= 12 ? [2, 3, 4] : k.n >= 6 ? [1, 2, 3] : [1, 2], j = 0;
+  return '<span class="pile">' + rows.map(function (n) { var r = ''; for (var i = 0; i < n; i++) r += orb(PACK_SAMPLE[(j++ + k.n) % PACK_SAMPLE.length]); return '<span class="pkrow">' + r + '</span>'; }).join('') + '</span><b class="hx outl">×' + k.n + '</b>';
+}
 /* ---------- power-up packs: every power-up drawn with the same tier odds as a round ---------- */
 var BUNDLES = [{ n: 3, coins: 250 }, { n: 6, coins: 480 }, { n: 12, coins: 900, rare: true, flag: 'POPULAR' }, { n: 25, gems: 30, rare: true }, { n: 48, gems: 55, sure: true, flag: 'BEST VALUE' }];
 function drawBundle(k) {
@@ -3496,8 +3562,10 @@ function shop(tab) {
         return '<div class="pinvt t-' + t.id + '"><span class="rtag rt-' + t.id + '">' + t.name + '</span>' + t.ids.map(function (id) { var q = pupById(id); return '<div class="pinvr">' + icon(q.icon) + '<span>' + q.name + '</span><b>' + owned(id) + '</b></div>'; }).join('') + '</div>';
       }).join('') + '<div class="pinvt"><span class="rtag">Before the round</span>' + PRE_PUPS.concat(['balls5', 'alert']).map(function (id) { var q = pupById(id); return '<div class="pinvr">' + icon(q.icon) + '<span>' + q.name + '</span><b>' + owned(id) + '</b></div>'; }).join('') + '</div></aside>' +
       '<div class="pbund"><div class="bundles">' + BUNDLES.map(function (k) {
-        return '<div class="bund' + (k.flag ? ' flagged' : '') + '">' + (k.flag ? '<span class="bflag">' + k.flag + '</span>' : '') + '<b class="bn outl">' + k.n + ' pack</b><span class="borbs">' + '<i></i>'.repeat(Math.min(k.n, 6)) + '</span>' +
-          '<small>' + (k.sure ? 'At least 1 super rare' : k.rare ? 'At least 1 rare' : 'Random mix') + '</small>' +
+        return '<div class="bund' + (k.gems ? ' hero' : '') + (k.flag ? ' flagged' : '') + '">' + (k.flag ? '<span class="bflag">' + k.flag + '</span>' : '') +
+          '<div class="bhd"><b class="outl">' + k.n + '</b><span>pack</span></div>' +
+          '<div class="btray">' + packArt(k) + '<i class="tw t1"></i><i class="tw t2"></i><i class="tw t3"></i></div>' +
+          '<small>' + (k.sure ? '✦ At least 1 super rare' : k.rare ? 'At least 1 rare' : 'Random mix') + '</small>' +
           '<button class="b3 ' + (k.gems ? 'plum' : 'gold') + ' buy" data-bund="' + k.n + '">' + icon(k.gems ? 'i-gem' : 'i-coin') + (k.gems || k.coins).toLocaleString() + '</button></div>';
       }).join('') + '</div><p class="note">Each power-up in a pack is drawn with the same odds as in a round: regular 75%, rare 20%, super rare 5%.</p>' +
       '<h4 class="pick">Pick your own</h4><div class="shopgrid">' + POWERUPS.map(function (p) {
@@ -3511,9 +3579,11 @@ function shop(tab) {
         '<button class="b3 gold buy" data-pack="' + k.id + '">' + icon('i-coin') + k.price.toLocaleString() + '</button></div>';
     }).join('') + '</div>';
   }
-  panel('<div class="tabs"><button data-t="power" aria-pressed="' + (tab === 'power') + '">Power-ups</button><button data-t="packs" aria-pressed="' + (tab === 'packs') + '">Card packs</button><button data-t="gems" aria-pressed="' + (tab === 'gems') + '">Amethyst Vault</button>' +
+  panel('<div class="tabs shead"><b class="stitle outl">' + ({ power: 'Power-ups', packs: 'Card Packs', gems: 'Amethyst Vault' }[tab]) + '</b>' +
     '<span class="spacer"></span>' + (tab === 'power' ? curPill('i-gem', S.gems) : '') + (tab === 'gems' ? curPill('i-gem', S.gems) : curPill('i-coin', S.coins)) + '<button class="pinfo" id="bInfo" aria-label="How it works">i</button></div>' + body +
-    '<p class="note">' + (tab === 'gems' ? 'Amethysts are rare gems. Earn them from level-ups, finished rooms and cities, and album sets.' : 'Everything here is bought with coins you win in bingo. All odds are shown.') + '</p>', '', function (v) {
+    '<p class="note">' + (tab === 'gems' ? 'Amethysts are rare gems. Earn them from level-ups, finished rooms and cities, and album sets.' : 'Everything here is bought with coins you win in bingo. All odds are shown.') + '</p>' +
+    '<div class="stabs">' + [['power', 'i-super', 'Power-ups'], ['packs', 'i-card', 'Card packs'], ['gems', 'i-gem', 'Vault']].map(function (t) { return '<button data-t="' + t[0] + '" aria-pressed="' + (tab === t[0]) + '"><span class="sto">' + icon(t[1]) + '</span><small>' + t[2] + '</small></button>'; }).join('') + '</div>', 'store', function (v) {
+      v.classList.add('vstore');
       v.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { SFX.tap(); shop(b.dataset.t); }; });
       $('#bInfo', v).onclick = function () { SFX.tap(); infoTour(0, function () { shop(tab); }); };
       v.querySelectorAll('[data-bund]').forEach(function (b) {
