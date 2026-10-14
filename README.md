@@ -81,7 +81,8 @@ A softly moving painting of the Paris room with falling petals, a gold Bingo Blo
   - shows a timer ring on the newest ball;
   - ends with Round complete and a Perfect Bloom bonus if you marked every called number yourself.
 - **Auto Boost** fires the Boost by itself when it's full. The Boost charges per card played, and its own marks don't recharge it (tuned with a simulation of thousands of rounds).
-- **Bouquet Jackpot Wheel:** a Full Bouquet or a Blackout earns a spin after the round. Tickets only, times your bet: Grand 500 (2%), Major 150 (6%), Minor 60 (12%), 40 (20%), 25 (25%), 15 (35%).
+- **Round Bloom show:** after a round with a bingo, your cards fly in with big stamped badges (Bingo, Double Bloom, Triple Bloom, Full Bouquet, Blackout), gold, silver and bronze place medals, and fireworks. A round where you marked every called number yourself is a **Perfect Bloom**.
+- **Bloom Summary and Bloom Wheel:** the summary counts up your tickets and shows your prizes, your Bake to Win ingredient tiles (with ✓ when a bar is full) and new album cards. Every bingo wins a spin of the Bloom Wheel (a Full Bouquet or Blackout adds one more). Jackpot banners across the top: Petite 25, Bouquet 50, Grand 120 and Royal 300 tickets, times your bet. Small prizes are 5, 8 or 10 tickets. Odds: 5 (30%), 8 (25%), 10 (20%), Petite (12%), Bouquet (8%), Grand (4%), Royal (1%).
 - **Garden Path** (featured rooms' bonus game): your marks fill a bar. When it's full, pick stepping stones toward the fountain:
   - the first two rows are safe;
   - Hops move you ahead;

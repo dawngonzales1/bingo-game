@@ -782,7 +782,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .bigs.wave .bcard .grid { animation: waveGlow 1s ease-out; }
 @keyframes waveGlow { 0% { filter: brightness(1); } 40% { filter: brightness(1.35) drop-shadow(0 0 10px #ffd45c); } 100% { filter: none; } }
 .bcard.x2on { box-shadow: 0 0 0 2px var(--ol), 0 7px 0 2px var(--ol), 0 0 30px 8px rgba(255,214,92,.85); }
-.stamp { position: absolute; z-index: 5; top: 2cqw; left: 2.5cqw; font-size: 11cqw; font-weight: 700; color: #ffe58f; transform: rotate(-14deg); animation: stamp .45s cubic-bezier(.2,.9,.3,1.4); pointer-events: none; }
+.x2stamp { position: absolute; z-index: 5; top: 2cqw; left: 2.5cqw; font-size: 11cqw; font-weight: 700; color: #ffe58f; transform: rotate(-14deg); animation: stamp .45s cubic-bezier(.2,.9,.3,1.4); pointer-events: none; }
 @keyframes stamp { from { transform: rotate(-14deg) scale(4); opacity: 0; } }
 /* power-up show */
 .pfx { position: fixed; inset: 0; z-index: 65; display: grid; place-items: center; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(110,40,170,.55), rgba(25,8,45,.25) 60%, transparent); animation: fade .2s; overflow: hidden; }
@@ -1304,6 +1304,106 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #play .dock .pu:nth-child(2) .orb { animation-delay: -.6s; } #play .dock .pu:nth-child(3) .orb { animation-delay: -1.2s; } #play .dock .pu:nth-child(4) .orb { animation-delay: -1.8s; } #play .dock .pu:nth-child(5) .orb { animation-delay: -2.4s; }
 @keyframes orbIdle { 50% { transform: translateY(-2px) rotate(-3deg); } }
 @media (prefers-reduced-motion: reduce) { .b3.gold::after, .b3.green::after { display: none; } }
+/* ===== Perfect Bloom card show ===== */
+.bshow { position: fixed; inset: 0; z-index: 58; display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; justify-items: center; align-items: center; gap: 6px; padding: 10px 16px 14px; box-sizing: border-box;
+  background: radial-gradient(ellipse at 50% 45%, rgba(110,40,170,.55), rgba(20,5,35,.88)); animation: fade .3s; }
+.bshow.out { opacity: 0; transition: opacity .3s; }
+.bsrib { position: relative; padding: 6px 54px 12px; animation: ribDrop .6s cubic-bezier(.2,.9,.3,1.3); background: linear-gradient(180deg, #ff7aa2, #c2416b); clip-path: polygon(0 0, 100% 0, 100% 72%, 50% 100%, 0 72%); filter: drop-shadow(0 4px 0 #3d1a4f); }
+.bsrib::before { content: ''; position: absolute; inset: 5px 8px 10px; border: 2px dashed rgba(255,243,184,.7); border-radius: 4px; clip-path: inherit; }
+.bsrib span { position: relative; font-size: clamp(22px, 9vh, 38px); color: #ffe58f; letter-spacing: .03em; }
+@keyframes ribDrop { from { transform: translateY(-120%); } }
+.bsnote { margin: 0; color: #ffe58f; font-size: clamp(12px, 4vh, 16px); animation: popIn .4s .4s both; }
+.bsgrid { display: grid; gap: clamp(8px, 2.5vh, 18px); height: 100%; min-height: 0; align-content: center; justify-content: center; grid-template-columns: repeat(var(--c, 2), auto); }
+.bsgrid.n1 { --c: 1; } .bsgrid.n2 { --c: 2; } .bsgrid.n4 { --c: 2; grid-template-rows: repeat(2, minmax(0, 1fr)); }
+.bsc { position: relative; height: 100%; max-height: min(42vh, 210px); aspect-ratio: 1; animation: dealIn .5s cubic-bezier(.2,.9,.3,1.25) both; container-type: size; }
+.bsgrid.n4 .bsc { max-height: 100%; }
+.bsc:nth-child(2) { animation-delay: .12s; } .bsc:nth-child(3) { animation-delay: .24s; } .bsc:nth-child(4) { animation-delay: .36s; }
+.bscg { width: 100%; height: 100%; box-sizing: border-box; display: grid; grid-template-columns: repeat(5, 1fr); gap: 3%; padding: 6%; border-radius: 12%;
+  background: linear-gradient(180deg, #5d2a96, #34124f) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; border: 3px solid transparent; box-shadow: 0 0 0 2px #3d1a4f, 0 8px 18px rgba(10,2,20,.5); }
+.bscg i { border-radius: 18%; background: linear-gradient(180deg, #fffef9, #f1dcb0); }
+.bscg i.d { background: radial-gradient(circle at 40% 32%, #d9b8ff, #8a48e6 55%, #4a1a8a); box-shadow: 0 0 0 1.5px #e9a81c; }
+.bscg i.f { background: radial-gradient(circle at 35% 28%, #fffbe0, #ffd45c 50%, #d99211); }
+.bbadge { position: absolute; inset: 8%; display: grid; place-items: center; align-content: center; text-align: center; line-height: .9; animation: badgeSlam .55s .5s cubic-bezier(.2,.9,.3,1.5) both; }
+.bbadge em { position: relative; font-style: normal; font-size: 17cqh; color: #fff; }
+.bbadge b { position: relative; font-size: 23cqh; color: #ffe58f; }
+.bbadge.jack em, .bbadge.jack b { background: linear-gradient(180deg, #fff, #ffd45c 45%, #ff8fb1 70%, #b996ff); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 3px 0 #3d1a4f) drop-shadow(2px 0 0 #3d1a4f) drop-shadow(-2px 0 0 #3d1a4f); text-shadow: none; }
+.bbadge.dbl b { color: #9fe0ff; }
+.bbadge.one b, .bbadge.one em { font-size: 26cqh; color: #ffe58f; }
+.bbrays { position: absolute; width: 130%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255,214,92,.55), transparent 62%), repeating-conic-gradient(rgba(255,243,184,.45) 0 9deg, transparent 9deg 18deg); -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 68%); mask-image: radial-gradient(circle, #000 25%, transparent 68%); animation: spinRays 5s linear infinite; }
+@keyframes badgeSlam { 0% { transform: scale(3) rotate(-12deg); opacity: 0; } 70% { transform: scale(.92) rotate(2deg); opacity: 1; } 100% { transform: none; } }
+.brank { position: absolute; top: -9%; left: -9%; width: 26%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font: 700 12cqh var(--ui); color: #fff; text-shadow: 0 1.5px 0 #3d1a4f;
+  background: radial-gradient(circle at 38% 30%, #e6d4ff, #8a48e6 60%, #4a1a8a); box-shadow: 0 0 0 2px #fff3b8, 0 0 0 3.5px #3d1a4f; animation: popIn .4s .9s both; }
+.brank.r1 { background: radial-gradient(circle at 38% 30%, #fffbe0, #ffd45c 55%, #c98a12); color: #3d1a4f; text-shadow: none; } .brank.r2 { background: radial-gradient(circle at 38% 30%, #fff, #c9d2df 55%, #7f8aa0); color: #3d1a4f; text-shadow: none; } .brank.r3 { background: radial-gradient(circle at 38% 30%, #ffd9b8, #e08a4a 55%, #9a4f1c); }
+.blucky { position: absolute; bottom: -6%; right: -6%; padding: 1px 6px; border-radius: 8px; font: 700 9cqh var(--ui); color: #fff; background: linear-gradient(180deg, #ff7aa2, #c2416b); box-shadow: 0 0 0 1.5px #3d1a4f; }
+.bsgo { padding: 6px 30px 7px; font-size: 18px; display: flex; gap: 8px; align-items: center; }
+.bsgo small { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #3d1a4f; color: #ffe58f; font-size: 12px; }
+/* ===== Bloom Summary ===== */
+#summary { display: grid; grid-template-columns: minmax(0, 46%) minmax(0, 1fr); gap: 14px; padding: max(10px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(10px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); box-sizing: border-box; overflow: hidden; background: #2a0c46; }
+#summary::before { content: ''; position: absolute; inset: -20px; background: var(--rbg) center / cover; filter: blur(10px) brightness(.7) saturate(1.2); }
+#summary > * { position: relative; }
+.sumL { display: flex; flex-direction: column; gap: 7px; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 26px 14px 12px; border-radius: 22px; color: #fff;
+  background: linear-gradient(180deg, rgba(74,28,120,.9), rgba(30,8,50,.92)) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; border: 3px solid transparent; box-shadow: 0 0 0 2px #3d1a4f, 0 14px 30px rgba(10,2,20,.5); animation: tierIn .5s cubic-bezier(.2,.9,.3,1.25) both; }
+.sribbon { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); padding: 3px 34px 5px; white-space: nowrap; background: linear-gradient(180deg, #ff7aa2, #c2416b); clip-path: polygon(0 0, 100% 0, 94% 50%, 100% 100%, 0 100%, 6% 50%); filter: drop-shadow(0 3px 0 #3d1a4f); }
+.sribbon span { font-size: clamp(18px, 7vh, 28px); color: #ffe58f; }
+.sumL { margin-top: 10px; }
+.slvl { display: flex; align-items: center; gap: 8px; font: 700 12px var(--ui); color: #ffe58f; }
+.slvl .pbar { flex: 1; height: 10px; }
+.sbig { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.sbig svg { width: clamp(40px, 15vh, 64px); height: clamp(40px, 15vh, 64px); filter: drop-shadow(0 4px 4px rgba(10,2,20,.5)); animation: hudBob 2.4s ease-in-out infinite; }
+.sbig b { font: 700 clamp(28px, 12vh, 48px)/1 var(--ui); color: #fff; text-shadow: 0 3px 0 #3d1a4f, 2px 0 0 #3d1a4f, -2px 0 0 #3d1a4f, 0 -2px 0 #3d1a4f; font-variant-numeric: tabular-nums; }
+.sbig small { align-self: flex-end; color: #e6d4ff; font-size: 11px; font-weight: 700; }
+.schips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 6px; border-radius: 14px; background: rgba(0,0,0,.22); }
+.schip { display: flex; align-items: center; gap: 2px; padding: 1px 9px 1px 2px; border-radius: 999px; background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1.5px rgba(255,214,92,.4); animation: popIn .4s both; }
+.schip svg { width: 26px; height: 26px; } .schip b { font-size: 13px; }
+.snone { font-size: 12px; color: #e6d4ff; }
+.stiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.stile { position: relative; display: grid; justify-items: center; gap: 2px; padding: 6px 4px; border-radius: 12px; background: linear-gradient(180deg, #fff9ee, #f3e3c4); color: #3d1a4f; box-shadow: 0 0 0 1.5px #3d1a4f, 0 3px 0 1.5px #3d1a4f; }
+.stile.full { background: linear-gradient(180deg, #e9ffd9, #b9eb9b); }
+.stile .ingdot { position: static !important; width: 24px; height: 24px; }
+.stile small { font-size: 10px; font-weight: 700; }
+.stile .ibar { width: 90%; height: 11px; }
+.sok { position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: #fff; background: #3fb43a; box-shadow: 0 0 0 1.5px #3d1a4f; }
+.sbadge { position: absolute; top: -7px; right: -6px; min-width: 18px; height: 18px; border-radius: 9px; display: grid; place-items: center; font-size: 10.5px; font-weight: 700; color: #fff; background: #e5383b; box-shadow: 0 0 0 1.5px #fff; animation: popIn .4s .8s both; }
+.scards { display: flex; gap: 5px; overflow-x: auto; scrollbar-width: none; padding: 2px; }
+.scards > span { flex: none; width: 54px; animation: flip .5s both; }
+.sbtns { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: auto; padding-top: 4px; }
+.sbtns .b3 { padding: 5px 14px; font-size: 15px; }
+.sumR { display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; justify-items: center; gap: 4px; min-height: 0; }
+.tiers4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; width: 100%; }
+.t4 { display: grid; justify-items: center; padding: 2px 4px 4px; border-radius: 12px; background: linear-gradient(180deg, var(--a), var(--b)); box-shadow: 0 0 0 2px #fff3b8, 0 0 0 3.5px #3d1a4f, 0 4px 0 3.5px #3d1a4f; animation: dropIn .45s both; }
+.t4:nth-child(2) { animation-delay: .07s; } .t4:nth-child(3) { animation-delay: .14s; } .t4:nth-child(4) { animation-delay: .21s; }
+.t4 em { font-style: normal; font-size: clamp(11px, 4.5vh, 17px); color: #fff; letter-spacing: .04em; }
+.t4 b { display: flex; align-items: center; gap: 2px; font-size: clamp(11px, 4vh, 15px); color: #3d1a4f; padding: 0 6px; border-radius: 8px; background: rgba(255,255,255,.75); }
+.t4 b svg { width: 16px; height: 16px; }
+.t4.hit { animation: tierHit .6s ease-in-out 4; }
+@keyframes tierHit { 50% { transform: scale(1.15); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #3d1a4f, 0 0 24px 8px rgba(255,214,92,.95); } }
+.wwrap { position: relative; width: 100%; height: 100%; min-height: 0; display: grid; place-items: center; }
+.wwrap canvas { display: block; filter: drop-shadow(0 10px 18px rgba(10,2,20,.5)); }
+.wspin { position: absolute; left: 50%; top: calc(50% + 1.3%); transform: translate(-50%, -50%); width: clamp(48px, 17%, 72px); aspect-ratio: 1; border-radius: 50%; border: 0; cursor: pointer;
+  background: radial-gradient(circle at 38% 28%, #fff 0 8%, #b8f07a 30%, #3fb43a 70%, #237a2a); box-shadow: 0 0 0 3px #ffe58f, 0 0 0 5px #3d1a4f, 0 4px 0 5px #3d1a4f; animation: playPulse 1.2s ease-in-out infinite; }
+.wspin span { font: 700 clamp(12px, 4.5vh, 18px) var(--ui); color: #fff; text-shadow: 0 2px 0 #1d5a20; }
+.wspin:disabled { animation: none; background: radial-gradient(circle at 38% 28%, #fff 0 8%, #d6c6ee 30%, #8c76a8 70%); cursor: default; }
+.wnote { margin: 0; font: 700 13px var(--ui); color: #ffe58f; text-align: center; text-shadow: 0 1.5px 2px #3d1a4f; }
+.wodds { border: 0; background: none; color: #e6d4ff; font: 600 11px var(--ui); text-decoration: underline; cursor: pointer; }
+@media (max-height: 300px) {
+  #summary { gap: 10px; padding-top: 6px; padding-bottom: 6px; }
+  .sumL { padding: 20px 10px 8px; gap: 5px; }
+  .stiles .ibar, .stile small { display: none; }
+  .stile { padding: 3px; }
+  .scards { display: none; }
+  .wodds { display: none; }
+  .bsrib { padding: 3px 40px 9px; }
+}
+.bsgrid { height: auto; }
+.bsc { height: min(46vh, 220px); max-height: none; }
+.bsgrid.n4 .bsc { height: min(30vh, 150px); }
+.bsgrid.n2 .bsc, .bsgrid.n1 .bsc { height: min(50vh, 230px); }
+.bbadge.jack em { font-size: 15cqh; } .bbadge.jack b { font-size: 17cqh; }
+.bbadge em, .bbadge b { white-space: nowrap; }
+.brank { font: 700 clamp(11px, 4.5vh, 16px)/1 var(--ui); }
+.bbadge.jack em, .bbadge.jack b { background: none; -webkit-background-clip: border-box; background-clip: border-box; filter: none; color: #fff; text-shadow: 0 .5cqh 0 #c2416b, 0 0 0 #000, 0 2px 0 #3d1a4f, 2px 0 0 #3d1a4f, -2px 0 0 #3d1a4f, 0 -2px 0 #3d1a4f, 0 4px 0 #3d1a4f; }
+.bbadge.jack b { color: #ffe58f; }
+.brank { animation-delay: .6s; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -2531,7 +2631,7 @@ function useAllx2() {
   S.items.allx2--; save(); $('#nAllx2').textContent = S.items.allx2;
   R.allx2 = true; R.dc *= 2; R.dp *= 2; $('#bAllx2').classList.add('on');
   pupFx('i-allx2', 'All ×2!', 'Every coin and petal prize is doubled');
-  setTimeout(function () { R && R.els.forEach(function (e) { e.classList.add('x2on'); var st = document.createElement('span'); st.className = 'stamp outl'; st.textContent = '×2'; e.appendChild(st); }); }, 600);
+  setTimeout(function () { R && R.els.forEach(function (e) { e.classList.add('x2on'); var st = document.createElement('span'); st.className = 'x2stamp outl'; st.textContent = '×2'; e.appendChild(st); }); }, 600);
 }
 var MULTI_MAX = 4, BLOOM_NAMES = ['', 'Bingo!', 'Double Bloom!', 'Triple Bloom!', 'Full Bouquet!'];
 function checkBingo(ci) {
@@ -2548,7 +2648,7 @@ function checkBingo(ci) {
 function claimLine(ci, line) {
   if (!R || R.left <= 0) return;
   var k = R.cards[ci], el = R.els[ci], blackout = R.mode === 'blackout', luck = ci === R.lucky ? 2 : 1;
-  k.n++;
+  k.n++; if (!k.rank) k.rank = R.total - R.left + 1;
   var lb = lineBonus(ci, line);
   var base = blackout ? 300 + 500 * (R.left / R.total) : 30 + 90 * (R.left / R.total);
   var coins = Math.round(base * R.bet * R.dc * luck * lb.m), petals = (blackout ? 10 + 3 * R.bet : 2 + R.bet) * R.dp * luck * lb.m * (R.room === hotRoom() ? 2 : 1);
@@ -2599,40 +2699,89 @@ function endRound(why) {
   if (why === 'quit') { var qr = R.roomObj; R = null; roomScreen(qr); return; }
   var perfect = !R.usedAuto && R.idx >= 10 && R.cards.every(function (k) { return k.won || k.cells.every(function (c) { return c.d || !R.called[c.n]; }); });
   if (perfect) { R.perfect = Math.round(50 * R.bet); S.coins += R.perfect; S.drops += 1; R.earned.coins += R.perfect; R.earned.drops += 1; save(); }
-  var st = document.createElement('div'); st.className = 'stamp'; st.innerHTML = '<div><b class="outl">Round complete!</b>' + (perfect ? '<span>Perfect Bloom: you marked every number!</span>' : '') + '</div>';
+  var st = document.createElement('div'); st.className = 'stamp'; st.innerHTML = '<div><b class="outl">Round complete!</b></div>';
   document.body.appendChild(st); SFX.set();
-  setTimeout(function () { st.remove(); if (R.jp) bouquetWheel(R.jp, R.bet, results); else results(); }, perfect ? 2000 : 1400);
+  setTimeout(function () { st.remove(); if (R.bingos) bloomShow(perfect, results); else results(); }, 1200);
 }
 
+/* ---------- end of round: Perfect Bloom card show, then the Bloom Summary with the Bloom Wheel ---------- */
+function badgeName(k) { if (R.mode === 'blackout') return k.n ? ['Blackout', 'Blackout'] : null; return [null, ['Bingo', ''], ['Double', 'Bloom'], ['Triple', 'Bloom'], ['Full', 'Bouquet']][Math.min(4, k.n)] || null; }
+function fireworks(ms) {
+  if (reduceMotion) return; var end = Date.now() + ms;
+  (function boom() { if (Date.now() > end) return; sparkle(innerWidth * (.1 + Math.random() * .8), innerHeight * (.12 + Math.random() * .45), 46); tone(220 + rand(200), 0, .08, 'triangle', .02); setTimeout(boom, 260 + rand(260)); })();
+}
+function bloomShow(perfect, done) {
+  var cards = R.cards.map(function (k) {
+    var b = badgeName(k), cells = k.cells.map(function (c, i) { return '<i class="' + (i === 12 ? 'f' : c.d ? 'd' : '') + '"></i>'; }).join('');
+    var tier = k.n >= 4 || R.mode === 'blackout' ? 'jack' : k.n >= 2 ? 'dbl' : 'one';
+    return '<div class="bsc"><div class="bscg">' + cells + '</div>' + (b ? '<div class="bbadge ' + tier + '"><span class="bbrays"></span><em class="outl">' + b[0] + '</em>' + (b[1] ? '<b class="outl">' + b[1] + '</b>' : '') + '</div>' : '') +
+      (k.rank ? '<span class="brank r' + Math.min(4, k.rank) + '">' + k.rank + '</span>' : '') + (R.lucky === R.cards.indexOf(k) ? '<span class="blucky">×2</span>' : '') + '</div>';
+  }).join('');
+  var o = document.createElement('div'); o.className = 'bshow';
+  o.innerHTML = '<div class="bsrib"><span class="outl">' + (perfect ? 'Perfect Bloom' : 'Round Bloom') + '</span></div>' + (perfect ? '<p class="bsnote outl">You marked every called number yourself! +' + R.perfect + ' coins</p>' : '') +
+    '<div class="bsgrid n' + R.cards.length + '">' + cards + '</div><button class="b3 gold bsgo" id="bsGo">Continue <small id="bsT">4</small></button>';
+  document.body.appendChild(o); SFX.bingo(); fireworks(2600);
+  var n = 4, tm = setInterval(function () { n--; var t = $('#bsT'); if (t) t.textContent = n; if (n <= 0) finish(); }, 1000), gone = false;
+  function finish() { if (gone) return; gone = true; clearInterval(tm); o.classList.add('out'); setTimeout(function () { o.remove(); done(); }, 300); }
+  $('#bsGo').onclick = finish;
+}
+var BLOOM_WHEEL = [{ lbl: '5', n: 5, w: 30 }, { lbl: 'PETITE', n: 25, w: 12, tier: 0 }, { lbl: '8', n: 8, w: 25 }, { lbl: 'BOUQUET', n: 50, w: 8, tier: 1 }, { lbl: '10', n: 10, w: 20 }, { lbl: 'GRAND', n: 120, w: 4, tier: 2 }, { lbl: '8', n: 8, w: 0 }, { lbl: 'ROYAL', n: 300, w: 1, tier: 3 }];
+var WHEEL_COLS = ['#7fd8c8', '#ff8fb1', '#9b5cf0', '#7fbfff', '#7fd8c8', '#d96bd9', '#9b5cf0', '#ffd45c'];
+var TIERS = [['Petite', '#7fe0a8', '#2f9a3a'], ['Bouquet', '#7fbfff', '#3a52c4'], ['Grand', '#ff8fb1', '#c2416b'], ['Royal', '#ffe58f', '#e9940f']];
 function results() {
-  var E = R.earned, head = R.bingos ? (R.mode === 'blackout' ? (R.bingos > 1 ? R.bingos + ' Blackouts!' : 'Blackout!') : (R.bingos > 1 ? R.bingos + ' Bingos!' : 'Bingo!')) : 'Round over';
+  var E = R.earned, spins = R.bingos ? 1 + (R.jp || 0) : 0, bet = R.bet, room = R.roomObj;
+  var head = R.bingos ? (R.mode === 'blackout' ? 'Blackout!' : R.bingos > 1 ? R.bingos + ' Bingos!' : 'Bingo!') : 'Round over';
   var ingCount = {}; E.ings.forEach(function (g) { ingCount[g] = (ingCount[g] || 0) + 1; });
-  show('<div class="screen" id="results"><div class="panel">' +
-    '<div class="res-l"><h2 class="outl">' + head + '</h2><p>' + (R.bingos ? 'Beautifully played.' : (R.mode === 'blackout' ? 'No blackout this time. Boost and Wild Petals help cover the card.' : 'No bingo this time. More cards give more chances.')) + '</p>' +
-      '<div class="res-stats"><div><b>' + R.bingos + '</b>Bingos</div><div><b>' + E.coins + '</b>Coins</div><div><b>' + E.petals + '</b>Petals</div></div>' +
-      '<div class="res-btns" style="justify-content:center">' + (R.pathReady ? '<button class="b3 green" id="bPath">Play Garden Path!</button>' : '') + '<button class="b3 gold" id="bAgain">Play again</button><button class="b3 cream" id="bLobby">Map</button><button class="b3 plum" id="bAlb">Album</button></div></div>' +
-    '<div class="res-r">' +
-      (E.sets.length ? '<h4>Set complete: ' + E.sets.map(function (id) { return setById(id).name; }).join(', ') + ' · +' + SET_REWARD * E.sets.length + ' coins</h4>' : '') +
-      '<h4>New for your album (' + E.cards.length + ')</h4>' +
-      (E.cards.length ? '<div class="got">' + E.cards.map(function (d, i) { return cardFace(d.id, { isNew: d.isNew, hideCount: true, delay: .15 + i * .18 }); }).join('') + '</div>' : '<p>Win a bingo or find a card square to get album cards.</p>') +
-      '<h4>For your pantry</h4>' +
-      (E.ings.length ? '<div class="chips">' + Object.keys(ingCount).map(function (id) { var g = ingById(id); return '<span class="chip"><i style="background:' + g.c + '"></i>' + g.name + ' <b>+' + ingCount[id] + '</b></span>'; }).join('') + '</div>' : '<p>No ingredients this round.</p>') +
-      (E.alerts ? '<p>+' + E.alerts + ' Bloom Alert' + (E.alerts > 1 ? 's' : '') + ' won. You have ' + S.alerts + '.</p>' : '') +
-      (R.mode === 'butterfly' ? '<p>Butterflies caught: <b>' + R.caught + '</b></p>' : '') +
-      (R.mode === 'recipe' ? '<p>Recipes baked: <b>' + R.baked + '</b></p>' : '') +
-      (R.mode === 'shape' ? '<p>' + R.shape.name + ' shapes completed: <b>' + R.shapes + '</b></p>' : '') +
-      (R.mode === 'mystery' ? '<p>Gifts opened: <b>' + R.gifts + '</b></p>' : '') +
-      (R.mode !== 'multi' ? '<div class="gprog"><b>Garden Path bonus: ' + bonusPct(R.room) + '%</b><div class="pbar"><i style="width:' + bonusPct(R.room) + '%"></i></div></div>' : '') +
-      (R.perfect ? '<p><b>Perfect Bloom!</b> You marked every called number yourself: +' + R.perfect + ' coins and a drop ball.</p>' : '') +
-      (E.tickets || E.drops || E.seeds ? '<p>' + [E.tickets ? '+' + E.tickets + ' tickets' : '', E.drops ? '+' + E.drops + ' drop balls for Petal Drop' : '', E.seeds ? '+' + E.seeds + ' seeds for the Team Garden' : ''].filter(Boolean).join(' · ') + '</p>' : '') +
-      (S.dry >= 3 ? '<p><b>Fair Play:</b> your next round starts with a free Head Start.</p>' : '') +
-      (E.petals ? '<p>You have <b>' + S.petals + ' petals</b>. Spend them on the map to build Paris.</p>' : '') +
-    '</div></div></div>');
-  if (R.bingos) setTimeout(function () { sparkle(innerWidth * .25, 80, 90); SFX.set(); }, 250);
-  var lastRoom = R.roomObj, lastBet = R.bet; $('#bAgain').onclick = function () { roomScreen(lastRoom); };
-  if ($('#bPath')) { $('#bPath').onclick = function () { this.remove(); gardenPath(lastBet, lastRoom.id); }; setTimeout(function () { if ($('#bPath')) toast('Your Garden Path bonus is full! Tap Play Garden Path.', 3400); }, 600); }
+  var tiles = BAKES[R.room] ? bakeNeed(R.room).map(function (nd) { var g = ingById(nd[0]), h = Math.min(nd[1], bakeState(R.room).have[nd[0]] || 0), full = h >= nd[1]; return '<div class="stile' + (full ? ' full' : '') + '">' + ingDot(nd[0]) + '<small>' + g.name + '</small><span class="ibar"><i style="width:' + (h / nd[1] * 100) + '%"></i><em>' + h + '/' + nd[1] + '</em></span>' + (full ? '<span class="sok">✓</span>' : '') + (ingCount[nd[0]] ? '<span class="sbadge">' + ingCount[nd[0]] + '</span>' : '') + '</div>'; }).join('')
+    : Object.keys(ingCount).map(function (id) { var g = ingById(id); return '<div class="stile">' + ingDot(id) + '<small>' + g.name + '</small><span class="sbadge">' + ingCount[id] + '</span></div>'; }).join('');
+  var chips = [['i-coin', E.coins], ['i-petal', E.petals], ['i-card', E.cards.length], ['i-drop', E.drops], ['i-seed', E.seeds], ['i-bulb', E.alerts]].filter(function (c) { return c[1]; })
+    .map(function (c, i) { return '<span class="schip" style="animation-delay:' + (.4 + i * .1) + 's">' + icon(c[0]) + '<b>' + c[1] + '</b></span>'; }).join('');
+  show('<div class="screen" id="summary" style="--rbg:url(' + room.img + ')">' +
+    '<div class="sumL"><div class="sribbon"><span class="outl">' + head + '</span></div>' +
+      '<div class="slvl"><span>LV ' + S.level + '</span><div class="pbar"><i style="width:' + Math.round(S.xp / xpNeed() * 100) + '%"></i></div></div>' +
+      '<div class="sbig">' + icon('i-ticket') + '<b id="sumTix">0</b><small>tickets won</small></div>' +
+      '<div class="schips">' + (chips || '<span class="snone">No prizes this round. More cards give more chances!</span>') + '</div>' +
+      (tiles ? '<div class="stiles">' + tiles + '</div>' : '') +
+      (E.cards.length ? '<div class="scards">' + E.cards.slice(0, 8).map(function (d, i) { return '<span style="animation-delay:' + (.5 + i * .12) + 's">' + cardFace(d.id, { isNew: d.isNew, hideCount: true }) + '</span>'; }).join('') + '</div>' : '') +
+      '<div class="sbtns">' + (R.pathReady ? '<button class="b3 green" id="bPath">Garden Path!</button>' : '') + '<button class="b3 gold" id="bAgain">Play again</button><button class="b3 plum" id="bLobby">Map</button><button class="b3 plum" id="bAlb">Album</button></div>' +
+    '</div>' +
+    '<div class="sumR"><div class="tiers4">' + TIERS.map(function (t, i) { var amt = BLOOM_WHEEL.filter(function (w) { return w.tier === i; })[0].n * bet; return '<div class="t4" id="tier' + i + '" style="--a:' + t[1] + ';--b:' + t[2] + '"><em class="outl">' + t[0] + '</em><b>' + icon('i-ticket') + amt + '</b></div>'; }).join('') + '</div>' +
+      '<div class="wwrap"><canvas id="bwCv" aria-label="Bloom Wheel"></canvas><button class="wspin" id="bwGo"' + (spins ? '' : ' disabled') + '><span>' + (spins ? 'SPIN' : '🔒') + '</span></button></div>' +
+      '<p class="wnote" id="bwMsg">' + (spins ? (spins > 1 ? spins + ' spins won: a Full Bouquet or Blackout adds extra spins!' : 'Your bingo won a spin of the Bloom Wheel!') : 'Win a bingo to spin the Bloom Wheel.') + '</p>' +
+      '<button class="wodds" id="bwOdds">See the odds</button></div>' +
+  '</div>');
+  if (R.bingos) setTimeout(function () { sparkle(innerWidth * .25, 80, 70); }, 250);
+  var tix = E.tickets; countTo($('#sumTix'), tix);
+  var lastRoom = R.roomObj, lastBet = bet; R = null;
+  $('#bAgain').onclick = function () { roomScreen(lastRoom); };
+  if ($('#bPath')) $('#bPath').onclick = function () { this.remove(); gardenPath(lastBet, lastRoom.id); };
   $('#bLobby').onclick = lobby; $('#bAlb').onclick = function () { album(null); };
-  R = null;
+  $('#bwOdds').onclick = function () { panel('<h3>Bloom Wheel odds</h3><table class="odds"><tr><th>Prize</th><th>Chance</th></tr>' + BLOOM_WHEEL.filter(function (w) { return w.w; }).slice().sort(function (a, b) { return b.n - a.n; }).map(function (w) { return '<tr><td>' + (w.tier !== undefined ? TIERS[w.tier][0] + ' jackpot: ' : '') + w.n * lastBet + ' tickets</td><td>' + w.w + '%</td></tr>'; }).join('') + '</table><p class="note">Every prize is tickets, times your bet (×' + lastBet + '). Every bingo wins a spin; a Full Bouquet or Blackout adds one more.</p>', 'small'); };
+  // the wheel
+  var cv = $('#bwCv'), ctx = cv.getContext('2d'), d = window.devicePixelRatio || 1, Wd = 300, angle = 0, spinning = false, seg = Math.PI * 2 / BLOOM_WHEEL.length;
+  var box = $('.wwrap'), sz = Math.max(130, Math.min(box.clientWidth, box.clientHeight)); cv.style.width = cv.style.height = sz + 'px'; cv.width = cv.height = Wd * d; ctx.scale(d, d);
+  var segs = BLOOM_WHEEL.map(function (w, i) { var big = w.tier !== undefined; return { c: WHEEL_COLS[i], big: big, lbl: big ? w.lbl : w.n * bet + '' }; });
+  (function idle() { if (!cv.isConnected) return; luxWheel(ctx, Wd, segs, angle, performance.now() / 1000); requestAnimationFrame(idle); })();
+  var auto = spins ? setTimeout(function () { var b = $('#bwGo'); if (b && !spinning) b.click(); }, 2600) : null;
+  $('#bwGo').onclick = function () {
+    var btn = this; clearTimeout(auto);
+    if (spinning || spins < 1) return;
+    spins--; spinning = true; btn.disabled = true;
+    var roll = Math.random() * 100, idx = 0, acc = 0; for (var i = 0; i < BLOOM_WHEEL.length; i++) { acc += BLOOM_WHEEL[i].w; if (BLOOM_WHEEL[i].w && roll < acc) { idx = i; break; } }
+    var start = angle, target = start - (start % (Math.PI * 2)) + Math.PI * 2 * 7 - (idx + .5) * seg + (Math.random() - .5) * seg * .5, t0 = performance.now(), dur = reduceMotion ? 300 : 4000, last = -1;
+    (function anim(now) {
+      var pp = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - pp, 4); angle = start + (target - start) * e;
+      var cur = wheelIndexAt(angle, BLOOM_WHEEL.length); if (cur !== last) { last = cur; tone(1400, 0, .03, 'square', .025); }
+      if (pp < 1) { requestAnimationFrame(anim); return; }
+      spinning = false;
+      var w = BLOOM_WHEEL[idx], amt = w.n * lastBet; S.tickets += amt; tix += amt; save(); refreshTop(); countTo($('#sumTix'), tix);
+      logEvent({ t: 'jackpot', prize: w.lbl, tickets: amt });
+      var big = w.tier !== undefined;
+      if (big) { var tEl = $('#tier' + w.tier); if (tEl) tEl.classList.add('hit'); fireworks(2400); pupFx('i-ticket', TIERS[w.tier][0] + ' Jackpot!', '+' + amt + ' tickets'); } else { SFX.coin(); sparkle(innerWidth * .7, innerHeight * .5, 50); }
+      $('#bwMsg').textContent = '+' + amt + ' tickets!' + (spins ? ' ' + spins + ' more spin' + (spins > 1 ? 's' : '') + '!' : '');
+      if (spins) { btn.disabled = false; auto = setTimeout(function () { if (btn.isConnected) btn.click(); }, 3500); } else { btn.querySelector('span').textContent = '✓'; }
+    })(t0);
+  };
 }
 
 var JACKPOT = [{ lbl: 'GRAND', n: 500, w: 2, c: '#f7b924' }, { lbl: '15', n: 15, w: 35, c: '#ffd45c' }, { lbl: 'MINOR', n: 60, w: 12, c: '#ff8fb1' }, { lbl: '25', n: 25, w: 25, c: '#7fe0a8' },
