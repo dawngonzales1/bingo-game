@@ -41,3 +41,15 @@ Ideas to build with the new art:
 - Event tiles play like tiny movies (scenes change, sun flares, spotlights).
 - Each side icon has its own little act: ticket flips, chick hatches, clam opens to show a pearl, chest bobs.
 - Gems and stars glint with a light sweep.
+
+## Competitor recordings (Bingo Blitz Xtra and Bingo Bash, Oct 14)
+Worth borrowing (fair, no money pressure):
+- Daily and weekly challenges ("Call 3 bingos", "Use 20 power-ups", "Daub 130 odd numbers") feeding a season reward path. Bloom version: a free Bloom Season path, no paid pass.
+- A free gift in the Shop every few hours, with the prizes flying into your counters ("Gift Collected!").
+- Story intro the first time you open a room: a few comic panels with Cordie, then "Let's Bingo!".
+- Weekly friendly leagues: small groups, points from bingos, "Ranked up!" moment, prizes for everyone who plays.
+- Daily Raffle (like Lottery Bash): earn tokens from bingos, a daily draw of winning balls.
+- Room cards flip to show cost and payouts.
+- Chef Menu (Blitz) = our Kitchen; "Dish Served!" big reveal moment is a good model.
+Skip (greedy or off-brand):
+- Sale pop-ups stacked on opening the app, "100% more gems", endless sale chains, paid unlock paths, countdown pressure, slots and casino mini games.
