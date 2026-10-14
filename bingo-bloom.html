@@ -1404,6 +1404,9 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .bbadge.jack em, .bbadge.jack b { background: none; -webkit-background-clip: border-box; background-clip: border-box; filter: none; color: #fff; text-shadow: 0 .5cqh 0 #c2416b, 0 0 0 #000, 0 2px 0 #3d1a4f, 2px 0 0 #3d1a4f, -2px 0 0 #3d1a4f, 0 -2px 0 #3d1a4f, 0 4px 0 #3d1a4f; }
 .bbadge.jack b { color: #ffe58f; }
 .brank { animation-delay: .6s; }
+#rotate .rtips { display: grid; gap: 8px; padding: 12px 14px; border-radius: 16px; background: rgba(255,255,255,.7); box-shadow: 0 0 0 2px var(--ol); text-align: left; }
+#rotate .rtips p { font-size: 14px; }
+#rotate .rtips b { font-size: inherit; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1492,7 +1495,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 <div id="app"></div>
 <canvas id="fx"></canvas>
 <div id="toast" hidden></div>
-<div id="rotate" role="alert"><div class="in"><div class="ph" aria-hidden="true"></div><b>Turn your phone sideways</b><p>Bingo Bloom is played with the phone on its side. If the screen doesn't turn, switch off rotation lock first.</p></div></div>
+<div id="rotate" role="alert"><div class="in"><div class="ph" aria-hidden="true"></div><b>Turn your phone sideways</b><p>Bingo Bloom is played with the phone on its side.</p><div class="rtips"><p><b>Screen won't turn?</b></p><p id="rtipIos"><b>iPhone:</b> swipe down from the top-right corner, tap the <b>lock with a circle arrow</b> so it turns off, then turn your phone sideways.</p><p id="rtipAnd"><b>Android:</b> swipe down from the top, turn on <b>Auto rotate</b>, then turn your phone sideways.</p></div></div></div>
 
 <script>
 (function () {
@@ -1566,6 +1569,7 @@ function logEvent(e) { e.at = Date.now(); S.events.push(e); if (S.events.length 
 
 /* ---------- helpers ---------- */
 var app = document.getElementById('app');
+try { var isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); document.getElementById(isIOS ? 'rtipAnd' : 'rtipIos').hidden = true; } catch (e) { /* show both */ }
 function $(sel, root) { return (root || document).querySelector(sel); }
 function rand(n) { return Math.floor(Math.random() * n); }
 function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = rand(i + 1), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
