@@ -2,6 +2,9 @@
 
 Notes from Dawn and the admins to build when the Firefly art arrives.
 
+## House rule (Dawn, Oct 14)
+"Everything in the app needs pizzazz and to be flashy and bubbly." Every screen and pop-up gets motion, sparkle and bounce; nothing plain or still.
+
 ## Featured rooms (Dawn, Oct 14)
 "The featured rooms is just a boring row of them at the bottom of the screen. There's no pizzazz or anything enticing to click on them."
 Ideas to build with the new art:

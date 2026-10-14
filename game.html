@@ -1756,6 +1756,35 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .calnext { font-size: 13px; color: #e9dcff; } .calnext b { color: #ffe58f; }
 @media (max-height: 480px) { .caltitle span { font-size: 21px; } .cday .cdi svg { width: 20px; height: 20px; } .cday .cdi { gap: 1px 4px; padding: 4px 2px; } .cdays { gap: 6px; } }
 @media (max-height: 300px) { .calsub { display: none; } .calmile { height: 34px; margin: 0 24px 2px; } .cmbar { top: 18px; } .cmgift b { width: 22px; height: 22px; } .cmgift small { margin-top: 6px; } .cday .cdh { font-size: 9.5px; } .cday .cdi svg { width: 16px; height: 16px; } .cday .cdi span { font-size: 9.5px; } .cal { gap: 4px; } }
+
+/* ===== bubbly layer ===== */
+.bubs { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.bubs i { position: absolute; bottom: -40px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff 0 12%, rgba(255,255,255,.45) 24%, rgba(255,170,215,.35) 58%, rgba(185,140,255,.6) 100%); box-shadow: inset 0 0 0 2px rgba(255,255,255,.85), 0 0 14px rgba(255,190,230,.7); animation: bubUp 3s ease-out both; }
+@keyframes bubUp { 0% { transform: translate(0, 0) scale(.4); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(var(--dx, 0px), -105vh) scale(1.1); opacity: 0; } }
+.veil > .bubs { z-index: 0; } .veil > .panel { z-index: 1; }
+.tapring { position: fixed; z-index: 90; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; pointer-events: none; border: 3px solid rgba(255,229,143,.95); box-shadow: 0 0 12px rgba(255,214,92,.8); animation: tapRing .5s ease-out forwards; }
+@keyframes tapRing { to { transform: scale(5); opacity: 0; border-width: 1px; } }
+.jelly { animation: jelly .5s cubic-bezier(.3,1.6,.5,1) !important; }
+@keyframes jelly { 0% { transform: scale(1, 1); } 25% { transform: scale(1.12, .88); } 50% { transform: scale(.94, 1.06); } 75% { transform: scale(1.03, .97); } 100% { transform: scale(1, 1); } }
+/* HUD buttons bob gently and their icons wiggle now and then */
+.round .c { animation: hudBob 3.2s ease-in-out infinite; }
+.round:nth-child(2) .c { animation-delay: -.8s; } .round:nth-child(3) .c { animation-delay: -1.6s; } .round:nth-child(4) .c { animation-delay: -2.4s; }
+@keyframes hudBob { 50% { transform: translateY(-3px); } }
+.round .c svg, .round .c img { animation: iconWiggle 6s ease-in-out infinite; }
+.round:nth-child(2n) .c svg, .round:nth-child(2n) .c img { animation-delay: -3s; }
+@keyframes iconWiggle { 0%, 88%, 100% { transform: rotate(0) scale(1); } 91% { transform: rotate(-12deg) scale(1.12); } 94% { transform: rotate(10deg) scale(1.12); } 97% { transform: rotate(-4deg) scale(1.05); } }
+.round .dot { animation: dotPop 1.4s ease-in-out infinite; } @keyframes dotPop { 50% { transform: scale(1.25); box-shadow: 0 0 10px #ff4d6d; } }
+/* currency pills sparkle when they change */
+.cur span.tick { animation: bumpBig .55s cubic-bezier(.2,.9,.3,1.6) !important; }
+@keyframes bumpBig { 30% { transform: scale(1.35); text-shadow: 0 0 12px #ffe58f; } }
+/* toasts bounce in like a bubble */
+#toast:not([hidden]) { animation: toastPop .5s cubic-bezier(.2,.9,.3,1.5) both; }
+@keyframes toastPop { 0% { transform: translateX(-50%) translateY(-24px) scale(.6); opacity: 0; } 60% { transform: translateX(-50%) scale(1.06, .94); opacity: 1; } 100% { transform: translateX(-50%) scale(1); } }
+/* pop-ups land with a squash and stretch */
+.panel { animation: panelJelly .55s cubic-bezier(.2,.9,.3,1.3), panelDrift 18s linear infinite !important; }
+@keyframes panelJelly { 0% { transform: scale(.6) translateY(30px); opacity: 0; } 55% { transform: scale(1.04, .96); opacity: 1; } 75% { transform: scale(.98, 1.02); } 100% { transform: none; } }
+.veil.typing .panel { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .round .c, .round .c svg, .round .c img, .round .dot { animation: none !important; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1997,6 +2026,27 @@ function say(text) {
 var fx = document.getElementById('fx'), fxc = fx.getContext('2d'), parts = [], fxOn = false;
 function sizeFx() { var d = window.devicePixelRatio || 1; fx.width = innerWidth * d; fx.height = innerHeight * d; fxc.setTransform(d, 0, 0, d, 0, 0); }
 addEventListener('resize', sizeFx); sizeFx();
+
+/* ---------- bubbly layer: tap bursts, jelly presses, floating bubbles ---------- */
+function bubbles(host, n) {
+  if (reduceMotion || !host) return;
+  var box = document.createElement('div'); box.className = 'bubs';
+  for (var i = 0; i < n; i++) { var z = 14 + rand(30); box.insertAdjacentHTML('beforeend', '<i style="left:' + rand(100) + '%;width:' + z + 'px;height:' + z + 'px;animation-delay:' + (Math.random() * 1.2).toFixed(2) + 's;animation-duration:' + (2.6 + Math.random() * 2).toFixed(2) + 's;--dx:' + (rand(60) - 30) + 'px"></i>'); }
+  host.appendChild(box); setTimeout(function () { box.remove(); }, 5200);
+}
+(function () {
+  if (reduceMotion) return;
+  document.addEventListener('pointerdown', function (e) {
+    var b = e.target.closest('button, .ftile, .tier, .bund, .gtile, .cday, .sitem, .pinvr');
+    if (!b || b.disabled || e.target.closest('#cards')) return;
+    sparkle(e.clientX, e.clientY, 9);
+    var ring = document.createElement('span'); ring.className = 'tapring'; ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
+    document.body.appendChild(ring); setTimeout(function () { ring.remove(); }, 520);
+    b.classList.remove('jelly'); void b.offsetWidth; b.classList.add('jelly'); setTimeout(function () { b.classList.remove('jelly'); }, 520);
+  }, { passive: true });
+  // pop-ups get a few bubbles drifting up behind them
+  new MutationObserver(function (ms) { ms.forEach(function (m) { m.addedNodes.forEach(function (nd) { if (nd.classList && nd.classList.contains('veil')) bubbles(nd, 10); }); }); }).observe(document.body, { childList: true });
+})();
 function sparkle(x, y, n) {
   if (reduceMotion) return;
   for (var i = 0; i < (n || 40); i++) {
@@ -2293,7 +2343,7 @@ function goFull() {
 }
 document.addEventListener('pointerup', function () { if (fsWanted && !document.fullscreenElement && matchMedia('(orientation: landscape)').matches) goFull(); }, true);
 document.addEventListener('pointerdown', function (e) { var b = e.target.closest && e.target.closest('button'); if (b && !b.disabled && !e.target.closest('#cards')) sparkle(e.clientX, e.clientY, 7); }, true);
-function show(html) { closeVeil(); app.innerHTML = html; var sc = app.firstElementChild; if (sc && !reduceMotion) sc.classList.add('enter'); }
+function show(html) { closeVeil(); app.innerHTML = html; var sc = app.firstElementChild; if (sc && !reduceMotion) { sc.classList.add('enter'); if (sc.id !== 'play') bubbles(sc, 14); } }
 function confetti(el) {
   if (reduceMotion) return; var r = el ? el.getBoundingClientRect() : { left: innerWidth / 2 - 50, width: 100, top: 0 }, cols = ['#ffd45c', '#ff8fb1', '#b996ff', '#7fe0a8', '#7fbfff', '#fff'];
   for (var i = 0; i < 36; i++) { var c = document.createElement('i'); c.className = 'conf'; c.style.left = (r.left + Math.random() * r.width) + 'px'; c.style.top = (r.top - 10) + 'px'; c.style.background = cols[i % cols.length]; c.style.setProperty('--dx', (Math.random() * 160 - 80) + 'px'); c.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg'); c.style.animationDelay = (Math.random() * .25) + 's'; c.style.animationDuration = (1.1 + Math.random() * .8) + 's'; document.body.appendChild(c); setTimeout(function (x) { return function () { x.remove(); }; }(c), 2400); }
@@ -3630,7 +3680,7 @@ function grant(p) {
 function fmt(ms) { var s = Math.max(0, Math.ceil(ms / 1000)), m = Math.floor(s / 60); return m + ':' + ('0' + s % 60).slice(-2); }
 function hoursLeftToday() { var d = new Date(), m = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d; return Math.floor(m / 3600000) + 'h ' + Math.floor(m % 3600000 / 60000) + 'm'; }
 function curPill(id, n, extra) { return '<span class="pill2">' + icon(id) + '<b' + (extra ? ' id="' + extra + '"' : '') + '>' + n.toLocaleString() + '</b></span>'; }
-function refreshTop() { ['tickets', 'coins', 'petals', 'gems'].forEach(function (k) { var e = document.getElementById(k); if (!e) return; var v = S[k].toLocaleString(); if (e.textContent !== v) { e.textContent = v; e.classList.remove('tick'); void e.offsetWidth; e.classList.add('tick'); } }); }
+function refreshTop() { ['tickets', 'coins', 'petals', 'gems'].forEach(function (k) { var e = document.getElementById(k); if (!e) return; var v = S[k].toLocaleString(); if (e.textContent !== v) { var up = +e.textContent.replace(/\D/g, '') < S[k]; e.textContent = v; e.classList.remove('tick'); void e.offsetWidth; e.classList.add('tick'); if (up) { var r = e.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 18); } } }); }
 
 function kitchen() {
   var timer;
