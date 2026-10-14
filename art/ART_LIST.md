@@ -723,7 +723,7 @@ Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft
 **Sleeping (come back tomorrow)** (save as `mascot-sleep.png`)
 
 ```
-Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides standing straight up, rosy cheeks and big sparkling violet eyes, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Curled up asleep hugging a small plum pillow, peaceful smile, eyes closed, full body, centered, no letters. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with two long soft ears with pink insides drooping sleepily, rosy cheeks, wearing a rich deep royal purple beret with a gold button, a short rich deep royal purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Sitting upright and fast asleep, eyes closed, head tilted gently to one side, peaceful smile, hugging a small round pastel pink pillow with tiny gold stars in front of her chest, full body, centered, no letters. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
 ```
 
 **Head and shoulders (for speech bubbles)** (save as `mascot-face.png`)
