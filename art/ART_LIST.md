@@ -679,44 +679,301 @@ Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gol
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a golden crescent moon, made of shiny gold with sparkles, extra special, on a soft round gold glow.
 ```
 
-## New: Paris city rooms (16:9, no reference image)
+# Still to make (October 2026)
 
-**106. Cafe du Parc (city room)** (save as `room-cafe.png`)
+## 1. Cordie, the Bingo Bloom mascot
+Make the character sheet first and generate until you love her. Then upload that picture as a Style reference (Reference → Style) for every other Cordie picture so she looks the same each time. Keep the mint-green background: send them to Claude as they are and the background gets cut out for you. Rename her if you like. Shape: **Square (1:1)**.
+
+**Character sheet (make first)** (save as `mascot-sheet.png`)
+
+```
+Character design sheet of a cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Shown three times side by side: front view, side view, back view, standing, full body. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+**Welcome back (waving)** (save as `mascot-wave.png`)
+
+```
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Waving hello with one paw and a big happy smile, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+**Giving a gift** (save as `mascot-gift.png`)
+
+```
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Holding out a pink gift box with a big gold ribbon toward the viewer, excited and smiling, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+**Explaining (tips and new features)** (save as `mascot-point.png`)
+
+```
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Pointing up and to the side with one paw, other paw on her hip, cheerful, as if explaining something, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+**Celebrating** (save as `mascot-cheer.png`)
+
+```
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Jumping in the air with both arms raised, overjoyed, eyes closed with a huge smile, full body, centered, no confetti. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+**Wow! (jackpots)** (save as `mascot-wow.png`)
+
+```
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Both paws on her cheeks, mouth open in delighted surprise, ears standing straight up, full body, centered. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+**Sleeping (come back tomorrow)** (save as `mascot-sleep.png`)
+
+```
+Cute 3D cartoon mobile game mascot: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Curled up asleep hugging a small plum pillow, peaceful smile, eyes closed, full body, centered, no letters. Glossy soft Pixar-style render, rounded friendly shapes, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+**Head and shoulders (for speech bubbles)** (save as `mascot-face.png`)
+
+```
+Cute 3D cartoon mobile game mascot portrait, head and shoulders: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear. Warm friendly smile, looking at the viewer, centered. Glossy soft Pixar-style render, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+## 2. Loading screen
+The big picture behind the logo and loading bar when the game opens. Upload your favorite Cordie as a Style reference for this one too. Shape: **Widescreen (16:9)**.
+
+**Opening scene** (save as `splash-paris.png`)
+
+```
+Glossy 3D cartoon mobile game key art: a small cream-white bunny with long soft ears with pink insides, rosy cheeks and big sparkling violet eyes, wearing a plum-purple beret with a gold button, a short plum-purple chef jacket with gold trim and gold buttons, and a small pink rose tucked behind one ear, standing happily in front of a charming pink Parisian pastry shop on a cobblestone street at golden hour, holding a gold whisk, pink blossom petals drifting in the air, a bunch of pastel bingo-ball balloons tied to a lamp post, warm magical light, rich detail. Empty open sky at the top center for a logo. No text, no logos.
+```
+
+## 3. Paris city rooms
+Each Paris room gets its own inside picture. Keep the middle calm so the bingo cards stay easy to read. Shape: **Widescreen (16:9)**.
+
+**Cafe du Parc** (save as `room-cafe.png`)
 
 ```
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a cozy Paris sidewalk cafe in a park in the morning, a cream and teal cafe front, round bistro tables with striped umbrellas, coffee cups and croissants, chestnut trees with soft pink blossoms, soft blurred background, calm open space in the center.
 ```
 
-**107. Grand Carousel (city room)** (save as `room-carousel.png`)
+**Grand Carousel** (save as `room-carousel.png`)
 
 ```
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a magical Paris park carousel at sunset, a vintage merry-go-round with a plum and cream striped roof, gold poles and pastel horses, twinkling string lights, soft blurred background, calm open space in the center.
 ```
 
-**108. Silk Boutique (city room)** (save as `room-boutique.png`)
+**Silk Boutique** (save as `room-boutique.png`)
 
 ```
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. an elegant Paris fashion street, boutique windows with silk dresses, hat boxes and perfume bottles, blue mansard rooftops and gold balconies, soft blurred background, calm open space in the center.
 ```
 
+## 4. Power-up icons
+These replace the drawn icons in the power-up bar, the Shop and the pack reveals. Remove the background after downloading. Shape: **Square (1:1)**.
 
-## New: icons (square, remove the background after)
-
-**109. Instant Bingo** (save as `icon-instant-bingo.png`)
+**Instant Bingo (super rare)** (save as `icon-instant-bingo.png`)
 
 ```
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glossy purple orb with a bright golden lightning bolt across it, single object, plain cream background, soft shadow underneath.
 ```
 
-**110. All ×2** (save as `icon-all-x2.png`)
+**All ×2 (super rare)** (save as `icon-all-x2.png`)
 
 ```
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a round shiny gold medallion badge with a plum gem in the center and sparkles, blank, no numbers, single object, plain cream background, soft shadow underneath.
 ```
 
-**111. Amethyst** (save as `icon-amethyst.png`)
+**Triple Daub (rare)** (save as `icon-triple-daub.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. three round pink dauber stamps in a cluster, each with a gold flower mark, single object, plain cream background, soft shadow underneath.
+```
+
+**Supercharger (rare)** (save as `icon-supercharger.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glowing purple battery charm full of golden lightning energy, single object, plain cream background, soft shadow underneath.
+```
+
+**Double Daub** (save as `icon-double-daub.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. two round pink dauber stamps side by side with gold flower marks, single object, plain cream background, soft shadow underneath.
+```
+
+**Single Daub** (save as `icon-single-daub.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. one round pink dauber stamp with a gold flower mark, single object, plain cream background, soft shadow underneath.
+```
+
+**Coin Squares** (save as `icon-coin-squares.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a small cream square tile with a shiny gold coin on it, single object, plain cream background, soft shadow underneath.
+```
+
+**Treasure Chest** (save as `icon-treasure-chest.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a small plum and gold treasure chest, slightly open, golden glow inside, single object, plain cream background, soft shadow underneath.
+```
+
+**Time Freeze** (save as `icon-time-freeze.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a pastel blue stopwatch covered in sparkly frost and tiny snowflakes, single object, plain cream background, soft shadow underneath.
+```
+
+**Double XP** (save as `icon-double-xp.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glowing purple star badge with a gold ribbon, single object, plain cream background, soft shadow underneath.
+```
+
+**Amethyst** (save as `icon-amethyst.png`)
 
 ```
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a faceted glossy amethyst gemstone, deep plum purple with pink highlights and a tiny gold sparkle, single object, plain cream background, soft shadow underneath.
 ```
 
+## 5. Bake to Win ingredients
+Item 6 on the admins' list. Shown in the Kitchen, the rooms and the round summary. Remove the background after downloading. Shape: **Square (1:1)**.
+
+**Flour** (save as `ing-flour.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a small cloth sack of flour with a wooden scoop, single object, plain cream background, soft shadow underneath.
+```
+
+**Butter** (save as `ing-butter.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a block of golden butter on a little dish, single object, plain cream background, soft shadow underneath.
+```
+
+**Sugar** (save as `ing-sugar.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glass jar of sparkling sugar cubes, single object, plain cream background, soft shadow underneath.
+```
+
+**Berries** (save as `ing-berries.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a small basket of red raspberries and strawberries, single object, plain cream background, soft shadow underneath.
+```
+
+**Vanilla** (save as `ing-vanilla.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a bundle of vanilla pods tied with a pink ribbon with a vanilla flower, single object, plain cream background, soft shadow underneath.
+```
+
+**Cream** (save as `ing-cream.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a little pitcher of fresh cream with a swirl of whipped cream, single object, plain cream background, soft shadow underneath.
+```
+
+## 6. Room daubs
+Each room marks numbers with its own stamp. Remove the background after downloading. Shape: **Square (1:1)**.
+
+**Candy Carnival daub** (save as `daub-candy.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a round pink and white swirl lollipop seen from the front, single object, plain cream background, soft shadow underneath.
+```
+
+**Lantern Market daub** (save as `daub-lantern.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a small round glowing paper lantern in warm orange and gold, single object, plain cream background, soft shadow underneath.
+```
+
+**Gold Coast daub** (save as `daub-shell.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a shiny pastel pink seashell with a tiny gold pearl, single object, plain cream background, soft shadow underneath.
+```
+
+**Midnight Garden daub** (save as `daub-moonflower.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glowing lilac moonflower with a tiny gold star in the center, single object, plain cream background, soft shadow underneath.
+```
+
+## 7. Macaron Match pieces
+Item 26 on the admins' list: bright, clear macarons so the board is easy to read. Remove the background after downloading. Shape: **Square (1:1)**.
+
+**Pink macaron** (save as `mm-pink.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glossy bright pink French macaron seen from the front at a slight angle, single object, plain cream background, soft shadow underneath.
+```
+
+**Lavender macaron** (save as `mm-lavender.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glossy lavender purple French macaron seen from the front at a slight angle, single object, plain cream background, soft shadow underneath.
+```
+
+**Mint macaron** (save as `mm-mint.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glossy mint green French macaron seen from the front at a slight angle, single object, plain cream background, soft shadow underneath.
+```
+
+**Lemon macaron** (save as `mm-lemon.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glossy lemon yellow French macaron seen from the front at a slight angle, single object, plain cream background, soft shadow underneath.
+```
+
+**Blueberry macaron** (save as `mm-blue.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a glossy sky blue French macaron seen from the front at a slight angle, single object, plain cream background, soft shadow underneath.
+```
+
+## 8. Store and gifts
+Big pictures for the power-up packs, the Bloom Calendar and the Amethyst Vault. Remove the background after downloading. Shape: **Square (1:1)**.
+
+**Power-up treasure** (save as `art-pupack.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. an open plum and gold treasure chest overflowing with glowing round purple orbs and gold coins, single object, plain cream background, soft shadow underneath.
+```
+
+**Mega Bouquet gift** (save as `art-mega-bouquet.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a large pink gift box with a gold bow and a bouquet of roses and peonies bursting out of the top, single object, plain cream background, soft shadow underneath.
+```
+
+**Amethyst Vault** (save as `art-vault.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. an ornate small gold vault door open with sparkling purple amethyst gems spilling out, single object, plain cream background, soft shadow underneath.
+```
+
+## 9. Reward pop-ups
+For the level-up, set, album and city celebration pop-ups. Remove the background after downloading. Shape: **Square (1:1)**.
+
+**Level up** (save as `art-levelup.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a shiny gold star medal with a plum ribbon and sparkles, single object, plain cream background, soft shadow underneath.
+```
+
+**Set complete** (save as `art-set-ribbon.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a plum and gold rosette award ribbon with a pink flower in the middle, single object, plain cream background, soft shadow underneath.
+```
+
+**Album complete** (save as `art-trophy.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a golden trophy cup decorated with pink roses and purple gems, single object, plain cream background, soft shadow underneath.
+```
+
+**City complete** (save as `art-city-crown.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a small golden crown with pink and purple gems on a plum velvet cushion, single object, plain cream background, soft shadow underneath.
+```
