@@ -1717,6 +1717,38 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .veil.typing .status { margin: 0; font-size: 12.5px; }
 .veil.typing .x { width: 30px; height: 30px; top: 4px; right: 6px; }
 .veil.typing .res-btns .b3 { padding: 6px 12px; }
+
+/* Bloom Calendar */
+.veil.vcal { background: radial-gradient(ellipse at center, rgba(90,30,140,.35), rgba(20,5,35,.85)), url(art/room-paris.webp) center / cover no-repeat; }
+.panel.cpanel { width: min(880px, 100%); }
+.cal { display: grid; gap: 8px; text-align: center; }
+.caltitle span { font-size: 26px; color: #ffe58f; }
+.calsub { margin: -6px 0 0; font-size: 12.5px; color: #e9dcff; }
+.calmile { position: relative; height: 44px; margin: 4px 30px 6px; }
+.cmbar { position: absolute; left: 0; right: 0; top: 24px; height: 9px; border-radius: 999px; background: rgba(20,5,35,.7); box-shadow: 0 0 0 1.5px #f6c64a; overflow: hidden; }
+.cmbar i { display: block; height: 100%; background: linear-gradient(90deg, #ff9cc4, #ffd45c); }
+.cmgift { position: absolute; top: 0; transform: translateX(-50%); display: grid; justify-items: center; }
+.cmgift b { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle, #b98cff, #4a1f86); box-shadow: 0 0 0 2px #f6c64a, 0 0 10px rgba(255,214,92,.6); }
+.cmgift b svg { width: 70%; height: 70%; } .cmgift small { margin-top: 12px; font-size: 9.5px; color: #ffe58f; font-weight: 700; white-space: nowrap; }
+.cmgift.got b { background: radial-gradient(circle, #8ff0b0, #1f9a5a); }
+.cdays { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)) 1.35fr; gap: 8px; align-items: stretch; }
+.cday { position: relative; display: grid; grid-template-rows: auto 1fr; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, #fff6fb, #ffd9ea); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--ol), 0 4px 0 3px #8a2a5a; animation: tierIn .45s cubic-bezier(.2,.9,.3,1.3) both; }
+.cday .cdh { padding: 3px 0; font-size: 11px; font-weight: 800; color: #fff; background: linear-gradient(180deg, #ff9cc4, #e0478c); }
+.cday .cdi { display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 2px 6px; padding: 6px 4px; }
+.cday .cdi span { display: grid; justify-items: center; font-size: 11px; font-weight: 800; } .cday .cdi b { color: #7a1f52 !important; }
+.cday.mega .cdi b { color: #8a4a06 !important; } .cday .cdi svg { width: 24px; height: 24px; }
+.cday.mega { background: linear-gradient(180deg, #fff8dc, #ffe08a); box-shadow: 0 0 0 2px #fff3b8, 0 0 0 3.5px var(--ol), 0 4px 0 3px #8a4a06, 0 0 18px 4px rgba(255,214,92,.6); }
+.cday.mega .cdh { background: linear-gradient(180deg, #ffd45c, #e9940f); letter-spacing: .04em; }
+.cday.done { filter: saturate(.55) brightness(.92); } .cday.done .cdok { position: absolute; right: 3px; top: 2px; width: 17px; height: 17px; font-size: 11px !important; border-radius: 50%; display: grid; place-items: center; font-size: 15px; font-weight: 800; color: #fff; background: linear-gradient(180deg, #5fd68a, #1f9a5a); box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--ol); }
+.cday.now { transform: translateY(-4px); box-shadow: 0 0 0 2.5px #fff3b8, 0 0 0 4px var(--ol), 0 6px 0 3px #8a2a5a, 0 0 20px 6px rgba(255,214,92,.85); animation: tierIn .45s both, nowPulse 1.2s ease-in-out .5s infinite; }
+@keyframes nowPulse { 50% { transform: translateY(-6px) scale(1.04); } }
+.cday.later { opacity: .82; }
+.cday.claim { animation: dayClaim .8s ease-out forwards; }
+@keyframes dayClaim { 40% { transform: scale(1.18) rotate(-3deg); } 100% { transform: scale(1); filter: saturate(.55) brightness(.92); } }
+.cday .tw { position: absolute; width: 9px; height: 9px; background: #fff; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: twk 2s ease-in-out infinite; } .cday .t1 { left: 8%; top: 30%; } .cday .t2 { right: 10%; bottom: 14%; animation-delay: -1s; }
+.calnext { font-size: 13px; color: #e9dcff; } .calnext b { color: #ffe58f; }
+@media (max-height: 480px) { .caltitle span { font-size: 21px; } .cday .cdi svg { width: 20px; height: 20px; } .cday .cdi { gap: 1px 4px; padding: 4px 2px; } .cdays { gap: 6px; } }
+@media (max-height: 300px) { .calsub { display: none; } .calmile { height: 34px; margin: 0 24px 2px; } .cmbar { top: 18px; } .cmgift b { width: 22px; height: 22px; } .cmgift small { margin-top: 6px; } .cday .cdh { font-size: 9.5px; } .cday .cdi svg { width: 16px; height: 16px; } .cday .cdi span { font-size: 9.5px; } .cal { gap: 4px; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -1860,7 +1892,7 @@ var LINES = (function () {
 /* ---------- saved progress (this phone only, for now) ---------- */
 var KEY = 'bingoBloom.v1';
 function fresh() {
-  return { v: 3, bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
+  return { v: 3, cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 3, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 3, bet: 1, xp: 0, level: 1, items: { headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
     build: {}, cityDone: false, lastGift: '', cards: 2, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'classic', auto: false, autoAlert: true } };
@@ -2297,6 +2329,54 @@ function titleLoad() {
   setTimeout(function () { if (!fin) { fin = true; got = urls.length; step(); done(); } }, 6000);
   step();
 }
+
+/* ---------- Bloom Calendar: a 7-day gift cycle. Missing a day never resets it; you pick up where you left off ---------- */
+var CAL = [
+  { t: 50, c: 150 }, { t: 75, c: 200, alert: 1 }, { t: 100, c: 250, pu: 1 }, { t: 100, c: 300, pe: 5 },
+  { t: 125, c: 400, pu: 2 }, { t: 150, c: 500, g: 5 }, { t: 250, c: 1000, g: 10, pu: 3, pack: 1, mega: true }];
+var CAL_MILES = [{ n: 14, g: 20, lbl: '2 weeks' }, { n: 28, g: 40, lbl: '4 weeks' }, { n: 56, g: 80, pack: 2, lbl: '8 weeks' }];
+function calState() { if (!S.cal) S.cal = { day: 0, total: 0, last: '' }; return S.cal; }
+function calReady() { return calState().last !== dayKey(); }
+function calItems(d) {
+  var a = [['i-ticket', d.t], ['i-coin', d.c]];
+  if (d.alert) a.push(['i-bulb', d.alert]); if (d.pe) a.push(['i-petal', d.pe]); if (d.g) a.push(['i-gem', d.g]);
+  if (d.pu) a.push(['i-super', d.pu]); if (d.pack) a.push(['i-card', 'pack']);
+  return a;
+}
+function calendar() {
+  var st = calState(), ready = calReady(), cur = st.day, next = CAL_MILES.filter(function (m) { return st.total < m.n; })[0], mx = CAL_MILES[CAL_MILES.length - 1].n;
+  var miles = '<div class="calmile"><div class="cmbar"><i style="width:' + Math.min(100, st.total / mx * 100) + '%"></i></div>' + CAL_MILES.map(function (m) {
+      return '<span class="cmgift' + (st.total >= m.n ? ' got' : '') + '" style="left:' + (m.n / mx * 100) + '%"><b>' + icon(m.pack ? 'i-card' : 'i-gem') + '</b><small>' + m.lbl + '</small></span>'; }).join('') + '</div>';
+  var cards = CAL.map(function (d, i) {
+    var state = i < cur || (i === cur && !ready) ? 'done' : i === cur ? 'now' : 'later';
+    if (!ready && i === cur) state = 'done';
+    return '<div class="cday ' + state + (d.mega ? ' mega' : '') + '" style="animation-delay:' + (i * .06) + 's"><span class="cdh">' + (d.mega ? 'MEGA BOUQUET' : 'Day ' + (i + 1)) + '</span>' +
+      '<div class="cdi">' + calItems(d).map(function (it) { return '<span>' + icon(it[0]) + '<b>' + (it[1] === 'pack' ? 'Pack' : it[1]) + '</b></span>'; }).join('') + '</div>' +
+      (state === 'done' ? '<span class="cdok">✓</span>' : '') + (state === 'now' ? '<i class="tw t1"></i><i class="tw t2"></i>' : '') + '</div>';
+  }).join('');
+  panel('<div class="cal"><h3 class="caltitle"><span class="outl">Bloom Calendar</span></h3><p class="calsub">' + st.total + ' day' + (st.total === 1 ? '' : 's') + ' collected · missing a day never resets your progress</p>' + miles +
+    '<div class="cdays">' + cards + '</div>' +
+    '<div class="res-btns">' + (ready ? '<button class="b3 gold shine" id="calGo">Collect Day ' + (cur + 1) + '</button>' : '<span class="calnext">Next gift in <b>' + untilText(nextReset()) + '</b> · ' + localTime(nextReset()) + '</span>') + '</div></div>', 'cpanel', function (v) {
+      v.classList.add('vcal');
+      if ($('#calGo', v)) $('#calGo', v).onclick = function () {
+        if (!calReady()) return;
+        var d = CAL[st.day], got = [];
+        S.tickets += d.t; S.coins += d.c; if (d.alert) S.alerts += d.alert; if (d.pe) S.petals += d.pe; if (d.g) S.gems += d.g;
+        for (var k = 0; k < (d.pu || 0); k++) { var id = drawBundle({ n: 1 })[0]; give(id, 1); got.push(pupById(id).name); }
+        st.last = dayKey(); st.total++; st.day = (st.day + 1) % CAL.length; S.lastGift = today();
+        var mile = CAL_MILES.filter(function (m) { return m.n === st.total; })[0]; if (mile) S.gems += mile.g;
+        save(); refreshTop();
+        var el = v.querySelector('.cday.now'); if (el) { el.classList.add('claim'); var r = el.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 70); }
+        SFX.coin(); setTimeout(function () { SFX.set && SFX.set(); }, 250); if (d.mega || mile) fireworks(2200);
+        setTimeout(function () {
+          prizeReveal(d.mega ? 'i-gift' : 'i-ticket', d.mega ? 'Mega Bouquet!' : 'Day ' + (CAL.indexOf(d) + 1) + ' gift!', '+' + d.t + ' tickets · +' + d.c + ' coins' + (d.g ? ' · +' + d.g + ' amethysts' : '') + (got.length ? ' · ' + got.join(', ') : '') + (mile ? ' · ' + mile.lbl + ' milestone: +' + mile.g + ' amethysts!' : ''), function () {
+            var packs = (d.pack ? 1 : 0) + (mile && mile.pack ? 1 : 0);
+            if (packs) openPack(PACKS[d.pack ? 1 : 2], 'Bloom Calendar'); else { closeVeil(); if ($('#lobby')) lobby(); }
+          });
+        }, 900);
+      };
+    });
+}
 function nextGiftText() { var d = new Date(), m = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d, h = Math.floor(m / 3600000); return h + 'h ' + Math.floor(m % 3600000 / 60000) + 'm'; }
 function rb(id, ic, cls, label, dot) { return '<button class="round" id="' + id + '"><span class="c ' + cls + '">' + icon(ic) + (dot ? '<span class="dot"></span>' : '') + '</span><span class="lb">' + label + '</span></button>'; }
 function topBar(extra) {
@@ -2310,7 +2390,7 @@ function topBar(extra) {
 }
 function lobby() {
   stopRound();
-  var giftReady = S.lastGift !== today(), stars = cityStars(), keep = $('#worldWrap') ? $('#worldWrap').scrollTop : 0;
+  var giftReady = calReady(), stars = cityStars(), keep = $('#worldWrap') ? $('#worldWrap').scrollTop : 0;
   var ovenReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); });
   var gamesHot = S.wheelDay !== today() || S.drops > 0 || S.scratch > 0;
   var feat = ROOMS.filter(function (r) { return r.mode !== 'multi'; });
@@ -2320,7 +2400,7 @@ function lobby() {
       '<div class="nextsec"><div class="cityban soon"><b class="outl">NEXT CITY</b><small>Finish Paris to travel on · coming soon</small></div></div></div>' +
     topBar('<div class="spacer"></div><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
-      rb('bGift', 'i-gift', 'pk', giftReady ? 'Collect' : nextGiftText(), giftReady) +
+      rb('bGift', 'i-gift', 'pk', giftReady ? 'Day ' + (calState().day + 1) + '!' : untilText(nextReset()), giftReady) +
       rb('bAlbum', 'i-album', 'gd', 'Album ' + ownedAll() + '/72') +
       rb('bKitchen', 'i-chef', 'pk', ovenReady ? 'Ready!' : 'Kitchen', ovenReady) +
     '</div>' +
@@ -2343,10 +2423,8 @@ function lobby() {
     if (r) roomScreen(r); else toast(lm.name + ' opens when all 4 Paris rooms have 3 blossoms.', 3200);
   });
   app.querySelectorAll('.ftile').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
-  $('#bGift').onclick = function (e) {
-    if (!giftReady) { toast('Your next gift is ready in ' + nextGiftText() + '.'); return; }
-    S.coins += DAILY_GIFT; S.tickets += 50; S.alerts++; S.lastGift = today(); save(); SFX.coin(); sparkle(e.clientX, e.clientY, 50); lobby(); toast('+50 tickets, +' + DAILY_GIFT + ' coins and a Bloom Alert. Come back tomorrow!', 3200);
-  };
+  $('#bGift').onclick = function () { SFX.tap(); calendar(); };
+  if (giftReady && S.calShown !== dayKey()) { S.calShown = dayKey(); save(); setTimeout(function () { if ($('#lobby') && !veil) calendar(); }, 900); }
   $('#bAlbum').onclick = function () { album(null); };
   $('#bKitchen').onclick = kitchen;
   $('#bShop').onclick = function () { shop(); };
