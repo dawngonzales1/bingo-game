@@ -2348,7 +2348,9 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @keyframes petalF { 0% { transform: translate(0, 0) rotate(0); opacity: 0; } 10% { opacity: 1; } 50% { transform: translate(30px, 58cqh) rotate(200deg); } 90% { opacity: 1; } 100% { transform: translate(-10px, 118cqh) rotate(400deg); opacity: 0; } }
 
 
-#mapFx { position: absolute; z-index: 1; top: 0; left: var(--side); width: calc(100% - 2 * var(--side)); height: auto; aspect-ratio: 1344 / 768; pointer-events: none; overflow: visible; }
+#mapFx { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: auto; aspect-ratio: 1344 / 768; pointer-events: none; overflow: visible; }
+.mapwin { position: relative; overflow: hidden; scrollbar-width: none; border-radius: 0 0 22px 22px; }
+.mapwin::-webkit-scrollbar { display: none; }
 /* nothing behind an open panel needs to keep moving */
 body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .screen *::after { animation-play-state: paused !important; }
 /* Battery saver: keeps the game, drops the extra moving effects */
@@ -2933,6 +2935,35 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 #title.season .logo { font-size: clamp(30px, 10vh, 54px); }
 #title.season .sbadge { position: absolute; top: 10px; right: 14px; padding: 4px 14px; border-radius: 999px; font: 800 13px var(--ui); color: #fff; background: linear-gradient(180deg, #ff9a3c, #d9443a); box-shadow: 0 0 0 2px #fff3b8, 0 0 0 4px var(--ol); text-shadow: 0 1px 0 var(--ol); animation: dropIn .6s .4s both; }
 #title.season.winter .sbadge { background: linear-gradient(180deg, #8fe3ff, #1b7fb8); }
+/* ===== featured rooms, the Frenzy way: two small square tiles and a MORE button, centred at the bottom ===== */
+.hud-feat { left: 50%; right: auto; transform: translateX(-50%); width: max-content; max-width: calc(100% - 2 * clamp(64px, 10vw, 84px) - 16px); overflow: visible; gap: 26px; padding: 0 0 14px; align-items: flex-end; }
+.fsq { --fs: clamp(54px, 18vh, 78px); flex: none; position: relative; width: var(--fs); height: var(--fs); padding: 0; border: 0; border-radius: 14px; background: linear-gradient(180deg, var(--c1), var(--c2)); box-shadow: 0 0 0 2.5px #e9a81c, 0 0 0 4px var(--ol), 0 4px 0 4px var(--ol), 0 8px 14px rgba(20,5,30,.45); animation: tierIn .5s cubic-bezier(.2,.9,.3,1.3) both; transition: transform .15s; }
+.fsq:nth-child(2) { animation-delay: .07s; }
+.fsq .fpic { position: absolute; inset: 3px; border-radius: 11px; background: center / cover; filter: saturate(1.25) brightness(1.08); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.7); }
+.fsq::after { content: ''; position: absolute; inset: 3px; border-radius: 11px; pointer-events: none; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.45) 50%, transparent 60%) no-repeat; background-size: 250% 100%; background-position: 160% 0; animation: cardShine 5s ease-in-out infinite; }
+.fsq:nth-child(2)::after { animation-delay: 2.5s; }
+.fsq .fnm { position: absolute; z-index: 2; left: 50%; right: auto; bottom: -9px; transform: translateX(-50%); width: max-content; max-width: 142%; padding: 1px 8px 2px; border-radius: 999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 10.5px; font-weight: 800; color: #3d1a4f; background: linear-gradient(180deg, #fff, #ffe9a8); box-shadow: 0 0 0 2px var(--ol); }
+.fsq .fhot { position: absolute; z-index: 3; top: -9px; right: -8px; padding: 1px 6px; border-radius: 999px; font-size: 9px; font-weight: 800; color: #fff; background: linear-gradient(180deg, #ff9a3c, #e5383b); box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol), 0 0 10px rgba(255,120,60,.8); animation: hotPulse 1s ease-in-out infinite; }
+.fsq.is-hot { box-shadow: 0 0 0 2.5px #fff3b8, 0 0 0 4px var(--ol), 0 4px 0 4px var(--ol), 0 0 18px 4px rgba(255,170,80,.7); }
+.fsq:active { transform: translateY(2px); }
+.fmorep { flex: none; display: grid; justify-items: center; gap: 0; margin-bottom: 6px; padding: 5px 16px 6px; border: 0; border-radius: 999px; font-family: var(--ui); color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #ffd45c 55%, #e9a81c); box-shadow: 0 0 0 2.5px var(--ol), 0 4px 0 2.5px var(--ol), 0 0 14px rgba(255,214,92,.7); animation: tierIn .5s .14s cubic-bezier(.2,.9,.3,1.3) both; }
+.fmorep b { font-size: 15px; letter-spacing: .06em; line-height: 1; } .fmorep small { font-size: 9px; font-weight: 800; opacity: .8; }
+.fmorep:active { transform: translateY(2px); }
+@media (max-height: 300px) { .fsq { --fs: 46px; } .fsq .fnm { font-size: 9px; } .fmorep { padding: 3px 12px 4px; } .fmorep b { font-size: 12px; } .fmorep small { display: none; } }
+.citysec { min-height: 100%; box-sizing: border-box; display: grid; align-content: center; padding-bottom: clamp(90px, 26vh, 120px); }
+#worldWrap { background: #1b3f74; }
+body:has(#lobby) .cordie-pop img { height: min(34vh, 160px); }
+.citypill small svg { width: 16px; height: 16px; vertical-align: -4px; }
+
+/* ===== nothing overlaps: Cordie sits under pop-ups and clear of the side buttons; shop tabs sit in the flow; room screen keeps its labels ===== */
+.cordie-pop { z-index: 20; }
+body:has(#lobby) .cordie-pop.left { left: calc(clamp(64px, 10vw, 84px) + 18px + env(safe-area-inset-left, 0px)); }
+body:has(#lobby) .cordie-pop .cbub { margin-bottom: clamp(120px, 37vh, 170px); }
+.ccordie { z-index: 1; }
+.stabs { position: relative; bottom: auto; order: -1; margin: 0 auto 2px; border-radius: 22px; padding: 4px 18px; box-shadow: 0 0 0 2px #f6c64a, 0 4px 10px rgba(10,2,20,.35); }
+.panel .tabs { order: -2; }
+#room .rbottom { margin-bottom: 14px; }
+@media (max-height: 300px) { #room .rbottom { margin-bottom: 0; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3548,7 +3579,7 @@ var MAP_WATER = [[110, 470], [330, 395], [575, 270], [700, 165], [990, 95], [180
 /* ---------- cities: Paris, then Rio de Janeiro (Dawn, Oct 15: a second city with a different feel) ---------- */
 var CITIES = {
   paris: { id: 'paris', name: 'Paris', big: 'PARIS', map: 'art/lobby-paris-map.webp', landmarks: LANDMARKS, plot: PLOT, lmImg: LM_IMG, footc: FOOTC, rooms: CITY_ROOMS, water: MAP_WATER, next: 'rio', blurb: 'finish all 4 rooms for a big prize' },
-  rio: { id: 'rio', name: 'Rio de Janeiro', big: 'RIO', map: 'art/lobby-rio-map.webp',
+  rio: { id: 'rio', name: 'Rio de Janeiro', short: 'Rio', big: 'RIO', map: 'art/lobby-rio-map.webp',
     landmarks: [{ id: 'beach', name: 'Copacabana Beach' }, { id: 'cablecar', name: 'Sugarloaf Cable Car' }, { id: 'parade', name: 'Carnival Parade' }, { id: 'samba', name: 'Samba Stage' }],
     plot: { beach: [470, 560], cablecar: [690, 360], parade: [1010, 500], samba: [190, 560] }, lmImg: { beach: ['art/landmark-beach.webp', 200, 1], cablecar: ['art/landmark-cablecar.webp', 190, 1], parade: ['art/landmark-parade.webp', 210, 1], samba: ['art/landmark-samba.webp', 210, 1] }, footc: { beach: [0, 40, 40], cablecar: [0, 40, 40], parade: [0, 40, 40], samba: [0, 40, 40] },
     rooms: ['beach', 'cablecar', 'parade', 'samba'], water: [[1150, 250], [1250, 470], [930, 110], [1080, 620]], next: null, blurb: 'finish all 4 rooms for a big prize' }
@@ -3687,7 +3718,7 @@ function goFull() {
 }
 document.addEventListener('pointerup', function () { if (fsWanted && !document.fullscreenElement && matchMedia('(orientation: landscape)').matches) goFull(); }, true);
 document.addEventListener('pointerdown', function (e) { var b = e.target.closest && e.target.closest('button'); if (b && !b.disabled && !e.target.closest('#cards')) sparkle(e.clientX, e.clientY, 7); }, true);
-function show(html) { closeVeil(); var cp = document.querySelector(".cordie-pop"); if (cp) cp.remove(); app.innerHTML = html; var sc = app.firstElementChild; if (sc && !reduceMotion) { sc.classList.add('enter'); if (sc.id !== 'play') bubbles(sc, 14); } }
+function show(html) { closeVeil(); WHEEL_BUSY = false; var cp = document.querySelector(".cordie-pop"); if (cp) cp.remove(); app.innerHTML = html; var sc = app.firstElementChild; if (sc && !reduceMotion) { sc.classList.add('enter'); if (sc.id !== 'play') bubbles(sc, 14); } }
 function confetti(el) {
   if (reduceMotion) return; var r = el ? el.getBoundingClientRect() : { left: innerWidth / 2 - 50, width: 100, top: 0 }, cols = ['#ffd45c', '#ff8fb1', '#b996ff', '#7fe0a8', '#7fbfff', '#fff'];
   for (var i = 0; i < 36; i++) { var c = document.createElement('i'); c.className = 'conf'; c.style.left = (r.left + Math.random() * r.width) + 'px'; c.style.top = (r.top - 10) + 'px'; c.style.background = cols[i % cols.length]; c.style.setProperty('--dx', (Math.random() * 160 - 80) + 'px'); c.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg'); c.style.animationDelay = (Math.random() * .25) + 's'; c.style.animationDuration = (1.1 + Math.random() * .8) + 's'; document.body.appendChild(c); setTimeout(function (x) { return function () { x.remove(); }; }(c), 2400); }
@@ -3817,11 +3848,11 @@ function cordieHello() {
 }
 
 /* ---------- reward celebrations: queued so they never interrupt a round or another pop-up ---------- */
-var REWQ = [];
+var REWQ = [], WHEEL_BUSY = false;
 function reward(art, title, sub, pose, then) { REWQ.push([art, title, sub, pose, then]); setTimeout(rewardNext, 300); }
 function rewardNext() {
   if (!REWQ.length || document.querySelector('.rwd')) return;
-  if (veil || (R && R.active && !R.ended) || document.querySelector('.reveal, .acel, .pfx')) { setTimeout(rewardNext, 1200); return; }
+  if (veil || WHEEL_BUSY || (R && R.active && !R.ended) || document.querySelector('.reveal, .acel, .pfx, .rload, .fcount')) { setTimeout(rewardNext, 1200); return; }
   var cp = document.querySelector('.cordie-pop'); if (cp) cp.remove();
   var r = REWQ.shift(), o = document.createElement('div'); o.className = 'rwd';
   o.innerHTML = '<div class="prays"></div><div class="rwin"><img class="rwart" src="art/' + r[0] + '.webp" alt=""><b class="rwt outl">' + r[1] + '</b><span class="rws">' + r[2] + '</span><button class="b3 gold" id="rwGo">Yay!</button></div>' +
@@ -3887,11 +3918,10 @@ function lobby() {
   var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city; });
   var otherOpen = Object.keys(CITIES).some(function (id) { return id !== cityId() && id !== 'paris' && canTravel(id) && !((S.visited || {})[id]); });
   var featAll = feat.slice().sort(function (a, b) { return (b.id === hotRoom()) - (a.id === hotRoom()); }), featShow = featAll.slice(0, 2), featRest = featAll.slice(2);
-  show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec">' + mapSvg() + mapFxSvg() +
+  show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec"><div class="mapwin">' + mapSvg() + mapFxSvg() + '</div>' +
       '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + (SWEPT ? '' : '<div class="csweep"><b class="outl">' + CITY.big + '</b><small>City of Blossoms</small></div>') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>' +
-      '<div class="cityban"><b class="outl">' + CITY.big + '</b><small>' + stars + '/12 blossoms · ' + CITY.blurb + '</small></div></div>' +
-      '</div>' +
-    '<button class="citypill' + (otherOpen ? ' go' : '') + '" id="bCities" aria-label="Change city"><span class="cpl">✈</span><b>' + esc(CITY.name) + '</b><small>' + (otherOpen ? 'Fly to a new city!' : 'Change city') + ' ▾</small></button>' +
+      '</div></div>' +
+    '<button class="citypill' + (otherOpen ? ' go' : '') + '" id="bCities" aria-label="Change city"><span class="cpl">✈</span><b>' + esc(CITY.name) + '</b><small>' + stars + '/12 ' + icon('i-blossom') + ' · ' + (otherOpen ? 'Fly to a new city!' : 'Change city') + ' ▾</small></button>' +
     topBar('<div class="spacer"></div><button class="evpill' + (eventsHot() ? ' hot' : '') + '" id="bEv" aria-label="Events"><img src="art/art-trophy.webp" alt=""><span>Events</span></button><button class="fbpill" id="bFb" aria-label="Send feedback">' + icon('i-chat') + '<span>Feedback</span></button><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       (giftReady ? rb('bGift', 'i-gift', 'pk', 'Day ' + (calState().day + 1) + '!', true) : '<button class="round giftwait" id="bGift"><span class="c pk">' + icon('i-gift') + '<i class="gclock">⏰</i></span><span class="lb">Gift in ' + untilText(nextReset()).replace(/ \d+m$/, '') + '</span></button>') +
@@ -3905,12 +3935,18 @@ function lobby() {
     '</div>' +
     '<div class="hud hud-feat">' + featShow.map(function (r) {
       var th = FEAT_THEME[r.id] || FEAT_THEME.garden, hot = r.id === hotRoom();
-      return '<button class="ftile ft2' + (hot ? ' is-hot' : '') + '" data-r="' + ROOMS.indexOf(r) + '" style="--c1:' + th[0] + ';--c2:' + th[1] + ';--fb:' + th[2] + '"><span class="fclip"><span class="fpic" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span></span>' + fmovHtml(r.id) + '<i class="fflash"></i>' +
-        '<span class="frib">' + MODE_INFO[r.mode].tag + '</span>' + (hot ? '<span class="fhot" title="2× petals here today">🔥<b>HOT</b><small>2× petals</small></span>' : '') +
-        '<span class="fnm">' + esc(r.name) + '</span><i class="fspk s1"></i><i class="fspk s2"></i><i class="fspk s3"></i>' +
-        '<span class="fxtra"><span class="fpl"><i class="live"></i><b data-pl="' + r.id + '">' + (40 + rand(60)) + '</b> playing</span><span class="fpu">' + roomFeat(r).map(function (id) { return icon(pupById(id).icon); }).join('') + '<small>2×</small></span><span class="fgo">PLAY ▶</span></span></button>';
-    }).join('') + (featRest.length ? '<button class="ftile fmore" id="bMoreRooms" aria-label="All featured rooms"><span class="fstack">' + featRest.slice(0, 3).map(function (r, k) { var th = FEAT_THEME[r.id] || FEAT_THEME.garden; return '<i style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center;--c2:' + th[1] + ';--k:' + k + '"></i>'; }).join('') + '</span><span class="fcnt">+' + featRest.length + '</span><span class="fnm">All rooms ▶</span></button>' : '') + '</div>' +
+      return '<button class="fsq' + (hot ? ' is-hot' : '') + '" data-r="' + ROOMS.indexOf(r) + '" style="--c1:' + th[0] + ';--c2:' + th[1] + '"><span class="fpic" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span>' +
+        (hot ? '<span class="fhot">🔥 2×</span>' : '') + '<span class="fnm">' + esc(r.name) + '</span></button>';
+    }).join('') + (featRest.length ? '<button class="fmorep" id="bMoreRooms" aria-label="All featured rooms"><b>MORE</b><small>' + feat.length + ' rooms</small></button>' : '') + '</div>' +
   '</div>');
+  // the painting only gets scroll room under the featured bar when it is taller than the screen; a short map sits centred with no blur band
+  // the painting only gets scroll room under the featured bar when it is taller than the screen; a short map sits centred with no blur band
+  // the painting only gets scroll room under the featured bar when it is taller than the screen; a short map sits centred with no blur band
+  // a painting shorter than the screen is scaled to its full height inside a window that can be dragged sideways; a taller one keeps its scroll room under the featured bar
+  (function () { var ww = $('#worldWrap'), cs = $('.citysec'), win = $('.mapwin'), ms0 = $('#mapSvg'); if (!ww || !cs || !win || !ms0) return; var natural = win.clientWidth * MAP_H / MAP_W, H = ww.clientHeight; if (natural >= H) return;
+    cs.style.paddingBottom = '0'; win.style.height = H + 'px'; win.style.overflowX = 'auto';
+    ['#mapSvg', '#mapFx'].forEach(function (id) { var e = $(id); if (!e) return; e.style.height = H + 'px'; e.style.width = Math.round(H * MAP_W / MAP_H) + 'px'; });
+    win.scrollLeft = Math.max(0, (win.scrollWidth - win.clientWidth) / 2); })();
   $('#worldWrap').scrollTop = keep;
   if (!keep) mapToGoal();
   if (!SWEPT) { SWEPT = true; var sw = $('.csweep'); if (sw) setTimeout(function () { sw.remove(); }, 3400); }
@@ -3921,8 +3957,7 @@ function lobby() {
   });
   $('#bCities').onclick = function () { SFX.tap(); cityPicker(); };
   if ($('#bMoreRooms')) $('#bMoreRooms').onclick = function () { SFX.tap(); featPicker(); };
-  app.querySelectorAll('.ftile[data-r]').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
-  featSpotlight();
+  app.querySelectorAll('.fsq[data-r]').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
   $('#bGift').onclick = function () { SFX.tap(); calendar(); };
   if (!guideDone('map')) { CORDIE_HI = true; setTimeout(function wait() { if (!$('#lobby')) return; if (veil || document.querySelector('.rwd, .story, .csweep, .gcol')) { setTimeout(wait, 800); return; } mapTour(); }, 1500); }
   else if (!(giftReady && S.calShown !== dayKey())) cordieHello(); else CORDIE_HI = true;
@@ -3972,7 +4007,7 @@ function cityPicker() {
       (done ? '<span class="cdone">★ COMPLETE</span>' : '') + (isHere ? '<span class="chere">YOU ARE HERE</span>' : '') +
       '<b class="outl">' + esc(c.big) + '</b><small>' + esc(c.name) + '</small>' +
       '<span class="cbl">' + range(0, 4).map(function (k) { return '<svg viewBox="0 0 40 40"><use href="#' + (k < Math.floor(n / 3) ? 'i-blossom' : 'i-blossom0') + '"/></svg>'; }).join('') + '<em>' + n + '/12</em></span>' +
-      (isHere ? '<span class="cstay">Playing here</span>' : open ? '<button class="b3 gold shine" data-fly="' + id + '">✈ Fly to ' + esc(c.name) + '</button>' : '<span class="clock">🔒 Finish ' + esc(CITIES[c.prev || 'paris'].name) + ' to unlock</span>') + '</div>';
+      (isHere ? '<span class="cstay">Playing here</span>' : open ? '<button class="b3 gold shine" data-fly="' + id + '">✈ Fly to ' + esc(c.short || c.name) + '</button>' : '<span class="clock">🔒 Finish ' + esc(CITIES[c.prev || 'paris'].name) + ' to unlock</span>') + '</div>';
   }).join('') + '<div class="ccard soon"><span class="cmist"></span><b class="outl">?</b><small>Next city</small><span class="clock">Coming soon…</span></div></div>', 'cities', function (v) {
     v.querySelectorAll('[data-fly]').forEach(function (b) { b.onclick = function () { SFX.tap(); closeVeil(); travelTo(b.dataset.fly); }; });
     v.querySelectorAll('.ccard.lock').forEach(function (c) { c.onclick = function () { SFX.no && SFX.no(); toast('Finish every room of ' + CITY.name + ' (12 blossoms) to fly on!', 3200); }; });
@@ -5149,6 +5184,7 @@ function finalCount(n) {
   R.timer = setTimeout(function () { finalCount(n - 1); }, 1000);
 }
 function endRound(why) {
+  WHEEL_BUSY = true; // hold level-ups and other pop-ups until the results wheel has finished
   if (!R || R.ended) return;
   R.ended = true; alertSpend(); stopRound();
   S.stats.rounds++; S.stats.bingos += R.bingos;
@@ -5226,6 +5262,7 @@ function results() {
   var box = $('.wwrap'), sz = Math.max(130, Math.min(box.clientWidth, box.clientHeight)); cv.style.width = cv.style.height = sz + 'px'; cv.width = cv.height = Wd * d; ctx.scale(d, d);
   var segs = BLOOM_WHEEL.map(function (w, i) { var big = w.tier !== undefined; return { c: WHEEL_COLS[i], big: big, lbl: big ? w.lbl : w.n * bet + '' }; });
   (function idle() { if (!cv.isConnected) return; luxWheel(ctx, Wd, segs, angle, performance.now() / 1000); requestAnimationFrame(idle); })();
+  WHEEL_BUSY = spins > 0;
   var auto = spins ? setTimeout(function () { var b = $('#bwGo'); if (b && !spinning) b.click(); }, 2600) : null;
   $('#bwGo').onclick = function () {
     var btn = this; clearTimeout(auto);
@@ -5244,7 +5281,7 @@ function results() {
       var big = w.tier !== undefined;
       if (big) { var tEl = $('#tier' + w.tier); if (tEl) tEl.classList.add('hit'); fireworks(2400); pupFx('i-ticket', TIERS[w.tier][0] + ' Jackpot!', '+' + amt + ' tickets'); } else { SFX.coin(); sparkle(innerWidth * .7, innerHeight * .5, 50); }
       $('#bwMsg').textContent = '+' + amt + ' tickets!' + (spins ? ' ' + spins + ' more spin' + (spins > 1 ? 's' : '') + '!' : '');
-      if (spins) { btn.disabled = false; auto = setTimeout(function () { if (btn.isConnected) btn.click(); }, 3500); } else { btn.querySelector('span').textContent = '✓'; }
+      if (spins) { btn.disabled = false; auto = setTimeout(function () { if (btn.isConnected) btn.click(); }, 3500); } else { btn.querySelector('span').textContent = '✓'; setTimeout(function () { WHEEL_BUSY = false; }, 2800); }
     })(t0);
   };
 }
@@ -6052,7 +6089,7 @@ var MODE_INFO = {
   blackout: { tag: 'BLACKOUT', foot: 'Cover the whole card', how: 'Blackout: cover all 24 squares' },
   butterfly: { tag: 'BUTTERFLIES', foot: 'Catch butterflies', how: 'Catch butterflies before they fly away' },
   recipe: { tag: 'RECIPES', foot: 'Bake recipes', how: 'Bingo lines fill your mixing bowl' },
-  shape: { tag: 'BONUS SHAPES', foot: 'Bonus shape pays extra', how: 'Every line still wins a bingo. The shape of the round is a bonus: complete it for a big extra prize' },
+  shape: { tag: 'BONUS SHAPES', foot: 'Bonus shape pays extra', how: 'Lines win as usual. Finish the round\'s shape for a bonus prize' },
   mystery: { tag: 'MYSTERY GIFTS', foot: 'Open mystery gifts', how: 'Open gift squares for prizes and boosts' }
 };
 var SHAPES = [
