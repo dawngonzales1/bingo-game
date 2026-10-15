@@ -1,0 +1,17 @@
+node_modules/
+www/index.html
+www/art/
+www/lib/
+www/firebase-config.js
+www/manifest.webmanifest
+www/privacy.html
+www/terms.html
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+ios/App/Pods/
+ios/App/build/
+ios/App/App.xcworkspace/xcuserdata/

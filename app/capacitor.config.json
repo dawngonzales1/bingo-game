@@ -1,0 +1,13 @@
+{
+  "appId": "com.cordelle.bingobloom",
+  "appName": "Bingo Bloom",
+  "webDir": "www",
+  "backgroundColor": "#2a0c46",
+  "server": { "androidScheme": "https" },
+  "ios": { "contentInset": "never", "backgroundColor": "#2a0c46", "preferredContentMode": "mobile" },
+  "android": { "allowMixedContent": false, "backgroundColor": "#2a0c46" },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 800, "launchAutoHide": true, "backgroundColor": "#2a0c46", "showSpinner": false },
+    "StatusBar": { "style": "DARK", "overlaysWebView": true, "backgroundColor": "#2a0c46" }
+  }
+}

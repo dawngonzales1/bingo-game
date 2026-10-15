@@ -2959,7 +2959,9 @@ body:has(#lobby) .cordie-pop img { height: min(34vh, 160px); }
 /* ===== nothing overlaps: Cordie sits under pop-ups and clear of the side buttons; shop tabs sit in the flow; room screen keeps its labels ===== */
 .cordie-pop { z-index: 20; }
 body:has(#lobby) .cordie-pop.left { left: calc(clamp(64px, 10vw, 84px) + 18px + env(safe-area-inset-left, 0px)); }
-body:has(#lobby) .cordie-pop .cbub { margin-bottom: clamp(120px, 37vh, 170px); }
+body:has(#lobby) .cordie-pop { flex-direction: column; align-items: flex-start; gap: 0; }
+body:has(#lobby) .cordie-pop .cbub { margin: 0 0 -6px 10px; max-width: min(260px, 40vw); font-size: 13px; padding: 7px 11px; }
+body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 7px solid transparent; border-top: 10px solid #fffaf0; border-right-color: transparent; }
 .ccordie { z-index: 1; }
 .stabs { position: relative; bottom: auto; order: -1; margin: 0 auto 2px; border-radius: 22px; padding: 4px 18px; box-shadow: 0 0 0 2px #f6c64a, 0 4px 10px rgba(10,2,20,.35); }
 .panel .tabs { order: -2; }
@@ -3071,6 +3073,76 @@ body:has(#lobby) .cordie-pop .cbub { margin-bottom: clamp(120px, 37vh, 170px); }
 .wmeter { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.5); font: 800 12px var(--ui); color: #ffe58f; }
 .wmeter i { flex: 1; height: 10px; border-radius: 5px; background: rgba(10,2,20,.5); overflow: hidden; } .wmeter i b { display: block; height: 100%; background: linear-gradient(90deg, #ff8fb1, #ffd45c); }
 .wmeter small { font: 700 11px var(--ui); color: #fff; }
+/* ===== Bloom Shop (real money, app only) and legal pages ===== */
+.iapgrid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.sitem.iap { position: relative; overflow: visible; } .sitem.iap svg { width: 56px; height: 56px; }
+.sitem.iap .bflag { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); padding: 1px 10px; border-radius: 999px; font-size: 10px; font-weight: 800; color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #ffd45c); box-shadow: 0 0 0 2px var(--ol); white-space: nowrap; }
+.sitem.iap .b3 { width: 100%; padding: 5px 6px; font-size: 16px; }
+.linkb { border: 0; background: none; padding: 0; font: inherit; color: #ffe58f; text-decoration: underline; cursor: pointer; }
+.tlegal { margin: 4px 0 0; font-size: 11.5px; color: #fff4c9; text-shadow: 0 1px 2px var(--ol); } .tlegal .linkb { color: #fff4c9; font-weight: 600; }
+.slegal { margin: 0; font-size: 12.5px; color: var(--mist); text-align: center; }
+.panel.legalp { width: min(96vw, 720px); max-height: 94vh; grid-template-rows: auto minmax(0, 1fr) auto; }
+.legalf { width: 100%; height: 100%; min-height: 0; border: 0; border-radius: 14px; background: #fff7e8; }
+.panel.legalp .b3 { justify-self: center; min-width: 160px; }
+.clearview .fsq .fnm, .clearview .fmorep, .clearview .fmorep *, .clearview .cityname small { -webkit-text-stroke: 0; }
+/* ===== the room panel over the map (Dawn: "ours looks boring and uninviting", Frenzy comparison) ===== */
+.panel.roomp { width: min(96vw, 820px); max-height: 96vh; padding: 10px 14px 12px; gap: 8px; overflow: visible; background: radial-gradient(circle at 10% 0%, rgba(255,120,200,.45), transparent 40%), radial-gradient(circle at 95% 100%, rgba(60,220,230,.4), transparent 40%), linear-gradient(180deg, #8a3ff0, #5a22a8 60%, #3d1278) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; }
+.panel.roomp::before { display: none; }
+.panel.roomp .x { top: -14px; right: -14px; }
+.rp { position: relative; display: grid; gap: 8px; }
+.rp .rnav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 34px; height: 56px; border: 0; border-radius: 14px; font: 900 30px/1 var(--ui); color: #fff; background: linear-gradient(180deg, #ff9cc4, #e0478c); box-shadow: 0 0 0 2.5px #fff3b8, 0 0 0 4.5px var(--ol), 0 4px 0 4.5px var(--ol); }
+.rp .rnav.l { left: -34px; } .rp .rnav.r { right: -34px; }
+.rphead { display: flex; align-items: center; gap: 10px; min-height: 36px; }
+.rprib { font-size: clamp(20px, 6.5vh, 28px); letter-spacing: .03em; }
+.rpmode { padding: 2px 10px; border-radius: 999px; font: 800 10px var(--ui); letter-spacing: .08em; color: #fff; background: linear-gradient(180deg, var(--c1), var(--c2)); box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol); }
+.rpjack { margin-left: auto; display: flex; align-items: center; gap: 4px; padding: 3px 12px; border-radius: 999px; background: linear-gradient(180deg, #fff3b8, #ffd45c 55%, #e9a81c); color: #3d1a4f; box-shadow: 0 0 0 2px var(--ol), 0 3px 0 2px var(--ol); }
+.rpjack small { font: 800 9px var(--ui); letter-spacing: .06em; } .rpjack b { font-size: clamp(15px, 5vh, 20px); } .rpjack svg { width: 20px; height: 20px; }
+.rpinfo { display: flex; align-items: center; gap: 10px; padding: 5px 10px; border-radius: 14px; background: rgba(20,8,40,.35); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.4); }
+.rpinfo .bake { padding: 0; background: none; border: 0; box-shadow: none; animation: none; flex: 1; } .rpinfo .rgrow { animation: none; }
+.rpdish { flex: none; width: clamp(34px, 11vh, 48px); aspect-ratio: 1; border-radius: 50%; background: center / cover; box-shadow: 0 0 0 2.5px #ffd45c, 0 0 0 4px var(--ol); }
+.rpbk { display: grid; gap: 2px; min-width: 0; flex: 1; } .rpbk b { font-size: 13px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .rpbk small { font-size: 11px; color: #ffe58f; }
+.rpbk .pbar { height: 8px; }
+.rpmain { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: stretch; }
+.rptiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.rpt { --t1: #5fe3e8; --t2: #1fa5b8; position: relative; display: grid; grid-template-rows: auto 1fr; border-radius: 16px; overflow: visible; background: linear-gradient(180deg, #fffaf0, #ffecc4); box-shadow: 0 0 0 2.5px #ffe58f, 0 0 0 4.5px var(--ol), 0 5px 0 4.5px color-mix(in srgb, var(--t2) 60%, #2a0c46); cursor: pointer; animation: tierIn .45s cubic-bezier(.2,.9,.3,1.3) both; transition: transform .15s; }
+.rpt.pink { --t1: #ff9cc4; --t2: #e0478c; } .rpt.gold { --t1: #ffe58f; --t2: #f07a1c; }
+.rpt.sel { transform: scale(1.04); box-shadow: 0 0 0 2.5px #fff, 0 0 0 4.5px var(--ol), 0 5px 0 4.5px color-mix(in srgb, var(--t2) 60%, #2a0c46), 0 0 22px 4px color-mix(in srgb, var(--t1) 85%, #fff); }
+.rpth { padding: 3px 6px 4px; border-radius: 14px 14px 0 0; background: linear-gradient(180deg, var(--t1), var(--t2)); box-shadow: inset 0 -3px 0 rgba(30,8,70,.3), inset 0 2px 0 rgba(255,255,255,.5); text-align: center; }
+.rpth b { font-size: clamp(14px, 4.6vh, 18px); color: #fff; text-shadow: 0 1.5px 0 var(--ol); }
+.rptb { display: grid; justify-items: center; gap: 3px; padding: 6px 6px 7px; color: #3d1a4f; }
+.rptb .tcards { height: clamp(24px, 8vh, 36px); } .rptb .tcards i { background: linear-gradient(180deg, var(--t2) 0 24%, #fffdf6 24%); }
+.rpmul { margin-top: -10px; padding: 0 8px; border-radius: 999px; font: 900 12px/1.5 var(--ui); color: #fff; background: linear-gradient(180deg, #ff9a3c, #e5383b); box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol); }
+.rptb .twin { gap: 4px; } .rptb .twin span { padding: 0 6px 0 1px; font-size: 11px; background: rgba(61,26,79,.08); box-shadow: 0 0 0 1.5px rgba(61,26,79,.25); color: #3d1a4f; } .rptb .twin svg { width: 16px; height: 16px; }
+.rptb .tplay { width: 100%; padding: 4px 4px 5px; font-size: 18px; border-radius: 12px; margin-top: 2px; background: linear-gradient(180deg, #9dff7a, #3fb43a 60%, #1f7a2a); color: #fff; text-shadow: 0 1.5px 0 #1d5a20; box-shadow: 0 0 0 2px var(--ol), 0 4px 0 2px var(--ol); }
+.rptb .tplay svg { width: 22px; height: 22px; margin: -3px 0; }
+.rpt .tflag { top: -10px; right: -10px; z-index: 2; transform: rotate(8deg); }
+.rptop3 { display: grid; align-content: start; justify-items: center; gap: 4px; min-width: 76px; padding: 6px 8px; border-radius: 14px; background: rgba(20,8,40,.35); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.4); }
+.rptop3 > small { font: 800 9.5px var(--ui); letter-spacing: .08em; color: #ffe58f; }
+.rp3 { position: relative; display: grid; justify-items: center; gap: 1px; } .rp3 b { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; color: #fff; background: radial-gradient(circle at 40% 30%, #7fe3ff, #1b7fb8 60%, #0d4a7a); box-shadow: 0 0 0 2px #ffe58f, 0 0 0 3.5px var(--ol); }
+.rp3 small { font: 700 10px var(--ui); color: #fff; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rp3n { position: absolute; top: -4px; left: -4px; width: 14px; height: 14px; border-radius: 50%; display: grid; place-items: center; font: 900 9px var(--ui); color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #e9a81c); box-shadow: 0 0 0 1.5px var(--ol); z-index: 1; }
+.rp3n.n2 { background: linear-gradient(180deg, #fff, #b9c4d6); } .rp3n.n3 { background: linear-gradient(180deg, #ffd1a8, #c77a3a); }
+.rpfoot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.rpups { display: flex; gap: 8px; align-items: center; }
+.rpups button { position: relative; width: 40px; height: 40px; padding: 0; border-radius: 50%; display: grid; place-items: center; border: 0; background: radial-gradient(circle at 40% 30%, rgba(255,255,255,.5) 0, rgba(255,255,255,.18) 10%, rgba(255,255,255,0) 30%), radial-gradient(circle, #f6edff, #cdb2f2 70%, #9c79d6); box-shadow: 0 0 0 2.5px #e9a81c, 0 0 0 4px var(--ol), 0 3px 0 4px var(--ol); }
+.rpups button svg { width: 76%; height: 76%; }
+.rpups button b { position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; border-radius: 9px; font-size: 10.5px; background: linear-gradient(180deg, #ff6f9d, #d63a6a); color: #fff; border: 2px solid #fff; box-sizing: border-box; display: grid; place-items: center; }
+.rpups button[aria-pressed="true"] { box-shadow: 0 0 0 2.5px #fff3b8, 0 0 0 4px var(--ol), 0 0 18px 6px rgba(255,214,92,.9); animation: pulse 1s infinite; }
+.rpups button:disabled { opacity: .45; }
+.rpfoot .rnote { font-size: 12px; color: #fff; }
+@media (max-height: 420px) { .panel.roomp { padding: 6px 12px 8px; gap: 5px; } .rp { gap: 5px; } .rpinfo { padding: 3px 8px; } .rpbk b { font-size: 12px; } .rptb { padding: 4px 4px 5px; gap: 2px; } .rptb .tplay { font-size: 15px; padding: 3px 4px 4px; } .rpups button { width: 32px; height: 32px; } .rpfoot .rnote, .betl { display: none; } .rptop3 { min-width: 64px; } .rp3 b { width: 24px; height: 24px; font-size: 12px; } .rphead { min-height: 30px; } }
+@media (max-width: 700px) { .rptop3 { display: none; } .rp .rnav.l { left: -22px; } .rp .rnav.r { right: -22px; } }
+.veil:has(.roomp) { background: rgba(40,14,52,.35); backdrop-filter: blur(6px) saturate(1.2); -webkit-backdrop-filter: blur(6px) saturate(1.2); }
+.rptb .tplay, .panel .rptb .tplay { background: linear-gradient(180deg, #9dff7a, #3fb43a 60%, #1f7a2a) !important; color: #fff !important; }
+.panel .rptb .tplay * { color: #fff !important; }
+.rpth { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.rpmul { margin: 0; padding: 0 7px; font-size: 11px; line-height: 1.5; }
+.rptb .twin span { background: #fff; box-shadow: 0 0 0 1.5px var(--ol); font-size: 12px; font-weight: 800; color: #3d1a4f; }
+.rpinfo.two { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; }
+.rpinfo.two .bake { display: flex; min-width: 0; } .rpinfo.two .bake .bk b { color: #fff; } .rpinfo.two .bake .bk small { color: #ffe58f; }
+.rpinfo.two .rgrow { display: grid; justify-items: center; gap: 2px; padding: 0 4px; } .rpinfo.two .rgrow b { display: flex; align-items: center; gap: 2px; font-size: 12px; color: #fff; } .rpinfo.two .rgrow b svg { width: 18px; height: 18px; } .rpinfo.two .rgrow .b3 { padding: 2px 10px; font-size: 14px; } .rpinfo.two .rgrow small { display: none; }
+@media (max-height: 420px) { .rptb .tcards { height: 22px; } .rpth b { font-size: 14px; } .rptb .twin span { font-size: 11px; } .rpfoot { flex-wrap: nowrap; gap: 6px; } .betsl { transform: scale(.9); transform-origin: right center; } .rpinfo { min-height: 0; } .rpbk .pbar { height: 6px; } .rpinfo.two .bake .ings { display: none; } .rprib { font-size: 18px; } .rpjack b { font-size: 14px; } .rpjack svg { width: 16px; height: 16px; } .panel.roomp { width: min(98vw, 820px); } .rp .rnav { width: 26px; height: 44px; font-size: 22px; } }
+.rptb .twin b, .panel .rptb .twin b { color: #3d1a4f; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3857,7 +3929,8 @@ function title() {
     '<div class="by"><span>by Cordelle</span></div>' +
     '<div class="tload" id="tLoad"><div class="tbar"><i id="tBar"></i></div><small id="tMsg">Preparing recipes…</small></div>' +
     '<button class="b3 gold shine" id="bStart" hidden>PLAY</button>' +
-    '<p class="tfoot">Fair play · every odd shown · no real-money prizes</p></div></div>');
+    '<p class="tfoot">Fair play · every odd shown · no real-money prizes</p><p class="tlegal"><button class="linkb" data-legal="privacy">Privacy Policy</button> · <button class="linkb" data-legal="terms">Terms of Service</button></p></div></div>');
+  app.querySelectorAll('[data-legal]').forEach(function (b) { b.onclick = function () { SFX.tap(); legal(b.dataset.legal); }; });
   setTimeout(refreshTitle, 0);
   seasonSplash();
   titleLoad();
@@ -3953,7 +4026,7 @@ function cordieHello() {
   if (CORDIE_HI) return; CORDIE_HI = true;
   var h = new Date().getHours(), part = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening', nm = myName();
   var lines = [part + (nm && nm !== 'Player' ? ', <b>' + esc(nm) + '</b>' : '') + '. The cards are ready whenever you are.', 'Welcome back' + (nm && nm !== 'Player' ? ', <b>' + esc(nm) + '</b>' : '') + '. The ovens are warm and the balls are rolling.', 'Bonjour! I saved you the best seat in the house.'];
-  setTimeout(function () { if ($('#lobby') && !veil && !$('.csweep')) cordieSay(Math.random() < .5 ? 'point' : 'cheer', lines[rand(lines.length)], 4200); }, $('.csweep') ? 3500 : 700);
+  setTimeout(function () { if ($('#lobby') && !veil && !$('.csweep')) cordieSay(Math.random() < .5 ? 'point' : 'cheer', lines[rand(lines.length)], 3000); }, $('.csweep') ? 3500 : 700);
 }
 
 /* ---------- reward celebrations: queued so they never interrupt a round or another pop-up ---------- */
@@ -4273,62 +4346,66 @@ function pupGuide() {
     '<p class="note">Marking numbers fills the glow line under the bar. When it is full, the next power-up fires and every card gets 2 free marks. With <b>AUTO</b> on, it all happens for you; with it off, tap the glowing bar. +5 Balls triggers on the last ball, Bloom Alert at the start (if enabled in Settings), and Time Freeze only when you mark numbers yourself.</p>', 'mid');
 }
 function roomScreen(room) {
+  // the room is a panel over the map (the Frenzy way): the lobby and its buttons stay around it
   stopRound();
   room = room || ROOMS[0];
   if (cityLock(room.lm || room.id)) { SFX.no && SFX.no(); toast('🔒 ' + lockMsg(room), 4200); if (!$('#lobby')) lobby(); return; }
   if (!S.seen) S.seen = {};
   if (!S.seen[room.id] && STORIES[room.id]) { S.seen[room.id] = 1; save(); roomStory(room, function () { roomScreen(room); }); return; }
-  var arm = {}, fair = S.dry >= 3, mi = MODE_INFO[room.mode], featured = room.mode !== 'multi';
-  var top = featured ? '<div class="bake"><span class="dish" style="background-image:url(' + room.img + ')"></span><div class="bk"><b>' + (MODE_INFO[room.mode].how) + '</b><small>Garden Path bonus ' + bonusPct(room.id) + '%</small><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div></div>' : bakeBar(room);
-  show('<div class="screen" id="room" style="background-image:linear-gradient(180deg, rgba(255,235,200,.06), rgba(40,15,70,.28)), url(' + room.img + ');background-position:center, ' + room.pos + ' center">' +
-    roomTop('Map', esc(room.name)) +
+  if (!$('#lobby')) lobby();
+  var arm = {}, fair = S.dry >= 3, featured = room.mode !== 'multi', th = FEAT_THEME[room.id] || ['#b98cff', '#6a32d0'];
+  var info = featured ? '<div class="rpinfo"><span class="rpdish" style="background-image:url(' + room.img + ');background-position:' + room.pos + ' center"></span><div class="rpbk"><b>' + MODE_INFO[room.mode].how + '</b><small>Garden Path bonus ' + bonusPct(room.id) + '%</small><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div></div>' : '<div class="rpinfo two">' + bakeBar(room) + roomGrow(room) + '</div>';
+  var top3 = LEAGUE_NAMES.slice().sort(function () { return Math.random() - .5; }).slice(0, 3);
+  var MULT = { 1: 2, 2: 6, 4: 10 }, TC = { 1: 'teal', 2: 'pink', 4: 'gold' };
+  panel('<div class="rp" style="--c1:' + th[0] + ';--c2:' + th[1] + '">' +
     '<button class="rnav l" id="rPrev" aria-label="Previous room">‹</button><button class="rnav r" id="rNext" aria-label="Next room">›</button>' +
-    '<div class="rtopband">' + top + (featured ? '' : roomGrow(room)) + '<div class="jack"><span class="jrays"></span><small>GRAND JACKPOT</small><b id="jackN">0</b><span>' + icon('i-ticket') + 'tickets</span></div></div>' +
-    roomLife(room) + '<div class="ffly">' + range(1, 14).map(function (i) { return '<i style="left:' + rand(100) + '%;top:' + (20 + rand(75)) + '%;animation-delay:-' + rand(8) + 's;animation-duration:' + (6 + rand(6)) + 's"></i>'; }).join('') + '</div>' +
-    '<div class="tiers">' + [1, 2, 4].map(function (n, i) {
-      return '<div class="tier' + (S.cards === n ? ' sel' : '') + '" data-n="' + n + '" style="animation-delay:' + (i * .08) + 's"><span class="trib">' + n + ' card' + (n > 1 ? 's' : '') + '</span>' + (n === 2 ? '<span class="tflag">POPULAR</span>' : n === 4 ? '<span class="tflag best">BEST VALUE</span>' : '') +
-        '<span class="tcards n' + n + '">' + '<i><em>BINGO</em></i>'.repeat(n) + '</span>' +
+    '<div class="rphead"><span class="rprib outl">' + esc(room.name) + '</span><span class="rpmode">' + MODE_INFO[room.mode].tag + '</span><span class="rpjack"><small>GRAND JACKPOT</small><b id="jackN">0</b>' + icon('i-ticket') + '</span></div>' +
+    info +
+    '<div class="rpmain"><div class="rptiers">' + [1, 2, 4].map(function (n, i) {
+      return '<div class="rpt ' + TC[n] + (S.cards === n ? ' sel' : '') + '" data-n="' + n + '" style="animation-delay:' + (i * .07) + 's">' + (n === 2 ? '<span class="tflag">POPULAR</span>' : n === 4 ? '<span class="tflag best">BEST VALUE</span>' : '') +
+        '<div class="rpth"><b>' + n + ' card' + (n > 1 ? 's' : '') + '</b><span class="rpmul">×' + MULT[n] + '</span></div>' +
+        '<div class="rptb"><span class="tcards n' + n + '">' + '<i><em>BINGO</em></i>'.repeat(n) + '</span>' +
         '<span class="twin"><span>' + icon('i-coin') + '<b data-tc="' + n + '"></b></span><span>' + icon('i-petal') + '<b data-tp="' + n + '"></b></span><span>' + icon('i-card') + '<b>×' + n + '</b></span></span>' +
-        '<button class="b3 gold shine tplay" data-play="' + n + '">' + icon('i-ticket') + '<b data-tk="' + n + '"></b></button></div>';
+        '<button class="b3 green shine tplay" data-play="' + n + '">' + icon('i-ticket') + '<b data-tk="' + n + '"></b></button></div></div>';
     }).join('') + '</div>' +
-    '<div class="rbottom"><div class="rpups">' + PRE_PUPS.map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<b>' + owned(id) + '</b><span class="pul">' + p.name.replace('Double ', '2× ') + '</span></button>'; }).join('') +
-      '<button class="pinfo" id="bPinfo" aria-label="What do power-ups do?">?</button></div>' +
+    '<div class="rptop3"><small>TOP 3 BINGO</small>' + top3.map(function (nm, i) { return '<span class="rp3"><i class="rp3n n' + (i + 1) + '">' + (i + 1) + '</i><b>' + nm.charAt(0) + '</b><small>' + esc(nm) + '</small></span>'; }).join('') + '</div></div>' +
+    '<div class="rpfoot"><div class="rpups">' + PRE_PUPS.map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<b>' + owned(id) + '</b></button>'; }).join('') + '<button class="pinfo" id="bPinfo" aria-label="What do power-ups do?">?</button></div>' +
       '<span class="rfeat" title="Featured power-ups come up twice as often in this room today"><small>TODAY\'S<br>FEATURED</small>' + roomFeat(room).map(function (id) { var t = pupTier(id); return '<span class="rfo r-' + t.id + '">' + icon(pupById(id).icon) + '</span>'; }).join('') + '<small>2×</small></span>' +
       '<div class="betsl"><small class="betl">BET</small><button class="bstep" id="bMinus" aria-label="Lower bet">−</button><div class="btrack"><i id="bFill"></i><span id="bKnob">×1</span></div><div class="bsteps">' + [1, 2, 3, 5].map(function (b) { return '<button data-bet="' + b + '">×' + b + '</button>'; }).join('') + '</div><button class="bstep" id="bPlus" aria-label="Raise bet">+</button></div>' +
-      '<span class="rnote">' + (fair ? '<b>Fair Play:</b> free Head Start this round' : 'Bet ×' + '<b id="bTxt"></b> · wins more') + '</span></div>' +
-    '</div>');
-  var BETS = [1, 2, 3, 5];
-  function upd() {
-    app.querySelectorAll('[data-tk]').forEach(function (x) { x.textContent = (+x.dataset.tk * CARD_COST * S.bet); });
-    app.querySelectorAll('[data-tc]').forEach(function (x) { x.textContent = (120 * S.bet * +x.dataset.tc).toLocaleString(); });
-    app.querySelectorAll('[data-tp]').forEach(function (x) { x.textContent = (2 + S.bet) * +x.dataset.tp; });
-    var k = BETS.indexOf(S.bet); if (k < 0) { k = 0; S.bet = 1; }
-    $('#bFill').style.width = (k / 3 * 100) + '%'; $('#bKnob').style.left = (k / 3 * 100) + '%'; $('#bKnob').textContent = '×' + S.bet;
-    if ($('#bTxt')) $('#bTxt').textContent = S.bet;
-    app.querySelectorAll('[data-bet]').forEach(function (x) { x.setAttribute('aria-pressed', +x.dataset.bet === S.bet); });
-    countTo($('#jackN'), 500 * S.bet);
-  }
-  function setBet(d) { var k = Math.max(0, Math.min(3, BETS.indexOf(S.bet) + d)); if (BETS[k] === S.bet) { SFX.no(); return; } S.bet = BETS[k]; save(); SFX.tap(); upd(); var kn = $('#bKnob'); kn.classList.remove('bump'); void kn.offsetWidth; kn.classList.add('bump'); }
-  $('#bBack').onclick = function () { SFX.tap(); lobby(); };
-  if ($('#bBake')) $('#bBake').onclick = function () { doBake(room); };
-  if ($('#bGrow')) $('#bGrow').onclick = function () { SFX.tap(); buildSheet(LANDMARKS.map(function (l) { return l.id; }).indexOf(room.lm), function () { roomScreen(room); }); };
-  $('#bMinus').onclick = function () { setBet(-1); }; $('#bPlus').onclick = function () { setBet(1); };
-  app.querySelectorAll('[data-bet]').forEach(function (x) { x.onclick = function () { var d = BETS.indexOf(+x.dataset.bet) - BETS.indexOf(S.bet); if (d) setBet(d); }; });
-  app.querySelectorAll('.tier').forEach(function (t) { t.onclick = function (e) { if (e.target.closest('[data-play]')) return; S.cards = +t.dataset.n; save(); SFX.tap(); app.querySelectorAll('.tier').forEach(function (x) { x.classList.toggle('sel', x === t); }); }; });
-  app.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function (e) { var id = b.dataset.arm; arm[id] = !arm[id]; b.setAttribute('aria-pressed', !!arm[id]); SFX.tap(); if (arm[id]) { var r = b.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 22); b.classList.remove('armpop'); void b.offsetWidth; b.classList.add('armpop'); toast(pupById(id).name + ' on: ' + pupById(id).desc, 2600); } else toast(pupById(id).name + ' off'); }; });
-  $('#bPinfo').onclick = function () { SFX.tap(); pupGuide(); };
-  var ri = ROOMS.indexOf(room);
-  $('#rPrev').onclick = function () { SFX.tap(); roomScreen(stepOpen(ri, -1)); };
-  $('#rNext').onclick = function () { SFX.tap(); roomScreen(stepOpen(ri, 1)); };
-  swipe($('#room'), function (d) { roomScreen(stepOpen(ri, d > 0 ? -1 : 1)); });
-  app.querySelectorAll('[data-play]').forEach(function (b) {
-    b.onclick = function () {
-      S.cards = +b.dataset.play; save();
-      if (S.tickets < S.cards * CARD_COST * S.bet) { S.tickets += 100; save(); SFX.coin(); toast('100 practice tickets added. Bake treats in the Kitchen to earn more.', 3600); roomScreen(room); return; }
-      S.lastRoom = room.id; roomLoad(room, roomFeat(room), function () { startRound(arm, room); });
-    };
+      '<span class="rnote">' + (fair ? '<b>Fair Play:</b> free Head Start this round' : 'Bet ×<b id="bTxt"></b> · wins more') + '</span></div>' +
+    '</div>', 'roomp', function (v) {
+    var BETS = [1, 2, 3, 5];
+    function upd() {
+      v.querySelectorAll('[data-tk]').forEach(function (x) { x.textContent = (+x.dataset.tk * CARD_COST * S.bet); });
+      v.querySelectorAll('[data-tc]').forEach(function (x) { x.textContent = (120 * S.bet * +x.dataset.tc).toLocaleString(); });
+      v.querySelectorAll('[data-tp]').forEach(function (x) { x.textContent = (2 + S.bet) * +x.dataset.tp; });
+      var k = BETS.indexOf(S.bet); if (k < 0) { k = 0; S.bet = 1; }
+      $('#bFill', v).style.width = (k / 3 * 100) + '%'; $('#bKnob', v).style.left = (k / 3 * 100) + '%'; $('#bKnob', v).textContent = '×' + S.bet;
+      if ($('#bTxt', v)) $('#bTxt', v).textContent = S.bet;
+      v.querySelectorAll('[data-bet]').forEach(function (x) { x.setAttribute('aria-pressed', +x.dataset.bet === S.bet); });
+      countTo($('#jackN', v), 500 * S.bet);
+    }
+    function setBet(d) { var k = Math.max(0, Math.min(3, BETS.indexOf(S.bet) + d)); if (BETS[k] === S.bet) { SFX.no(); return; } S.bet = BETS[k]; save(); SFX.tap(); upd(); var kn = $('#bKnob', v); kn.classList.remove('bump'); void kn.offsetWidth; kn.classList.add('bump'); }
+    if ($('#bBake', v)) $('#bBake', v).onclick = function () { doBake(room); };
+    if ($('#bGrow', v)) $('#bGrow', v).onclick = function () { SFX.tap(); buildSheet(LANDMARKS.map(function (l) { return l.id; }).indexOf(room.lm), function () { roomScreen(room); }); };
+    $('#bMinus', v).onclick = function () { setBet(-1); }; $('#bPlus', v).onclick = function () { setBet(1); };
+    v.querySelectorAll('[data-bet]').forEach(function (x) { x.onclick = function () { var d = BETS.indexOf(+x.dataset.bet) - BETS.indexOf(S.bet); if (d) setBet(d); }; });
+    v.querySelectorAll('.rpt').forEach(function (t) { t.onclick = function (e) { if (e.target.closest('[data-play]')) return; S.cards = +t.dataset.n; save(); SFX.tap(); v.querySelectorAll('.rpt').forEach(function (x) { x.classList.toggle('sel', x === t); }); }; });
+    v.querySelectorAll('[data-arm]').forEach(function (b) { b.onclick = function () { var id = b.dataset.arm; arm[id] = !arm[id]; b.setAttribute('aria-pressed', !!arm[id]); SFX.tap(); if (arm[id]) { var r = b.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 22); b.classList.remove('armpop'); void b.offsetWidth; b.classList.add('armpop'); toast(pupById(id).name + ' on: ' + pupById(id).desc, 2600); } else toast(pupById(id).name + ' off'); }; });
+    $('#bPinfo', v).onclick = function () { SFX.tap(); pupGuide(); };
+    var ri = ROOMS.indexOf(room);
+    $('#rPrev', v).onclick = function () { SFX.tap(); roomScreen(stepOpen(ri, -1)); };
+    $('#rNext', v).onclick = function () { SFX.tap(); roomScreen(stepOpen(ri, 1)); };
+    swipe($('.rp', v), function (d) { roomScreen(stepOpen(ri, d > 0 ? -1 : 1)); });
+    v.querySelectorAll('[data-play]').forEach(function (b) {
+      b.onclick = function () {
+        S.cards = +b.dataset.play; save();
+        if (S.tickets < S.cards * CARD_COST * S.bet) { S.tickets += 100; save(); SFX.coin(); toast('100 practice tickets added. Bake treats in the Kitchen to earn more.', 3600); roomScreen(room); return; }
+        S.lastRoom = room.id; closeVeil(); roomLoad(room, roomFeat(room), function () { startRound(arm, room); });
+      };
+    });
+    upd();
   });
-  upd();
 }
 function pantry() {
   panel('<h3>Pantry</h3><p>Ingredients you collect while playing. Send spares to teammates who need them.</p>' +
@@ -4371,6 +4448,7 @@ function settings() {
     '<div class="opt"><span>Battery saver <small style="color:var(--mist)">fewer moving effects, keeps your phone cool</small></span><button class="sw" id="swLite" aria-pressed="' + !!st.lite + '" aria-label="Battery saver"></button></div>' +
     '<div class="opt"><span>Mark numbers for me <small style="color:var(--mist)">for players who find tapping hard · Perfect Card rewards pause while it is on</small></span><button class="sw" id="swAssist" aria-pressed="' + !!st.assist + '" aria-label="Mark numbers for me"></button></div>' +
     '<div class="opt"><span>Ball speed</span><div class="seg" id="spd"><button data-s="slowest" aria-pressed="' + (st.speed === 'slowest') + '">Slowest</button><button data-s="slow" aria-pressed="' + (st.speed === 'slow') + '">Slow</button><button data-s="relaxed" aria-pressed="' + (st.speed === 'relaxed') + '">Relaxed</button><button data-s="classic" aria-pressed="' + (st.speed === 'classic') + '">Classic</button><button data-s="fast" aria-pressed="' + (st.speed === 'fast') + '">Quick</button></div></div>' +
+    '<p class="slegal"><button class="linkb" data-legal="privacy">Privacy Policy</button> · <button class="linkb" data-legal="terms">Terms of Service</button>' + (IAP.isApp() ? ' · <button class="linkb" id="bRestoreS">Restore Purchases</button>' : '') + '</p>' +
     '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign In / Account') + '</button><button class="b3 plum" id="bFb2">Send Feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">Feedback Inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 gold" id="bTour" style="padding:6px 12px">Show Me Around</button><button class="b3 plum" id="bHow" style="padding:6px 12px">How to Play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play Promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester Boost: +2,000 tickets, coins and power-ups</button>' +
     '<div class="resetbox"><small>Want a clean slate? This erases all of your progress:</small><button class="b3 cream" id="bReset">Start Over (clear my progress)</button></div>', 'small', function (v) {
@@ -4386,6 +4464,8 @@ function settings() {
       $('#swVoice', v).onclick = function () { st.voice = !st.voice; this.setAttribute('aria-pressed', st.voice); save(); say('B 7'); };
       v.querySelectorAll('#spd button').forEach(function (b) { b.onclick = function () { st.speed = b.dataset.s; save(); v.querySelectorAll('#spd button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
       $('#bAcct', v).onclick = accountPanel;
+      v.querySelectorAll('[data-legal]').forEach(function (b) { b.onclick = function () { SFX.tap(); legal(b.dataset.legal); }; });
+      if ($('#bRestoreS', v)) $('#bRestoreS', v).onclick = function () { SFX.tap(); IAP.restore(); };
       $('#bFb2', v).onclick = function () { feedback('Settings'); };
       $('#bTour', v).onclick = function () { S.guide = {}; save(); closeVeil(); lobby(); };
       if ($('#bFbIn', v)) $('#bFbIn', v).onclick = feedbackInbox;
@@ -5694,10 +5774,66 @@ function sendIngredient(id) {
       };
     });
 }
+
+/* ---------- in-app purchases (only inside the iOS/Android app; the website keeps the coin shop) ----------
+   The app shell (app/) wraps this page with Capacitor and the RevenueCat plugin. Product ids below must match the
+   products you create in App Store Connect, Google Play Console and RevenueCat. Prices come from the store. */
+var IAP_ITEMS = [
+  { id: 'bb_starter', name: 'Starter Bundle', desc: '3,000 coins · 300 tickets · 10 amethysts · a Gold Pack', give: { coins: 3000, tickets: 300, gems: 10, gpack: 1 }, icon: 'i-gift', usd: '0.99', flag: 'ONE TIME', once: true },
+  { id: 'bb_coins_2000', name: 'Pocket of Coins', desc: '2,000 coins', give: { coins: 2000 }, icon: 'i-coin', usd: '1.99' },
+  { id: 'bb_coins_6000', name: 'Bag of Coins', desc: '6,000 coins', give: { coins: 6000 }, icon: 'i-coin', usd: '4.99', flag: 'POPULAR' },
+  { id: 'bb_coins_15000', name: 'Chest of Coins', desc: '15,000 coins', give: { coins: 15000 }, icon: 'i-coin', usd: '9.99' },
+  { id: 'bb_coins_40000', name: 'Vault of Coins', desc: '40,000 coins', give: { coins: 40000 }, icon: 'i-coin', usd: '19.99', flag: 'BEST VALUE' },
+  { id: 'bb_tickets_500', name: 'Ticket Roll', desc: '500 tickets', give: { tickets: 500 }, icon: 'i-ticket', usd: '1.99' },
+  { id: 'bb_tickets_1500', name: 'Ticket Book', desc: '1,500 tickets', give: { tickets: 1500 }, icon: 'i-ticket', usd: '4.99' },
+  { id: 'bb_gems_50', name: 'Amethyst Pouch', desc: '50 amethysts', give: { gems: 50 }, icon: 'i-gem', usd: '4.99' },
+  { id: 'bb_goldpack', name: 'Gold Card Pack', desc: '1 Gold Pack · a gold card guaranteed', give: { gpack: 1 }, icon: 'i-card-pack', usd: '2.99' },
+  { id: 'bb_goldpack_3', name: 'Gold Pack Trio', desc: '3 Gold Packs', give: { gpack: 3 }, icon: 'i-card-pack', usd: '7.99' }
+];
+var IAP = (function () {
+  var P = null, ready = false, prices = {}, configured = false;
+  function plugin() { try { var C = window.Capacitor; if (!C || !C.isNativePlatform || !C.isNativePlatform()) return null; return C.Plugins && C.Plugins.Purchases || null; } catch (e) { return null; } }
+  function platform() { try { return window.Capacitor.getPlatform(); } catch (e) { return 'web'; } }
+  function init() {
+    P = plugin(); if (!P) return Promise.resolve(false);
+    var cfg = window.BLOOM_APP && window.BLOOM_APP.revenueCat || {}, key = platform() === 'ios' ? cfg.ios : cfg.android;
+    if (!key || /REPLACE/.test(key)) return Promise.resolve(false);
+    var opts = { apiKey: key }; if (ON && ON.user && ON.user.uid) opts.appUserID = ON.user.uid;
+    return P.configure(opts).then(function () { configured = true; return P.getProducts({ productIdentifiers: IAP_ITEMS.map(function (x) { return x.id; }) }); })
+      .then(function (r) { (r.products || []).forEach(function (pr) { prices[pr.identifier] = pr; }); ready = true; return true; })
+      .catch(function (e) { console.warn('IAP init', e); return false; });
+  }
+  function available() { return !!(P && configured); }
+  function price(item) { var pr = prices[item.id]; return pr && pr.priceString ? pr.priceString : '$' + item.usd; }
+  function grant(item) {
+    var g = item.give;
+    if (g.coins) S.coins += g.coins; if (g.tickets) S.tickets += g.tickets; if (g.gems) S.gems += g.gems;
+    if (!S.iap) S.iap = []; S.iap.push({ id: item.id, at: Date.now() }); logEvent({ t: 'iap', id: item.id }); save(); refreshTop(); SFX.coin();
+    if (g.gpack) { var left = g.gpack; (function next() { openPack(PACKS[PACKS.length - 1], 'Gold Pack'); if (--left > 0) setTimeout(next, 400); })(); }
+    else reward('art-levelup', item.name, item.desc + ' added to your account. Thank you!', 'cheer');
+  }
+  function buy(item) {
+    if (!available()) { toast('Purchases are available in the Bingo Bloom app.'); return; }
+    var pr = prices[item.id]; if (!pr) { toast('That item is not available right now. Please try again in a moment.'); return; }
+    if (item.once && S.iap && S.iap.some(function (x) { return x.id === item.id; })) { toast('The Starter Bundle can be bought once per account.'); return; }
+    toast('Opening the store…');
+    P.purchaseStoreProduct({ product: pr }).then(function () { grant(item); })
+      .catch(function (e) { var m = (e && (e.message || e.code) || '') + ''; if (/cancel/i.test(m)) return; toast('The purchase did not go through. You were not charged.', 3600); console.warn('IAP', e); });
+  }
+  function restore() { if (!available()) { toast('Restore works inside the Bingo Bloom app.'); return; } P.restorePurchases().then(function () { toast('Purchases restored.'); }).catch(function () { toast('Nothing to restore.'); }); }
+  return { init: init, available: available, price: price, buy: buy, restore: restore, isApp: function () { return !!plugin(); } };
+})();
+function legal(which) {
+  panel('<h3>' + (which === 'terms' ? 'Terms of Service' : 'Privacy Policy') + '</h3><iframe class="legalf" src="' + (which === 'terms' ? 'terms.html' : 'privacy.html') + '" title="' + (which === 'terms' ? 'Terms of Service' : 'Privacy Policy') + '"></iframe><button class="b3 gold" data-x style="padding:8px;font-size:18px">Got It</button>', 'legalp');
+}
 function shop(tab) {
   tab = tab || 'power';
   var body;
-  if (tab === 'gems') {
+  if (tab === 'shop') {
+    body = '<div class="shopgrid iapgrid">' + IAP_ITEMS.map(function (it, i) {
+      return '<div class="sitem iap' + (it.flag ? ' flagged' : '') + '" style="--d:' + i + '">' + (it.flag ? '<span class="bflag">' + it.flag + '</span>' : '') + '<svg viewBox="0 0 40 40"><use href="#' + it.icon + '"/></svg><b>' + it.name + '</b><small>' + it.desc + '</small><button class="b3 green buy" data-iap="' + it.id + '">' + IAP.price(it) + '</button></div>';
+    }).join('') + '</div><p class="note">Prices are shown by your app store before you confirm. Items are virtual and have no cash value. <button class="linkb" data-legal="terms">Terms</button> · <button class="linkb" data-legal="privacy">Privacy</button> · <button class="linkb" id="bRestore">Restore Purchases</button></p>';
+  } else if (tab === 'gems') {
     body = '<div class="shopgrid">' + VAULT.map(function (g, i) {
       return '<div class="sitem vault" style="--d:' + i + '"><span class="vgem"><i class="vglow"></i><svg viewBox="0 0 40 40"><use href="#' + g.icon + '"/></svg></span><b>' + g.name + '</b><small>' + g.desc + '</small>' +
         '<button class="b3 plum buy" data-gem="' + g.id + '">' + icon('i-gem') + g.price + '</button></div>';
@@ -5724,13 +5860,16 @@ function shop(tab) {
         '<button class="b3 gold buy" data-pack="' + k.id + '">' + icon('i-coin') + k.price.toLocaleString() + '</button></div>';
     }).join('') + '</div>';
   }
-  panel('<div class="tabs shead">' + (tab === 'gems' ? '<img class="vaultart" src="art/art-vault.webp" alt="">' : '') + '<b class="stitle outl">' + ({ power: 'Power-ups', packs: 'Card Packs', gems: 'Amethyst Vault' }[tab]) + '</b>' +
+  panel('<div class="tabs shead">' + (tab === 'gems' ? '<img class="vaultart" src="art/art-vault.webp" alt="">' : '') + '<b class="stitle outl">' + ({ power: 'Power-ups', packs: 'Card Packs', gems: 'Amethyst Vault', shop: 'Bloom Shop' }[tab]) + '</b>' +
     '<span class="spacer"></span>' + (tab === 'power' ? curPill('i-gem', S.gems) : '') + (tab === 'gems' ? curPill('i-gem', S.gems) : curPill('i-coin', S.coins)) + '<button class="pinfo" id="bInfo" aria-label="How it works">i</button></div>' + freeGiftRow() + body +
     '<p class="note">' + (tab === 'gems' ? 'Amethysts are rare gems. Earn them from level-ups, completed rooms and cities, and album sets.' : 'Everything here is purchased with coins you win in bingo. All odds are shown.') + '</p>' +
-    '<div class="stabs">' + [['power', 'i-super', 'Power-ups'], ['packs', 'i-card', 'Card Packs'], ['gems', 'i-gem', 'Vault']].map(function (t) { return '<button data-t="' + t[0] + '" aria-pressed="' + (tab === t[0]) + '"><span class="sto">' + icon(t[1]) + '</span><small>' + t[2] + '</small></button>'; }).join('') + '</div>', 'store', function (v) {
+    '<div class="stabs">' + [['power', 'i-super', 'Power-ups'], ['packs', 'i-card', 'Card Packs'], ['gems', 'i-gem', 'Vault']].concat(IAP.available() ? [['shop', 'i-bag', 'Bloom Shop']] : []).map(function (t) { return '<button data-t="' + t[0] + '" aria-pressed="' + (tab === t[0]) + '"><span class="sto">' + icon(t[1]) + '</span><small>' + t[2] + '</small></button>'; }).join('') + '</div>', 'store', function (v) {
       v.classList.add('vstore');
       if ($('#fgGo', v)) $('#fgGo', v).onclick = function () { openFreeGift(tab); };
       v.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { SFX.tap(); shop(b.dataset.t); }; });
+      v.querySelectorAll('[data-iap]').forEach(function (b) { b.onclick = function () { SFX.tap(); IAP.buy(IAP_ITEMS.filter(function (x) { return x.id === b.dataset.iap; })[0]); }; });
+      v.querySelectorAll('[data-legal]').forEach(function (b) { b.onclick = function () { SFX.tap(); legal(b.dataset.legal); }; });
+      if ($('#bRestore', v)) $('#bRestore', v).onclick = function () { SFX.tap(); IAP.restore(); };
       $('#bInfo', v).onclick = function () { SFX.tap(); infoTour(0, function () { shop(tab); }); };
       v.querySelectorAll('[data-bund]').forEach(function (b) {
         b.onclick = function () {
@@ -7407,6 +7546,7 @@ function boot(data) {
   save(true);
   title();
   onlineInit(); refreshTitle();
+  setTimeout(function () { IAP.init(); }, 1500);
 }
 if (window.claude && window.claude.hot && window.claude.hot.snapshot) { try { window.claude.hot.snapshot(function () { return { save: S }; }); } catch (e) { /* fine */ } }
 if (window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(boot);
