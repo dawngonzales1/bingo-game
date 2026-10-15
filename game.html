@@ -275,6 +275,22 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .strip .b3d.new { animation: ballRoll .45s cubic-bezier(.2,.9,.3,1.3); }
 @keyframes ballRoll { from { transform: translateX(-40px) rotate(-160deg) scale(.6); opacity: 0; } }
 .stile.full::after { content: '✓'; position: absolute; right: -5px; bottom: -5px; width: 17px; height: 17px; border-radius: 50%; display: grid; place-items: center; font: 900 11px var(--ui); color: #fff; background: #2fae55; box-shadow: 0 0 0 1.5px #fff; }
+/* celebrations that grow with the win */
+.bcard.winflash { animation: cardFlash 1.4s ease-out; }
+@keyframes cardFlash { 0% { box-shadow: 0 0 0 0 rgba(255,214,92,0); } 20% { box-shadow: 0 0 0 5px #fff3b8, 0 0 40px 14px rgba(255,214,92,.95); } 100% { box-shadow: 0 0 0 0 rgba(255,214,92,0); } }
+.cell.win { animation: winGlow 1.1s ease-in-out 2; }
+@keyframes winGlow { 50% { box-shadow: 0 0 0 3px #fff, 0 0 22px 8px rgba(255,214,92,1); } }
+.bslam.incard.t2 .bsl b { color: #ffd6ec; text-shadow: 0 .05em 0 #c2416b, 0 .1em 0 #3d1a4f, 0 .14em .2em rgba(20,5,35,.5); }
+.bslam.incard.t3 .bsl b { color: #d8c2ff; text-shadow: 0 .05em 0 #6a32d0, 0 .1em 0 #3d1a4f, 0 .14em .2em rgba(20,5,35,.5); }
+.bslam.incard.t2 .bsrays, .bslam.incard.t3 .bsrays { background: repeating-conic-gradient(rgba(255,180,220,.45) 0 8deg, transparent 8deg 22deg); }
+.bqshow { position: fixed; inset: 0; z-index: 62; display: grid; place-items: center; pointer-events: none; overflow: hidden; animation: fade .3s both, bsOut .45s 2.1s ease-in forwards; background: radial-gradient(ellipse at 50% 50%, rgba(60,20,90,.55), rgba(20,5,35,.25) 70%); }
+.bqin { position: relative; display: grid; justify-items: center; gap: 4px; }
+.bqart { width: clamp(120px, 42vh, 220px); height: auto; filter: drop-shadow(0 10px 18px rgba(20,5,35,.6)); animation: gcBox .9s cubic-bezier(.2,1.5,.4,1) both; }
+.bqshow .bqrib { position: relative; top: 0; left: 0; transform: none; margin-top: -10px; animation: popIn .4s .35s both; }
+.bqshow .bqrib span { font-size: clamp(22px, 8vh, 36px); }
+.bqin small { font: 800 clamp(12px, 3.6vh, 16px) var(--ui); color: #fff; animation: popIn .4s .55s both; }
+.bqcordie { position: absolute; left: 3%; bottom: -3%; height: min(52vh, 240px); animation: bsCordie .6s .2s cubic-bezier(.2,1.4,.4,1) both; filter: drop-shadow(0 6px 10px rgba(20,5,35,.5)); }
+.calm .bqshow, .lite .bqshow { background: none; } .calm .bqshow .bsrays, .lite .bqshow .bsrays { display: none; }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
@@ -4207,7 +4223,7 @@ function daub(ci, i, cell, fromBoost) {
   cell.insertAdjacentHTML('afterbegin', roomDaub() + '<i class="burst"></i>');
   setTimeout(function () { var bu = cell.querySelector('.burst'); if (bu) bu.remove(); }, 700);
   if (!reduceMotion) { var cr = cell.getBoundingClientRect(); if (cr.width) { sparkle(cr.left + cr.width / 2, cr.top + cr.height / 2, 6); petalBurst(cr.left + cr.width / 2, cr.top + cr.height / 2, 3); } }
-  SFX.daub(); addXp(2); if (!fromBoost && Math.random() < .7) floatText(cell, '+2 xp');
+  SFX.daub(); if (!fromBoost) buzz(12); addXp(2); if (!fromBoost && Math.random() < .7) floatText(cell, '+2 xp');
   if (c.t) collect(c, cell);
   modeDaub(ci, i, cell);
   if (!fromBoost) R.meter = Math.min(R.boostAt, R.meter + 1);
@@ -4683,12 +4699,22 @@ function checkBingo(ci) {
   }
 }
 /* the BINGO moment: gold letters slam down over light rays and Cordie cheers. Never blocks taps, gone in under 2 seconds */
-function bingoSlam(name, sub, card) {
+// a short vibration on phones that can, under the Sounds switch; never in Calm mode
+function buzz(pat) { try { if (S.settings.sound && !S.settings.calm && navigator.vibrate) navigator.vibrate(pat); } catch (e) { /* fine */ } }
+// Full Bouquet: the bouquet bursts open over the screen for two seconds and never blocks a tap
+function bouquetShow(card, coins, petals) {
+  var o = document.createElement('div'); o.className = 'bqshow';
+  o.innerHTML = '<i class="bsrays"></i><div class="bqin"><img class="bqart" src="art/art-mega-bouquet.webp" alt=""><div class="sribbon bqrib"><span class="outl">FULL BOUQUET!</span></div><small class="outl">4 bingos on one card · +' + coins + ' coins · +' + petals + ' petals · a Jackpot Wheel spin</small></div><img class="bqcordie" src="art/mascot-cheer.webp" alt="">';
+  document.body.appendChild(o);
+  if (!reduceMotion) { setTimeout(function () { prizeRain(36, 'petal'); sparkle(innerWidth / 2, innerHeight * .4, 120); }, 150); setTimeout(function () { coinBurst(innerWidth / 2, innerHeight * .55, 30); }, 500); }
+  setTimeout(function () { o.remove(); }, 2600);
+}
+function bingoSlam(name, sub, card, tier) {
   var host = $('#play'); if (!host) return;
   var big = /blackout/i.test(name) ? 'BLACKOUT' : 'BINGO';
   if (card && big === 'BINGO') { // the callout slams onto the winning card; your other cards stay in play
     var oldc = card.querySelector('.bslam'); if (oldc) oldc.remove();
-    var c = document.createElement('div'); c.className = 'bslam incard';
+    var c = document.createElement('div'); c.className = 'bslam incard t' + (tier || 1);
     c.innerHTML = '<i class="bsrays"></i><div class="bswrap"><img class="bstrophy" src="art/art-trophy.webp" alt=""><div class="bsl">' + big.split('').map(function (ch, i) { return '<b class="outl" style="--k:' + i + '">' + ch + '</b>'; }).join('') + '</div>' +
       (!/^bingo!?$/i.test(name) ? '<em class="outl">' + esc(name) + '</em>' : '') + '<small>' + esc(sub) + '</small></div>';
     card.appendChild(c); setTimeout(function () { c.remove(); }, 2000); return;
@@ -4739,12 +4765,17 @@ function claimLine(ci, line) {
   var burst = document.createElement('div'); burst.className = 'won';
   burst.innerHTML = '<div><b>' + name + '</b><small>' + (luck > 1 ? 'Lucky ×2! ' : '') + (lb.note ? lb.note + ' · ' : '') + '+' + coins + ' coins · +' + petals + ' petals</small></div>';
   el.appendChild(burst);
-  bingoSlam(name, (luck > 1 ? 'Lucky ×2! ' : '') + '+' + coins + ' coins', el);
+  var tier = blackout ? 4 : Math.min(4, k.n);
+  bingoSlam(name, (luck > 1 ? 'Lucky ×2! ' : '') + '+' + coins + ' coins', el, tier);
+  el.classList.remove('winflash'); void el.offsetWidth; el.classList.add('winflash'); setTimeout(function () { el.classList.remove('winflash'); }, 1500);
+  buzz(tier >= 4 ? [40, 50, 40, 50, 90] : tier >= 2 ? [30, 40, 50] : [35]);
+  if (!blackout && k.n >= MULTI_MAX) bouquetShow(el, coins, petals);
   line.forEach(function (i, w) { var c = el.querySelector('[data-i="' + i + '"]'); if (c) { c.style.setProperty('--w', w); c.classList.remove('wave'); void c.offsetWidth; c.classList.add('wave'); setTimeout(function () { c.classList.remove('wave'); }, 1400); } });
   oneToGo(ci);
   if (k.won) el.classList.add('done'); else setTimeout(function () { burst.remove(); }, 1700);
-  SFX.bingo(); say(name.replace('!', ''));
-  var r = el.getBoundingClientRect(); if (r.width) { sparkle(r.left + r.width / 2, r.top + r.height / 2, 30); coinBurst(r.left + r.width / 2, r.top + r.height * .45, 22); petalBurst(r.left + r.width / 2, r.top + r.height * .45, 12); }
+  SFX.bingo(); if (tier >= 3) setTimeout(function () { SFX.set(); }, 350); say(name.replace('!', ''));
+  var r = el.getBoundingClientRect(); if (r.width) { sparkle(r.left + r.width / 2, r.top + r.height / 2, 24 + tier * 12); coinBurst(r.left + r.width / 2, r.top + r.height * .45, 14 + tier * 8); petalBurst(r.left + r.width / 2, r.top + r.height * .45, 8 + tier * 5); }
+  if (blackout) { prizeRain(40, 'coin'); setTimeout(function () { prizeRain(24, 'gem'); }, 400); }
   if (R.cards.every(function (x) { return x.won; })) { R.active = false; clearTimeout(R.timer); setTimeout(function () { endRound('done'); }, 1800); }
   else if (R.left === 0) { R.active = false; clearTimeout(R.timer); toast('All bingos have been claimed'); setTimeout(function () { endRound('claimed'); }, 1800); }
 }
