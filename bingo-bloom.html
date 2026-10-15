@@ -3066,6 +3066,11 @@ body:has(#lobby) .cordie-pop .cbub { margin-bottom: clamp(120px, 37vh, 170px); }
 .cnav.l { left: calc(clamp(64px, 10vw, 84px) + 2px); } .cnav.r { right: calc(clamp(64px, 10vw, 84px) + 2px); }
 @media (hover: hover) and (pointer: fine) { .cnav { display: grid; place-items: center; } .cnav[hidden] { display: none; } }
 .citypill { display: none; }
+#summary.nowheel { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+#summary.nowheel .sumL { width: min(100%, 560px); }
+.wmeter { display: flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.5); font: 800 12px var(--ui); color: #ffe58f; }
+.wmeter i { flex: 1; height: 10px; border-radius: 5px; background: rgba(10,2,20,.5); overflow: hidden; } .wmeter i b { display: block; height: 100%; background: linear-gradient(90deg, #ff8fb1, #ffd45c); }
+.wmeter small { font: 700 11px var(--ui); color: #fff; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -5359,20 +5364,21 @@ function results() {
     : Object.keys(ingCount).map(function (id) { var g = ingById(id); return '<div class="stile">' + ingDot(id) + '<small>' + g.name + '</small><span class="sbadge">' + ingCount[id] + '</span></div>'; }).join('');
   var chips = [['i-ticket', E.tickets], ['i-coin', E.coins], ['i-petal', E.petals], ['i-card', E.cards.length], ['i-drop', E.drops], ['i-seed', E.seeds], ['i-bulb', E.alerts ? alertText(E.alerts) : 0]].filter(function (c) { return c[1]; })
     .map(function (c, i) { return '<span class="schip" style="animation-delay:' + (.4 + i * .1) + 's">' + icon(c[0]) + '<b>' + c[1] + '</b></span>'; }).join('');
-  show('<div class="screen" id="summary" style="--rbg:url(' + room.img + ')">' +
+  var jpEarned = (E.jackpots || 0) > 0, hasWheel = spins > 0 || jpEarned;
+  show('<div class="screen" id="summary' + (hasWheel ? '' : ' nowheel') + '" style="--rbg:url(' + room.img + ')">' +
     '<div class="sumL"><i class="srays"></i><div class="sribbon"><span class="outl">' + head + '</span></div><img class="scordie" src="' + cordieArt(R.bingos ? 'cheer' : 'point') + '" alt="">' +
       '<div class="sscroll"><div class="slvl"><span>LV ' + S.level + '</span><div class="pbar"><i style="width:' + Math.round(S.xp / xpNeed() * 100) + '%"></i></div></div>' +
       '<div class="sbox"><span class="slab">From your bingos</span><div class="schips">' + (chips || '<span class="snone">No prizes this round. More cards give more chances!</span>') + '</div></div>' +
       (E.cards.length ? '<div class="sbox"><span class="slab">New Album Cards (' + E.cards.length + ')</span><div class="scards">' + E.cards.map(function (d, i) { return '<span style="animation-delay:' + (.5 + i * .12) + 's">' + cardFace(d.id, { isNew: d.isNew, hideCount: true }) + '</span>'; }).join('') + '</div></div>' : '') +
-      '<div class="sbox swheel"><span class="slab">From the Bloom Wheel</span><div class="sbig">' + icon('i-ticket') + '<b id="sumWheel">0</b><small>tickets</small></div></div>' +
+      (hasWheel ? '<div class="sbox swheel"><span class="slab">From the Bloom Wheel</span><div class="sbig">' + icon('i-ticket') + '<b id="sumWheel">0</b><small>tickets</small></div></div>' : '<div class="wmeter"><span>Bloom Wheel</span><i><b style="width:' + Math.round(S.wheelMeter / WHEEL_NEED * 100) + '%"></b></i><small>' + S.wheelMeter + '/' + WHEEL_NEED + ' bingos</small></div>') +
       (tiles ? '<div class="sbox"><span class="slab">' + (BAKES[R.room] ? 'Bake to Win Ingredients' : 'Ingredients for the Kitchen') + '</span><div class="stiles">' + tiles + '</div></div>' : '') +
       '<div class="stotal">Round total: <b id="sumTot"></b></div></div>' +
       '<div class="sbtns">' + (R.pathReady ? '<button class="b3 green" id="bPath">Garden Path!</button>' : '') + '<button class="b3 gold" id="bAgain">Play Again</button><button class="b3 plum" id="bLobby">Map</button><button class="b3 plum" id="bAlb">Album</button></div>' +
     '</div>' +
-    '<div class="sumR"><div class="tiers4">' + TIERS.map(function (t, i) { var amt = BLOOM_WHEEL.filter(function (w) { return w.tier === i; })[0].n * bet; return '<div class="t4" id="tier' + i + '" style="--a:' + t[1] + ';--b:' + t[2] + '"><em class="outl">' + t[0] + '</em><b>' + icon('i-ticket') + amt + '</b></div>'; }).join('') + '</div>' +
+    (hasWheel ?     '<div class="sumR"><div class="tiers4">' + TIERS.map(function (t, i) { var amt = BLOOM_WHEEL.filter(function (w) { return w.tier === i; })[0].n * bet; return '<div class="t4" id="tier' + i + '" style="--a:' + t[1] + ';--b:' + t[2] + '"><em class="outl">' + t[0] + '</em><b>' + icon('i-ticket') + amt + '</b></div>'; }).join('') + '</div>' +
       '<div class="wwrap"><canvas id="bwCv" aria-label="Bloom Wheel"></canvas><button class="wspin" id="bwGo"' + (spins ? '' : ' disabled') + '><span>' + (spins ? 'SPIN' : '🔒') + '</span></button></div>' +
       '<div class="wfoot"><p class="wnote" id="bwMsg">' + (spins ? 'Your bingos earned ' + (spins > 1 ? spins + ' spins' : 'a spin') + ' of the Bloom Wheel!' : 'Bloom Wheel meter: ' + S.wheelMeter + '/' + WHEEL_NEED + ' bingos. ' + (WHEEL_NEED - S.wheelMeter) + ' more for a spin.') + '</p>' +
-      '<button class="wskip" id="bwSkip" hidden>SKIP ▶▶ <b>4s</b></button><button class="wodds" id="bwOdds">See the Odds</button></div></div>' +
+      '<button class="wskip" id="bwSkip" hidden>SKIP ▶▶ <b>4s</b></button><button class="wodds" id="bwOdds">See the Odds</button></div></div>' : '') +
   '</div>');
   if (R.bingos) setTimeout(function () { sparkle(innerWidth * .25, 80, 70); }, 250);
   var tix = E.tickets, wheelTix = 0;
@@ -5383,8 +5389,9 @@ function results() {
   $('#bAgain').onclick = function () { roomScreen(lastRoom); };
   if ($('#bPath')) $('#bPath').onclick = function () { this.remove(); gardenPath(lastBet, lastRoom.id); };
   $('#bLobby').onclick = lobby; $('#bAlb').onclick = function () { album(null); };
-  $('#bwOdds').onclick = function () { panel('<h3>Bloom Wheel Odds</h3><table class="odds"><tr><th>Prize</th><th>Chance</th></tr>' + BLOOM_WHEEL.reduce(function (acc, w) { var f = acc.filter(function (x) { return x.n === w.n && x.tier === w.tier; })[0]; if (f) f.w += w.w; else acc.push({ n: w.n, w: w.w, tier: w.tier }); return acc; }, []).sort(function (a, b) { return b.n - a.n; }).map(function (w) { return '<tr><td>' + (w.tier !== undefined ? TIERS[w.tier][0] + ' Jackpot: ' : '') + w.n * lastBet + ' tickets</td><td>' + w.w + '%</td></tr>'; }).join('') + '</table><p class="note">Every prize is paid in tickets, multiplied by your bet (×' + lastBet + '). Every bingo earns a spin; a Full Bouquet or Blackout adds one more.</p>', 'small'); };
+  if ($('#bwOdds')) $('#bwOdds').onclick = function () { panel('<h3>Bloom Wheel Odds</h3><table class="odds"><tr><th>Prize</th><th>Chance</th></tr>' + BLOOM_WHEEL.reduce(function (acc, w) { var f = acc.filter(function (x) { return x.n === w.n && x.tier === w.tier; })[0]; if (f) f.w += w.w; else acc.push({ n: w.n, w: w.w, tier: w.tier }); return acc; }, []).sort(function (a, b) { return b.n - a.n; }).map(function (w) { return '<tr><td>' + (w.tier !== undefined ? TIERS[w.tier][0] + ' Jackpot: ' : '') + w.n * lastBet + ' tickets</td><td>' + w.w + '%</td></tr>'; }).join('') + '</table><p class="note">Every prize is paid in tickets, multiplied by your bet (×' + lastBet + '). Every bingo earns a spin; a Full Bouquet or Blackout adds one more.</p>', 'small'); };
   // the wheels: the Bloom Wheel first; a Full Bouquet or Blackout then slides in the Bouquet Jackpot wheel after it (the Frenzy stack)
+  if (!hasWheel) { WHEEL_BUSY = false; return; }
   var cv = $('#bwCv'), ctx = cv.getContext('2d'), d = window.devicePixelRatio || 1, Wd = 300, angle = 0, spinning = false;
   var box = $('.wwrap'), sz = Math.max(130, Math.min(box.clientWidth, box.clientHeight)); cv.style.width = cv.style.height = sz + 'px'; cv.width = cv.height = Wd * d; ctx.scale(d, d); $('#bwGo').style.setProperty('--hub', Math.round(sz * .24) + 'px');
   var jpSpins = E.jackpots || 0;
