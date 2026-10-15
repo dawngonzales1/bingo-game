@@ -392,6 +392,11 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #play .cell.need.hint { box-shadow: inset 0 0 0 .9cqw #ff3b4a, 0 0 0 .8cqw #ffd45c, 0 0 3cqw 1cqw rgba(255,214,92,.95) !important; }
 #play #cards.has-minis { grid-template-columns: auto minmax(0, 1fr) !important; }
 #play #cards.has-minis .minis { order: -1; }
+.nextsec.open .nxmist { background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,.08), rgba(20,40,60,.35) 75%); }
+.nextsec .cityban .b3 { margin-top: 8px; }
+.city-rio .cityban { background: linear-gradient(180deg, #29c6d8, #1b7fb8) !important; }
+.city-rio .cityban small { color: #fff3b8; }
+.city-rio .citysec::before { background-image: url(art/lobby-rio-map.webp); }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
@@ -2986,7 +2991,7 @@ var KEY = 'bingoBloom.v1';
 function fresh() {
   return { v: 3, fbQueue: [], cal: { day: 0, total: 0, last: '' }, calShown: '', bonus: {}, freeAlertRounds: 0, alertMin: 60, mm: null, tickets: 100, coins: 300, petals: 0, gems: 20, albumTimes: 0, stars: 0, name: 'Player', photo: '', style: { avatar: 'initial', frame: 'gold', dauber: 'bloom' }, unlocked: {}, bake: {}, alerts: 0, bet: 1, xp: 0, level: 1, items: { bee: 1, headstart: 1, wild: 1, balls5: 1, dcoins: 0, dpetals: 0, instant: 1, allx2: 1, daub1: 2, daub2: 1, daub3: 1, coinsq: 1, chest: 1, super: 1, freeze: 1, dxp: 1 },
     drops: 5, seeds: 0, scratch: 1, spins: 0, ovens: [null, null], dry: 0, wheelDay: '', mmDay: '', mmPlays: 3, garden: null, album: {}, ing: {}, setsDone: {}, albumDone: false, albumStart: Date.now(),
-    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', keepSpare: true, quest: {}, league: {}, raffle: {}, guide: {}, newCards: {}, freeGift: 0, seen: {}, sentReq: {}, stats: { rounds: 0, bingos: 0 }, events: [],
+    build: {}, cityDone: false, lastGift: '', cards: 2, lastRoom: '', keepSpare: true, quest: {}, league: {}, raffle: {}, guide: {}, newCards: {}, freeGift: 0, seen: {}, sentReq: {}, city: 'paris', cities: {}, travel: 0, stats: { rounds: 0, bingos: 0 }, events: [],
     settings: { sound: true, voice: false, speed: 'slow', assist: false, lite: false, autoAlert: true, lang: 'auto' } };
 }
 function merge(saved) {
@@ -3073,7 +3078,7 @@ function cityLock(id) {
   return LANDMARKS.filter(function (l) { return l.id === prev; })[0];
 }
 function lockMsg(r) { var p = cityLock(r.lm || r.id); return p ? r.name + ' opens when ' + p.name + ' has its first blossom. Win petals in bingo, then tap Grow in ' + p.name + '.' : ''; }
-function stepOpen(ri, d) { for (var k = 1; k <= ROOMS.length; k++) { var r = ROOMS[(ri + d * k + ROOMS.length * k) % ROOMS.length]; if (!cityLock(r.lm || r.id)) return r; } return ROOMS[ri]; }
+function stepOpen(ri, d) { for (var k = 1; k <= ROOMS.length; k++) { var r = ROOMS[(ri + d * k + ROOMS.length * k) % ROOMS.length]; if (roomHere(r) && !cityLock(r.lm || r.id)) return r; } return ROOMS[ri]; }
 // the room to work on next: the first open Paris room that still needs blossoms
 function goalLm() { for (var i = 0; i < CITY_ROOMS.length; i++) { var id = CITY_ROOMS[i]; if (!cityLock(id) && (S.build[id] || 0) < 3) return id; } return null; }
 function mapToGoal() {
@@ -3399,6 +3404,7 @@ var PLACE = { patisserie: { at: [330, 190], rib: [338, 372] }, cafe: { at: [640,
   bridge: { at: [880, 214], rib: [955, 372] }, carousel: { at: [1190, 400], rib: [1190, 486] }, boutique: { at: [1390, 150], rib: [1392, 338] } };
 
 function landmarkArt(id, lvl, ghost) {
+  if (!DRAW[id]) return lmGeneric(id, lvl);
   if (lvl > 0) return DRAW[id](lvl);
   var f = FOOT[id], s = '';
   if (id === 'carousel') return '<ellipse cx="0" cy="0" rx="86" ry="30" fill="#d9b47c" stroke="#a67a40" stroke-width="3" stroke-dasharray="10 7"/><g opacity=".3" style="filter:grayscale(1)">' + DRAW.carousel(3) + '</g>' + sign(0, 20);
@@ -3443,16 +3449,55 @@ function lmPicture(id, lvl, cx, baseY) {
 var FOOTC = { patisserie: [10, 50, 50], cafe: [0, 50, 50], bridge: [78, 61, 20], carousel: [0, 0, 44], boutique: [0, 45, 45] };
 /* living map: the river sparkles and ripples, the fountain sprays (Dawn's Bingo Frenzy recording) */
 var MAP_WATER = [[110, 470], [330, 395], [575, 270], [700, 165], [990, 95], [180, 650]];
+/* ---------- cities: Paris, then Rio de Janeiro (Dawn, Oct 15: a second city with a different feel) ---------- */
+var CITIES = {
+  paris: { id: 'paris', name: 'Paris', big: 'PARIS', map: 'art/lobby-paris-map.webp', landmarks: LANDMARKS, plot: PLOT, lmImg: LM_IMG, footc: FOOTC, rooms: CITY_ROOMS, water: MAP_WATER, next: 'rio', blurb: 'finish all 4 rooms for a big prize' },
+  rio: { id: 'rio', name: 'Rio de Janeiro', big: 'RIO', map: 'art/lobby-rio-map.webp',
+    landmarks: [{ id: 'beach', name: 'Copacabana Beach' }, { id: 'cablecar', name: 'Sugarloaf Cable Car' }, { id: 'parade', name: 'Carnival Parade' }, { id: 'samba', name: 'Samba Stage' }],
+    plot: { beach: [470, 560], cablecar: [690, 360], parade: [1010, 500], samba: [190, 560] }, lmImg: {}, footc: { beach: [0, 40, 40], cablecar: [0, 40, 40], parade: [0, 40, 40], samba: [0, 40, 40] },
+    rooms: ['beach', 'cablecar', 'parade', 'samba'], water: [[1150, 250], [1250, 470], [930, 110], [1080, 620]], next: null, blurb: 'finish all 4 rooms for a big prize' }
+};
+var CITY = CITIES.paris;
+function cityId() { return CITIES[S.city] ? S.city : 'paris'; }
+function setCity(id) {
+  var c = CITIES[id] || CITIES.paris; CITY = c; LANDMARKS = c.landmarks; PLOT = c.plot; LM_IMG = c.lmImg; FOOTC = c.footc; CITY_ROOMS = c.rooms; MAP_WATER = c.water;
+  document.documentElement.classList.toggle('city-rio', c.id === 'rio');
+}
+function cityDone(id) { return id === 'paris' ? !!S.cityDone : !!(S.cities && S.cities[id]); }
+function canTravel(id) { return !!(S.travel || cityDone(CITIES[id] && CITIES[id].prev || 'paris')); }
+CITIES.rio.prev = 'paris';
+function roomHere(r) { return r.city ? r.city === cityId() : (r.lm ? cityId() === 'paris' : true); }
+function travelTo(id) {
+  S.city = id; S.lastRoom = ''; save(); setCity(id); SFX.set();
+  var c = CITIES[id], d = document.createElement('div'); d.className = 'rload'; d.style.backgroundImage = 'url(' + c.map + ')';
+  d.innerHTML = '<b>✈ ' + esc(c.name) + '</b><div class="rlbar"><i></i><em>0%</em></div><small>' + (id === 'rio' ? 'Carnival, beach and samba. Grow 3 blossoms in each room!' : 'Welcome back to Paris!') + '</small>';
+  document.body.appendChild(d); var bar = d.querySelector('i'), em = d.querySelector('em'), t0 = performance.now(), dur = reduceMotion ? 200 : 1300;
+  requestAnimationFrame(function () { bar.style.width = '100%'; });
+  (function tick(now) { var k = Math.min(1, (now - t0) / dur); em.textContent = Math.round(k * 100) + '%'; if (k < 1) requestAnimationFrame(tick); })(t0);
+  setTimeout(function () { lobby(); d.classList.add('out'); setTimeout(function () { d.remove(); }, 400); }, dur + 150);
+}
+// a landmark with no drawn or painted art yet: a bright little building with the room's colours, flags for each blossom
+var LM_COLOR = { beach: ['#ffd447', '#29c6d8'], cablecar: ['#2f8df5', '#ff9b1f'], parade: ['#ff5f6d', '#7dff9a'], samba: ['#a04ff0', '#ffd447'] };
+function lmGeneric(id, lvl) {
+  var c = LM_COLOR[id] || ['#f6c64a', '#3f86ec'], s = '<g transform="translate(0 -20)">';
+  s += '<ellipse cx="60" cy="52" rx="86" ry="26" fill="#000" opacity=".16"/>';
+  s += '<path d="M-20 40 L-20 -10 L60 -50 L140 -10 L140 40 Z" fill="' + (lvl ? c[0] : '#d9d2c4') + '" stroke="#1a1030" stroke-width="4" stroke-linejoin="round"/>';
+  s += '<path d="M-30 -8 L60 -58 L150 -8 Z" fill="' + (lvl ? c[1] : '#bfb7a8') + '" stroke="#1a1030" stroke-width="4" stroke-linejoin="round"/>';
+  s += '<rect x="42" y="4" width="36" height="36" rx="6" fill="#fff" stroke="#1a1030" stroke-width="3"/>';
+  for (var k = 0; k < lvl; k++) s += '<g transform="translate(' + (10 + k * 50) + ' -70)"><path d="M0 0v-34" stroke="#1a1030" stroke-width="3"/><path d="M0 -34 l26 8 -26 8z" fill="' + c[k % 2] + '" stroke="#1a1030" stroke-width="2.5"/></g>';
+  if (!lvl) s += sign(60, 60);
+  return s + '</g>';
+}
 function mapLife() {
   var h = '<g class="mlife" pointer-events="none">';
   MAP_WATER.forEach(function (w, i) { h += '<path class="wglint" style="animation-delay:-' + (i * .73).toFixed(2) + 's" transform="translate(' + w[0] + ' ' + w[1] + ')" d="M0 -11 Q1.5 -1.5 11 0 Q1.5 1.5 0 11 Q-1.5 1.5 -11 0 Q-1.5 -1.5 0 -11Z"/>'; });
   [[150, 520, 0], [640, 220, -2.5], [930, 120, -1.2]].forEach(function (w) { h += '<path class="wripple" style="animation-delay:' + w[2] + 's" transform="translate(' + w[0] + ' ' + w[1] + ')" d="M-26 0 Q-13 -7 0 0 Q13 7 26 0"/>'; });
-  for (var k = 0; k < 6; k++) h += '<circle class="fdrop" r="' + (3 + k % 3) + '" cx="676" cy="418" style="--dx:' + ((k - 2.5) * 13) + 'px;animation-delay:-' + (k * .25).toFixed(2) + 's"/>';
-  return h + '<ellipse class="fpool" cx="676" cy="472" rx="58" ry="20"/></g>';
+  if (CITY.id === 'paris') { for (var k = 0; k < 6; k++) h += '<circle class="fdrop" r="' + (3 + k % 3) + '" cx="676" cy="418" style="--dx:' + ((k - 2.5) * 13) + 'px;animation-delay:-' + (k * .25).toFixed(2) + 's"/>'; h += '<ellipse class="fpool" cx="676" cy="472" rx="58" ry="20"/>'; }
+  return h + '</g>';
 }
 // your picture on a gold pin at the room you played last, with a pulse ring on the ground
 function mapPin() {
-  var last = ROOMS.filter(function (r) { return r.id === S.lastRoom; })[0], lm = (last && last.lm) || 'patisserie', p = PLOT[lm]; if (!p) return '';
+  var last = ROOMS.filter(function (r) { return r.id === S.lastRoom; })[0], lm = (last && last.lm && PLOT[last.lm]) ? last.lm : CITY_ROOMS[0], p = PLOT[lm]; if (!p) return '';
   var av = S.style.avatar, pic = '';
   if (av === 'photo' && S.photo) pic = S.photo;
   else if (av && av.indexOf('|') > 0 && S.album[av]) { var ci = cardInfo(av); pic = 'art/card-' + ci.set.id + '-' + (ci.idx + 1) + '.webp'; }
@@ -3467,8 +3512,8 @@ function mapPin() {
 function mapFxSvg() { return '<svg id="mapFx" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + mapLife() + mapPin() + '</svg>'; }
 var SWEPT = false;
 function mapSvg() {
-  var s = '<svg id="mapSvg" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The city of Paris that you build">';
-  s += '<image href="art/lobby-paris-map.webp" x="0" y="0" width="' + MAP_W + '" height="' + MAP_H + '" preserveAspectRatio="xMidYMid slice"/>';
+  var s = '<svg id="mapSvg" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The city of ' + esc(CITY.name) + ' that you build">';
+  s += '<image href="' + CITY.map + '" x="0" y="0" width="' + MAP_W + '" height="' + MAP_H + '" preserveAspectRatio="xMidYMid slice"/>';
   LANDMARKS.slice().sort(function (a, b) { return PLOT[a.id][1] - PLOT[b.id][1]; }).forEach(function (lm) {
     var p = PLOT[lm.id], f = FOOTC[lm.id], i = LANDMARKS.indexOf(lm);
     s += '<g class="lm' + (cityLock(lm.id) ? ' lmlock' : '') + '" data-lm="' + i + '"><ellipse cx="' + p[0] + '" cy="' + p[1] + '" rx="95" ry="60" fill="transparent"/>' +
@@ -3578,7 +3623,7 @@ function titleLoad() {
   var bar = $('#tBar'), msg = $('#tMsg'), btn = $('#bStart'), box = $('#tLoad');
   function done() { if (!btn || !btn.isConnected) return; LOADED = true; if (box) box.remove(); btn.hidden = false; btn.classList.add('popin'); }
   if (LOADED) { done(); return; }
-  var urls = ['art/lobby-paris-map.webp'].concat(ROOMS.map(function (r) { return r.img; }), CITY_ROOMS.map(function (id) { return 'art/landmark-' + id + '.webp'; }), ['art/icon-ticket.webp', 'art/icon-coin.webp', 'art/icon-petal.webp', 'art/icon-kitchen.webp', 'art/icon-album.webp', 'art/icon-shop.webp', 'art/icon-team.webp']);
+  var urls = [CITY.map].concat(ROOMS.map(function (r) { return r.img; }), CITY_ROOMS.map(function (id) { return 'art/landmark-' + id + '.webp'; }), ['art/icon-ticket.webp', 'art/icon-coin.webp', 'art/icon-petal.webp', 'art/icon-kitchen.webp', 'art/icon-album.webp', 'art/icon-shop.webp', 'art/icon-team.webp']);
   urls = urls.filter(function (u, i) { return u && urls.indexOf(u) === i; });
   var MSG = ['Preparing recipes…', 'Warming the ovens…', 'Polishing the bingo balls…', 'Arranging the flowers…', 'Start your bingo time!'], got = 0, t0 = Date.now(), fin = false;
   function step() {
@@ -3728,11 +3773,13 @@ function lobby() {
   S.ovens = (S.ovens || [null, null]).map(function (o) { return o && RECIPES.some(function (r) { return r.id === o.r; }) ? o : null; });
   var ovenReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); });
   var gamesHot = S.wheelDay !== today() || S.drops > 0 || S.scratch > 0;
-  var feat = ROOMS.filter(function (r) { return r.mode !== 'multi'; });
+  var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city; });
+  var nx = CITY.next ? CITIES[CITY.next] : null, nxOpen = nx && canTravel(nx.id);
   show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec">' + mapSvg() + mapFxSvg() +
-      '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + (SWEPT ? '' : '<div class="csweep"><b class="outl">PARIS</b><small>City of Blossoms</small></div>') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>' +
-      '<div class="cityban"><b class="outl">PARIS</b><small>' + stars + '/12 blossoms · finish all 4 rooms for a big prize</small></div></div>' +
-      '<div class="nextsec"><i class="nxblur"></i><i class="nxmist"></i><div class="cityban soon"><span class="nxlock">🔒</span><b class="outl">NEXT CITY</b><small>A new city is waiting… finish Paris to travel on!</small></div></div></div>' +
+      '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + (SWEPT ? '' : '<div class="csweep"><b class="outl">' + CITY.big + '</b><small>City of Blossoms</small></div>') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>' +
+      '<div class="cityban"><b class="outl">' + CITY.big + '</b><small>' + stars + '/12 blossoms · ' + CITY.blurb + '</small></div></div>' +
+      (nx ? '<div class="nextsec' + (nxOpen ? ' open' : '') + '"><i class="nxblur" style="background-image:url(' + nx.map + ')' + (nxOpen ? ';filter:blur(6px) saturate(1.3)' : '') + '"></i><i class="nxmist"></i><div class="cityban soon">' + (nxOpen ? '<b class="outl">' + esc(nx.big) + '</b><small>' + esc(nx.name) + ' is open!</small><button class="b3 gold shine" id="bTravel">✈ Fly to ' + esc(nx.name) + '</button>' : '<span class="nxlock">🔒</span><b class="outl">NEXT CITY</b><small>' + esc(nx.name) + ' is waiting… finish ' + esc(CITY.name) + ' to travel on!</small>') + '</div></div>' :
+       '<div class="nextsec open"><i class="nxblur" style="background-image:url(' + CITIES.paris.map + ');filter:blur(6px) saturate(1.2)"></i><i class="nxmist"></i><div class="cityban soon"><b class="outl">PARIS</b><small>Your first city</small><button class="b3 gold" id="bTravel">✈ Back to Paris</button></div></div>') + '</div>' +
     topBar('<div class="spacer"></div><button class="evpill' + (eventsHot() ? ' hot' : '') + '" id="bEv" aria-label="Events"><img src="art/art-trophy.webp" alt=""><span>Events</span></button><button class="fbpill" id="bFb" aria-label="Send feedback">' + icon('i-chat') + '<span>Feedback</span></button><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       (giftReady ? rb('bGift', 'i-gift', 'pk', 'Day ' + (calState().day + 1) + '!', true) : '<button class="round giftwait" id="bGift"><span class="c pk">' + icon('i-gift') + '<i class="gclock">⏰</i></span><span class="lb">Gift in ' + untilText(nextReset()).replace(/ \d+m$/, '') + '</span></button>') +
@@ -3758,8 +3805,9 @@ function lobby() {
   $('#worldWrap').addEventListener('click', function (e) {
     var g = e.target.closest('.lm'); if (!g) return;
     var lm = LANDMARKS[+g.dataset.lm], r = roomByLm(lm.id); SFX.tap();
-    if (r) roomScreen(r); else if (S.cityDone) toast('Paris is complete! The Stone Bridge leads to the next city, coming soon.', 3200); else toast(lm.name + ' opens when all 4 Paris rooms have 3 blossoms.', 3200);
+    if (r) roomScreen(r); else if (S.cityDone) travelTo('rio'); else toast(lm.name + ' opens when all 4 Paris rooms have 3 blossoms.', 3200);
   });
+  if ($('#bTravel')) $('#bTravel').onclick = function () { SFX.tap(); travelTo(nx ? nx.id : 'paris'); };
   app.querySelectorAll('.ftile').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
   featSpotlight();
   $('#bGift').onclick = function () { SFX.tap(); calendar(); };
@@ -3822,13 +3870,13 @@ function buildSheet(i, after) {
         var msg = lm.name + ' now has ' + (lvl + 1) + ' blossom' + (lvl ? 's' : '') + '!';
         var cityNow = false;
         if (lvl + 1 === 3 && CITY_ROOMS.indexOf(lm.id) >= 0) { S.tickets += ROOM_REWARD; S.gems += 5; msg = lm.name + ' is complete! +' + ROOM_REWARD + ' tickets and 5 amethysts'; }
-        if (!S.cityDone && cityStars() === 12) { S.cityDone = true; cityNow = true; S.coins += CITY_REWARD; S.tickets += CITY_TICKETS; S.gems += CITY_GEMS; S.build.bridge = 3; logEvent({ t: 'cityComplete', city: 'paris' }); }
+        if (!cityDone(cityId()) && cityStars() === 12) { if (cityId() === 'paris') S.cityDone = true; else { if (!S.cities) S.cities = {}; S.cities[cityId()] = 1; } cityNow = true; S.coins += CITY_REWARD; S.tickets += CITY_TICKETS; S.gems += CITY_GEMS; S.build.bridge = 3; logEvent({ t: 'cityComplete', city: 'paris' }); }
         var ci = CITY_ROOMS.indexOf(lm.id), nextLm = ci >= 0 && lvl === 0 && ci < CITY_ROOMS.length - 1 ? LANDMARKS.filter(function (l) { return l.id === CITY_ROOMS[ci + 1]; })[0] : null;
         save(); SFX.build(); (after || lobby)();
         if (lvl + 1 === 3 && ci >= 0 && !cityNow) reward('art-set-ribbon', lm.name + ' complete!', 'All 3 blossoms grown · +' + ROOM_REWARD + ' tickets and 5 amethysts', 'cheer');
-        else if (nextLm && (S.build[nextLm.id] || 0) === 0) reward('art-levelup', nextLm.name + ' is open!', 'Your first blossom at ' + lm.name + ' opened the next room of Paris', 'point');
+        else if (nextLm && (S.build[nextLm.id] || 0) === 0) reward('art-levelup', nextLm.name + ' is open!', 'Your first blossom at ' + lm.name + ' opened the next room of ' + CITY.name, 'point');
         else toast(msg, 3200);
-        if (cityNow) setTimeout(function () { reward('art-city-crown', 'Paris complete!', '+' + CITY_TICKETS + ' tickets · ' + CITY_GEMS + ' amethysts · +' + CITY_REWARD + ' coins · a Gold Pack', 'wow', function () { openPack(PACKS[PACKS.length - 1], 'Paris prize'); }); }, 600); sparkle(innerWidth / 2, innerHeight / 2, 110);
+        if (cityNow) setTimeout(function () { reward('art-city-crown', CITY.name + ' complete!', '+' + CITY_TICKETS + ' tickets · ' + CITY_GEMS + ' amethysts · +' + CITY_REWARD + ' coins · a Gold Pack', 'wow', function () { openPack(PACKS[PACKS.length - 1], 'Paris prize'); }); }, 600); sparkle(innerWidth / 2, innerHeight / 2, 110);
       };
     });
 }
@@ -3844,8 +3892,13 @@ var ROOMS = [
   { id: 'meadow', name: 'Butterfly Meadow', open: true, mode: 'butterfly', art: posterMeadow, img: 'art/room-butterfly-meadow.webp', pos: '70%' },
   { id: 'carnival', name: 'Candy Carnival', open: true, mode: 'recipe', art: posterCandy, img: 'art/room-candy-carnival.webp', pos: '22%' },
   { id: 'coast', name: 'Gold Coast', open: true, mode: 'shape', art: posterCoast, img: 'art/room-gold-coast.webp', pos: '72%' },
-  { id: 'market', name: 'Lantern Market', open: true, mode: 'mystery', art: posterMarket, img: 'art/room-lantern-market.webp', pos: '18%' }
+  { id: 'market', name: 'Lantern Market', open: true, mode: 'mystery', art: posterMarket, img: 'art/room-lantern-market.webp', pos: '18%' },
+  { id: 'beach', lm: 'beach', city: 'rio', name: 'Copacabana Beach', open: true, mode: 'multi', art: posterOf('art/room-rio-beach.webp', '50%'), img: 'art/room-rio-beach.webp', pos: '50%' },
+  { id: 'cablecar', lm: 'cablecar', city: 'rio', name: 'Sugarloaf Cable Car', open: true, mode: 'shape', art: posterOf('art/room-rio-cablecar.webp', '50%'), img: 'art/room-rio-cablecar.webp', pos: '50%' },
+  { id: 'parade', lm: 'parade', city: 'rio', name: 'Carnival Parade', open: true, mode: 'blackout', art: posterOf('art/room-rio-parade.webp', '50%'), img: 'art/room-rio-parade.webp', pos: '50%' },
+  { id: 'samba', lm: 'samba', city: 'rio', name: 'Samba Stage', open: true, mode: 'mystery', art: posterOf('art/room-rio-samba.webp', '50%'), img: 'art/room-rio-samba.webp', pos: '50%' }
 ];
+function posterOf(src, pos) { return function () { return '<span class="art" style="background:url(' + src + ') ' + pos + ' center / cover no-repeat"></span>'; }; }
 function posterMeadow() { return '<span class="art" style="background:url(art/room-butterfly-meadow.webp) 70% center / cover no-repeat"></span>'; }
 function posterMarket() { return '<span class="art" style="background:url(art/room-lantern-market.webp) 18% center / cover no-repeat"></span>'; }
 function posterParis() { return '<span class="art" style="background:url(art/room-paris.webp) 30% center / cover no-repeat"></span>'; }
@@ -3866,9 +3919,13 @@ var BAKES = {
   patisserie: [['S1|1', 'Rose Macarons'], ['S1|7', 'Caramel Canelés'], ['S1|8', 'Opera Cake']],
   cafe: [['S1|2', 'Butter Croissants'], ['S1|3', 'Chocolate Éclairs'], ['S1|9', 'Crème Brûlée']],
   carousel: [['S1|4', 'Madeleines'], ['S1|5', 'Fruit Tart'], ['S2|3', 'Hot Cocoa Party']],
-  boutique: [['S1|6', 'Mille-feuille'], ['S2|2', 'Café Crème Tea'], ['S2|9', 'Golden Dessert Spoon']]
+  boutique: [['S1|6', 'Mille-feuille'], ['S2|2', 'Café Crème Tea'], ['S2|9', 'Golden Dessert Spoon']],
+  beach: [['S5|1', 'Coconut Tulip Cakes'], ['S5|7', 'Sunflower Brigadeiros'], ['S5|9', 'Golden Rose Pavlova']],
+  cablecar: [['S3|4', 'Carousel Churros'], ['S3|5', 'Fountain Fizz'], ['S3|9', 'Grand Tower Torte']],
+  parade: [['S6|1', 'Accordion Alfajores'], ['S6|7', 'Trumpet Tarts'], ['S6|9', 'Golden Mic Cake']],
+  samba: [['S8|1', 'Lantern Lemonade'], ['S8|2', 'Firework Fudge'], ['S8|9', 'Golden Moon Pie']]
 };
-var BAKE_INGS = { patisserie: ['sugar', 'cream', 'berries'], cafe: ['flour', 'butter', 'cream'], carousel: ['flour', 'sugar', 'vanilla'], boutique: ['butter', 'vanilla', 'berries'] };
+var BAKE_INGS = { patisserie: ['sugar', 'cream', 'berries'], cafe: ['flour', 'butter', 'cream'], carousel: ['flour', 'sugar', 'vanilla'], boutique: ['butter', 'vanilla', 'berries'], beach: ['sugar', 'berries', 'cream'], cablecar: ['flour', 'sugar', 'butter'], parade: ['butter', 'vanilla', 'cream'], samba: ['flour', 'vanilla', 'berries'] };
 function bakeState(id) { var b = S.bake[id]; if (!b) b = S.bake[id] = { star: 0, have: {} }; return b; }
 function bakeNeed(id) { var b = bakeState(id), k = Math.min(b.star, 2), base = [10, 8, 6]; return BAKE_INGS[id].map(function (g, i) { return [g, base[i] * (k + 1)]; }); }
 function bakeReady(id) { var b = bakeState(id); return b.star < 3 && bakeNeed(id).every(function (n) { return (b.have[n[0]] || 0) >= n[1]; }); }
@@ -4017,7 +4074,7 @@ function settings() {
     '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign in / Account') + '</button><button class="b3 plum" id="bFb2">💬 Send feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">📥 Feedback inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 gold" id="bTour" style="padding:6px 12px">Show me around</button><button class="b3 plum" id="bHow" style="padding:6px 12px">How to play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester boost: +2,000 tickets, coins and power-ups</button>' +
     '<div class="resetbox"><small>Only if you want to wipe everything and begin again:</small><button class="b3 cream" id="bReset">Start over (clear my progress)</button></div>', 'small', function (v) {
-      $('#bBoostT', v).onclick = function () { S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; give('alert', 5); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
+      $('#bBoostT', v).onclick = function () { S.travel = 1; S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; give('alert', 5); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
       v.querySelectorAll('[data-lng]').forEach(function (b) { b.onclick = function () { if ((st.lang || 'auto') === b.dataset.lng) return; st.lang = b.dataset.lng; save(); SFX.tap(); setTimeout(function () { location.reload(); }, 150); }; });
@@ -4119,7 +4176,7 @@ function startRound(arm, room) {
   setTimeout(function () { if (R && R.els[R.lucky]) { R.els[R.lucky].classList.add('is-lucky'); var fc = R.els[R.lucky].querySelector('.cell.free'); if (fc) fc.textContent = '×2'; R.els[R.lucky].insertAdjacentHTML('beforeend', '<span class="lucktag outl">Lucky card ×2</span>'); setTimeout(function () { var lt = R && R.els[R.lucky] && R.els[R.lucky].querySelector('.lucktag'); if (lt) lt.remove(); }, 4500); SFX.boost(); } }, 1600);
 }
 function renderPlay() {
-  show('<div class="screen" id="play"' + (R.mode === 'multi' && R.roomObj ? ' style="background-image:linear-gradient(180deg, rgba(255,240,246,.18), rgba(255,240,246,.32)), url(' + R.roomObj.img + ')"' : '') + '>' + roomLife(R.roomObj) +
+  show('<div class="screen" id="play"' + (R.roomObj ? ' style="background-image:linear-gradient(180deg, rgba(255,240,246,.18), rgba(255,240,246,.32)), url(' + R.roomObj.img + ')"' : '') + '>' + roomLife(R.roomObj) +
     '<div class="lcol"><div class="lbtns"><button class="mini-btn" id="bQuit" aria-label="Leave round">' + LINE_ICON.back + '</button></div>' +
       '<div class="bleft" id="sLeftW"><small>BINGOS</small><b id="sLeft">0</b><small id="sPlayers">0 players</small></div>' +
       '</div>' +
@@ -4553,7 +4610,7 @@ var DAUBERS = [
 ];
 function hasStyle(kind, it) { return !it.ok && !it.drop && !it.gems ? true : !!(S.unlocked[kind + ':' + it.id] || (it.ok && it.ok())); }
 /* each themed room stamps its own daub, unless the player picked a special dauber in the Style Studio */
-var ROOM_DAUB = { garden: 'moonflower', carnival: 'candy', coast: 'shell', market: 'lantern', patisserie: 'macaron', cafe: 'cup', carousel: 'horse', boutique: 'bow', meadow: 'butterfly' };
+var ROOM_DAUB = { garden: 'moonflower', carnival: 'candy', coast: 'shell', market: 'lantern', patisserie: 'macaron', cafe: 'cup', carousel: 'horse', boutique: 'bow', meadow: 'butterfly', beach: 'rio-ball', cablecar: 'rio-maraca', parade: 'rio-mask', samba: 'rio-drum' };
 // daubs still being drawn in Firefly: the game checks once whether the picture exists and uses the drawn dauber until it does
 var DAUB_OK = {};
 function daubReady(d) {
@@ -5974,7 +6031,7 @@ function goalUi() {
 }
 
 /* ---------- Garden Path: the featured rooms' bonus game ---------- */
-function hotRoom() { var f = ROOMS.filter(function (r) { return r.mode !== 'multi'; }), d = Math.floor(Date.now() / 86400000); return f[d % f.length].id; }
+function hotRoom() { var f = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city; }), d = Math.floor(Date.now() / 86400000); return f[d % f.length].id; }
 function bonusPct(room) { return Math.min(100, Math.round((S.bonus && S.bonus[room]) || 0)); }
 function gardenPath(bet, room) {
   S.bonus[room] = 0; save();
@@ -6398,6 +6455,10 @@ function openFreeGift(tab) {
 
 /* ---------- room stories: the first visit to a room opens with a little comic starring Cordie ---------- */
 var STORIES = {
+  beach: ['Olá! Welcome to Copacabana, the sunniest beach in Rio.', 'Every bingo brings more umbrellas to the sand. Grow 3 blossoms and the beach party starts!'],
+  cablecar: ['All aboard the Sugarloaf Cable Car!', 'Finish the bonus shape for a big extra prize, and watch the city go by.'],
+  parade: ['The Carnival Parade is rolling. Drums, feathers, confetti!', 'Cover the whole card to crown the float. Grow 3 blossoms and the parade never ends!'],
+  samba: ['Spotlights on at the Samba Stage!', 'Open the gift squares for prizes, and dance your way to 3 blossoms!'],
   patisserie: ['Bonjour! Welcome to Rose Patisserie, the sweetest corner of Paris.', 'Grow 3 blossoms here and Paris shines a little brighter!'],
   cafe: ['Café du Parc! The best hot chocolate in all of Paris.', 'Every bingo fills the café with friends. Grow 3 blossoms to light up the park!'],
   carousel: ['The Grand Carousel is spinning just for you!', 'Each bingo adds a painted horse and twinkle lights. Grow 3 blossoms and the music plays!'],
@@ -7010,7 +7071,7 @@ function applyTheme() {
 function boot(data) {
   load();
   if (data && data.save) S = merge(data.save);
-  applyTheme(); applyLang();
+  applyTheme(); applyLang(); setCity(cityId());
   if (S.alerts > 0) { S.alertMin = (S.alertMin || 0) + S.alerts * ALERT_UNIT; S.alerts = 0; save(); }
   document.documentElement.classList.toggle('lite', !!S.settings.lite); document.documentElement.classList.toggle('calm', !!S.settings.calm); document.documentElement.classList.toggle('clearview', !!S.settings.clear);
   save(true);
