@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Bingo Bloom</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -3143,6 +3144,15 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .rpinfo.two .rgrow { display: grid; justify-items: center; gap: 2px; padding: 0 4px; } .rpinfo.two .rgrow b { display: flex; align-items: center; gap: 2px; font-size: 12px; color: #fff; } .rpinfo.two .rgrow b svg { width: 18px; height: 18px; } .rpinfo.two .rgrow .b3 { padding: 2px 10px; font-size: 14px; } .rpinfo.two .rgrow small { display: none; }
 @media (max-height: 420px) { .rptb .tcards { height: 22px; } .rpth b { font-size: 14px; } .rptb .twin span { font-size: 11px; } .rpfoot { flex-wrap: nowrap; gap: 6px; } .betsl { transform: scale(.9); transform-origin: right center; } .rpinfo { min-height: 0; } .rpbk .pbar { height: 6px; } .rpinfo.two .bake .ings { display: none; } .rprib { font-size: 18px; } .rpjack b { font-size: 14px; } .rpjack svg { width: 16px; height: 16px; } .panel.roomp { width: min(98vw, 820px); } .rp .rnav { width: 26px; height: 44px; font-size: 22px; } }
 .rptb .twin b, .panel .rptb .twin b { color: #3d1a4f; }
+/* ===== Bloom Alert, the Frenzy way: a soft ghost of the dauber breathes behind the number, no glow, no flashing ===== */
+#play .cell.hint { background: #fff !important; box-shadow: 0 .9cqw 0 rgba(20,5,30,.55) !important; animation: none !important; }
+#play .cell.hint > span:not(.ghost) { position: relative; z-index: 1; }
+#play .cell > span.ghost, .cell .ghost { position: absolute !important; inset: 6% !important; width: auto !important; height: auto !important; z-index: 0; pointer-events: none; opacity: .4; animation: ghostPulse 1.4s ease-in-out infinite; }
+.cell .ghost .rdaub { position: absolute; inset: 0; opacity: 1; animation: none; filter: none; }
+.cell .ghost svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+@keyframes ghostPulse { 0%, 100% { opacity: .2; transform: scale(.94); } 50% { opacity: .62; transform: scale(1); } }
+.cell.d .ghost { display: none; }
+.calm .cell .ghost, .lite .cell .ghost { animation: none; opacity: .4; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4649,7 +4659,7 @@ function hintUi() {
   if (!R || !R.alert) return;
   R.els.forEach(function (e, ci) {
     var k = R.cards[ci]; if (k.won) return;
-    k.cells.forEach(function (c, i) { if (!c.d && R.called[c.n]) { var el = e.querySelector('[data-i="' + i + '"]'); if (el) el.classList.add('hint'); } });
+    k.cells.forEach(function (c, i) { if (!c.d && R.called[c.n]) { var el = e.querySelector('[data-i="' + i + '"]'); if (el && !el.classList.contains('hint')) { el.classList.add('hint'); el.insertAdjacentHTML('afterbegin', '<span class="ghost">' + roomDaub() + '</span>'); } } });
   });
 }
 function autoAlertOn() {
@@ -4712,7 +4722,7 @@ function callNext() {
   if (st) { var prev = R.recent[1]; if (prev) { var t = document.createElement('span'); t.innerHTML = ball3d(prev, 'new'); st.insertBefore(t.firstChild, st.children[1] || null); } while (st.children.length > 46) st.lastChild.remove(); $('#nCalled').textContent = R.idx + '/' + R.seq.length; var bt = $('#nBallsTop'); if (bt) bt.textContent = R.idx + '/' + R.seq.length; }
   $('#sBalls').textContent = R.idx + '/' + R.seq.length;
   SFX.ball(); say(letter(n) + ' ' + n);
-  setTimeout(hintUi, 2200); bfTick();
+  setTimeout(hintUi, Math.max(300, speedMs() - 1500)); bfTick(); // the Bloom Alert ghost stamp shows 1.5 s before the next ball, so you daub naturally first
   if (S.settings.assist) setTimeout(function () { autoDaub(n); }, 450);
   rivals();
   if (!R.active) return;
@@ -4772,7 +4782,7 @@ function onCardTap(e) {
 }
 function daub(ci, i, cell, fromBoost) {
   var c = R.cards[ci].cells[i]; c.d = true; qEv('daub', 1); if (c.n % 2) qEv('odd', 1);
-  cell.classList.add('d'); cell.classList.remove('hint');
+  cell.classList.add('d'); cell.classList.remove('hint'); var gh = cell.querySelector('.ghost'); if (gh) gh.remove();
   var tr = cell.querySelector('.tr'); if (tr) tr.remove();
   cell.insertAdjacentHTML('afterbegin', roomDaub() + '<i class="burst"></i>');
   setTimeout(function () { var bu = cell.querySelector('.burst'); if (bu) bu.remove(); }, 700);
