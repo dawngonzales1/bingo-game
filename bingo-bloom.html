@@ -175,6 +175,71 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .pdchip.gold { background: linear-gradient(180deg, #ffe58f, #e9a81c); color: #3d1a4f; box-shadow: 0 0 0 1.5px #fff, 0 0 12px rgba(255,214,92,.9); }
 .pdrail [data-games] { padding: 5px 16px; font-size: 13px; }
 @media (max-height: 360px) { .pdrail { gap: 6px; padding-top: 6px; } .pdhint { display: none; } }
+/* Golden Scratch: nine foil squares on a plum card with a gold frame */
+.panel.scp, .panel.mmp { width: auto; max-width: 100%; padding: 10px 14px; background: radial-gradient(ellipse at 70% 20%, rgba(255,214,92,.22), transparent 50%), radial-gradient(ellipse at 20% 90%, rgba(255,140,200,.18), transparent 50%), linear-gradient(180deg, #2b1d5e, #120f33) !important; box-shadow: 0 0 0 3px #e9a81c, 0 0 0 5px var(--ol), 0 10px 30px rgba(0,0,0,.55); }
+.scz, .mmz { display: flex; gap: 16px; align-items: center; justify-content: center; }
+.scz .scard { position: relative; flex: none; border-radius: 22px !important; border: 0 !important; padding: 0; background: linear-gradient(160deg, #2b1a5e, #140d35) !important; box-shadow: 0 0 0 4px #f6c64a, 0 0 0 7px #2a1640, 0 0 36px rgba(255,214,92,.45), 0 12px 28px rgba(0,0,0,.55) !important; overflow: visible !important; }
+.scz .scard::after { content: ''; position: absolute; inset: 5px; border-radius: 17px; border: 2px solid rgba(255,229,143,.45); pointer-events: none; }
+.scstar { position: absolute; width: 24px; height: 24px; z-index: 2; background: radial-gradient(circle at 40% 30%, #fff8d6, #ffd45c 50%, #b8780a); clip-path: polygon(50% 0, 62% 35%, 100% 38%, 70% 60%, 80% 100%, 50% 78%, 20% 100%, 30% 60%, 0 38%, 38% 35%); filter: drop-shadow(0 0 6px rgba(255,214,92,.9)); animation: pulse 2.2s ease-in-out infinite; }
+.scstar.tl { left: -9px; top: -9px; } .scstar.tr { right: -9px; top: -9px; } .scstar.bl { left: -9px; bottom: -9px; } .scstar.br { right: -9px; bottom: -9px; }
+.calm .scstar, .lite .scstar { animation: none; }
+.scz .sgrid { position: absolute; inset: 12px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 9px; padding: 0; }
+.scz .scell { position: relative; overflow: hidden; border-radius: 15px; border: 0; background: radial-gradient(circle at 50% 35%, #fffaf0, #f1dfbb); box-shadow: inset 0 0 0 2px rgba(246,198,74,.7), 0 3px 6px rgba(0,0,0,.35); display: grid; place-items: center; touch-action: none; }
+.scz .scell img { width: 70%; height: 70%; object-fit: contain; filter: drop-shadow(0 3px 3px rgba(0,0,0,.35)); transform: scale(.7); opacity: .6; transition: transform .35s cubic-bezier(.2,.9,.3,1.4), opacity .3s; }
+.scz .scell.open img { transform: scale(1); opacity: 1; }
+.sfoil { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border-radius: 15px; touch-action: none; }
+.scell.open .sfoil { opacity: 0; transition: opacity .3s; pointer-events: none; }
+.scell.warm { box-shadow: inset 0 0 0 2px #ffd45c, 0 0 16px 4px rgba(255,214,92,.75); animation: pulse 1s ease-in-out infinite; }
+.scz .scell.hit { background: radial-gradient(circle, #fff6c9, #ffd447); box-shadow: 0 0 0 3px #fff, 0 0 22px 6px rgba(255,214,92,.9); animation: hudBob 1s ease-in-out infinite; }
+.scz .scell.hit img { transform: scale(1.15); }
+.scrail { display: grid; gap: 10px; justify-items: center; align-content: center; width: clamp(200px, 36vw, 300px); }
+.scp .scrib { position: relative; top: 0; left: 0; transform: none; background: linear-gradient(180deg, #ffe58f, #d9950f) !important; filter: drop-shadow(0 3px 0 #3a2a05) drop-shadow(0 0 14px rgba(255,214,92,.6)); }
+.scp .scrib span { color: #fff !important; font-size: clamp(16px, 5.5vh, 22px); }
+.schint { margin: -4px 0 0; text-align: center; font-size: 12.5px; font-weight: 600; color: #ffe9b0; }
+.schint b { color: #fff; }
+.scprizes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; width: 100%; }
+.scpz { position: relative; display: grid; justify-items: center; gap: 1px; padding: 6px 3px 4px; border-radius: 13px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); box-shadow: 0 0 0 1.5px rgba(255,214,92,.45); }
+.scpz img { width: clamp(24px, 7vh, 32px); height: clamp(24px, 7vh, 32px); object-fit: contain; filter: drop-shadow(0 3px 3px rgba(0,0,0,.4)); }
+.scpz b { font: 800 10.5px/1.1 var(--ui); color: #fff; }
+.scpz.jack { background: linear-gradient(180deg, #ffe58f, #e9a81c); box-shadow: 0 0 0 2px #fff, 0 0 16px rgba(255,214,92,.9); } .scpz.jack b { color: #3d1a4f !important; font: 800 10.5px/1.1 var(--ui) !important; text-shadow: none !important; }
+.scpz.note { align-content: center; } .scpz.note b { color: #ffd6ec; font-weight: 700; font-size: 10px; }
+.sccount { font: 700 13px var(--ui); color: #ffd6ec; display: flex; align-items: center; gap: 8px; }
+.sccount > b { display: grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px; border-radius: 999px; background: linear-gradient(180deg, #ffe58f, #f0b31c); color: #3d1a4f; font-size: 15px; box-shadow: 0 0 0 2px #3d1a4f; }
+.scrail .res-btns { justify-content: center; }
+@media (max-height: 360px) { .schint { display: none; } .scrail { gap: 6px; } }
+
+/* Macaron Match: a plum tray with glowing pockets, a counting score, stars and a moves pill */
+.panel.mmp .mmboard { border: 0 !important; border-radius: 18px !important; box-shadow: 0 0 0 4px #f6c64a, 0 0 0 7px #2a1640, 0 0 36px rgba(255,214,92,.4), 0 12px 28px rgba(0,0,0,.55) !important; background: radial-gradient(circle at 50% 30%, rgba(255,214,240,.22), transparent 70%), linear-gradient(180deg, #3a1a6e, #24124a) !important; transition: box-shadow .25s; }
+.panel.mmp .mmboard::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.1) 0 36%, rgba(255,255,255,.03) 37% 42%, transparent 43%) 0 0 / var(--s) var(--s); }
+.panel.mmp .mmboard.flash { box-shadow: 0 0 0 4px #fff3b8, 0 0 0 7px #2a1640, 0 0 60px 10px rgba(255,214,92,.9), 0 12px 28px rgba(0,0,0,.55) !important; }
+.mac.land::before { animation: macLand .45s cubic-bezier(.2,.9,.3,1.4); }
+@keyframes macLand { 0% { transform: scale(1); } 35% { transform: scale(1.12, .84); } 65% { transform: scale(.94, 1.08); } 100% { transform: scale(1); } }
+.mac.wob::before { animation: macWob 1s ease-in-out; }
+@keyframes macWob { 25% { transform: rotate(-7deg) scale(1.05); } 75% { transform: rotate(6deg) scale(1.05); } }
+.mac.pop::before { transform: scale(1.9) rotate(30deg); filter: brightness(1.6) drop-shadow(0 0 12px #ffd45c) !important; transition: transform .32s, filter .32s; }
+.mmcombo { position: absolute; left: 10px; top: 10px; z-index: 6; padding: 4px 14px; border-radius: 999px; background: linear-gradient(180deg, #b996ff, #6a32d0); box-shadow: 0 0 0 2px #fff, 0 0 16px #b996ff; font: 800 14px var(--ui); color: #fff; transform: rotate(-8deg); animation: popIn .35s cubic-bezier(.2,.9,.3,1.5) both; pointer-events: none; }
+.mmz .mmpts { z-index: 7; font: 900 26px var(--ui); color: #fff3b8; text-shadow: 0 2px 0 #b8780a, 0 4px 0 #3d1a4f, 0 0 16px rgba(255,214,92,.9); }
+.mmz .mmpts.big { font-size: 34px; }
+.mmrail { display: grid; gap: 10px; justify-items: center; align-content: center; width: clamp(180px, 32vw, 280px); }
+.mmp .mmrib { position: relative; top: 0; left: 0; transform: none; background: linear-gradient(180deg, #ff8fc0, #b8307a) !important; filter: drop-shadow(0 3px 0 #3a0a2a) drop-shadow(0 0 12px rgba(255,120,190,.5)); }
+.mmp .mmrib span { color: #fff !important; font-size: clamp(16px, 5.5vh, 22px); }
+.mmscore { display: grid; justify-items: center; padding: 4px 22px 8px; border-radius: 16px; background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); box-shadow: 0 0 0 2px rgba(255,214,92,.75), 0 6px 14px rgba(0,0,0,.4); }
+.mmscore small { font: 800 10px var(--ui); letter-spacing: .14em; color: #ffd6ec; }
+.mmscore b { font-size: clamp(26px, 9vh, 38px); line-height: 1.05; color: #fff; text-shadow: 0 3px 0 #3d1a4f, 0 0 14px rgba(255,214,92,.6); }
+.mmscore b.bump { animation: bump .35s; }
+.mmstars { display: flex; gap: 6px; margin-top: 2px; }
+.mmstars i { width: 22px; height: 22px; background: #4f3f7a; clip-path: polygon(50% 0, 62% 35%, 100% 38%, 70% 60%, 80% 100%, 50% 78%, 20% 100%, 30% 60%, 0 38%, 38% 35%); transition: transform .3s; }
+.mmstars i.on { background: radial-gradient(circle at 40% 30%, #fff8d6, #ffd45c 55%, #e9a81c); filter: drop-shadow(0 0 6px #ffd45c); animation: bump .5s; }
+.mmbar { position: relative; width: 100%; min-width: 150px; height: 12px; margin: 6px 0 12px; border-radius: 6px; background: rgba(0,0,0,.4); box-shadow: inset 0 0 0 2px rgba(255,214,92,.5); overflow: visible; }
+.mmbar i { display: block; height: 100%; width: 0; border-radius: 6px; background: linear-gradient(90deg, #ff8fc0, #ffd45c, #fff3b8); box-shadow: 0 0 10px rgba(255,214,92,.9); transition: width .5s ease; }
+.mmbar em { position: absolute; top: 100%; margin-top: 2px; transform: translateX(-50%); font: 700 8px var(--ui); color: #ffe58f; white-space: nowrap; } .mmbar em:last-child { transform: translateX(-90%); } .mmbar em:first-of-type { transform: translateX(-30%); }
+.mmmoves { display: flex; align-items: center; gap: 8px; padding: 4px 14px 4px 6px; border-radius: 999px; background: linear-gradient(180deg, #ffe58f, #f0b31c); color: #3d1a4f; box-shadow: 0 0 0 2px #3d1a4f, 0 4px 0 2px #3d1a4f; }
+.mmmoves i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #fff; font-style: normal; font-size: 15px; }
+.mmmoves b { font-size: 24px; line-height: 1; } .mmmoves small { font-size: 11px; font-weight: 700; }
+.mmmoves.low { background: linear-gradient(180deg, #ffb3b3, #e5383b); color: #fff; animation: pulse 1s ease-in-out infinite; } .mmmoves.low i { color: #e5383b; }
+.mmtip { margin: 0; text-align: center; font: 600 11px/1.3 var(--ui); color: #e9d6ff; }
+.mmp #mmMsg p { margin: 0; text-align: center; font-weight: 700; color: #ffe58f; }
+@media (max-height: 360px) { .mmtip { display: none; } .mmrail { gap: 6px; } }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
@@ -5304,41 +5369,74 @@ function scratchCard() {
   if (win) counts[pick] = 3;
   while (grid.length < 9) { var s = rand(SCR.length); if (s === pick || (counts[s] || 0) >= 2) continue; counts[s] = (counts[s] || 0) + 1; grid.push(s); }
   grid = shuffle(grid);
-  panel('<div class="dropwrap sgame"><div class="scard"><div class="sgrid">' + grid.map(function (s, i) { return '<div class="scell" data-s="' + s + '"><img src="art/' + PRIZE_PIC[SCR[s].p.t] + '.webp" alt=""></div>'; }).join('') + '</div><canvas id="scCv" aria-label="Scratch with your finger"></canvas></div>' +
-    '<div class="dropside"><h3>Golden Scratch Card</h3><p class="dwst on">Scratch the gold! Find <b>3 matching pictures</b> to win that prize.</p>' +
-    '<div class="dwprizes">' + SCR.map(function (x) { return '<div class="dwp' + (x.p.t === 'gcard' ? ' jack' : '') + '"><img src="art/' + PRIZE_PIC[x.p.t] + '.webp" alt=""><b>' + prizeText(x.p) + '</b></div>'; }).join('') + '<div class="dwp more"><b>About half of all cards win</b></div></div>' +
-    '<div class="res-btns"><button class="b3 gold" id="scAll">Reveal all</button><button class="b3 cream" data-games>‹ Side games</button></div><p id="scMsg" class="note">' + S.scratch + ' more card' + (S.scratch === 1 ? '' : 's') + ' after this one.</p></div></div>', 'sgp', function (v) {
+  // Golden Scratch (Dawn, Oct 15): nine foil squares you scratch one at a time, a glow that builds as a match comes together, and a win that lights the three
+  panel('<div class="scz"><div class="scard" id="scCard"><i class="scstar tl"></i><i class="scstar tr"></i><i class="scstar bl"></i><i class="scstar br"></i><div class="sgrid">' + grid.map(function (s, i) {
+      return '<div class="scell" data-s="' + s + '" data-i="' + i + '"><img src="art/' + PRIZE_PIC[SCR[s].p.t] + '.webp" alt=""><canvas class="sfoil"></canvas></div>';
+    }).join('') + '</div></div>' +
+    '<div class="scrail"><div class="sribbon scrib"><span class="outl">Golden Scratch</span></div><p class="schint" id="scHint">Scratch the gold. Find 3 matching pictures to win that prize.</p>' +
+    '<div class="scprizes">' + SCR.map(function (x) { return '<div class="scpz' + (x.p.t === 'gcard' ? ' jack' : '') + '"><img src="art/' + PRIZE_PIC[x.p.t] + '.webp" alt=""><b>' + (x.p.t === 'gcard' ? 'GOLD card' : x.p.t === 'alert' ? '1 hr Alert' : prizeText(x.p)) + '</b></div>'; }).join('') + '<div class="scpz note"><b>about half<br>of cards win</b></div></div>' +
+    '<div class="sccount" id="scMsg"><b>' + S.scratch + '</b> more card' + (S.scratch === 1 ? '' : 's') + ' after this one</div>' +
+    '<div class="res-btns"><button class="b3 gold shine" id="scAll">Reveal all</button><button class="b3 cream" data-games>‹ Side games</button></div></div></div>', 'scp', function (v) {
       backToGames(v);
-      var cv = $('#scCv', v), box = $('.scard', v), ctx = cv.getContext('2d'), d = window.devicePixelRatio || 1;
-      var sz = Math.max(200, Math.min(300, innerHeight - 90)); box.style.width = box.style.height = sz + 'px';
-      cv.width = cv.height = sz * d; ctx.scale(d, d);
-      // a shiny gold foil coating with sparkles and a stamped label
-      var g = ctx.createLinearGradient(0, 0, sz, sz); g.addColorStop(0, '#fff3b8'); g.addColorStop(.25, '#f6c64a'); g.addColorStop(.5, '#fff6c9'); g.addColorStop(.75, '#d99a1a'); g.addColorStop(1, '#ffe58f');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, sz, sz);
-      for (var q = 0; q < 70; q++) { var qx = (q * 73) % sz, qy = (q * 131) % sz; ctx.fillStyle = 'rgba(255,255,255,' + (.15 + (q % 5) * .08) + ')'; ctx.fillRect(qx, qy, 2 + q % 3, 2 + q % 3); }
-      ctx.strokeStyle = 'rgba(140,90,10,.35)'; ctx.lineWidth = 2; for (var q2 = -sz; q2 < sz; q2 += 18) { ctx.beginPath(); ctx.moveTo(q2, 0); ctx.lineTo(q2 + sz, sz); ctx.stroke(); }
-      ctx.fillStyle = 'rgba(20,32,63,.9)'; ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(sz * .14, sz * .42, sz * .72, sz * .16, sz * .08); else ctx.rect(sz * .14, sz * .42, sz * .72, sz * .16); ctx.fill();
-      ctx.fillStyle = '#ffe58f'; ctx.font = '800 ' + Math.round(sz * .075) + 'px Fredoka, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('✦ SCRATCH HERE ✦', sz / 2, sz / 2 + sz * .028);
-      ctx.globalCompositeOperation = 'destination-out';
-      var down = false, moves = 0;
-      function scratchAt(e) { var rc = cv.getBoundingClientRect(); ctx.beginPath(); ctx.arc(e.clientX - rc.left, e.clientY - rc.top, sz * .085, 0, 7); ctx.fill(); if (++moves % 8 === 0) check(); if (moves % 3 === 0) tone(300 + rand(200), 0, .03, 'triangle', .015); }
-      function check() {
-        var data = ctx.getImageData(0, 0, cv.width, cv.height).data, clear = 0, n = 0;
-        for (var y = 0; y < cv.height; y += 12 * d) for (var x = 0; x < cv.width; x += 12 * d) { n++; if (data[(Math.floor(y) * cv.width + Math.floor(x)) * 4 + 3] < 40) clear++; }
-        if (clear / n > .6) reveal();
+      var card = $('#scCard', v), cells = [].slice.call(v.querySelectorAll('.scell')), d = Math.min(2, window.devicePixelRatio || 1);
+      var sz = Math.max(200, Math.min(340, innerHeight - 50)); card.style.width = card.style.height = sz + 'px';
+      var lite = fxLite() || reduceMotion, revealed = 0, found = {};
+      // each square gets its own gold foil
+      cells.forEach(function (c, i) {
+        var cv = c.querySelector('canvas'), w = c.clientWidth || Math.floor((sz - 42) / 3), h = c.clientHeight || w, x2 = cv.getContext('2d');
+        cv.width = w * d; cv.height = h * d; x2.scale(d, d); c._w = w; c._h = h; c._ctx = x2; c._cleared = 0;
+        var g = x2.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#fff3b8'); g.addColorStop(.22, '#f6c64a'); g.addColorStop(.42, '#fff8d6'); g.addColorStop(.6, '#d99a1a'); g.addColorStop(.8, '#ffe58f'); g.addColorStop(1, '#c98a12');
+        x2.fillStyle = g; x2.fillRect(0, 0, w, h);
+        x2.strokeStyle = 'rgba(255,255,255,.28)'; x2.lineWidth = 1.5; for (var q = -h; q < w; q += 9) { x2.beginPath(); x2.moveTo(q, 0); x2.lineTo(q + h, h); x2.stroke(); }
+        x2.strokeStyle = 'rgba(140,90,10,.45)'; x2.lineWidth = 2; x2.strokeRect(1, 1, w - 2, h - 2);
+        x2.fillStyle = 'rgba(20,12,50,.75)'; x2.font = '800 ' + Math.round(h * .32) + 'px Fredoka, system-ui, sans-serif'; x2.textAlign = 'center'; x2.textBaseline = 'middle'; x2.fillText('✦', w / 2, h / 2 + 1);
+        x2.globalCompositeOperation = 'destination-out';
+      });
+      var down = false, moves = 0, last = null;
+      function cellAt(x, y) { for (var i = 0; i < cells.length; i++) { var r = cells[i].getBoundingClientRect(); if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return [cells[i], x - r.left, y - r.top]; } return null; }
+      function scratchAt(e) {
+        var hit = cellAt(e.clientX, e.clientY); if (!hit) return;
+        var c = hit[0]; if (c.classList.contains('open')) return;
+        var x2 = c._ctx, r = c._w * .2; x2.beginPath(); x2.arc(hit[1], hit[2], r, 0, 7); x2.fill();
+        if (last && last[0] === c) { x2.lineWidth = r * 2; x2.lineCap = 'round'; x2.beginPath(); x2.moveTo(last[1], last[2]); x2.lineTo(hit[1], hit[2]); x2.stroke(); }
+        last = hit; moves++;
+        if (!lite && moves % 2 === 0) sparkle(e.clientX, e.clientY, 3);
+        if (moves % 3 === 0) tone(300 + rand(200), 0, .03, 'triangle', .015);
+        if (moves % 5 === 0) check(c);
+      }
+      function check(c) {
+        var cv = c.querySelector('canvas'), x2 = c._ctx, data = x2.getImageData(0, 0, cv.width, cv.height).data, clear = 0, n = 0;
+        for (var y = 0; y < cv.height; y += 8 * d) for (var x = 0; x < cv.width; x += 8 * d) { n++; if (data[(Math.floor(y) * cv.width + Math.floor(x)) * 4 + 3] < 40) clear++; }
+        if (clear / n > .55) open(c);
+      }
+      function open(c, quick) {
+        if (c.classList.contains('open')) return; c.classList.add('open'); revealed++;
+        var s = +c.dataset.s; found[s] = (found[s] || 0) + 1;
+        if (!quick) { SFX.tap(); var r = c.getBoundingClientRect(); if (!lite) sparkle(r.left + r.width / 2, r.top + r.height / 2, 14); }
+        // anticipation: when two of a kind are showing, both start to glow
+        if (found[s] === 2) { cells.forEach(function (k) { if (+k.dataset.s === s && k.classList.contains('open')) k.classList.add('warm'); }); if (!quick) { SFX.boost(); $('#scHint', v).innerHTML = '<b>Two matching!</b> One more for ' + (SCR[s].p.t === 'gcard' ? 'a GOLD card' : prizeText(SCR[s].p)) + '…'; } }
+        if (revealed >= 9) setTimeout(reveal, quick ? 0 : 250);
       }
       function reveal() {
-        if (done) return; done = true; cv.style.transition = 'opacity .4s'; cv.style.opacity = 0; setTimeout(function () { cv.remove(); }, 450);
+        if (done) return; done = true;
+        cells.forEach(function (c) { if (!c.classList.contains('open')) { c.classList.add('open'); } c.classList.remove('warm'); });
         var msg;
-        if (win) { v.querySelectorAll('.scell[data-s="' + pick + '"]').forEach(function (c) { c.classList.add('hit'); }); var wtxt = grant(SCR[pick].p).replace(/^\+/, ''); msg = 'You won ' + wtxt + '!'; setTimeout(function () { bigWin([PRIZE_PIC[SCR[pick].p.t]], 'You won!', [wtxt], 'cheer', null); }, 700); }
-        else { msg = 'No match this time.'; setTimeout(function () { bigWin([], 'So close!', ['No match this time.', S.scratch > 0 ? 'Try your next card!' : 'Win more scratch cards from the Daily Wheel and the Kitchen.'], 'point', null); }, 600); }
-        $('#scMsg', v).innerHTML = '<b>' + msg + '</b> ' + (S.scratch > 0 ? '<button class="b3 gold" id="scNext" style="padding:4px 12px">Next card (' + S.scratch + ')</button>' : 'No cards left.');
+        if (win) {
+          var wc = cells.filter(function (c) { return +c.dataset.s === pick; }); wc.forEach(function (c) { c.classList.add('hit'); });
+          var p = SCR[pick].p, wtxt = grant(p).replace(/^\+/, ''), gold = p.t === 'gcard' || p.n >= 100; msg = 'You won ' + wtxt + '!';
+          SFX.set(); wc.forEach(function (c, i) { setTimeout(function () { var r = c.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 30); }, i * 120); });
+          var cr = card.getBoundingClientRect(); setTimeout(function () { coinBurst(cr.left + cr.width / 2, cr.top + cr.height * .6, gold ? 40 : 18, p.t === 'tickets' ? 'ticket' : p.t === 'petals' ? 'petal' : 'coin'); if (gold) prizeRain(30, 'coin'); }, 300);
+          setTimeout(function () { bigWin([PRIZE_PIC[p.t]], gold ? 'Jackpot!' : 'You won!', [wtxt], 'cheer', null); }, gold ? 1100 : 800);
+        } else { msg = 'No match this time.'; SFX.no(); setTimeout(function () { bigWin([], 'So close!', ['No match this time.', S.scratch > 0 ? 'Try your next card!' : 'Win more scratch cards from the Daily Wheel and the Kitchen.'], 'point', null); }, 600); }
+        $('#scHint', v).innerHTML = '<b>' + msg + '</b>';
+        $('#scMsg', v).innerHTML = S.scratch > 0 ? '<button class="b3 gold shine" id="scNext">Next card (' + S.scratch + ')</button>' : '<b>0</b> cards left. Win more from the Daily Wheel and the Kitchen.';
         var nx = $('#scNext', v); if (nx) nx.onclick = scratchCard;
+        $('#scAll', v).disabled = true;
       }
-      cv.addEventListener('pointerdown', function (e) { down = true; cv.setPointerCapture(e.pointerId); scratchAt(e); });
-      cv.addEventListener('pointermove', function (e) { if (down) scratchAt(e); });
-      cv.addEventListener('pointerup', function () { down = false; check(); });
-      $('#scAll', v).onclick = reveal;
+      card.addEventListener('pointerdown', function (e) { down = true; last = null; card.setPointerCapture(e.pointerId); scratchAt(e); });
+      card.addEventListener('pointermove', function (e) { if (down) scratchAt(e); });
+      card.addEventListener('pointerup', function () { down = false; last = null; if (last) check(last[0]); cells.forEach(function (c) { if (!c.classList.contains('open')) check(c); }); });
+      $('#scAll', v).onclick = function () { cells.forEach(function (c) { open(c, true); }); reveal(); };
     });
 }
 
@@ -5362,12 +5460,11 @@ function macaronMatch() {
   }
   function keep() { S.mm = G.over ? null : { score: G.score, moves: G.moves, b: G.b.map(function (row) { return row.map(function (p) { return p.c; }); }) }; save(); }
   keep();
-  panel('<div class="dropwrap"><div class="mmboard" id="mmB" style="width:' + size * MM_N + 'px;height:' + size * MM_N + 'px;--s:' + size + 'px"></div><div class="dropside"><h3>Macaron Match</h3>' +
-    '<p>Swipe a macaron, or tap two side by side, to swap them. Line up 3 or more of one color and they pop.</p>' +
-    '<p class="note"><b>Win extra moves:</b> match 4 = +1 move, match 5 = +2 moves, a chain of 3 pops in one swap = +1 move.<br>You get 3 free games a day. Leaving saves your game, so you can come back and finish it.</p>' +
-    (resumed ? '<p class="note"><b>Welcome back! Your saved game is ready.</b></p>' : '') +
-    '<div class="mmstat"><span>Moves <b id="mmMoves">20</b></span><span>Score <b id="mmScore">0</b></span></div><div class="pbar"><i id="mmBar" style="width:0"></i></div>' +
-    '<small class="note">★ 800 = 10 tickets · ★★ 1,600 = 25 tickets + 1 seed · ★★★ 2,600 = 50 tickets + 4 seeds + an album card (50% gold)</small><div id="mmMsg"></div><button class="b3 cream" data-games>‹ Side games</button></div></div>', '', function (v) {
+  panel('<div class="mmz"><div class="mmboard" id="mmB" style="width:' + size * MM_N + 'px;height:' + size * MM_N + 'px;--s:' + size + 'px"></div><div class="mmrail"><div class="sribbon mmrib"><span class="outl">Macaron Match</span></div>' +
+    '<div class="mmscore"><small>SCORE</small><b id="mmScore">0</b><div class="mmstars"><i></i><i></i><i></i></div><div class="mmbar"><i id="mmBar" style="width:0"></i><em style="left:' + Math.round(MM_STARS[0] / MM_STARS[2] * 100) + '%">★ 800</em><em style="left:' + Math.round(MM_STARS[1] / MM_STARS[2] * 100) + '%">★★ 1,600</em><em style="left:100%">★★★ 2,600</em></div></div>' +
+    '<div class="mmmoves" id="mmMv"><i>↻</i><div><b id="mmMoves">20</b><small> moves</small></div></div>' +
+    '<p class="mmtip">' + (resumed ? '<b>Welcome back!</b> Your saved game is ready. ' : '') + 'Swipe to swap · 3 in a row pops · 4 = +1 move, 5 = +2 · ★ 10 tickets · ★★ 25 + seed · ★★★ 50 + seeds + album card</p>' +
+    '<div id="mmMsg"></div><button class="b3 cream" data-games>‹ Side games</button></div></div>', 'mmp', function (v) {
       backToGames(v);
       var board = $('#mmB', v);
       function render() {
@@ -5376,12 +5473,25 @@ function macaronMatch() {
           var p = G.b[y][x]; if (!p) continue; seen[p.id] = 1;
           var el = G.el[p.id];
           if (!el) { el = document.createElement('div'); el.className = 'mac mk' + p.c; el.style.setProperty('--c', MM_COLORS[p.c]); el.dataset.id = p.id; board.appendChild(el); G.el[p.id] = el; el.style.transform = 'translate(' + x * size + 'px,' + (p.fy !== undefined ? p.fy : y) * size + 'px)'; void el.offsetWidth; }
+          if (+el.dataset.y < y || p.fy !== undefined) { (function (e) { setTimeout(function () { e.classList.remove('land'); void e.offsetWidth; e.classList.add('land'); }, 380); })(el); }
           el.style.transform = 'translate(' + x * size + 'px,' + y * size + 'px)'; el.dataset.x = x; el.dataset.y = y; el.classList.toggle('sel', !!(G.sel && G.sel[0] === x && G.sel[1] === y));
           delete p.fy;
         }
         Object.keys(G.el).forEach(function (id) { if (!seen[id]) { var e = G.el[id]; e.classList.add('pop'); delete G.el[id]; setTimeout(function () { e.remove(); }, 340); } });
-        $('#mmMoves', v).textContent = G.moves; $('#mmScore', v).textContent = G.score.toLocaleString(); $('#mmBar', v).style.width = Math.min(100, G.score / MM_STARS[2] * 100) + '%';
+        $('#mmMoves', v).textContent = G.moves; $('#mmMv', v).classList.toggle('low', G.moves <= 3 && !G.over); $('#mmBar', v).style.width = Math.min(100, G.score / MM_STARS[2] * 100) + '%';
+        v.querySelectorAll('.mmstars i').forEach(function (st, i) { st.classList.toggle('on', G.score >= MM_STARS[i]); });
+        countTo($('#mmScore', v), G.score);
       }
+      var shown = 0, cntT = null;
+      function countTo(el, n) {
+        if (!el) return; if (n === shown) { el.textContent = n.toLocaleString(); return; }
+        cancelAnimationFrame(cntT); var from = shown, t0 = performance.now(), dur = lite ? 0 : 450;
+        el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+        (function tick(now) { var k = dur ? Math.min(1, (now - t0) / dur) : 1; shown = Math.round(from + (n - from) * (1 - Math.pow(1 - k, 3))); el.textContent = shown.toLocaleString(); if (k < 1) cntT = requestAnimationFrame(tick); })(t0);
+      }
+      var lite = fxLite() || reduceMotion;
+      // the tray is never still: now and then a macaron gives a little wobble
+      (function idle() { if (!board.isConnected) return; if (!lite && !G.busy && !G.over) { var ids = Object.keys(G.el); var e = G.el[ids[rand(ids.length)]]; if (e) { e.classList.remove('wob'); void e.offsetWidth; e.classList.add('wob'); } } setTimeout(idle, 1400 + rand(1200)); })();
       function matches() {
         var m = {}, x, y, run;
         for (y = 0; y < MM_N; y++) { run = 1; for (x = 1; x <= MM_N; x++) { if (x < MM_N && G.b[y][x] && G.b[y][x - 1] && G.b[y][x].c === G.b[y][x - 1].c) run++; else { if (run >= 3) for (var k = x - run; k < x; k++) m[k + ',' + y] = 1; run = 1; } } }
@@ -5399,7 +5509,9 @@ function macaronMatch() {
           var pts = m.length * 20 * combo; G.score += pts;
           m.forEach(function (c) { var e = G.el[G.b[c[1]][c[0]].id]; if (e) e.classList.add('hit'); });
           var cx = 0, cy = 0; m.forEach(function (c) { cx += c[0]; cy += c[1]; }); cx = (cx / m.length + .5) * size; cy = (cy / m.length + .5) * size;
-          var fl = document.createElement('b'); fl.className = 'mmpts outl'; fl.textContent = '+' + pts + (combo > 1 ? ' combo ×' + combo : ''); fl.style.left = cx + 'px'; fl.style.top = cy + 'px'; board.appendChild(fl); setTimeout(function () { fl.remove(); }, 900);
+          var fl = document.createElement('b'); fl.className = 'mmpts outl' + (m.length >= 4 || combo > 1 ? ' big' : ''); fl.textContent = '+' + pts; fl.style.left = cx + 'px'; fl.style.top = cy + 'px'; board.appendChild(fl); setTimeout(function () { fl.remove(); }, 900);
+          if (combo > 1) { var cb = board.querySelector('.mmcombo'); if (cb) cb.remove(); cb = document.createElement('span'); cb.className = 'mmcombo'; cb.textContent = 'COMBO ×' + combo + '!'; board.appendChild(cb); setTimeout(function () { cb.remove(); }, 1300); board.classList.add('flash'); setTimeout(function () { board.classList.remove('flash'); }, 350); }
+          if (!lite) { var br = board.getBoundingClientRect(), sx = br.left + cx / (size * MM_N) * br.width, sy = br.top + cy / (size * MM_N) * br.height; sparkle(sx, sy, 10 + m.length * 5); if (m.length >= 4 || combo > 1) petalBurst(sx, sy, 10); }
           if (combo === 1 && m.length >= 5) bonus += 2; else if (combo === 1 && m.length === 4) bonus += 1;
           if (combo === 3) bonus += 1;
           tone(PENTA[Math.min(PENTA.length - 1, combo)], 0, .3, 'sine', .12); await wait(380);
@@ -5421,7 +5533,7 @@ function macaronMatch() {
         G.over = true; keep(); var stars = MM_STARS.filter(function (s) { return G.score >= s; }).length;
         var tix = [0, 10, 25, 50][stars], seeds = [0, 0, 1, 4][stars];
         if (tix) S.tickets += tix; if (seeds) addSeeds(seeds); addXp(5 + stars * 5); var mmCard = stars === 3 ? grant({ t: 'card', n: 1, gold: .5 }) : ''; save();
-        if (stars) { SFX.set(); sparkle(innerWidth / 3, innerHeight / 2, 90); }
+        if (stars) { SFX.set(); sparkle(innerWidth / 3, innerHeight / 2, 60 + stars * 30); coinBurst(innerWidth / 3, innerHeight / 2, 10 + stars * 10, 'ticket'); if (stars === 3) prizeRain(30, 'coin'); }
         var mmLines = [stars ? '★'.repeat(stars) + '  ' + G.score.toLocaleString() + ' points' : G.score.toLocaleString() + ' points'].concat(tix ? ['+' + tix + ' tickets'] : ['Reach 800 points to win tickets']).concat(seeds ? ['+' + seeds + ' seeds'] : []).concat(mmCard ? ['Album card: ' + mmCard.replace(/^\+/, '')] : []);
         setTimeout(function () { bigWin(tix ? ['icon-ticket'].concat(seeds ? ['icon-seed'] : []).concat(mmCard ? ['icon-card-pack'] : []) : [], stars ? (stars === 3 ? 'Sweet victory!' : 'Well done!') : 'Out of moves!', mmLines, stars ? 'cheer' : 'point', null); }, 500);
         $('#mmMsg', v).innerHTML = '<p><b>' + (stars ? '★'.repeat(stars) + ' Well done!' : 'Out of moves!') + '</b> ' + (tix ? '+' + tix + ' tickets' + (seeds ? ' and +' + seeds + ' seeds' : '') + (mmCard ? '. Album card: ' + mmCard.replace(/^\+/, '') : '') : 'Reach 800 points to win tickets.') + '</p>' +
