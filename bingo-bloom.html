@@ -289,6 +289,18 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .bqin small { font: 800 clamp(12px, 3.6vh, 16px) var(--ui); color: #fff; animation: popIn .4s .55s both; }
 .bqcordie { position: absolute; left: 3%; bottom: -3%; height: min(52vh, 240px); animation: bsCordie .6s .2s cubic-bezier(.2,1.4,.4,1) both; filter: drop-shadow(0 6px 10px rgba(20,5,35,.5)); }
 .calm .bqshow, .lite .bqshow { background: none; } .calm .bqshow .bsrays, .lite .bqshow .bsrays { display: none; }
+#play { --pc: clamp(64px, 9vw, 84px) !important; }
+#play .pcur { display: grid; gap: 3px; width: 100%; margin-bottom: 4px; }
+#play .pcur .cur { display: flex; align-items: center; gap: 3px; height: 20px; padding: 0 6px 0 2px; border-radius: 999px; font: 800 10.5px var(--ui); color: #fff; background: rgba(30,8,45,.65); box-shadow: 0 0 0 1.5px #f6c64a, 0 2px 5px rgba(0,0,0,.4); white-space: nowrap; }
+#play .pcur img { width: 16px; height: 16px; flex: none; }
+#play .pcur b { overflow: hidden; text-overflow: ellipsis; }
+#play .pcur b.tick { animation: bump .4s; color: #ffe58f; }
+@media (max-height: 340px) { #play .pcur .cur:nth-child(3) { display: none; } }
+#play > .fcount { position: fixed; grid-area: 1 / 1 / -1 / -1; }
+.fcount { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 58; pointer-events: none; display: grid; justify-items: center; animation: fcIn 1s cubic-bezier(.2,.9,.3,1.3) both; }
+.fcount b { font: 900 clamp(70px, 30vh, 150px)/1 var(--ui); color: #fff3b8; text-shadow: 0 .05em 0 #b8780a, 0 .1em 0 #3d1a4f, 0 0 30px rgba(255,214,92,.9); }
+.fcount small { font: 800 clamp(12px, 4vh, 18px) var(--ui); color: #fff; margin-top: -6px; }
+@keyframes fcIn { 0% { transform: translate(-50%, -50%) scale(2); opacity: 0; } 20% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
@@ -4028,7 +4040,7 @@ function renderPlay() {
   $('#bAutoB').onclick = function () { S.settings.autoBoost = !autoPups(); save(); this.setAttribute('aria-pressed', autoPups()); SFX.tap(); toast(autoPups() ? 'Auto power-ups on: when Boost fills, your power-ups fire by themselves' : 'Auto power-ups off: tap the glowing Boost to fire them', 3000); meterUi(); };
   R.pq = []; pqFill(true);
   $('#pq').onclick = function (e) { if (e.target.closest('#bAutoB') || !R) return; if (R.meter >= R.boostAt && R.active) useBoost(); else { SFX.tap(); toast(R.pq.length ? 'Your power-ups fire when the glow line under them is full. Keep marking numbers!' : 'No power-ups loaded. Get more in the Shop between rounds.', 2800); } };
-  if (!$('#play .pcol')) $('#play').insertAdjacentHTML('beforeend', '<div class="pcol" id="pcol"><div class="pavs" id="pavs"></div>' + (R.mode === 'multi' ? '<div class="bqm" id="bqm" title="Full Bouquet: 4 bingos on one card"><small>BOUQUET</small><div class="bqf"><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""></div></div>' : '') + '</div>');
+  if (!$('#play .pcol')) $('#play').insertAdjacentHTML('beforeend', '<div class="pcol" id="pcol"><div class="pcur"><span class="cur"><img src="art/icon-ticket.webp" alt=""><b id="tickets">' + S.tickets.toLocaleString() + '</b></span><span class="cur"><img src="art/icon-coin.webp" alt=""><b id="coins">' + S.coins.toLocaleString() + '</b></span><span class="cur"><img src="art/icon-petal.webp" alt=""><b id="petals">' + S.petals.toLocaleString() + '</b></span></div><div class="pavs" id="pavs"></div>' + (R.mode === 'multi' ? '<div class="bqm" id="bqm" title="Full Bouquet: 4 bingos on one card"><small>BOUQUET</small><div class="bqf"><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""></div></div>' : '') + '</div>');
   $('#bSwap').onclick = swapCards; playersRow();
   var rv = $('#play .rvid'); if (rv) { rv.addEventListener('playing', function () { rv.classList.add('on'); }, { once: true }); rv.play && rv.play().catch(function () {}); } if (R.room && ROOM_DAUB[R.room]) daubReady(ROOM_DAUB[R.room]);
   $('#bView4').onclick = function () { S.settings.view4 = S.settings.view4 === false; save(); SFX.tap(); placeCards(); };
@@ -4161,7 +4173,7 @@ function callNext() {
   rivals();
   if (!R.active) return;
   if (R.idx >= R.seq.length && autoPups() && S.items.balls5 > 0 && R.cards.some(function (k) { return !k.won; }) && !R.autoBalls) { R.autoBalls = true; R.timer = setTimeout(function () { if (R && !R.ended) { var bb = $('#bBalls'); if (bb) bb.click(); } }, 900); return; }
-  if (R.idx >= R.seq.length) { R.lastBall = true; toast('Last ball! Mark your numbers and call your bingos.' + (S.items.balls5 ? ' Or use +5 Balls.' : '')); R.timer = setTimeout(function () { endRound('balls'); }, 7000); }
+  if (R.idx >= R.seq.length) { R.lastBall = true; toast('Last ball! Mark your numbers and call your bingos.' + (S.items.balls5 ? ' Or use +5 Balls.' : '')); R.timer = setTimeout(function () { finalCount(3); }, 4000); }
   else R.timer = setTimeout(callNext, speedMs());
 }
 // a little live feed of other players winning, so rounds feel shared (friends' names mixed in when signed in)
@@ -4817,6 +4829,15 @@ function checkUpdate() {
 setTimeout(checkUpdate, 8000); setInterval(checkUpdate, 5 * 60000);
 document.addEventListener('visibilitychange', function () { if (!document.hidden) checkUpdate(); });
 function stopRound() { if (R) { clearTimeout(R.timer); R.active = false; } try { if (wake) wake.release(); } catch (e) { /* fine */ } wake = null; }
+// 3, 2, 1 before the round closes: time to mark the numbers that were called and claim a last bingo
+function finalCount(n) {
+  if (!R || R.ended) return;
+  var old = $('#play .fcount'); if (old) old.remove();
+  if (n <= 0) { endRound('balls'); return; }
+  var d = document.createElement('div'); d.className = 'fcount'; d.innerHTML = '<b class="outl">' + n + '</b><small class="outl">last bingos!</small>'; $('#play').appendChild(d);
+  tone(660 + (3 - n) * 120, 0, .25, 'sine', .08); say(String(n));
+  R.timer = setTimeout(function () { finalCount(n - 1); }, 1000);
+}
 function endRound(why) {
   if (!R || R.ended) return;
   R.ended = true; alertSpend(); stopRound();
