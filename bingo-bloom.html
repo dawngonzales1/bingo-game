@@ -240,6 +240,12 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .mmtip { margin: 0; text-align: center; font: 600 11px/1.3 var(--ui); color: #e9d6ff; }
 .mmp #mmMsg p { margin: 0; text-align: center; font-weight: 700; color: #ffe58f; }
 @media (max-height: 360px) { .mmtip { display: none; } .mmrail { gap: 6px; } }
+.cardrv { position: fixed; inset: 0; z-index: 85; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, rgba(110,40,170,.7), rgba(25,8,45,.9)); overflow: hidden; animation: fade .25s both; }
+.cardrv.out { opacity: 0; transition: opacity .3s; }
+.crvin { position: relative; display: grid; justify-items: center; gap: 12px; padding: 26px 20px 14px; max-width: 94vw; }
+.cardrv .crvrib { position: relative; top: 0; left: 0; transform: none; }
+.cardrv .got { max-width: 92vw; }
+.crvset { margin: 0; font-weight: 700; color: #ffe58f; }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
@@ -4563,7 +4569,7 @@ function pupFx(ic, title, sub) {
   o.innerHTML = '<div class="prays"></div><div class="pbox"><span class="porb">' + icon(ic) + '</span><b class="outl">' + title + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</div>';
   document.body.appendChild(o); SFX.boost(); setTimeout(function () { SFX.coin(); }, 180);
   sparkle(innerWidth / 2, innerHeight / 2, 70);
-  setTimeout(function () { o.classList.add('out'); }, 900); setTimeout(function () { o.remove(); }, 1200);
+  setTimeout(function () { o.classList.add('out'); }, 900); setTimeout(function () { o.remove(); flushCards(); }, 1200);
 }
 function wave() { var b = $('.bigs'); if (!b) return; b.classList.remove('wave'); void b.offsetWidth; b.classList.add('wave'); }
 function flyTo(from, to, ic, done) {
@@ -4956,6 +4962,19 @@ function prizeText(p) {
   return n + ' ' + nm + (n > 1 && /Card|spin|ingredient|Alert/.test(nm) ? 's' : '');
 }
 function prizeIcon(t) { return { tickets: 'i-ticket', coins: 'i-coin', petals: 'i-petal', seeds: 'i-seed', drops: 'i-drop', scratch: 'i-scratch', spin: 'i-games', ing: 'i-basket', pack: 'i-card', alert: 'i-bulb', gcard: 'i-card', card: 'i-card' }[t] || (pupById(t) || {}).icon || 'i-gift'; }
+var CARD_Q = [];
+function flushCards() {
+  if (!CARD_Q.length || document.querySelector('.cardrv')) return;
+  var got = CARD_Q.splice(0), sets = []; got.forEach(function (d) { sets = sets.concat(d.sets || []); });
+  var o = document.createElement('div'); o.className = 'cardrv';
+  o.innerHTML = '<i class="bsrays"></i><div class="crvin"><div class="sribbon crvrib"><span class="outl">' + (got.length > 1 ? 'New cards!' : got[0].isNew ? 'New card!' : 'Album card') + '</span></div><div class="got">' + got.map(function (d, i) { return cardFace(d.id, { isNew: d.isNew, hideCount: true, delay: .2 + i * .22 }); }).join('') + '</div>' +
+    (sets.length ? '<p class="crvset">Set complete: ' + sets.map(function (id) { return setById(id).name; }).join(', ') + '! +' + SET_REWARD * sets.length + ' coins</p>' : '') +
+    '<div class="res-btns"><button class="b3 gold shine" id="crvOk">' + (got.some(function (d) { return d.isNew; }) ? 'Add to album' : 'Great!') + '</button><button class="b3 plum" id="crvAlb">Open album</button></div></div>';
+  document.body.appendChild(o); SFX.set(); setTimeout(function () { sparkle(innerWidth / 2, innerHeight * .4, 70); if (got.some(function (d) { return cardInfo(d.id).gold; })) coinBurst(innerWidth / 2, innerHeight * .5, 20); }, 500);
+  function close(then) { o.classList.add('out'); setTimeout(function () { o.remove(); if (then) then(); }, 300); }
+  $('#crvOk', o).onclick = function () { SFX.tap(); close(); };
+  $('#crvAlb', o).onclick = function () { SFX.tap(); close(function () { album(null); }); };
+}
 function grant(p) {
   var n = p.n || 1;
   if (p.t === 'tickets') S.tickets += n;
@@ -4967,7 +4986,7 @@ function grant(p) {
   else if (p.t === 'spin') S.spins += n;
   else if (p.t === 'ing') { var got = []; for (var i = 0; i < n; i++) got.push(ingById(dropIng()).name); save(); return '+' + got.join(', '); }
   else if (p.t === 'pack') { save(); return 'a Gold Pack'; }
-  else if (p.t === 'gcard' || p.t === 'card') { var names2 = []; for (var j = 0; j < n; j++) { var dc = dropCard(p.t === 'gcard' ? 1 : (p.gold || .25)); names2.push(cardInfo(dc.id).name + (cardInfo(dc.id).gold ? ' ★' : '')); } save(); return '+' + names2.join(', '); }
+  else if (p.t === 'gcard' || p.t === 'card') { var names2 = []; for (var j = 0; j < n; j++) { var dc = dropCard(p.t === 'gcard' ? 1 : (p.gold || .25)); names2.push(cardInfo(dc.id).name + (cardInfo(dc.id).gold ? ' ★' : '')); CARD_Q.push(dc); } save(); return '+' + names2.join(', '); }
   else give(p.t, n);
   save();
   return '+' + prizeText(p);
@@ -5585,7 +5604,7 @@ function teamGarden() {
           g.claimed[i] = true; var hasPack = false; t.prize.forEach(function (p) { if (p.t === 'pack') hasPack = true; else grant(p); });
           logEvent({ t: 'garden', tier: i, week: g.week }); save(); SFX.set(); refreshTop();
           if (hasPack) { openPack(PACKS[2], true); return; }
-          toast(t.name + ' prize: ' + t.prize.map(prizeText).join(' + ') + '!'); teamGarden();
+          toast(t.name + ' prize: ' + t.prize.map(prizeText).join(' + ') + '!'); teamGarden(); setTimeout(flushCards, 400);
         };
       });
     });
@@ -5880,14 +5899,14 @@ function bigWin(pics, title, lines, pose, done) {
   o.innerHTML = '<div class="rays"></div><div class="rv"><b class="rvt outl">' + esc(title) + '</b><div class="bwpics">' + pics.map(function (p, i) { return '<span class="bwp" style="--d:' + i + '"><img src="art/' + p + '.webp" alt=""></span>'; }).join('') + '</div>' +
     '<div class="bwlines">' + lines.map(function (l) { return '<span class="outl">' + esc(l) + '</span>'; }).join('') + '</div><button class="b3 gold" id="rvGo">' + (pics.length ? 'Collect' : 'OK') + '</button></div>' + (pose ? '<img class="bwcordie" src="art/mascot-' + pose + '.webp" alt="">' : '');
   document.body.appendChild(o); if (pics.length) { SFX.set(); setTimeout(function () { sparkle(innerWidth / 2, innerHeight * .45, 70); coinBurst(innerWidth / 2, innerHeight * .55, 16); }, 250); } else SFX.no();
-  $('#rvGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (done) done(); }, 250); };
+  $('#rvGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (done) done(); flushCards(); }, 250); };
 }
 function prizeReveal(iconId, title, sub, done) {
   var o = document.createElement('div'); o.className = 'reveal';
   o.innerHTML = '<div class="rays"></div><div class="rv"><b class="rvt outl">' + esc(title) + '</b><div class="rvi"><svg viewBox="0 0 40 40"><use href="#' + iconId + '"/></svg></div><span class="rvs">' + esc(sub) + '</span><button class="b3 gold" id="rvGo">Collect</button></div>';
   document.body.appendChild(o); SFX.set();
   setTimeout(function () { sparkle(innerWidth / 2, innerHeight * .45, 120); }, 250);
-  $('#rvGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (done) done(); }, 250); };
+  $('#rvGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (done) done(); flushCards(); }, 250); };
 }
 
 /* ---------- online play: accounts, cloud saves, friends, gifts, card trading and teams.
