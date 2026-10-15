@@ -2460,6 +2460,11 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .clearview .outl, .clearview .panel h3, .clearview b, .clearview small, .clearview span, .clearview p { text-shadow: none !important; }
 .clearview .panel h3 { filter: none !important; color: #ffe58f !important; background: none !important; -webkit-text-fill-color: #ffe58f; }
 .clearview .mmboard .mac { transform-origin: center; }
+.clearview #play .ptop .ball .in { width: 82% !important; height: 82% !important; } .clearview #play .ptop .ball .in b { font-size: calc(var(--s) * .46) !important; font-weight: 900 !important; }
+.clearview #play .ptop .ball .in small { font-size: calc(var(--s) * .15) !important; }
+.clearview #play .strip .b3d i { font-size: 17px !important; font-weight: 900 !important; }
+.clearview .outl, .clearview #play .ppl small, .clearview .pul, .clearview .fnm, .clearview .hud-left small, .clearview .rb small { paint-order: stroke fill; -webkit-text-stroke: 3px #2a0d3d; font-weight: 800; }
+.clearview .pul, .clearview #room .rnote { color: #fff !important; }
 #lobby .giftwait .c svg { filter: saturate(.55) brightness(.9) drop-shadow(0 3px 0 rgba(40,12,64,.55)); }
 #lobby .giftwait .c { position: relative; }
 .giftwait .gclock { position: absolute; right: -4px; bottom: -2px; font-size: 18px; font-style: normal; filter: drop-shadow(0 1px 1px rgba(0,0,0,.4)); }
@@ -2498,12 +2503,12 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .coach.out { opacity: 0; transition: opacity .25s; }
 .cring { position: fixed; border-radius: 18px; box-shadow: 0 0 0 4px #ffd447, 0 0 0 9999px rgba(20,6,40,.66); transition: all .4s cubic-bezier(.3,1.2,.4,1); pointer-events: auto; }
 .coach.nohole .cring { box-shadow: 0 0 0 9999px rgba(20,6,40,.66); }
-.cbub2 { position: fixed; padding: 12px 14px 10px; border-radius: 18px; color: #3d1a4f; background: #fffaf0; box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px var(--ol), 0 10px 22px rgba(10,2,20,.5); cursor: default; }
+.cbub2 { position: fixed; z-index: 3; padding: 12px 14px 10px; border-radius: 18px; color: #3d1a4f; background: #fffaf0; box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px var(--ol), 0 10px 22px rgba(10,2,20,.5); cursor: default; }
 .cbub2.pop { animation: popIn .35s cubic-bezier(.2,1.4,.4,1) both; }
 .cbub2 p { margin: 0 0 8px; font: 600 15px/1.35 var(--ui); } .cbub2 b { color: #8a2fc7; }
 .cbtns { display: flex; justify-content: flex-end; gap: 8px; } .cbtns .b3 { padding: 5px 14px; font-size: 14px; }
 .cstep { position: absolute; left: 14px; bottom: 12px; font: 700 11px var(--ui); color: #9a7ab8; }
-.ccordie { position: fixed; bottom: 0; height: min(42vh, 200px); pointer-events: none; filter: drop-shadow(0 6px 10px rgba(10,2,20,.5)); animation: hudBob 2.6s ease-in-out infinite; }
+.ccordie { position: fixed; z-index: 2; bottom: 0; height: min(42vh, 200px); pointer-events: none; filter: drop-shadow(0 6px 10px rgba(10,2,20,.5)); animation: hudBob 2.6s ease-in-out infinite; }
 .ccordie.l { left: 8px; } .ccordie.r { right: 8px; }
 @media (max-height: 300px) { .cbub2 p { font-size: 13px; } .ccordie { height: 34vh; } }
 
@@ -2988,9 +2993,19 @@ var SFX = {
   set: function () { [523.25, 783.99, 1046.5, 1567.98, 2093].forEach(function (f, i) { tone(f, i * .12, 1.1, 'sine', .1); }); }
 };
 document.addEventListener('pointerdown', function wakeVoice() { document.removeEventListener('pointerdown', wakeVoice, true); try { if ('speechSynthesis' in window) { var u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } } catch (e) { /* fine */ } }, true);
+var VOICE = null, VOICE_T = 0;
+function pickVoice() {
+  if (!('speechSynthesis' in window)) return null; var vs = speechSynthesis.getVoices(); if (!vs.length) return null;
+  var want = ['Google US English', 'Samantha', 'Microsoft Aria', 'Microsoft Jenny', 'Karen', 'Moira', 'Google UK English Female'];
+  for (var i = 0; i < want.length; i++) { var v = vs.filter(function (x) { return x.name.indexOf(want[i]) === 0; })[0]; if (v) return v; }
+  return vs.filter(function (x) { return /^en/i.test(x.lang) && !/compact/i.test(x.name); })[0] || vs[0];
+}
 function say(text) {
   if (!S.settings.voice || !('speechSynthesis' in window)) return;
-  try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(text); u.rate = .95; u.pitch = 1.05; speechSynthesis.speak(u); } catch (e) { /* no voice */ }
+  try {
+    speechSynthesis.cancel(); if (!VOICE || Date.now() - VOICE_T > 60000) { VOICE = pickVoice(); VOICE_T = Date.now(); }
+    var u = new SpeechSynthesisUtterance(text.replace(/^([BINGO]) (\d+)$/, '$1, $2')); if (VOICE) u.voice = VOICE; u.rate = 1 + (Math.random() - .5) * .08; u.pitch = 1.15 + (Math.random() - .5) * .14; speechSynthesis.speak(u);
+  } catch (e) { /* no voice */ }
 }
 
 /* ---------- gold sparkle ---------- */
@@ -4790,7 +4805,7 @@ function endRound(why) {
 /* ---------- end of round: Perfect Bloom card show, then the Bloom Summary with the Bloom Wheel ---------- */
 function badgeName(k) { if (R.mode === 'blackout') return k.n ? ['Blackout', ''] : null; return [null, ['Bingo', ''], ['Double', 'Bloom'], ['Triple', 'Bloom'], ['Full', 'Bouquet']][Math.min(4, k.n)] || null; }
 function fireworks(ms) {
-  if (reduceMotion) return; var end = Date.now() + ms;
+  if (reduceMotion) return; var end = Date.now() + (ms || 2000);
   (function boom() { if (Date.now() > end) return; sparkle(innerWidth * (.1 + Math.random() * .8), innerHeight * (.12 + Math.random() * .45), 46); tone(220 + rand(200), 0, .08, 'triangle', .02); setTimeout(boom, 260 + rand(260)); })();
 }
 function bloomShow(perfect, done) {

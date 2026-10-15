@@ -62,3 +62,8 @@ Clarity: how do you know a room is complete (Sandy); daily gift button unclear (
 Looks: featured tiles too busy, should be subtle but eye-catching; Cordie hopping between tiles looks cheap and laggy, should stay and point; next city should be a blurred teaser, not plain; buttons overlapping; still looks plain/cheap, needs better animation.
 Team/social (online): one place for everything Teams; send cards from the album; see who on your team is online; dots for new messages, friend requests and cards; tap a teammate to friend them.
 Ideas: Bee power-up like Bingo Frenzy's boomerang (Crystal). Unique game names (already enforced). Crystal likes being able to choose auto-mark (kept in Settings).
+
+## Team feedback, Oct 14 (evening)
+- Sapphire: themes that change with the seasons, plus seasonal side games (autumn leaves, winter lights, spring blossom, summer beach). Good fit for the second city plan.
+- Done: fireworks stuck on after a Shop purchase (fixed); caller voice livelier; Clear view ball numbers now really bigger; white text gets a crisp outline in Clear view; tour Cordie layered above the shade; wheel hub flush.
+- Open: 'ghostly bunnies' on tutorial panels (one player, Chrome) - need a screenshot to see it.
