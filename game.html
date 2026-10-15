@@ -319,6 +319,24 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @keyframes rdPop { from { transform: scale(2); opacity: 0; } }
 .lucktag { position: absolute; z-index: 5; left: 50%; top: 38%; transform: translate(-50%, -50%) rotate(-6deg); padding: 3px 12px; border-radius: 999px; background: linear-gradient(180deg, #ffc2d9, #e9578a); font: 800 clamp(12px, 5cqw, 16px) var(--ui); color: #fff; box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #3d1a4f, 0 0 16px rgba(255,120,180,.8); animation: popIn .4s cubic-bezier(.2,.9,.3,1.5) both, fade .4s 4s reverse both; white-space: nowrap; pointer-events: none; }
 @media (max-height: 340px) { .rdcor { display: none; } .ready .rdfeat { display: none; } }
+/* brightness pass (Dawn: as bright and punchy as the big bingo apps): no dark wash over the room, sunnier picture, whiter tiles, bolder numbers */
+#play::before { background: radial-gradient(ellipse at 50% 120%, rgba(255,255,255,.3), transparent 55%) !important; }
+#play.m-multi, #play.m-butterfly, #play.m-recipe, #play.m-shape { filter: none; }
+#play.m-multi { background-image: linear-gradient(180deg, rgba(255,250,240,.06), rgba(255,250,240,.12)), url(art/room-paris.webp) !important; }
+#play.m-butterfly { background-image: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.1)), url(art/room-butterfly-meadow.webp) !important; }
+#play.m-recipe { background-image: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.1)), url(art/room-candy-carnival.webp) !important; }
+#play.m-shape { background-image: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.08)), url(art/room-gold-coast.webp) !important; }
+#play.m-mystery { background-image: linear-gradient(180deg, rgba(40,15,70,0), rgba(40,15,70,.08)), url(art/room-lantern-market.webp) !important; }
+#play.m-blackout { background-image: linear-gradient(180deg, rgba(30,15,60,0), rgba(30,15,60,.1)), url(art/room-midnight-garden.webp) !important; }
+#play .rlife .rvid { filter: saturate(1.15) brightness(1.08); }
+#play .cell { background: linear-gradient(180deg, #ffffff, #fbf6ea) !important; box-shadow: inset 0 1px 0 #fff, inset 0 -1.2cqw 0 #e6dcc6, 0 .6cqw 1.2cqw rgba(30,10,50,.18) !important; color: #1f1740 !important; font-weight: 800 !important; }
+#play .cell.d { background: linear-gradient(180deg, #ffffff, #f3eafc) !important; }
+#play .cell.free, #play .bcard.is-lucky .cell.free { background: radial-gradient(circle at 35% 30%, #fff8d6, #ffd45c 50%, #e9a81c) !important; color: #5b2a00 !important; box-shadow: inset 0 0 0 1.5px #b8780a, inset 0 2px 0 rgba(255,255,255,.7), 0 .6cqw 1.2cqw rgba(30,10,50,.18) !important; }
+#play.m-blackout .cell.free { background: rgba(255,214,92,.18) !important; color: rgba(255,229,143,.7) !important; }
+#play .bcard { box-shadow: 0 0 0 2px #3d1a4f, 0 10px 22px rgba(20,5,35,.4), 0 0 24px rgba(255,214,92,.3) !important; }
+#play .ptop .ball { filter: saturate(1.2) brightness(1.06); }
+#play .strip .b3d { filter: saturate(1.15); }
+.clearview #play::before { background: rgba(30,8,50,.2) !important; }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
