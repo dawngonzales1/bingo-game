@@ -92,6 +92,15 @@ service cloud.firestore {
       }
     }
 
+    // Top 3 Bingo boards: anyone signed in may read; a player writes only their own row, with a sane bingo count
+    match /boards/{board}/players/{uid} {
+      allow read: if signedIn();
+      allow create, update: if signedIn() && me() == uid
+        && request.resource.data.name is string && request.resource.data.name.size() <= 14
+        && request.resource.data.bingos is int && request.resource.data.bingos >= 0 && request.resource.data.bingos <= 2000
+        && (resource == null || request.resource.data.bingos <= resource.data.bingos + 40);
+    }
+
     // feedback: anyone signed in may send; only Dawn reads and marks done
     match /feedback/{id} {
       allow create: if signedIn() && request.resource.data.uid == me();

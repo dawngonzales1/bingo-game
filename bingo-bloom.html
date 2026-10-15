@@ -3166,6 +3166,8 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .rptrophy { width: clamp(42px, 14vh, 60px); height: auto; margin: -16px 4px -16px -12px; filter: drop-shadow(0 3px 3px rgba(20,5,30,.4)); animation: hudBob 2.6s ease-in-out infinite; }
 .rpjack { padding-left: 14px; }
 @media (max-height: 420px) { .rptrophy { width: 30px; margin: -6px 0 -6px -6px; } }
+.rp3 .av { --av: 30px; } .rp3 em { font: 800 10px var(--ui); font-style: normal; color: #ffe58f; margin-top: -2px; }
+.rp3.me small { color: #ffe58f; } .rp3wait { font: 600 10px/1.3 var(--ui); color: #e6d4ff; text-align: center; max-width: 72px; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4398,7 +4400,7 @@ function roomScreen(room) {
   if (!$('#lobby')) lobby();
   var arm = {}, fair = S.dry >= 3, featured = room.mode !== 'multi', th = FEAT_THEME[room.id] || ['#b98cff', '#6a32d0'];
   var info = featured ? '<div class="rpinfo"><span class="rpdish" style="background-image:url(' + room.img + ');background-position:' + room.pos + ' center"></span><div class="rpbk"><b>' + tl(MODE_INFO[room.mode].how) + '</b><small>' + tl('Garden Path bonus') + ' ' + bonusPct(room.id) + '%</small><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div></div>' : '<div class="rpinfo two">' + bakeBar(room) + roomGrow(room) + '</div>';
-  var top3 = LEAGUE_NAMES.slice().sort(function () { return Math.random() - .5; }).slice(0, 3);
+  var top3 = [];
   var MULT = { 1: 2, 2: 6, 4: 10 }, TC = { 1: 'teal', 2: 'pink', 4: 'gold' };
   panel('<div class="rp" style="--c1:' + th[0] + ';--c2:' + th[1] + '">' +
     '<button class="rnav l" id="rPrev" aria-label="Previous room">‹</button><button class="rnav r" id="rNext" aria-label="Next room">›</button>' +
@@ -4411,7 +4413,7 @@ function roomScreen(room) {
         '<span class="twin"><span>' + icon('i-coin') + '<b data-tc="' + n + '"></b></span><span>' + icon('i-petal') + '<b data-tp="' + n + '"></b></span><span>' + icon('i-card') + '<b>×' + n + '</b></span></span>' +
         '<button class="b3 green shine tplay" data-play="' + n + '">' + icon('i-ticket') + '<b data-tk="' + n + '"></b></button></div></div>';
     }).join('') + '</div>' +
-    '<div class="rptop3"><small>TOP 3 BINGO</small>' + top3.map(function (nm, i) { return '<span class="rp3"><i class="rp3n n' + (i + 1) + '">' + (i + 1) + '</i><b>' + nm.charAt(0) + '</b><small>' + esc(nm) + '</small></span>'; }).join('') + '</div></div>' +
+    '<div class="rptop3" id="rpTop3"><small>TOP 3 BINGO</small><span class="rp3wait">This week\'s best players show here</span></div></div>' +
     '<div class="rpfoot"><div class="rpups">' + PRE_PUPS.map(function (id) { var p = pupById(id); return '<button data-arm="' + id + '" aria-pressed="false"' + (owned(id) ? '' : ' disabled') + ' title="' + p.name + '">' + icon(p.icon) + '<b>' + owned(id) + '</b></button>'; }).join('') + '<button class="pinfo" id="bPinfo" aria-label="What do power-ups do?">?</button></div>' +
       '<span class="rfeat" title="Featured power-ups come up twice as often in this room today"><small>TODAY\'S<br>FEATURED</small>' + roomFeat(room).map(function (id) { var t = pupTier(id); return '<span class="rfo r-' + t.id + '">' + icon(pupById(id).icon) + '</span>'; }).join('') + '<small>2×</small></span>' +
       '<div class="betsl"><small class="betl">BET</small><button class="bstep" id="bMinus" aria-label="Lower bet">−</button><div class="btrack"><i id="bFill"></i><span id="bKnob">×1</span></div><div class="bsteps">' + [1, 2, 3, 5].map(function (b) { return '<button data-bet="' + b + '">×' + b + '</button>'; }).join('') + '</div><button class="bstep" id="bPlus" aria-label="Raise bet">+</button></div>' +
@@ -4448,6 +4450,10 @@ function roomScreen(room) {
       };
     });
     upd();
+    boardTop(room.id, 3, function (rows) {
+      var box = $('#rpTop3', v); if (!box) return;
+      box.innerHTML = '<small>TOP 3 BINGO</small>' + (rows.length ? rows.map(function (r, i) { return '<span class="rp3' + (ON.user && r.id === ON.user.uid ? ' me' : '') + '" title="' + esc(r.name) + ' · ' + r.bingos + ' bingos this week"><i class="rp3n n' + (i + 1) + '">' + (i + 1) + '</i>' + avatarHtml(30, { frame: r.frame || 'gold', avatar: 'initial', name: r.name }) + '<small>' + esc(r.name) + '</small><em>' + r.bingos + '</em></span>'; }).join('') : '<span class="rp3wait">Be the first on this week\'s board!</span>');
+    });
   });
 }
 function pantry() {
@@ -5056,7 +5062,7 @@ function avatarHtml(px, o) {
   o = o || {}; var fr = o.frame || S.style.frame, av = o.avatar || S.style.avatar, inner;
   if (av === 'photo' && S.photo) inner = '<span class="avin" style="background-image:url(' + S.photo + ')"></span>';
   else if (av.indexOf('|') > 0 && S.album[av]) { var ci = cardInfo(av); inner = '<span class="avin" style="background-image:url(art/card-' + ci.set.id + '-' + (ci.idx + 1) + '.webp)"></span>'; }
-  else inner = '<span class="avin ini">' + esc((S.name || 'P').charAt(0).toUpperCase()) + '</span>';
+  else inner = '<span class="avin ini">' + esc((o.name || S.name || 'P').charAt(0).toUpperCase()) + '</span>';
   var deco = { rose: icon('i-petal', 'dk d1') + icon('i-petal', 'dk d3'), garden: icon('i-bfly', 'dk d2'), amethyst: icon('i-gem', 'dk dtop'), grand: icon('i-blossom', 'dk d1') + icon('i-blossom', 'dk d2') + icon('i-blossom', 'dk d3') + icon('i-blossom', 'dk d4'), night: '<i class="moon"></i>' }[fr] || '';
   return '<span class="av fr-' + fr + '" style="--av:' + px + 'px">' + inner + deco + '</span>';
 }
@@ -5437,6 +5443,17 @@ function roundOverSlam(then) {
   var d = document.createElement('div'); d.className = 'rover'; d.innerHTML = '<b class="outl">ROUND</b><b class="outl">OVER</b>'; document.body.appendChild(d); SFX.set(); buzz([60, 40, 60]);
   setTimeout(function () { d.classList.add('out'); setTimeout(function () { d.remove(); }, 350); then(); }, 1500);
 }
+/* Top 3 Bingo: a small weekly board per room in Firestore (boards/{room}_{week}/players/{uid}). Signed-in players post their bingo total for the week; the room panel shows the top three real players. */
+function boardRef(room) { return ON.db.collection('boards').doc(room + '_' + new Date(weekStart()).toISOString().slice(0, 10)); }
+function boardPost(room, bingos) {
+  if (!ON.ok || !ON.user || !bingos) return;
+  if (!S.board) S.board = {}; var k = room + '_' + new Date(weekStart()).toISOString().slice(0, 10), tot = (S.board[k] || 0) + bingos; S.board[k] = tot; save(true);
+  boardRef(room).collection('players').doc(ON.user.uid).set({ name: myName(), bingos: tot, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, at: Date.now() }).catch(function () {});
+}
+function boardTop(room, n, done) {
+  if (!ON.ok || !ON.user) { done([]); return; }
+  boardRef(room).collection('players').orderBy('bingos', 'desc').limit(n).get().then(function (q) { done(q.docs.map(function (d) { var v = d.data(); v.id = d.id; return v; })); }).catch(function () { done([]); });
+}
 function endRound(why) {
   WHEEL_BUSY = true; // hold level-ups and other pop-ups until the results wheel has finished
   if (!R || R.ended) return;
@@ -5445,7 +5462,7 @@ function endRound(why) {
   if (why !== 'quit') { if (R.bingos) S.dry = 0; else S.dry++; }
   if (why !== 'quit' && R.mode !== 'multi') { S.bonus[R.room] = Math.min(100, (S.bonus[R.room] || 0) + R.marks * 1.5); R.pathReady = S.bonus[R.room] >= 100; }
   logEvent({ t: 'round', room: R.room, mode: R.mode, cards: R.cards.length, bingos: R.bingos, coins: R.earned.coins, petals: R.earned.petals });
-  save();
+  save(); if (why !== 'quit') boardPost(R.room, R.bingos);
   if (why === 'quit') { var qr = R.roomObj; R = null; roomScreen(qr); return; }
   var perfect = !R.usedAuto && R.idx >= 10 && R.cards.every(function (k) { return k.won || k.cells.every(function (c) { return c.d || !R.called[c.n]; }); });
   if (perfect) { R.perfect = Math.round(50 * R.bet); S.coins += R.perfect; S.drops += 1; R.earned.coins += R.perfect; R.earned.drops += 1; save(); }
