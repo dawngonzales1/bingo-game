@@ -3157,7 +3157,7 @@ var LANDMARKS = [
   { id: 'boutique', name: 'Silk Boutique' }
 ];
 var STAR_COST = [4, 7, 10];
-var CARD_COST = 5, BALLS = 45, SET_REWARD = 250, ALBUM_REWARD = 5000, ALBUM_TICKETS = 2000, CITY_REWARD = 1000, DAILY_GIFT = 150, BOOST_AT = 8, ALBUM_DAYS = 60;
+var CARD_COST = 5, BALLS = 45, CITY_BALLS = 40, SET_REWARD = 250, ALBUM_REWARD = 5000, ALBUM_TICKETS = 2000, CITY_REWARD = 1000, DAILY_GIFT = 150, BOOST_AT = 8, ALBUM_DAYS = 60;
 var LINES = (function () {
   var L = [], r, c;
   for (r = 0; r < 5; r++) L.push([0, 1, 2, 3, 4].map(function (c) { return r * 5 + c; }));
@@ -4374,7 +4374,7 @@ function startRound(arm, room) {
   if (fairHS) S.dry = 0;
   save();
   var total = blackout ? 6 + rand(3) : 14 + rand(5);
-  R = { roomObj: room, room: room.id, mode: room.mode, boostAt: (blackout ? 4 : 6) + 4 * S.cards, bet: S.bet, dc: dc, dp: dp, wild: false, players: total * 4 + rand(20), focus: 0, alert: false, els: [], cards: [], seq: shuffle(range(1, 75)).slice(0, blackout ? 65 : BALLS), idx: 0, called: {}, recent: [], active: false, paused: false, timer: null,
+  R = { roomObj: room, room: room.id, mode: room.mode, boostAt: (blackout ? 4 : 6) + 4 * S.cards, bet: S.bet, dc: dc, dp: dp, wild: false, players: total * 4 + rand(20), focus: 0, alert: false, els: [], cards: [], seq: shuffle(range(1, 75)).slice(0, blackout ? 65 : room.mode === 'multi' ? CITY_BALLS : BALLS), idx: 0, called: {}, recent: [], active: false, paused: false, timer: null,
     total: total, left: total, meter: 0, bingos: 0, lucky: rand(S.cards), usedAuto: !!S.settings.assist, earned: { coins: 0, petals: 0, alerts: 0, tickets: 0, drops: 0, seeds: 0, cards: [], ings: [], sets: [] } };
   R.feat = roomFeat(room); modeSetup(); R.xp2 = dxp; if (dxp) setTimeout(function () { toast('Double XP is on for this round'); }, 2600);
   for (var k = 0; k < S.cards; k++) { var nc = makeCard(); nc.lines = {}; nc.n = 0; R.cards.push(nc); }
@@ -6128,7 +6128,7 @@ function teamGarden() {
 }
 function fairPlay() {
   panel('<h3>Our Fair Play Promise</h3><ul>' +
-    '<li>More balls each round (' + BALLS + ') and plenty of bingos to go around.</li>' +
+    '<li>Plenty of balls each round (' + CITY_BALLS + ' in city rooms, ' + BALLS + ' in featured rooms) and plenty of bingos to go around.</li>' +
     '<li>Three rounds in a row without a bingo? Your next round starts with a free Head Start.</li>' +
     '<li>Every card pack, the Daily Wheel and Scratch Cards show their real odds.</li>' +
     '<li>The odds never get worse the longer you play.</li>' +
