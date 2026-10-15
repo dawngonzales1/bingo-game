@@ -96,7 +96,7 @@ button:focus-visible { outline: 3px solid var(--gold2); outline-offset: 2px; }
 button.city { text-align: left; color: var(--ink); font: inherit; }
 #mapWrap { position: absolute; inset: 0; overflow-x: auto; overflow-y: hidden; background: radial-gradient(ellipse at center, #fbefcb, #f1d99c); scrollbar-width: none; cursor: grab; }
 #mapWrap::-webkit-scrollbar { display: none; }
-#mapSvg { display: block; height: 100%; margin: 0 84px 0 76px; }
+.mapSvg { display: block; height: 100%; margin: 0 84px 0 76px; }
 .lm { cursor: pointer; }
 .lm:active { filter: brightness(1.08); }
 .twinkle { animation: twinkle 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
@@ -1141,7 +1141,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #worldWrap::-webkit-scrollbar { display: none; }
 .citysec { --side: clamp(64px, 10vw, 84px); position: relative; padding: 0 var(--side) var(--fh, 84px); overflow: hidden; }
 .citysec::before { content: ''; position: absolute; inset: -20px; background: url(art/lobby-paris-map.webp) center / cover; filter: blur(14px) brightness(.8) saturate(1.1); }
-#worldWrap #mapSvg { position: relative; display: block; width: 100%; height: auto; margin: 0; border-radius: 0 0 22px 22px; box-shadow: 0 0 0 3px var(--gold2), 0 0 0 5px var(--ol), 0 12px 30px rgba(20,5,30,.5); }
+#worldWrap .mapSvg { position: relative; display: block; width: 100%; height: auto; margin: 0; border-radius: 0 0 22px 22px; box-shadow: 0 0 0 3px var(--gold2), 0 0 0 5px var(--ol), 0 12px 30px rgba(20,5,30,.5); }
 #worldWrap .lm { cursor: pointer; }
 .cityban { position: relative; display: grid; justify-items: center; margin: 10px auto 0; width: max-content; max-width: 90%; padding: 4px 40px 6px; text-align: center; background: linear-gradient(90deg, transparent, rgba(40,12,64,.85) 18%, rgba(40,12,64,.85) 82%, transparent); }
 .cityban b { font-size: clamp(22px, 8vh, 36px); letter-spacing: .08em; line-height: 1.05; }
@@ -1441,8 +1441,8 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .ftile:nth-child(2)::after { animation-delay: 1s; } .ftile:nth-child(3)::after { animation-delay: 2s; } .ftile:nth-child(4)::after { animation-delay: 3s; } .ftile:nth-child(5)::after { animation-delay: 4s; }
 .ftile { animation: tierIn .5s cubic-bezier(.2,.9,.3,1.3) both; }
 .ftile:nth-child(2) { animation-delay: .06s; } .ftile:nth-child(3) { animation-delay: .12s; } .ftile:nth-child(4) { animation-delay: .18s; } .ftile:nth-child(5) { animation-delay: .24s; }
-#mapSvg .lm image { transform-box: fill-box; transform-origin: 50% 100%; }
-#mapSvg .lm:nth-of-type(2n) image { animation-delay: -1.3s; } #mapSvg .lm:nth-of-type(3n) image { animation-delay: -2.6s; }
+.mapSvg .lm image { transform-box: fill-box; transform-origin: 50% 100%; }
+.mapSvg .lm:nth-of-type(2n) image { animation-delay: -1.3s; } .mapSvg .lm:nth-of-type(3n) image { animation-delay: -2.6s; }
 @keyframes breathe { 50% { transform: scale(1.025, 1.035); } }
 .citysec .flyer2 { position: absolute; left: 0; top: 0; z-index: 2; width: clamp(22px, 5vh, 34px); height: clamp(22px, 5vh, 34px); pointer-events: none; animation: flyAcross 18s linear infinite; filter: drop-shadow(0 4px 4px rgba(20,5,30,.3)); }
 .citysec .flyer2 svg { width: 100%; height: 100%; animation: flap .35s ease-in-out infinite alternate; }
@@ -2282,20 +2282,20 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 
 
 /* living map (Dawn's Frenzy recording: nothing sits still) */
-#mapFx .wglint { fill: #fff; opacity: 0; transform-box: fill-box; transform-origin: center; animation: wGlint 3.6s ease-in-out infinite; }
+.mapFx .wglint { fill: #fff; opacity: 0; transform-box: fill-box; transform-origin: center; animation: wGlint 3.6s ease-in-out infinite; }
 @keyframes wGlint { 0%, 60%, 100% { opacity: 0; scale: .3; } 75% { opacity: .95; scale: 1; rotate: 45deg; } 90% { opacity: 0; scale: .5; rotate: 90deg; } }
-#mapFx .wripple { fill: none; stroke: rgba(255,255,255,.75); stroke-width: 3.5; stroke-linecap: round; opacity: 0; animation: wRipple 5s ease-in-out infinite; }
+.mapFx .wripple { fill: none; stroke: rgba(255,255,255,.75); stroke-width: 3.5; stroke-linecap: round; opacity: 0; animation: wRipple 5s ease-in-out infinite; }
 @keyframes wRipple { 0% { opacity: 0; translate: -14px 4px; } 40% { opacity: .9; } 100% { opacity: 0; translate: 22px -6px; } }
-#mapFx .fdrop { fill: #e9fbff; stroke: #8fd8f0; stroke-width: 1; opacity: 0; animation: fDrop 1.5s cubic-bezier(.3,.7,.5,1) infinite; }
+.mapFx .fdrop { fill: #e9fbff; stroke: #8fd8f0; stroke-width: 1; opacity: 0; animation: fDrop 1.5s cubic-bezier(.3,.7,.5,1) infinite; }
 @keyframes fDrop { 0% { opacity: 0; transform: translate(0, 0); } 10% { opacity: 1; } 45% { transform: translate(calc(var(--dx) * .6), -34px); } 100% { opacity: 0; transform: translate(var(--dx), 30px); } }
-#mapFx .fpool { fill: none; stroke: rgba(255,255,255,.8); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: fPool 2s ease-out infinite; opacity: 0; }
+.mapFx .fpool { fill: none; stroke: rgba(255,255,255,.8); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: fPool 2s ease-out infinite; opacity: 0; }
 @keyframes fPool { 0% { scale: .5; opacity: .9; } 100% { scale: 1.15; opacity: 0; } }
-#mapFx .pring { fill: none; stroke: #ffd447; stroke-width: 4; transform-box: fill-box; transform-origin: center; animation: pRing 2s ease-out infinite; }
-#mapFx .pring.r2 { animation-delay: -1s; }
+.mapFx .pring { fill: none; stroke: #ffd447; stroke-width: 4; transform-box: fill-box; transform-origin: center; animation: pRing 2s ease-out infinite; }
+.mapFx .pring.r2 { animation-delay: -1s; }
 @keyframes pRing { 0% { scale: .4; opacity: 1; } 100% { scale: 2.1; opacity: 0; } }
-#mapFx .pbob { animation: pBob 1.8s ease-in-out infinite; }
+.mapFx .pbob { animation: pBob 1.8s ease-in-out infinite; }
 @keyframes pBob { 50% { transform: translateY(-8px); } }
-#mapFx .pini { font: 800 26px var(--ui); fill: #fff; }
+.mapFx .pini { font: 800 26px var(--ui); fill: #fff; }
 .citysec .gull { position: absolute; z-index: 2; width: clamp(18px, 4vh, 28px); pointer-events: none; top: 14%; left: 0; animation: gullX 26s linear infinite; }
 .citysec .gull svg { display: block; width: 100%; overflow: visible; fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 2px 2px rgba(40,12,64,.35)); animation: gullFlap .5s ease-in-out infinite alternate; transform-origin: 50% 60%; }
 .citysec .gull.g1 { top: 20%; width: clamp(14px, 3vh, 22px); animation-delay: -1.6s; }
@@ -2350,14 +2350,14 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @keyframes petalF { 0% { transform: translate(0, 0) rotate(0); opacity: 0; } 10% { opacity: 1; } 50% { transform: translate(30px, 58cqh) rotate(200deg); } 90% { opacity: 1; } 100% { transform: translate(-10px, 118cqh) rotate(400deg); opacity: 0; } }
 
 
-#mapFx { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: auto; aspect-ratio: 1344 / 768; pointer-events: none; overflow: visible; }
+.mapFx { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: auto; aspect-ratio: 1344 / 768; pointer-events: none; overflow: visible; }
 .mapwin { position: relative; overflow: hidden; scrollbar-width: none; border-radius: 0 0 22px 22px; }
 .mapwin::-webkit-scrollbar { display: none; }
 /* nothing behind an open panel needs to keep moving */
 body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .screen *::after { animation-play-state: paused !important; }
 /* Battery saver: keeps the game, drops the extra moving effects */
-.lite .rlife, .lite #mapFx .mlife, .lite #mapFx .pring, .lite .gull, .lite .flyer2, .lite .cloudz, .lite .fmov, .lite .fflash, .lite .bubs, .lite .ffly, .lite .ftile .fspk { display: none !important; }
-.lite .ftile .fpic, .lite .ftile.ft2, .lite .ftile::after, .lite #lobby .round .c, .lite #lobby .round .c svg, .lite .round .c img, .lite .hud-top .cur > svg, .lite .hud-top .cur .plus, .lite #mapFx .pbob, .lite .cityban b, .lite .tier .tplay, .lite #play .bcard::after, .lite #play .cell.free, .lite .round .dot, .lite .fcordie { animation: none !important; }
+.lite .rlife, .lite .mapFx .mlife, .lite .mapFx .pring, .lite .gull, .lite .flyer2, .lite .cloudz, .lite .fmov, .lite .fflash, .lite .bubs, .lite .ffly, .lite .ftile .fspk { display: none !important; }
+.lite .ftile .fpic, .lite .ftile.ft2, .lite .ftile::after, .lite #lobby .round .c, .lite #lobby .round .c svg, .lite .round .c img, .lite .hud-top .cur > svg, .lite .hud-top .cur .plus, .lite .mapFx .pbob, .lite .cityban b, .lite .tier .tplay, .lite #play .bcard::after, .lite #play .cell.free, .lite .round .dot, .lite .fcordie { animation: none !important; }
 
 .fblang { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin: -2px 34px 4px; direction: ltr; }
 .fblang button { padding: 3px 10px; border-radius: 999px; font: 800 12px var(--ui); color: #fff; background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,243,184,.5); cursor: pointer; }
@@ -2563,8 +2563,8 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .stbar b { margin-right: auto; font-size: clamp(18px, 6vh, 26px); color: #fff3b8; }
 #stGo { animation: popIn .4s 2.4s both, playPulse 1.4s 2.8s ease-in-out infinite; }
 .lite .gcol .bsrays { display: none; }
-#mapSvg .lmlock image { filter: grayscale(.75) brightness(.8); }
-#mapSvg .growme { transform-box: fill-box; transform-origin: 50% 100%; animation: growBob 1.2s ease-in-out infinite; }
+.mapSvg .lmlock image { filter: grayscale(.75) brightness(.8); }
+.mapSvg .growme { transform-box: fill-box; transform-origin: 50% 100%; animation: growBob 1.2s ease-in-out infinite; }
 @keyframes growBob { 50% { transform: translateY(-6px) scale(1.08); } }
 /* top bar: on phones the Events and Feedback pills show just their icons so Settings always fits */
 #bSet { flex: none; }
@@ -2696,7 +2696,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 #room .rnav { position: absolute; }
 #room .bake { background: linear-gradient(180deg, rgba(74,26,120,.94), rgba(46,14,84,.94)) !important; }
 .fbsave { display: block; margin: 6px 0 0; padding: 4px 12px; font-size: 13px; }
-#mapSvg .bmon { filter: drop-shadow(0 0 5px rgba(255,170,210,.95)); }
+.mapSvg .bmon { filter: drop-shadow(0 0 5px rgba(255,170,210,.95)); }
 
 /* album sets: your Firefly cards in gold arch frames on navy velvet */
 .al-body { background: radial-gradient(circle at 50% 0, rgba(255,214,92,.12), transparent 60%), repeating-linear-gradient(45deg, rgba(255,255,255,.025) 0 2px, transparent 2px 14px), linear-gradient(180deg, #1b2a4f, #0f1830) !important; }
@@ -3051,6 +3051,23 @@ body:has(#lobby) .cordie-pop .cbub { margin-bottom: clamp(120px, 37vh, 170px); }
 @keyframes slamIn { from { transform: scale(3); opacity: 0; } }
 .rover.out { opacity: 0; transition: opacity .3s; }
 #title.season.harvest .sbadge { background: linear-gradient(180deg, #ffb347, #c9560f); }
+/* ===== the world is a strip of cities: swipe to travel (Dawn: "we just need to swipe the screen to move to different cities") ===== */
+#worldWrap { display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; background: #1b3f74; }
+.citysec { flex: none; width: 100%; height: 100%; min-height: 0; padding: 0 !important; display: block; position: relative; overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always; }
+.mapwin { position: absolute; top: 0; bottom: 0; left: var(--side); right: var(--side); overflow: hidden; border-radius: 0; }
+.citysec::before { background-image: var(--cbg, url(art/lobby-paris-map.webp)); filter: blur(10px) brightness(.85) saturate(1.2); }
+#worldWrap .mapSvg, .mapFx { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; margin: 0; border-radius: 0; box-shadow: none; aspect-ratio: auto; }
+.citysec.locked .mapwin { filter: saturate(.4) brightness(.6); }
+.clockp { position: absolute; z-index: 6; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 2px; padding: 12px 26px 14px; border-radius: 22px; background: rgba(20,8,40,.82); box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px var(--ol); color: #fff; text-align: center; pointer-events: none; }
+.clockp span { font-size: 34px; } .clockp b { font-size: clamp(22px, 7vh, 34px); letter-spacing: .08em; } .clockp small { font: 700 13px var(--ui); color: #ffe58f; }
+.cityname { position: absolute; z-index: 6; left: 0; right: 0; bottom: clamp(104px, 31vh, 136px); display: grid; justify-items: center; padding: 6px 0 8px; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(40,12,64,.75) 20%, rgba(40,12,64,.75) 80%, transparent); opacity: 0; transition: opacity .25s; }
+.cityname b { font-size: clamp(22px, 8vh, 40px); letter-spacing: .12em; line-height: 1; } .cityname small { font: 800 12px var(--ui); color: #ffe58f; display: flex; align-items: center; gap: 3px; } .cityname small svg { width: 16px; height: 16px; }
+#lobby.scrolling .cityname, .cityname.show { opacity: 1; }
+#lobby .hud { transition: opacity .25s; } #lobby.scrolling .hud { opacity: .1; pointer-events: none; }
+.cnav { position: absolute; z-index: 8; top: 50%; transform: translateY(-50%); width: 34px; height: 54px; border: 0; border-radius: 12px; font: 900 30px/1 var(--ui); color: #fff; background: rgba(40,12,64,.55); box-shadow: 0 0 0 2px rgba(255,229,143,.7); display: none; }
+.cnav.l { left: calc(clamp(64px, 10vw, 84px) + 2px); } .cnav.r { right: calc(clamp(64px, 10vw, 84px) + 2px); }
+@media (hover: hover) and (pointer: fine) { .cnav { display: grid; place-items: center; } .cnav[hidden] { display: none; } }
+.citypill { display: none; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3292,12 +3309,13 @@ function cityLock(id) {
   return LANDMARKS.filter(function (l) { return l.id === prev; })[0];
 }
 function lockMsg(r) { var p = cityLock(r.lm || r.id); return p ? r.name + ' opens once ' + p.name + ' has its first blossom. Earn petals in bingo, then tap Grow at ' + p.name + '.' : ''; }
-function stepOpen(ri, d) { for (var k = 1; k <= ROOMS.length; k++) { var r = ROOMS[(ri + d * k + ROOMS.length * k) % ROOMS.length]; if (roomHere(r) && !cityLock(r.lm || r.id)) return r; } return ROOMS[ri]; }
+function stepOpen(ri, d) { for (var k = 1; k <= ROOMS.length; k++) { var r = ROOMS[(ri + d * k + ROOMS.length * k) % ROOMS.length]; if (roomHere(r) && roomOpen(r) && !cityLock(r.lm || r.id)) return r; } return ROOMS[ri]; }
 // the room to work on next: the first open Paris room that still needs blossoms
 function goalLm() { for (var i = 0; i < CITY_ROOMS.length; i++) { var id = CITY_ROOMS[i]; if (!cityLock(id) && (S.build[id] || 0) < 3) return id; } return null; }
 function mapToGoal() {
+  return; // the whole city is always on screen now
   var w = $('#worldWrap'), id = goalLm(); if (!w || !id) return;
-  var g = [].slice.call(document.querySelectorAll('#mapSvg .lm')).filter(function (x) { return LANDMARKS[+x.dataset.lm].id === id; })[0]; if (!g) return;
+  var g = [].slice.call(document.querySelectorAll('.mapSvg .lm')).filter(function (x) { return LANDMARKS[+x.dataset.lm].id === id; })[0]; if (!g) return;
   var t = $('.hud-feat'), vis = (t ? t.getBoundingClientRect().top : w.clientHeight) - w.getBoundingClientRect().top, r = g.getBoundingClientRect();
   var mid = r.top - w.getBoundingClientRect().top + w.scrollTop + r.height / 2;
   w.scrollTop = Math.max(0, mid - vis * .5);
@@ -3630,20 +3648,18 @@ function landmarkArt(id, lvl, ghost) {
 }
 function sign(x, y) { return '<g transform="translate(' + x + ' ' + y + ')"><path d="M0 0v-26" stroke="#3d1a4f" stroke-width="4"/><rect x="-26" y="-50" width="52" height="28" rx="6" fill="#e9b27a"' + OL + '/><svg x="-14" y="-50" width="28" height="28" viewBox="0 0 40 40"><use href="#i-hammer"/></svg></g>'; }
 function ribbon(lm, i) {
-  var pl = PLOT[lm.id], p = [pl[0], pl[1] + LM_S * FOOTC[lm.id][2] + 30], lvl = S.build[lm.id] || 0, W = lm.name.length * 11 + 36, s = '<g transform="translate(' + p[0] + ' ' + p[1] + ') scale(1.2)">';
-  s += '<path d="M' + (-W / 2 - 16) + ' 0l14 -12v24z M' + (W / 2 + 16) + ' 0l-14 -12v24z" fill="#c98a12" stroke="#1a1030" stroke-width="2.5" stroke-linejoin="round"/>';
-  s += '<rect x="' + (-W / 2) + '" y="-16" width="' + W + '" height="32" rx="16" fill="#141c34" fill-opacity=".92" stroke="#f6c64a" stroke-width="3"/>';
-  s += '<rect x="' + (-W / 2 + 4) + '" y="-12" width="' + (W - 8) + '" height="24" rx="12" fill="none" stroke="#fff3b8" stroke-opacity=".35" stroke-width="1.2"/>';
-  s += '<text x="0" y="6.5" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="800" font-size="18" fill="#ffe58f">' + esc(lm.name) + '</text>';
-  s += '<rect x="-78" y="-76" width="156" height="58" rx="29" fill="#141c34" fill-opacity=".82" stroke="#f6c64a" stroke-width="3"/>' + (lvl ? '<rect x="-78" y="-76" width="156" height="58" rx="29" fill="none" stroke="#fff3b8" stroke-opacity=".5" stroke-width="1.5" transform="translate(0 0)"/>' : '');
-  for (var k = 0; k < 3; k++) {
-    var on = k < lvl, x = (k - 1) * 48, y = -47;
-    var sz = k === 1 ? 54 : 48; s += '<svg class="' + (on ? 'bmon' : '') + '" x="' + (x - sz / 2) + '" y="' + (y - sz / 2) + '" width="' + sz + '" height="' + sz + '" viewBox="0 0 40 40"><use href="#' + (on ? 'i-blossom' : 'i-blossom0') + '"/></svg>';
+  // a small name plaque (the next room to grow gets a pink one), three little blossoms above it for city rooms; no arrows, no big boxes
+  var pl = PLOT[lm.id], p = [pl[0], pl[1] + LM_S * FOOTC[lm.id][2] + 26], lvl = S.build[lm.id] || 0, isCity = CITY_ROOMS.indexOf(lm.id) >= 0, goal = isCity && goalLm() === lm.id, locked = cityLock(lm.id);
+  var W = lm.name.length * 10.5 + 34, s = '<g transform="translate(' + p[0] + ' ' + p[1] + ')">';
+  s += '<rect x="' + (-W / 2) + '" y="-15" width="' + W + '" height="30" rx="15" fill="' + (goal ? '#e0478c' : '#141c34') + '" fill-opacity=".93" stroke="' + (goal ? '#fff' : '#f6c64a') + '" stroke-width="3"/>';
+  s += '<text x="0" y="6" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="800" font-size="17" fill="' + (goal ? '#fff' : '#ffe58f') + '">' + esc(lm.name) + '</text>';
+  if (isCity && !locked) {
+    s += '<rect x="-46" y="-52" width="92" height="34" rx="17" fill="#141c34" fill-opacity=".8" stroke="#f6c64a" stroke-width="2.5"/>';
+    for (var k = 0; k < 3; k++) { var on = k < lvl, x = (k - 1) * 28; s += '<svg class="' + (on ? 'bmon' : '') + '" x="' + (x - 13) + '" y="-48" width="26" height="26" viewBox="0 0 40 40"><use href="#' + (on ? 'i-blossom' : 'i-blossom0') + '"/></svg>'; }
   }
-  if (CITY_ROOMS.indexOf(lm.id) >= 0 && lvl >= 3) s += '<g class="mapdone"><circle cx="' + (-W / 2 - 4) + '" cy="-2" r="17" fill="#f6c64a" stroke="#fff" stroke-width="3"/><text x="' + (-W / 2 - 4) + '" y="6" text-anchor="middle" font-size="20" font-weight="900" fill="#3d1a4f">✓</text></g>';
-  if (cityLock(lm.id)) s += '<g class="maplock"><circle cx="' + (-W / 2 - 4) + '" cy="-2" r="17" fill="#3d1a4f" stroke="#fff3b8" stroke-width="3"/><text x="' + (-W / 2 - 4) + '" y="6" text-anchor="middle" font-size="20">🔒</text></g>';
-  if (CITY_ROOMS.indexOf(lm.id) >= 0 && !cityLock(lm.id) && lvl < 3 && S.petals >= STAR_COST[lvl]) s += '<g class="growme"><rect x="' + (W / 2 - 14) + '" y="-50" width="76" height="30" rx="15" fill="#3fb43a" stroke="#fff" stroke-width="3"/><text x="' + (W / 2 + 24) + '" y="-29" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="800" font-size="17" fill="#fff" stroke="#1d5a1a" stroke-width="3" paint-order="stroke">Grow!</text></g>';
-  if (false) s += '<g class="bounce"><circle cx="' + (W / 2 + 4) + '" cy="-30" r="17" fill="url(#gBuild)"' + OL + '/><svg x="' + (W / 2 - 10) + '" y="-44" width="28" height="28" viewBox="0 0 40 40"><use href="#i-hammer"/></svg></g>';
+  if (isCity && lvl >= 3) s += '<g class="mapdone"><circle cx="' + (-W / 2 - 2) + '" cy="0" r="15" fill="#f6c64a" stroke="#fff" stroke-width="3"/><text x="' + (-W / 2 - 2) + '" y="7" text-anchor="middle" font-size="18" font-weight="900" fill="#3d1a4f">✓</text></g>';
+  if (locked) s += '<g class="maplock"><circle cx="' + (-W / 2 - 2) + '" cy="0" r="15" fill="#3d1a4f" stroke="#fff3b8" stroke-width="3"/><text x="' + (-W / 2 - 2) + '" y="6" text-anchor="middle" font-size="17">🔒</text></g>';
+  if (isCity && !locked && lvl < 3 && S.petals >= STAR_COST[lvl]) s += '<g class="growme"><rect x="' + (W / 2 - 10) + '" y="-46" width="68" height="26" rx="13" fill="#3fb43a" stroke="#fff" stroke-width="3"/><text x="' + (W / 2 + 24) + '" y="-27" text-anchor="middle" font-family="Fredoka, system-ui, sans-serif" font-weight="800" font-size="15" fill="#fff" stroke="#1d5a1a" stroke-width="3" paint-order="stroke">Grow!</text></g>';
   return s + '</g>';
 }
 var MAP_W = 1344, MAP_H = 768, LM_S = .72;
@@ -3671,7 +3687,9 @@ var CITIES = {
     plot: { beach: [470, 560], cablecar: [690, 360], parade: [1010, 500], samba: [190, 560] }, lmImg: { beach: ['art/landmark-beach.webp', 200, 1], cablecar: ['art/landmark-cablecar.webp', 190, 1], parade: ['art/landmark-parade.webp', 210, 1], samba: ['art/landmark-samba.webp', 210, 1] }, footc: { beach: [0, 40, 40], cablecar: [0, 40, 40], parade: [0, 40, 40], samba: [0, 40, 40] },
     rooms: ['beach', 'cablecar', 'parade', 'samba'], water: [[1150, 250], [1250, 470], [930, 110], [1080, 620]], next: null, blurb: 'Complete all 4 rooms for a grand prize' }
 };
-var CITY = CITIES.paris;
+var CITY = CITIES.paris, CITY_ORDER = ['paris', 'rio'];
+function cityMapHtml(id) { var keep = cityId(); setCity(id); var h = mapSvg().replace('id="mapSvg"', 'class="mapSvg" data-city="' + id + '"') + mapFxSvg().replace('id="mapFx"', 'class="mapFx"'); setCity(keep); return h; }
+function cityBlossomsOf(id) { return CITIES[id].rooms.reduce(function (a, r) { return a + Math.min(3, S.build[r] || 0); }, 0); }
 function cityId() { return CITIES[S.city] ? S.city : 'paris'; }
 function setCity(id) {
   var c = CITIES[id] || CITIES.paris; CITY = c; LANDMARKS = c.landmarks; PLOT = c.plot; LM_IMG = c.lmImg; FOOTC = c.footc; CITY_ROOMS = c.rooms; MAP_WATER = c.water;
@@ -3724,10 +3742,10 @@ function mapPin() {
     '<circle r="21" fill="none" stroke="#fff3b8" stroke-width="2.5"/></g></g>';
 }
 // the moving bits get their own see-through layer on top, so the big map picture never has to be redrawn
-function mapFxSvg() { return '<svg id="mapFx" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + mapLife() + mapPin() + '</svg>'; }
+function mapFxSvg() { return '<svg id="mapFx" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' + mapLife() + mapPin() + '</svg>'; }
 var SWEPT = false;
 function mapSvg() {
-  var s = '<svg id="mapSvg" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The city of ' + esc(CITY.name) + ' that you build">';
+  var s = '<svg id="mapSvg" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The city of ' + esc(CITY.name) + ' that you build">';
   s += '<image href="' + CITY.map + '" x="0" y="0" width="' + MAP_W + '" height="' + MAP_H + '" preserveAspectRatio="xMidYMid slice"/>';
   LANDMARKS.slice().sort(function (a, b) { return PLOT[a.id][1] - PLOT[b.id][1]; }).forEach(function (lm) {
     var p = PLOT[lm.id], f = FOOTC[lm.id], i = LANDMARKS.indexOf(lm);
@@ -4003,13 +4021,17 @@ function lobby() {
   S.ovens = (S.ovens || [null, null]).map(function (o) { return o && RECIPES.some(function (r) { return r.id === o.r; }) ? o : null; });
   var ovenReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); });
   var gamesHot = S.wheelDay !== today() || S.drops > 0 || S.scratch > 0;
-  var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city; });
-  var otherOpen = Object.keys(CITIES).some(function (id) { return id !== cityId() && id !== 'paris' && canTravel(id) && !((S.visited || {})[id]); });
+  var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city && roomOpen(r); });
   var featAll = feat.slice().sort(function (a, b) { return (b.id === hotRoom()) - (a.id === hotRoom()); }), featShow = featAll.slice(0, 2), featRest = featAll.slice(2);
-  show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec"><div class="mapwin">' + mapSvg() + mapFxSvg() + '</div>' +
-      '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + (SWEPT ? '' : '<div class="csweep"><b class="outl">' + CITY.big + '</b><small>City of Blossoms</small></div>') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>' +
-      '</div></div>' +
-    '<button class="citypill' + (otherOpen ? ' go' : '') + '" id="bCities" aria-label="Change city"><span class="cpl">✈</span><b>' + esc(CITY.name) + '</b><small>' + stars + '/12 ' + icon('i-blossom') + ' · ' + (otherOpen ? 'Fly to a new city' : 'Change city') + ' ▾</small></button>' +
+  var sky = '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>';
+  show('<div class="screen" id="lobby"><div id="worldWrap">' + CITY_ORDER.map(function (id) {
+      var c = CITIES[id], open = canTravel(id), here = id === cityId();
+      return '<div class="citysec' + (open ? '' : ' locked') + '" data-city="' + id + '" style="--cbg:url(' + c.map + ')"><div class="mapwin">' + cityMapHtml(id) + '</div>' + sky +
+        (here && !SWEPT ? '<div class="csweep"><b class="outl">' + c.big + '</b><small>City of Blossoms</small></div>' : '') +
+        (open ? '' : '<div class="clockp"><span>🔒</span><b class="outl">' + esc(c.name) + '</b><small>Complete ' + esc(CITIES[c.prev || 'paris'].name) + ' to unlock</small></div>') +
+        '<div class="cityname"><b class="outl">' + esc(c.big === 'RIO' ? 'RIO DE JANEIRO' : c.big) + '</b><small>' + cityBlossomsOf(id) + '/12 ' + icon('i-blossom') + '</small></div></div>';
+    }).join('') + '</div>' +
+    '<button class="cnav l" id="cPrev" aria-label="Previous city">‹</button><button class="cnav r" id="cNext" aria-label="Next city">›</button>' +
     topBar('<div class="spacer"></div><button class="evpill' + (eventsHot() ? ' hot' : '') + '" id="bEv" aria-label="Events"><img src="art/art-trophy.webp" alt=""><span>Events</span></button><button class="fbpill" id="bFb" aria-label="Send feedback">' + icon('i-chat') + '<span>Feedback</span></button><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       (giftReady ? rb('bGift', 'i-gift', 'pk', 'Day ' + (calState().day + 1) + '!', true) : '<button class="round giftwait" id="bGift"><span class="c pk">' + icon('i-gift') + '<i class="gclock">⏰</i></span><span class="lb">Gift in ' + untilText(nextReset()).replace(/ \d+m$/, '') + '</span></button>') +
@@ -4027,23 +4049,32 @@ function lobby() {
         (hot ? '<span class="fhot">🔥 2×</span>' : '') + '<span class="fnm">' + esc(r.name) + '</span></button>';
     }).join('') + (featRest.length ? '<button class="fmorep" id="bMoreRooms" aria-label="All featured rooms"><b>MORE</b><small>' + feat.length + ' rooms</small></button>' : '') + '</div>' +
   '</div>');
-  // the painting only gets scroll room under the featured bar when it is taller than the screen; a short map sits centred with no blur band
-  // the painting only gets scroll room under the featured bar when it is taller than the screen; a short map sits centred with no blur band
-  // the painting only gets scroll room under the featured bar when it is taller than the screen; a short map sits centred with no blur band
-  // a painting shorter than the screen is scaled to its full height inside a window that can be dragged sideways; a taller one keeps its scroll room under the featured bar
-  (function () { var ww = $('#worldWrap'), cs = $('.citysec'), win = $('.mapwin'), ms0 = $('#mapSvg'); if (!ww || !cs || !win || !ms0) return; var natural = win.clientWidth * MAP_H / MAP_W, H = ww.clientHeight; if (natural >= H) return;
-    cs.style.paddingBottom = '0'; win.style.height = H + 'px'; win.style.overflowX = 'auto';
-    ['#mapSvg', '#mapFx'].forEach(function (id) { var e = $(id); if (!e) return; e.style.height = H + 'px'; e.style.width = Math.round(H * MAP_W / MAP_H) + 'px'; });
-    win.scrollLeft = Math.max(0, (win.scrollWidth - win.clientWidth) / 2); })();
-  $('#worldWrap').scrollTop = keep;
-  if (!keep) mapToGoal();
+  (function () { // the world is one long strip of cities: swipe sideways to travel, no buttons needed
+    var ww = $('#worldWrap'), lob = $('#lobby'), idx = Math.max(0, CITY_ORDER.indexOf(cityId())), scrollT = null;
+    ww.scrollLeft = idx * ww.clientWidth;
+    function nav() { var i = Math.round(ww.scrollLeft / ww.clientWidth); $('#cPrev').hidden = i <= 0; $('#cNext').hidden = i >= CITY_ORDER.length - 1; }
+    nav();
+    ww.addEventListener('scroll', function () {
+      lob.classList.add('scrolling'); clearTimeout(scrollT);
+      scrollT = setTimeout(function () {
+        if (!lob.isConnected) return; lob.classList.remove('scrolling'); nav();
+        var i = Math.round(ww.scrollLeft / ww.clientWidth), id = CITY_ORDER[i] || 'paris', cn = ww.children[i] && ww.children[i].querySelector('.cityname');
+        if (cn) { cn.classList.add('show'); setTimeout(function () { cn.classList.remove('show'); }, 2200); }
+        if (id !== cityId() && canTravel(id)) { S.city = id; S.lastRoom = ''; if (!S.visited) S.visited = {}; S.visited[id] = 1; save(); setCity(id); SFX.set(); }
+      }, 160);
+    }, { passive: true });
+    $('#cPrev').onclick = function () { SFX.tap(); ww.scrollBy({ left: -ww.clientWidth, behavior: 'smooth' }); };
+    $('#cNext').onclick = function () { SFX.tap(); ww.scrollBy({ left: ww.clientWidth, behavior: 'smooth' }); };
+    addEventListener('resize', function () { if (ww.isConnected) ww.scrollLeft = Math.max(0, CITY_ORDER.indexOf(cityId())) * ww.clientWidth; });
+  })();
+
   if (!SWEPT) { SWEPT = true; var sw = $('.csweep'); if (sw) setTimeout(function () { sw.remove(); }, 3400); }
   $('#worldWrap').addEventListener('click', function (e) {
     var g = e.target.closest('.lm'); if (!g) return;
+    var cs = g.closest('.citysec'); if (cs && cs.dataset.city !== cityId()) { var cid = cs.dataset.city; if (!canTravel(cid)) { SFX.no && SFX.no(); toast('Complete ' + CITIES[CITIES[cid].prev || 'paris'].name + ' to unlock ' + CITIES[cid].name + '.', 3200); return; } S.city = cid; save(); setCity(cid); }
     var lm = LANDMARKS[+g.dataset.lm], r = roomByLm(lm.id); SFX.tap();
     if (r) roomScreen(r); else if (S.cityDone) travelTo('rio'); else toast(lm.name + ' opens when all 4 Paris rooms have 3 blossoms.', 3200);
   });
-  $('#bCities').onclick = function () { SFX.tap(); cityPicker(); };
   if ($('#bMoreRooms')) $('#bMoreRooms').onclick = function () { SFX.tap(); featPicker(); };
   app.querySelectorAll('.fsq[data-r]').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
   $('#bGift').onclick = function () { SFX.tap(); calendar(); };
@@ -4102,7 +4133,7 @@ function cityPicker() {
   });
 }
 function featPicker() {
-  var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city; }), hot = hotRoom();
+  var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city && roomOpen(r); }), hot = hotRoom();
   panel('<h3>Featured Rooms</h3><p class="csub">Special ways to play. Every room rewards petals, coins and cards.</p><div class="rgrid">' + feat.map(function (r) {
     var th = FEAT_THEME[r.id] || FEAT_THEME.garden;
     return '<button class="rcard' + (r.id === hot ? ' is-hot' : '') + '" data-r="' + ROOMS.indexOf(r) + '" style="--c1:' + th[0] + ';--c2:' + th[1] + '"><span class="rpic" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span>' +
@@ -4146,7 +4177,8 @@ function buildSheet(i, after) {
 }
 
 /* featured tile colors: frame light, frame deep, picture brightness */
-var FEAT_THEME = { garden: ['#b79cff', '#6a3fd6', 1.32], meadow: ['#8ff0cf', '#1fa58c', 1.1], carnival: ['#ffb3d6', '#e0478c', 1.08], coast: ['#ffe08a', '#f08a1c', 1.06], market: ['#ffb08f', '#d9443a', 1.18] };
+function roomOpen(r) { var se = season(); return !r.season || !!(se && se.id === r.season); } // seasonal rooms only show during their season
+var FEAT_THEME = { hollow: ['#ffb347', '#7b3fe0', 1.0], garden: ['#b79cff', '#6a3fd6', 1.32], meadow: ['#8ff0cf', '#1fa58c', 1.1], carnival: ['#ffb3d6', '#e0478c', 1.08], coast: ['#ffe08a', '#f08a1c', 1.06], market: ['#ffb08f', '#d9443a', 1.18] };
 var ROOMS = [
   { id: 'patisserie', lm: 'patisserie', name: 'Rose Patisserie', open: true, mode: 'multi', art: posterParis, img: 'art/room-paris.webp', pos: '30%' },
   { id: 'cafe', lm: 'cafe', name: 'Cafe du Parc', open: true, mode: 'multi', art: posterParis, img: 'art/room-cafe.webp', pos: '50%' },
@@ -4157,6 +4189,7 @@ var ROOMS = [
   { id: 'carnival', name: 'Candy Carnival', open: true, mode: 'recipe', art: posterCandy, img: 'art/room-candy-carnival.webp', pos: '22%' },
   { id: 'coast', name: 'Gold Coast', open: true, mode: 'shape', art: posterCoast, img: 'art/room-gold-coast.webp', pos: '72%' },
   { id: 'market', name: 'Lantern Market', open: true, mode: 'mystery', art: posterMarket, img: 'art/room-lantern-market.webp', pos: '18%' },
+  { id: 'hollow', name: 'Pumpkin Hollow', open: true, mode: 'mystery', art: posterOf('art/splash-halloween.webp', 'center'), img: 'art/splash-halloween.webp', pos: '50%', season: 'halloween' },
   { id: 'beach', lm: 'beach', city: 'rio', name: 'Copacabana Beach', open: true, mode: 'multi', art: posterOf('art/room-rio-beach.webp', '50%'), img: 'art/room-rio-beach.webp', pos: '50%' },
   { id: 'cablecar', lm: 'cablecar', city: 'rio', name: 'Sugarloaf Cable Car', open: true, mode: 'shape', art: posterOf('art/room-rio-cablecar.webp', '50%'), img: 'art/room-rio-cablecar.webp', pos: '50%' },
   { id: 'parade', lm: 'parade', city: 'rio', name: 'Carnival Parade', open: true, mode: 'blackout', art: posterOf('art/room-rio-parade.webp', '50%'), img: 'art/room-rio-parade.webp', pos: '50%' },
@@ -4426,17 +4459,17 @@ function startRound(arm, room) {
   if (dc > 1 || dp > 1) setTimeout(function () { toast((dc > 1 ? 'Double Coins' : '') + (dc > 1 && dp > 1 ? ' and ' : '') + (dp > 1 ? 'Double Petals' : '') + ' on for this round'); }, 1400);
   try { if (navigator.wakeLock) navigator.wakeLock.request('screen').then(function (w) { wake = w; }).catch(function () {}); } catch (e) { /* fine */ }
   var bigs = $('.bigs'), ready = document.createElement('div'); ready.className = 'ready'; $('#cards').appendChild(ready);
-  var n = 5, P = R.players, T = R.total, rdTop = document.createElement('div'); rdTop.className = 'rdtop'; rdTop.id = 'rdTop';
-  rdTop.innerHTML = '<b>Game starts in <em id="rdS">5</em> s</b><small>Waiting for players to join…</small><span class="rdfeat">' + R.feat.map(function (id) { var pp = pupById(id); return '<span class="rdpu">' + icon(pp.icon) + '<em>' + esc(pp.name) + '</em></span>'; }).join('') + '</span>'; $('#play').appendChild(rdTop);
+  var n = 3, P = R.players, T = R.total, rdTop = document.createElement('div'); rdTop.className = 'rdtop'; rdTop.id = 'rdTop';
+  rdTop.innerHTML = '<b>Game starts in <em id="rdS">3</em> s</b><small>Waiting for players to join…</small><span class="rdfeat">' + R.feat.map(function (id) { var pp = pupById(id); return '<span class="rdpu">' + icon(pp.icon) + '<em>' + esc(pp.name) + '</em></span>'; }).join('') + '</span>'; $('#play').appendChild(rdTop);
   (function tick() {
     if (!R || !ready.isConnected) { ready.remove(); rdTop.remove(); return; }
     if (n === 0) { ready.remove(); rdTop.remove(); var go = function () { if (!R || R.ended) return; $('#sLeft').textContent = R.left; R.active = true; autoAlertOn(); callNext(); if (R.mode === 'shape') setTimeout(function () { toast('Bonus shape: ' + R.shape.name + '. Every line still wins; complete the shape for a big extra prize!', 4200); }, 3400); }; if (!guideDone('round')) roundTour(go); else go(); return; }
-    var f = (6 - n) / 5;
+    var f = (4 - n) / 3;
     $('#sLeft').textContent = Math.max(1, Math.round(T * f)); var pl = $('#sPlayers'); if (pl) pl.textContent = Math.round(P * f) + ' players';
     if (!ready.firstChild) ready.innerHTML = '<b class="rdbig outl" id="rdN"></b>';
     var rs = $('#rdS'); if (rs) rs.textContent = n;
     var rn = $('#rdN', ready); if (rn) { rn.textContent = n; rn.classList.remove('pop'); void rn.offsetWidth; rn.classList.add('pop'); }
-    if (n === 5) say('Get ready');
+    if (n === 3) say('Get ready');
     tone(660 + (5 - n) * 70, 0, .2, 'sine', .06); n--; setTimeout(tick, 1000);
   })();
   setTimeout(function () { if (R && R.els[R.lucky]) { R.els[R.lucky].classList.add('is-lucky'); var fc = R.els[R.lucky].querySelector('.cell.free'); if (fc) fc.textContent = '×2'; R.els[R.lucky].insertAdjacentHTML('beforeend', '<span class="lucktag outl">Lucky card ×2</span>'); setTimeout(function () { var lt = R && R.els[R.lucky] && R.els[R.lucky].querySelector('.lucktag'); if (lt) lt.remove(); }, 4500); SFX.boost(); } }, 1600);
@@ -4581,7 +4614,7 @@ function callNext() {
   if (R.idx >= R.seq.length) return;
   var n = R.seq[R.idx++];
   while (R.called[n] && R.idx < R.seq.length) n = R.seq[R.idx++];
-  if (R.called[n]) { if (R.idx >= R.seq.length) { R.lastBall = true; R.timer = setTimeout(function () { finalCount(5); }, 1000); } return; }
+  if (R.called[n]) { if (R.idx >= R.seq.length) { R.lastBall = true; R.timer = setTimeout(function () { finalCount(3); }, 1000); } return; }
   if (R.called[n]) return;
   R.called[n] = true; R.lastCall = Date.now();
   var onCards = 0, covered = 0; R.cards.forEach(function (k) { k.cells.forEach(function (c) { if (c.n === n) { onCards++; if (c.d) covered++; } }); });
@@ -4601,7 +4634,7 @@ function callNext() {
   rivals();
   if (!R.active) return;
   if (R.idx >= R.seq.length && autoPups() && S.items.balls5 > 0 && R.cards.some(function (k) { return !k.won; }) && !R.autoBalls) { R.autoBalls = true; R.timer = setTimeout(function () { if (R && !R.ended) { var bb = $('#bBalls'); if (bb) bb.click(); } }, 900); return; }
-  if (R.idx >= R.seq.length) { R.lastBall = true; toast('Last ball! Mark your numbers and call your bingos.' + (S.items.balls5 ? ' Or use +5 Balls.' : '')); R.timer = setTimeout(function () { finalCount(5); }, 4000); }
+  if (R.idx >= R.seq.length) { R.lastBall = true; toast('Last ball! Mark your numbers and call your bingos.' + (S.items.balls5 ? ' Or use +5 Balls.' : '')); R.timer = setTimeout(function () { finalCount(3); }, 4000); }
   else R.timer = setTimeout(callNext, speedMs());
 }
 // a little live feed of other players winning, so rounds feel shared (friends' names mixed in when signed in)
@@ -4876,7 +4909,7 @@ var DAUBERS = [
 ];
 function hasStyle(kind, it) { return !it.ok && !it.drop && !it.gems ? true : !!(S.unlocked[kind + ':' + it.id] || (it.ok && it.ok())); }
 /* each themed room stamps its own daub, unless the player picked a special dauber in the Style Studio */
-var ROOM_DAUB = { garden: 'moonflower', carnival: 'candy', coast: 'shell', market: 'lantern', patisserie: 'macaron', cafe: 'cup', carousel: 'horse', boutique: 'bow', meadow: 'butterfly', beach: 'rio-ball', cablecar: 'rio-maraca', parade: 'rio-mask', samba: 'rio-drum' };
+var ROOM_DAUB = { hollow: 'pumpkin', garden: 'moonflower', carnival: 'candy', coast: 'shell', market: 'lantern', patisserie: 'macaron', cafe: 'cup', carousel: 'horse', boutique: 'bow', meadow: 'butterfly', beach: 'rio-ball', cablecar: 'rio-maraca', parade: 'rio-mask', samba: 'rio-drum' };
 // daubs still being drawn in Firefly: the game checks once whether the picture exists and uses the drawn dauber until it does
 var DAUB_OK = {};
 function daubReady(d) {
@@ -5271,7 +5304,7 @@ function finalCount(n) {
   if (R.idx < R.seq.length || !R.lastBall) return;
   if (n <= 0) { roundOverSlam(function () { endRound('balls'); }); return; }
   var bw = $('#play .ballwrap') || $('#play'), d = document.createElement('div'); d.className = 'fclock'; d.innerHTML = '<i>⏰</i><b>' + n + '</b>'; bw.appendChild(d);
-  tone(660 + (5 - n) * 90, 0, .25, 'sine', .08); say(String(n));
+  tone(660 + (3 - n) * 120, 0, .25, 'sine', .08); say(String(n));
   R.timer = setTimeout(function () { finalCount(n - 1); }, 1000);
 }
 function roundOverSlam(then) {
@@ -5315,11 +5348,13 @@ function bloomShow(perfect, done) {
   function finish() { if (gone) return; gone = true; clearInterval(tm); o.classList.add('out'); setTimeout(function () { o.remove(); done(); }, 300); }
   $('#bsGo').onclick = finish; o.onclick = finish;
 }
+var WHEEL_NEED = 3; // bingos per Bloom Wheel spin (the wheel is earned, not handed out)
 var BLOOM_WHEEL = [{ lbl: '5', n: 5, w: 30 }, { lbl: 'PETITE', n: 25, w: 12, tier: 0 }, { lbl: '8', n: 8, w: 13 }, { lbl: 'BOUQUET', n: 50, w: 8, tier: 1 }, { lbl: '10', n: 10, w: 20 }, { lbl: 'GRAND', n: 120, w: 4, tier: 2 }, { lbl: '8', n: 8, w: 12 }, { lbl: 'ROYAL', n: 300, w: 1, tier: 3 }];
 var WHEEL_COLS = ['#1fd1b2', '#4ed35a', '#8a3ff0', '#3b8cff', '#1fd1b2', '#ff4fa3', '#8a3ff0', '#ffc12e'];
 var TIERS = [['Petite', '#7ef07a', '#1f9a3a'], ['Bouquet', '#7fbfff', '#2456d6'], ['Grand', '#ff8fc8', '#d6338a'], ['Royal', '#ffe58f', '#f0870f']];
 function results() {
-  var E = R.earned, spins = R.bingos ? 1 : 0, bet = R.bet, room = R.roomObj;
+  var E = R.earned, bet = R.bet, room = R.roomObj;
+  S.wheelMeter = (S.wheelMeter || 0) + R.bingos; var spins = Math.floor(S.wheelMeter / WHEEL_NEED); S.wheelMeter -= spins * WHEEL_NEED; save();
   var head = R.bingos ? (R.mode === 'blackout' ? 'Blackout!' : R.bingos > 1 ? R.bingos + ' Bingos!' : 'Bingo!') : 'Round Over';
   var ingCount = {}; E.ings.forEach(function (g) { ingCount[g] = (ingCount[g] || 0) + 1; });
   var tiles = BAKES[R.room] ? bakeNeed(R.room).map(function (nd) { var g = ingById(nd[0]), h = Math.min(nd[1], bakeState(R.room).have[nd[0]] || 0), full = h >= nd[1]; return '<div class="stile' + (full ? ' full' : '') + '">' + ingDot(nd[0]) + '<small>' + g.name + '</small><span class="ibar"><i style="width:' + (h / nd[1] * 100) + '%"></i><em>' + h + '/' + nd[1] + '</em></span>' + (full ? '<span class="sok">✓</span>' : '') + (ingCount[nd[0]] ? '<span class="sbadge">' + ingCount[nd[0]] + '</span>' : '') + '</div>'; }).join('')
@@ -5338,7 +5373,7 @@ function results() {
     '</div>' +
     '<div class="sumR"><div class="tiers4">' + TIERS.map(function (t, i) { var amt = BLOOM_WHEEL.filter(function (w) { return w.tier === i; })[0].n * bet; return '<div class="t4" id="tier' + i + '" style="--a:' + t[1] + ';--b:' + t[2] + '"><em class="outl">' + t[0] + '</em><b>' + icon('i-ticket') + amt + '</b></div>'; }).join('') + '</div>' +
       '<div class="wwrap"><canvas id="bwCv" aria-label="Bloom Wheel"></canvas><button class="wspin" id="bwGo"' + (spins ? '' : ' disabled') + '><span>' + (spins ? 'SPIN' : '🔒') + '</span></button></div>' +
-      '<div class="wfoot"><p class="wnote" id="bwMsg">' + (spins ? 'Your bingo earned a spin of the Bloom Wheel!' : 'Win a bingo to spin the Bloom Wheel.') + '</p>' +
+      '<div class="wfoot"><p class="wnote" id="bwMsg">' + (spins ? 'Your bingos earned ' + (spins > 1 ? spins + ' spins' : 'a spin') + ' of the Bloom Wheel!' : 'Bloom Wheel meter: ' + S.wheelMeter + '/' + WHEEL_NEED + ' bingos. ' + (WHEEL_NEED - S.wheelMeter) + ' more for a spin.') + '</p>' +
       '<button class="wskip" id="bwSkip" hidden>SKIP ▶▶ <b>4s</b></button><button class="wodds" id="bwOdds">See the Odds</button></div></div>' +
   '</div>');
   if (R.bingos) setTimeout(function () { sparkle(innerWidth * .25, 80, 70); }, 250);
@@ -6325,7 +6360,7 @@ function goalUi() {
 }
 
 /* ---------- Garden Path: the featured rooms' bonus game ---------- */
-function hotRoom() { var f = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city; }), d = Math.floor(Date.now() / 86400000); return f[d % f.length].id; }
+function hotRoom() { var f = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city && roomOpen(r); }), d = Math.floor(Date.now() / 86400000); return f[d % f.length].id; }
 function bonusPct(room) { return Math.min(100, Math.round((S.bonus && S.bonus[room]) || 0)); }
 function gardenPath(bet, room) {
   S.bonus[room] = 0; save();
@@ -6752,7 +6787,8 @@ var STORIES = {
   meadow: ['Welcome to Butterfly Meadow! Hear the wings?', 'Catch the butterflies on your card for big prizes!'],
   carnival: ['Step right up to Candy Carnival!', 'Collect the sweets on your card and bake a prize!'],
   coast: ['The Gold Coast sparkles in the sun!', 'Finish the bonus shape for a big extra prize!'],
-  market: ['Lanterns, music and mystery gifts at Lantern Market!', 'Open the gift squares to see what is inside!']
+  market: ['Lanterns, music and mystery gifts at Lantern Market!', 'Open the gift squares to see what is inside!'],
+  hollow: ['Trick or treat! Pumpkin Hollow is open for Halloween.', 'Open the gift squares for spooky surprises.']
 };
 var RIO_POSE = { point: 'rio-point', wow: 'rio-cheer', cheer: 'rio-cheer', wave: 'rio-wave', stand: 'rio-wave', gift: 'rio-maraca' };
 function cordieArt(pose) { return 'art/mascot-' + ((S.city === 'rio' && RIO_POSE[pose]) ? RIO_POSE[pose] : pose) + '.webp'; }
@@ -6819,7 +6855,7 @@ function mapTour() {
   if (!$('#lobby') || veil || document.querySelector('.coach')) return;
   var cp = document.querySelector('.cordie-pop'); if (cp) cp.remove();
   var w = $('#worldWrap'); if (w) w.scrollTop = 0;
-  function lmEl(id) { return function () { var g = [].slice.call(document.querySelectorAll('#mapSvg .lm')).filter(function (x) { return LANDMARKS[+x.dataset.lm].id === id && x.querySelector('rect'); })[0]; return g; }; }
+  function lmEl(id) { return function () { var g = [].slice.call(document.querySelectorAll('.mapSvg .lm')).filter(function (x) { return LANDMARKS[+x.dataset.lm].id === id && x.querySelector('rect'); })[0]; return g; }; }
   coach([
     { text: '<b>Bonjour, I\'m Cordie!</b> Welcome to Bingo Bloom. Let me show you around. It only takes a minute.', pose: 'wow' },
     { sel: lmEl('patisserie'), text: 'This is <b>Paris</b>. Each building is a bingo room. <b>Start here at Rose Patisserie!</b> Tap a room to play in it.' },
