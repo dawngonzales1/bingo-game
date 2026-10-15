@@ -1649,6 +1649,11 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .frost { position: absolute; inset: 0; z-index: 8; pointer-events: none; display: grid; place-items: center; background: radial-gradient(ellipse at center, rgba(217,242,255,.05), rgba(150,210,255,.45)); box-shadow: inset 0 0 60px 20px rgba(200,235,255,.8); animation: fade .4s; }
 .frost b { font-size: clamp(40px, 22vh, 110px); color: #d9f2ff; opacity: .85; animation: pulse 1s ease-in-out infinite; }
 #cards.all4 .bigs.four { display: grid; grid-template-columns: repeat(2, auto); justify-content: center; align-content: center; gap: 12px; position: relative; }
+/* four cards at once: squares go a little wider than tall so the cards fill the width (the Frenzy room) */
+#cards.all4 .bigs.four .cell { aspect-ratio: 1.42; }
+#cards.all4 .bigs.four .bcard .grid { gap: 3px; padding: 3px 4px 4px; }
+#cards.all4 .bigs.four .bcard .hdr { padding: 3px 6px; }
+#cards.all4 .bigs.four .bcard .hdr span { width: 70%; }
 #cards.all4 .bigs.four #bView4 { position: absolute; right: 0; bottom: 0; z-index: 3; padding: 3px 9px; font-size: 12px; }
 #cards.all4 { grid-template-columns: 1fr; }
 .minis .swap { padding: 3px 8px; font-size: 12px; }
@@ -1709,11 +1714,18 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @media (max-width: 640px) { .tmwrap { grid-template-columns: 1fr; } }
 
 /* power-up bar across the top of the round */
-#play { grid-template-columns: var(--lc) minmax(0, 1fr) !important; grid-template-areas: "l t" "l c" !important; }
+#play { --pc: clamp(44px, 6.5vw, 56px); grid-template-columns: var(--lc) minmax(0, 1fr) var(--pc) !important; grid-template-areas: "l t p" "l c p" !important; }
+#play .pcol { grid-area: p; display: flex; flex-direction: column; align-items: center; gap: 5px; min-height: 0; padding: 4px 0; overflow: hidden; }
+#play .pcol .ppl { width: 34px; }
+#play .pcol .rfeed { width: 100%; margin-top: auto; }
+#play .pcol .rfi { padding: 3px 3px; font-size: 8.5px; justify-content: center; text-align: center; border-radius: 9px; }
+#play .pcol .rfi i { width: 16px; height: 16px; font-size: 9px; }
+#play .pcol .rfi em { display: none; }
+#play #cards .prow { display: none; }
 #play .rail { display: none !important; }
 #play #cards { grid-template-rows: minmax(0, 1fr) auto; }
 #play #cards .prow { grid-column: 1; grid-row: 2; display: flex; align-items: center; gap: 8px; height: 34px; margin-top: 2px; padding: 0 8px; border-radius: 17px; background: linear-gradient(180deg, rgba(118,56,182,.9), rgba(56,20,90,.92)) padding-box, linear-gradient(90deg, #b8780a, #ffe58f 30%, #e9a81c 70%, #fff3b8) border-box; border: 2px solid transparent; box-shadow: 0 0 0 1.5px var(--ol), 0 3px 0 1.5px var(--ol); }
-.pavs { display: flex; align-items: center; gap: 2px; flex: 1; min-width: 0; overflow: hidden; }
+.pavs { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
 .ppl { position: relative; display: grid; justify-items: center; width: 34px; flex: none; background: none; }
 .ppl i, .ppl .av { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font: 800 11px var(--ui); font-style: normal; color: #fff; background: var(--pc, #7b44d8); box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--ol); }
 .ppl .av { --av: 22px !important; }
@@ -3952,7 +3964,7 @@ function renderPlay() {
         '<button class="pu pmore" id="bMore" aria-label="All power-ups"><span class="orb">' + icon('i-more') + '<b id="nMore">' + IN_PUPS.reduce(function (a, k) { return a + owned(k); }, 0) + '</b></span><span class="pl">More</span></button>' +
       '</div>' +
       '<span hidden><b id="sBalls"></b><b id="sCoins"></b><b id="sPetals"></b><i id="meter"></i></span></div>' +
-    '<div id="cards"><div class="prow" id="prow"><div class="pavs" id="pavs"></div><div class="pgoal"><i class="pbar"><b id="pbarFill"></b></i><div class="pstar" id="pstar"><b id="pLeft">0</b><small>LEFT</small></div></div></div><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap" aria-label="Swap cards">⇄<span> Swap</span></button><button class="b3 plum swap" id="bView4" aria-label="Show all 4 cards">⊞<span> All 4</span></button></div></div></div>');
+    '<div id="cards"><div class="bigs"></div><div class="minis"><button class="b3 plum swap" id="bSwap" aria-label="Swap cards">⇄<span> Swap</span></button><button class="b3 plum swap" id="bView4" aria-label="Show all 4 cards">⊞<span> All 4</span></button></div></div></div>');
   R.els = R.cards.map(function (k, ci) { var t = document.createElement('div'); t.innerHTML = cardHtml(k, ci); return t.firstChild; });
   placeCards();
   $('#cards').addEventListener('click', onCardTap);
@@ -3960,9 +3972,10 @@ function renderPlay() {
   $('#bAutoB').onclick = function () { S.settings.autoBoost = !autoPups(); save(); this.setAttribute('aria-pressed', autoPups()); SFX.tap(); toast(autoPups() ? 'Auto power-ups on: when Boost fills, your power-ups fire by themselves' : 'Auto power-ups off: tap the glowing Boost to fire them', 3000); meterUi(); };
   R.pq = []; pqFill(true);
   $('#pq').onclick = function (e) { if (e.target.closest('#bAutoB') || !R) return; if (R.meter >= R.boostAt && R.active) useBoost(); else { SFX.tap(); toast(R.pq.length ? 'Your power-ups fire when the glow line under them is full. Keep marking numbers!' : 'No power-ups loaded. Get more in the Shop between rounds.', 2800); } };
+  if (!$('#play .pcol')) $('#play').insertAdjacentHTML('beforeend', '<div class="pcol" id="pcol"><div class="pavs" id="pavs"></div></div>');
   $('#bSwap').onclick = swapCards; playersRow();
   var rv = $('#play .rvid'); if (rv) { rv.addEventListener('playing', function () { rv.classList.add('on'); }, { once: true }); rv.play && rv.play().catch(function () {}); } if (R.room && ROOM_DAUB[R.room]) daubReady(ROOM_DAUB[R.room]);
-  $('#bView4').onclick = function () { S.settings.view4 = !S.settings.view4; save(); SFX.tap(); placeCards(); };
+  $('#bView4').onclick = function () { S.settings.view4 = S.settings.view4 === false; save(); SFX.tap(); placeCards(); };
   $('#bAlert').onclick = useAlert;
   $('#bMore').onclick = pupTray;
   $('#bInstant').onclick = useInstant;
@@ -4008,7 +4021,7 @@ function placeCards() {
   var big = $('.bigs'), mini = $('.minis'), swap = $('#bSwap'), v4 = $('#bView4'), cards = $('#cards');
   big.classList.remove('four'); cards.classList.remove('all4');
   if (R.els.length <= 2) { R.els.forEach(function (e) { big.appendChild(e); }); cards.classList.remove('has-minis'); }
-  else if (S.settings.view4) {
+  else if (S.settings.view4 !== false) {
     cards.classList.remove('has-minis'); cards.classList.add('all4'); big.classList.add('four');
     R.els.forEach(function (e) { big.appendChild(e); }); big.appendChild(v4); v4.innerHTML = '⊟<span> 2 big</span>';
   } else {
@@ -4102,10 +4115,10 @@ function rivalWin() {
   var pool = LEAGUE_NAMES.concat((ON.friends || []).map(function (f) { return f.name; }).filter(Boolean));
   var nm = (R.pavs && R.pavs.length && Math.random() < .8) ? R.pavs[rand(R.pavs.length)] : pool[rand(pool.length)], what = R.mode === 'blackout' ? 'BLACKOUT' : ['BINGO', 'BINGO', 'BINGO', 'Double Bloom'][rand(4)];
   var pav = host.querySelector('.ppl[data-n="' + nm.replace(/"/g, '') + '"]'); if (pav) { pav.classList.remove('won'); void pav.offsetWidth; pav.classList.add('won'); }
-  var feed = host.querySelector('.rfeed'); if (!feed) { feed = document.createElement('div'); feed.className = 'rfeed'; var lc = host.querySelector('.lcol'); (lc || host).appendChild(feed); }
+  var feed = host.querySelector('.rfeed'); if (!feed) { feed = document.createElement('div'); feed.className = 'rfeed'; var pc = host.querySelector('.pcol'); (pc || host).appendChild(feed); }
   var it = document.createElement('div'); it.className = 'rfi';
   it.innerHTML = '<i style="background:' + RIV_COLORS[rand(RIV_COLORS.length)] + '">' + esc(nm.charAt(0)) + '</i><span><b>' + esc(nm) + '</b> got ' + what + '!</span><em>' + R.left + ' left</em>';
-  feed.appendChild(it); while (feed.children.length > 2) feed.firstChild.remove();
+  feed.appendChild(it); while (feed.children.length > 1) feed.firstChild.remove();
   setTimeout(function () { it.classList.add('out'); setTimeout(function () { it.remove(); }, 400); }, 3200);
 }
 function bumpLeft() {
@@ -4119,6 +4132,7 @@ function playersRow() {
   var pool = LEAGUE_NAMES.concat((ON.friends || []).map(function (f) { return f.name; }).filter(Boolean)), seen = {}, names = [];
   while (names.length < 7 && names.length < pool.length) { var nm = pool[rand(pool.length)]; if (!seen[nm]) { seen[nm] = 1; names.push(nm); } }
   R.pavs = names;
+  names = names.slice(0, 5);
   box.innerHTML = '<span class="ppl you" title="' + esc(myName()) + '">' + avatarHtml(28) + '<small>YOU</small></span>' + names.map(function (n, i) {
     return '<span class="ppl" data-n="' + esc(n) + '" title="' + esc(n) + '" style="--pc:' + RIV_COLORS[i % RIV_COLORS.length] + '"><i>' + esc(n.charAt(0)) + '</i><small>' + esc(n) + '</small></span>';
   }).join('');
@@ -4256,7 +4270,7 @@ function autoWild() {
   });
   if (!best || !spend('wild')) return;
   pupFx('i-wild', 'Wild Petal!', 'Marked your best square');
-  if (R.els.length > 2 && !S.settings.view4 && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
+  if (R.els.length > 2 && S.settings.view4 === false && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
   setTimeout(function () {
     if (!R || R.ended) return; var k = R.cards[best.ci]; if (k.cells[best.i].d) return;
     var el = R.els[best.ci].querySelector('[data-i="' + best.i + '"]');
