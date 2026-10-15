@@ -386,6 +386,10 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .rload .rlbar em { position: absolute; inset: 0; display: grid; place-items: center; font: 800 12px var(--ui); color: #fff; text-shadow: 0 1px 0 #1d5a20; font-style: normal; }
 .rload small { margin-top: 8px; display: flex; align-items: center; gap: 6px; font: 700 13px var(--ui); color: #fff; text-shadow: 0 1px 0 #3d1a4f, 0 0 6px rgba(0,0,0,.6); }
 .rload small svg { width: 24px; height: 24px; }
+#play .cell.need { box-shadow: inset 0 0 0 .9cqw #ff3b4a, inset 0 -1cqw 0 #efe4d4, 0 .5cqw 0 rgba(120,70,30,.18), 0 0 2cqw rgba(255,60,80,.6) !important; }
+#play .cell.need.hint { box-shadow: inset 0 0 0 .9cqw #ff3b4a, 0 0 0 .8cqw #ffd45c, 0 0 3cqw 1cqw rgba(255,214,92,.95) !important; }
+#play #cards.has-minis { grid-template-columns: auto minmax(0, 1fr) !important; }
+#play #cards.has-minis .minis { order: -1; }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
@@ -4141,7 +4145,7 @@ function renderPlay() {
   if (!$('#play .pcol')) $('#play').insertAdjacentHTML('beforeend', '<div class="pcol" id="pcol"><div class="pcur"><span class="cur"><img src="art/icon-ticket.webp" alt=""><b id="tickets">' + S.tickets.toLocaleString() + '</b></span><span class="cur"><img src="art/icon-coin.webp" alt=""><b id="coins">' + S.coins.toLocaleString() + '</b></span><span class="cur"><img src="art/icon-petal.webp" alt=""><b id="petals">' + S.petals.toLocaleString() + '</b></span></div><div class="pavs" id="pavs"></div>' + (R.mode === 'multi' ? '<div class="bqm" id="bqm" title="Full Bouquet: 4 bingos on one card"><small>BOUQUET</small><div class="bqf"><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""></div></div>' : '') + '</div>');
   $('#bSwap').onclick = swapCards; playersRow();
   var rv = $('#play .rvid'); if (rv) { rv.addEventListener('playing', function () { rv.classList.add('on'); }, { once: true }); rv.play && rv.play().catch(function () {}); } if (R.room && ROOM_DAUB[R.room]) daubReady(ROOM_DAUB[R.room]);
-  $('#bView4').onclick = function () { S.settings.view4 = S.settings.view4 === false; save(); SFX.tap(); placeCards(); };
+  $('#bView4').onclick = function () { S.settings.view4 = !S.settings.view4; save(); SFX.tap(); placeCards(); };
   $('#bAlert').onclick = useAlert;
   $('#bMore').onclick = pupTray;
   $('#bInstant').onclick = useInstant;
@@ -4187,7 +4191,7 @@ function placeCards() {
   var big = $('.bigs'), mini = $('.minis'), swap = $('#bSwap'), v4 = $('#bView4'), cards = $('#cards');
   big.classList.remove('four'); cards.classList.remove('all4');
   if (R.els.length <= 2) { R.els.forEach(function (e) { big.appendChild(e); }); cards.classList.remove('has-minis'); }
-  else if (S.settings.view4 !== false) {
+  else if (S.settings.view4) {
     cards.classList.remove('has-minis'); cards.classList.add('all4'); big.classList.add('four');
     R.els.forEach(function (e) { big.appendChild(e); }); big.appendChild(v4); v4.innerHTML = '⊟<span> 2 big</span>';
   } else {
@@ -4436,7 +4440,7 @@ function autoWild() {
   });
   if (!best || !spend('wild')) return;
   pupFx('i-wild', 'Wild Petal!', 'Marked your best square');
-  if (R.els.length > 2 && S.settings.view4 === false && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
+  if (R.els.length > 2 && !S.settings.view4 && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
   setTimeout(function () {
     if (!R || R.ended) return; var k = R.cards[best.ci]; if (k.cells[best.i].d) return;
     var el = R.els[best.ci].querySelector('[data-i="' + best.i + '"]');
@@ -4842,6 +4846,12 @@ function oneToGo(ci) {
     else near = LINES.some(function (L, j) { return !k.lines[j] && L.filter(function (i) { return !k.cells[i].d; }).length === 1; });
   }
   el.classList.toggle('one2go', near);
+  var needs = {};
+  if (!k.won) {
+    if (R.mode === 'blackout') { var left = k.cells.map(function (c, i) { return c.d ? -1 : i; }).filter(function (i) { return i >= 0; }); if (left.length === 1) needs[left[0]] = 1; }
+    else LINES.forEach(function (L, j) { if (k.lines[j]) return; var open = L.filter(function (i) { return !k.cells[i].d; }); if (open.length === 1) needs[open[0]] = 1; });
+  }
+  el.querySelectorAll('.cell').forEach(function (c) { c.classList.toggle('need', !!needs[+c.dataset.i]); });
   var tag = el.querySelector('.o2g');
   if (near && !tag) el.insertAdjacentHTML('beforeend', '<span class="o2g outl">1 TO GO!</span>');
   else if (!near && tag) tag.remove();
