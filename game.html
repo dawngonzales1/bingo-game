@@ -2837,6 +2837,104 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 .rfi b { color: #ffe58f; } .rfi em { font-style: normal; font-size: 10px; padding: 0 6px; border-radius: 999px; background: rgba(255,255,255,.15); }
 .rfi.out { animation: rfOut .4s ease-in forwards; }
 @keyframes rfIn { from { transform: translateX(-110%); opacity: 0; } } @keyframes rfOut { to { transform: translateX(-110%); opacity: 0; } }
+/* ===== city pill + city picker (Dawn: "it's too hard to go to different cities") ===== */
+.citypill { position: absolute; z-index: 6; left: 50%; top: 56px; transform: translateX(-50%); display: flex; align-items: center; gap: 7px; padding: 3px 14px 4px 8px; border-radius: 999px; border: 0; color: #fff; font-family: var(--ui);
+  background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0) 50%), linear-gradient(180deg, #29c6d8, #1b7fb8); box-shadow: 0 0 0 2.5px #fff3b8, 0 0 0 4.5px var(--ol), 0 5px 0 4px var(--ol), 0 10px 16px rgba(20,5,30,.45); animation: dropIn .45s .2s cubic-bezier(.2,.9,.3,1.3) both; }
+.citypill .cpl { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; font-size: 17px; background: radial-gradient(circle at 40% 30%, #fff, #ffd45c 60%, #e9a81c); color: #3d1a4f; box-shadow: 0 0 0 2px var(--ol); }
+.citypill b { font-size: 17px; letter-spacing: .04em; text-shadow: 0 1.5px 0 var(--ol); }
+.citypill small { font-size: 10.5px; font-weight: 800; color: #fff3b8; text-shadow: 0 1px 0 var(--ol); }
+.citypill.go { animation: dropIn .45s .2s cubic-bezier(.2,.9,.3,1.3) both, playPulse 1.4s 1s ease-in-out infinite; }
+.citypill.go .cpl { animation: fcHop .9s ease-in-out infinite; }
+.citypill:active { transform: translateX(-50%) translateY(2px); }
+@media (max-height: 360px) { .citypill { top: 46px; padding: 2px 10px 3px 6px; } .citypill b { font-size: 14px; } .citypill small { font-size: 9px; } .citypill .cpl { width: 22px; height: 22px; font-size: 13px; } }
+.panel.cities, .panel.rooms { width: min(96vw, 760px); max-height: 94vh; overflow: auto; padding: 10px 14px 14px; }
+.csub { margin: -4px 0 8px; font-size: 12.5px; color: var(--mist); text-align: center; }
+.cgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ccard { position: relative; display: grid; justify-items: center; align-content: end; gap: 3px; min-height: clamp(130px, 44vh, 190px); padding: 10px 8px 10px; border-radius: 18px; overflow: hidden; background: center / cover #3d1a4f; color: #fff; text-align: center;
+  box-shadow: 0 0 0 3px #e9a81c, 0 0 0 5px var(--ol), 0 6px 0 5px var(--ol), 0 12px 18px rgba(20,5,30,.4); animation: tierIn .5s cubic-bezier(.2,.9,.3,1.3) both; }
+.ccard:nth-child(2) { animation-delay: .08s; } .ccard:nth-child(3) { animation-delay: .16s; }
+.ccard .cmist { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(40,12,64,0) 20%, rgba(40,12,64,.88) 72%); }
+.ccard.lock .cmist, .ccard.soon .cmist { background: linear-gradient(180deg, rgba(20,8,40,.55), rgba(20,8,40,.92) 70%); }
+.ccard.lock { filter: saturate(.55); cursor: pointer; }
+.ccard.soon { background: radial-gradient(circle at 50% 30%, #6a32d0, #2a0c46 70%); }
+.ccard.here { box-shadow: 0 0 0 3px #fff3b8, 0 0 0 5px var(--ol), 0 6px 0 5px var(--ol), 0 0 26px 8px rgba(255,214,92,.75); }
+.ccard > * { position: relative; }
+.ccard b { font-size: clamp(22px, 7vh, 34px); letter-spacing: .08em; line-height: 1; }
+.ccard small { font-size: 12px; font-weight: 700; color: #ffe58f; }
+.ccard .cbl { display: flex; align-items: center; gap: 1px; margin: 2px 0 4px; }
+.ccard .cbl svg { width: 22px; height: 22px; } .ccard .cbl em { font-style: normal; font-size: 11.5px; font-weight: 800; margin-left: 4px; }
+.ccard .b3 { padding: 6px 12px; font-size: 15px; width: 100%; }
+.cstay { padding: 4px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 800; color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #ffd45c); box-shadow: 0 0 0 2px var(--ol); }
+.clock { font-size: 11.5px; font-weight: 700; color: #e6d4ff; }
+.chere, .cdone { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); padding: 2px 10px; border-radius: 999px; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; white-space: nowrap; color: #fff; background: linear-gradient(180deg, #5fe08a, #1fa58c); box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol); }
+.cdone { background: linear-gradient(180deg, #ffd45c, #e9a81c); color: #3d1a4f; }
+.ccard.here .cdone { top: 30px; }
+@media (max-height: 360px) { .cgrid { gap: 8px; } .ccard { min-height: 120px; padding: 6px; } .ccard b { font-size: 20px; } .ccard .b3 { font-size: 13px; padding: 4px 8px; } }
+.rload .plane { position: absolute; top: 18%; left: -12%; font-size: clamp(40px, 12vh, 72px); color: #fff; text-shadow: 0 3px 0 var(--ol), 0 8px 16px rgba(0,0,0,.5); transform: rotate(-12deg); animation: planeFly 1.5s cubic-bezier(.3,.6,.5,1) both; }
+.rload .plane::after { content: ''; position: absolute; right: 90%; top: 55%; width: 60vw; height: 5px; border-radius: 3px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.9)); }
+@keyframes planeFly { 0% { left: -14%; top: 30%; } 100% { left: 108%; top: 8%; } }
+
+/* ===== featured bar: HOT room + one more, then an All rooms tile ===== */
+.ftile.fmore { flex: none; position: relative; width: clamp(96px, 16vw, 124px); height: auto; aspect-ratio: 16 / 9.6; max-height: clamp(52px, 21vh, 92px); border-radius: 16px; overflow: visible; display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 20%, #9d6cff, #5a2590 60%, #2e0e4c); box-shadow: 0 0 0 3px #e9a81c, 0 0 0 5px var(--ol), 0 5px 0 5px var(--ol), 0 10px 16px rgba(20,5,30,.45); animation: tierIn .5s .2s both, fbob 3.4s -1s ease-in-out infinite; }
+.ftile.fmore::before, .ftile.fmore::after { display: none; }
+.ftile.fmore .fstack { position: relative; width: 70%; height: 62%; margin-top: -6px; }
+.ftile.fmore .fstack i { position: absolute; left: calc(var(--k) * 16%); top: calc(var(--k) * 6px); width: 68%; height: 80%; border-radius: 8px; background: center / cover; box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--c2), 0 4px 8px rgba(20,5,30,.5); transform: rotate(calc(var(--k) * 6deg - 6deg)); }
+.ftile.fmore .fcnt { position: absolute; top: -10px; right: -6px; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 800; color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #ffd45c 55%, #e9a81c); box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol); animation: playPulse 1.4s ease-in-out infinite; z-index: 5; }
+.ftile.fmore .fnm { position: absolute; left: 50%; right: auto; bottom: -9px; transform: translateX(-50%); padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; white-space: nowrap; color: #3d1a4f; background: linear-gradient(180deg, #fff, #ffe9a8); box-shadow: 0 0 0 2px var(--ol); z-index: 4; }
+.ftile.fmore:active { transform: translateY(2px); }
+@media (max-height: 300px) { .ftile.fmore { width: 80px; } .ftile.fmore .fnm { font-size: 9px; padding: 1px 6px; bottom: -7px; } .ftile.fmore .fcnt { font-size: 10px; } }
+.rgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(136px, 1fr)); gap: 14px 10px; padding-top: 8px; }
+.rcard { position: relative; display: grid; grid-template-rows: auto auto; gap: 0; padding: 0; border: 0; border-radius: 16px; overflow: visible; text-align: left; font-family: var(--ui); color: #fff; background: linear-gradient(180deg, var(--c1), var(--c2)); box-shadow: 0 0 0 3px #e9a81c, 0 0 0 5px var(--ol), 0 5px 0 5px var(--ol), 0 10px 16px rgba(20,5,30,.4); animation: tierIn .5s cubic-bezier(.2,.9,.3,1.3) both; transition: transform .15s; }
+.rcard:nth-child(2) { animation-delay: .06s; } .rcard:nth-child(3) { animation-delay: .12s; } .rcard:nth-child(4) { animation-delay: .18s; } .rcard:nth-child(5) { animation-delay: .24s; }
+.rcard:hover, .rcard:focus-visible { transform: translateY(-3px); } .rcard:active { transform: translateY(2px); }
+.rcard.is-hot { box-shadow: 0 0 0 3px #fff3b8, 0 0 0 5px var(--ol), 0 5px 0 5px var(--ol), 0 0 24px 6px rgba(255,170,80,.7); }
+.rcard .rpic { display: block; aspect-ratio: 16 / 8; margin: 4px 4px 0; border-radius: 12px; background: center / cover; filter: saturate(1.25) brightness(1.08); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.75); }
+.rcard .frib { top: -8px; left: 8px; border-radius: 999px; padding: 1px 8px; font-size: 9px; color: #fff; background: linear-gradient(180deg, var(--c1), var(--c2)); box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol); text-shadow: 0 1px 0 rgba(40,10,50,.5); z-index: 5; }
+.rcard .fhot { top: -10px; right: 6px; font-size: 9px; padding: 1px 7px; border-radius: 999px; z-index: 5; }
+.rcard .rtx { display: grid; padding: 4px 8px 28px; line-height: 1.1; }
+.rcard .rtx b { font-size: 15px; text-shadow: 0 1.5px 0 var(--ol); } .rcard .rtx small { font-size: 10.5px; font-weight: 700; color: #fff3b8; text-shadow: 0 1px 0 rgba(40,10,50,.5); }
+.rcard .rpu { position: absolute; left: 8px; bottom: 6px; display: inline-flex; align-items: center; gap: 2px; padding: 1px 6px; border-radius: 999px; background: rgba(30,8,45,.7); box-shadow: 0 0 0 1px rgba(255,229,143,.6); }
+.rcard .rpu svg { width: 18px; height: 18px; } .rcard .rpu small { font-size: 9px; font-weight: 800; color: #ffe58f; }
+.rcard .rplay { position: absolute; right: 8px; bottom: 4px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; color: #3d1a4f; background: linear-gradient(180deg, #fff3b8, #ffd45c 55%, #e9a81c); box-shadow: 0 0 0 1.5px var(--ol), 0 0 12px rgba(255,214,92,.8); animation: playPulse 1.4s ease-in-out infinite; }
+@media (max-height: 360px) { .rgrid { gap: 10px 8px; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); } .rcard .rpic { aspect-ratio: 16 / 7; } .rcard .rtx { padding-bottom: 24px; } .rcard .rtx b { font-size: 13px; } }
+
+/* ===== card tiers: bold, bright, each its own colour (Dawn: "they look plain and cheap") ===== */
+.tier { --t1: #ff8fb1; --t2: #d63a7a; --t3: #ffd0e0; color: #fff; overflow: visible;
+  background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0) 45%), linear-gradient(180deg, var(--t1), var(--t2)); border: 3px solid transparent; background-clip: padding-box, padding-box;
+  box-shadow: 0 0 0 3px #ffe58f, 0 0 0 5px var(--ol), 0 7px 0 5px color-mix(in srgb, var(--t2) 60%, #2a0c46), 0 14px 22px rgba(20,5,30,.4); }
+.tier:nth-child(2) { --t1: #b98cff; --t2: #6a32d0; --t3: #e6d4ff; }
+.tier:nth-child(3) { --t1: #ffd45c; --t2: #f07a1c; --t3: #fff3b8; }
+.tier::before { content: ''; position: absolute; inset: 4px; border-radius: 15px; pointer-events: none; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.65); }
+.tier::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.45) 50%, transparent 60%) no-repeat; background-size: 250% 100%; background-position: 160% 0; animation: cardShine 5s ease-in-out infinite; }
+.tier:nth-child(2)::after { animation-delay: 1.6s; } .tier:nth-child(3)::after { animation-delay: 3.2s; }
+.tier.sel { transform: scale(1.08); box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--ol), 0 7px 0 5px color-mix(in srgb, var(--t2) 60%, #2a0c46), 0 0 30px 8px color-mix(in srgb, var(--t1) 85%, #fff); animation: tierIn .5s cubic-bezier(.2,.9,.3,1.3) both, selGlow 1.6s 0.5s ease-in-out infinite; }
+@keyframes selGlow { 50% { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--ol), 0 7px 0 5px color-mix(in srgb, var(--t2) 60%, #2a0c46), 0 0 40px 14px color-mix(in srgb, var(--t1) 95%, #fff); } }
+.calm .tier.sel { animation: none; }
+.trib, .tier:nth-child(2) .trib, .tier:nth-child(3) .trib { background: linear-gradient(180deg, #fff, var(--t3)); color: color-mix(in srgb, var(--t2) 85%, #2a0c46); text-shadow: none; font-size: 16px; padding: 2px 18px 3px; box-shadow: 0 0 0 2.5px var(--ol), 0 3px 0 2.5px var(--ol); }
+.tcards i { background: linear-gradient(180deg, var(--t2) 0 24%, #fffdf6 24%); box-shadow: 0 0 0 1.5px var(--ol), 0 2px 0 1.5px var(--ol), 0 4px 8px rgba(20,5,30,.35); }
+.tcards i em { color: #fff; text-shadow: 0 1px 0 rgba(40,10,50,.6); }
+.twin { gap: 5px; }
+.twin span { padding: 1px 7px 1px 2px; border-radius: 999px; background: rgba(255,255,255,.94); color: #3d1a4f; box-shadow: 0 0 0 1.5px var(--ol), 0 2px 0 1.5px var(--ol); }
+.tplay { font-size: 20px; box-shadow: 0 0 0 2px var(--ol), 0 4px 0 2px var(--ol), 0 0 16px rgba(255,214,92,.7); }
+.tier.sel .tplay { animation: playPulse 1.4s ease-in-out infinite; }
+.tier .tflag { box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol); }
+.tiers { padding-top: 6px; }
+/* Butterfly Meadow butterflies glide at one steady, slow pace everywhere (fixes the sudden take-off some browsers showed) */
+.rlife .fly { left: -20%; animation: flyL 22s linear infinite, flyBob 3.2s ease-in-out infinite, tflap .28s ease-in-out infinite alternate; transform: none !important; }
+.rlife .fly:nth-child(2) { animation-duration: 27s, 3.6s, .3s; } .rlife .fly:nth-child(3) { animation-duration: 31s, 2.9s, .26s; }
+@keyframes flyL { from { left: -20%; } to { left: 104%; } }
+@keyframes flyBob { 0%, 100% { translate: 0 0; rotate: 6deg; } 50% { translate: 0 -16px; rotate: -6deg; } }
+#room > .rlife, #room > .rbg { position: absolute; z-index: 0; }
+
+/* holiday title screens: Dawn's Firefly splash art takes over the loading screen for the season */
+#title.season .tbg { background-image: var(--splash); filter: none; background-position: center; }
+#title.season .tbg::after { background: linear-gradient(180deg, rgba(20,8,40,.15), rgba(20,8,40,0) 30%, rgba(20,8,40,.55)); }
+#title.season .tcordie, #title.season .tballoons, #title.season .tfall { display: none; }
+#title.season .in { align-self: end; margin-bottom: clamp(10px, 5vh, 30px); }
+#title.season .logo { font-size: clamp(30px, 10vh, 54px); }
+#title.season .sbadge { position: absolute; top: 10px; right: 14px; padding: 4px 14px; border-radius: 999px; font: 800 13px var(--ui); color: #fff; background: linear-gradient(180deg, #ff9a3c, #d9443a); box-shadow: 0 0 0 2px #fff3b8, 0 0 0 4px var(--ol); text-shadow: 0 1px 0 var(--ol); animation: dropIn .6s .4s both; }
+#title.season.winter .sbadge { background: linear-gradient(180deg, #8fe3ff, #1b7fb8); }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3464,13 +3562,14 @@ function setCity(id) {
   document.documentElement.classList.toggle('city-rio', c.id === 'rio');
 }
 function cityDone(id) { return id === 'paris' ? !!S.cityDone : !!(S.cities && S.cities[id]); }
-function canTravel(id) { return !!(S.travel || cityDone(CITIES[id] && CITIES[id].prev || 'paris')); }
+function canTravel(id) { return id === 'paris' || !!(S.travel || cityDone(CITIES[id] && CITIES[id].prev || 'paris')); }
 CITIES.rio.prev = 'paris';
 function roomHere(r) { return r.city ? r.city === cityId() : (r.lm ? cityId() === 'paris' : true); }
 function travelTo(id) {
-  S.city = id; S.lastRoom = ''; save(); setCity(id); SFX.set();
+  S.city = id; S.lastRoom = ''; if (!S.visited) S.visited = {}; S.visited[id] = 1; save(); setCity(id); SFX.set();
   var c = CITIES[id], d = document.createElement('div'); d.className = 'rload'; d.style.backgroundImage = 'url(' + c.map + ')';
-  d.innerHTML = '<b>✈ ' + esc(c.name) + '</b><div class="rlbar"><i></i><em>0%</em></div><small>' + (id === 'rio' ? 'Carnival, beach and samba. Grow 3 blossoms in each room!' : 'Welcome back to Paris!') + '</small>';
+  d.classList.add('fly');
+  d.innerHTML = '<span class="plane">✈</span><b>✈ ' + esc(c.name) + '</b><div class="rlbar"><i></i><em>0%</em></div><small>' + (id === 'rio' ? 'Carnival, beach and samba. Grow 3 blossoms in each room!' : 'Welcome back to Paris!') + '</small>';
   document.body.appendChild(d); var bar = d.querySelector('i'), em = d.querySelector('em'), t0 = performance.now(), dur = reduceMotion ? 200 : 1300;
   requestAnimationFrame(function () { bar.style.width = '100%'; });
   (function tick(now) { var k = Math.min(1, (now - t0) / dur); em.textContent = Math.round(k * 100) + '%'; if (k < 1) requestAnimationFrame(tick); })(t0);
@@ -3596,6 +3695,19 @@ function confetti(el) {
   for (var i = 0; i < 36; i++) { var c = document.createElement('i'); c.className = 'conf'; c.style.left = (r.left + Math.random() * r.width) + 'px'; c.style.top = (r.top - 10) + 'px'; c.style.background = cols[i % cols.length]; c.style.setProperty('--dx', (Math.random() * 160 - 80) + 'px'); c.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg'); c.style.animationDelay = (Math.random() * .25) + 's'; c.style.animationDuration = (1.1 + Math.random() * .8) + 's'; document.body.appendChild(c); setTimeout(function (x) { return function () { x.remove(); }; }(c), 2400); }
 }
 
+var SEASONS = [
+  { id: 'halloween', badge: '🎃 Happy Halloween!', from: [10, 1], to: [11, 2], msgs: ['Carving pumpkins…', 'Lighting the lanterns…', 'Brewing something bubbly…'] },
+  { id: 'winter', badge: '❄️ Happy Holidays!', from: [12, 1], to: [1, 3], msgs: ['Wrapping presents…', 'Hanging the lights…', 'Warming the cocoa…'] }
+];
+function season() {
+  var d = new Date(), m = d.getMonth() + 1, day = d.getDate(), md = m * 100 + day;
+  return SEASONS.filter(function (x) { var a = x.from[0] * 100 + x.from[1], b = x.to[0] * 100 + x.to[1]; return a <= b ? md >= a && md <= b : md >= a || md <= b; })[0] || null;
+}
+function seasonSplash() {
+  var se = season(), t = $('#title'); if (!se || !t) return;
+  var im = new Image(); im.onload = function () { if (!t.isConnected) return; t.style.setProperty('--splash', 'url(' + im.src + ')'); t.classList.add('season', se.id); t.insertAdjacentHTML('beforeend', '<span class="sbadge">' + se.badge + '</span>'); var m = $('#tMsg'); if (m) m.textContent = se.msgs[0]; };
+  im.src = 'art/splash-' + se.id + '.webp';
+}
 function title() {
   var petals = '';
   for (var i = 0; i < 14; i++) petals += '<img src="art/icon-petal.webp" alt="" style="left:' + rand(100) + '%;width:' + (18 + rand(22)) + 'px;animation-duration:' + (9 + rand(9)) + 's,' + (3 + rand(3)) + 's;animation-delay:-' + rand(18) + 's,-' + rand(4) + 's">';
@@ -3609,6 +3721,7 @@ function title() {
     '<button class="b3 gold shine" id="bStart" hidden>PLAY</button>' +
     '<p class="tfoot">Fair bingo · every odd shown · no real-money prizes</p></div></div>');
   setTimeout(refreshTitle, 0);
+  seasonSplash();
   titleLoad();
   $('#bStart').onclick = function () {
     ac(); SFX.coin();
@@ -3774,12 +3887,13 @@ function lobby() {
   var ovenReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); });
   var gamesHot = S.wheelDay !== today() || S.drops > 0 || S.scratch > 0;
   var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city; });
-  var nx = CITY.next ? CITIES[CITY.next] : null, nxOpen = nx && canTravel(nx.id);
+  var otherOpen = Object.keys(CITIES).some(function (id) { return id !== cityId() && id !== 'paris' && canTravel(id) && !((S.visited || {})[id]); });
+  var featAll = feat.slice().sort(function (a, b) { return (b.id === hotRoom()) - (a.id === hotRoom()); }), featShow = featAll.slice(0, 2), featRest = featAll.slice(2);
   show('<div class="screen" id="lobby"><div id="worldWrap"><div class="citysec">' + mapSvg() + mapFxSvg() +
       '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + (SWEPT ? '' : '<div class="csweep"><b class="outl">' + CITY.big + '</b><small>City of Blossoms</small></div>') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>' +
       '<div class="cityban"><b class="outl">' + CITY.big + '</b><small>' + stars + '/12 blossoms · ' + CITY.blurb + '</small></div></div>' +
-      (nx ? '<div class="nextsec' + (nxOpen ? ' open' : '') + '"><i class="nxblur" style="background-image:url(' + nx.map + ')' + (nxOpen ? ';filter:blur(6px) saturate(1.3)' : '') + '"></i><i class="nxmist"></i><div class="cityban soon">' + (nxOpen ? '<b class="outl">' + esc(nx.big) + '</b><small>' + esc(nx.name) + ' is open!</small><button class="b3 gold shine" id="bTravel">✈ Fly to ' + esc(nx.name) + '</button>' : '<span class="nxlock">🔒</span><b class="outl">NEXT CITY</b><small>' + esc(nx.name) + ' is waiting… finish ' + esc(CITY.name) + ' to travel on!</small>') + '</div></div>' :
-       '<div class="nextsec open"><i class="nxblur" style="background-image:url(' + CITIES.paris.map + ');filter:blur(6px) saturate(1.2)"></i><i class="nxmist"></i><div class="cityban soon"><b class="outl">PARIS</b><small>Your first city</small><button class="b3 gold" id="bTravel">✈ Back to Paris</button></div></div>') + '</div>' +
+      '</div>' +
+    '<button class="citypill' + (otherOpen ? ' go' : '') + '" id="bCities" aria-label="Change city"><span class="cpl">✈</span><b>' + esc(CITY.name) + '</b><small>' + (otherOpen ? 'Fly to a new city!' : 'Change city') + ' ▾</small></button>' +
     topBar('<div class="spacer"></div><button class="evpill' + (eventsHot() ? ' hot' : '') + '" id="bEv" aria-label="Events"><img src="art/art-trophy.webp" alt=""><span>Events</span></button><button class="fbpill" id="bFb" aria-label="Send feedback">' + icon('i-chat') + '<span>Feedback</span></button><button class="round" id="bSet" aria-label="Settings"><span class="c pl">' + icon('i-gear') + '</span></button>') +
     '<div class="hud hud-left">' +
       (giftReady ? rb('bGift', 'i-gift', 'pk', 'Day ' + (calState().day + 1) + '!', true) : '<button class="round giftwait" id="bGift"><span class="c pk">' + icon('i-gift') + '<i class="gclock">⏰</i></span><span class="lb">Gift in ' + untilText(nextReset()).replace(/ \d+m$/, '') + '</span></button>') +
@@ -3791,13 +3905,13 @@ function lobby() {
       rb('bGames', 'i-games', 'pl', 'Games', gamesHot) +
       rb('bTeam', 'i-team', '', 'Team', gardenReady()) +
     '</div>' +
-    '<div class="hud hud-feat">' + feat.map(function (r) {
+    '<div class="hud hud-feat">' + featShow.map(function (r) {
       var th = FEAT_THEME[r.id] || FEAT_THEME.garden, hot = r.id === hotRoom();
       return '<button class="ftile ft2' + (hot ? ' is-hot' : '') + '" data-r="' + ROOMS.indexOf(r) + '" style="--c1:' + th[0] + ';--c2:' + th[1] + ';--fb:' + th[2] + '"><span class="fclip"><span class="fpic" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span></span>' + fmovHtml(r.id) + '<i class="fflash"></i>' +
         '<span class="frib">' + MODE_INFO[r.mode].tag + '</span>' + (hot ? '<span class="fhot" title="2× petals here today">🔥<b>HOT</b><small>2× petals</small></span>' : '') +
         '<span class="fnm">' + esc(r.name) + '</span><i class="fspk s1"></i><i class="fspk s2"></i><i class="fspk s3"></i>' +
         '<span class="fxtra"><span class="fpl"><i class="live"></i><b data-pl="' + r.id + '">' + (40 + rand(60)) + '</b> playing</span><span class="fpu">' + roomFeat(r).map(function (id) { return icon(pupById(id).icon); }).join('') + '<small>2×</small></span><span class="fgo">PLAY ▶</span></span></button>';
-    }).join('') + '</div>' +
+    }).join('') + (featRest.length ? '<button class="ftile fmore" id="bMoreRooms" aria-label="All featured rooms"><span class="fstack">' + featRest.slice(0, 3).map(function (r, k) { var th = FEAT_THEME[r.id] || FEAT_THEME.garden; return '<i style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center;--c2:' + th[1] + ';--k:' + k + '"></i>'; }).join('') + '</span><span class="fcnt">+' + featRest.length + '</span><span class="fnm">All rooms ▶</span></button>' : '') + '</div>' +
   '</div>');
   $('#worldWrap').scrollTop = keep;
   if (!keep) mapToGoal();
@@ -3807,8 +3921,9 @@ function lobby() {
     var lm = LANDMARKS[+g.dataset.lm], r = roomByLm(lm.id); SFX.tap();
     if (r) roomScreen(r); else if (S.cityDone) travelTo('rio'); else toast(lm.name + ' opens when all 4 Paris rooms have 3 blossoms.', 3200);
   });
-  if ($('#bTravel')) $('#bTravel').onclick = function () { SFX.tap(); travelTo(nx ? nx.id : 'paris'); };
-  app.querySelectorAll('.ftile').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
+  $('#bCities').onclick = function () { SFX.tap(); cityPicker(); };
+  if ($('#bMoreRooms')) $('#bMoreRooms').onclick = function () { SFX.tap(); featPicker(); };
+  app.querySelectorAll('.ftile[data-r]').forEach(function (b) { b.onclick = function () { SFX.tap(); roomScreen(ROOMS[+b.dataset.r]); }; });
   featSpotlight();
   $('#bGift').onclick = function () { SFX.tap(); calendar(); };
   if (!guideDone('map')) { CORDIE_HI = true; setTimeout(function wait() { if (!$('#lobby')) return; if (veil || document.querySelector('.rwd, .story, .csweep, .gcol')) { setTimeout(wait, 800); return; } mapTour(); }, 1500); }
@@ -3848,6 +3963,34 @@ function panel(inner, cls, onReady) {
   veil.addEventListener('pointerup', function (e) { if (downOut && e.target === veil && Math.abs(e.clientX - dx0) < 12 && Math.abs(e.clientY - dy0) < 12 && !veil.querySelector('.mmboard')) closeVeil(); downOut = false; });
   veil.onclick = function (e) { if (e.target.closest('[data-x]')) closeVeil(); };
   document.body.appendChild(veil); if (onReady) onReady(veil); return veil;
+}
+
+function cityBlossoms(c) { return c.rooms.reduce(function (a, id) { return a + Math.min(3, S.build[id] || 0); }, 0); }
+function cityPicker() {
+  var here = cityId(), ids = Object.keys(CITIES);
+  panel('<h3>✈ Cities</h3><p class="csub">Every city has 4 rooms. Grow 3 blossoms in each to finish it and open the next!</p><div class="cgrid">' + ids.map(function (id) {
+    var c = CITIES[id], n = cityBlossoms(c), open = canTravel(id), isHere = id === here, done = cityDone(id);
+    return '<div class="ccard' + (isHere ? ' here' : open ? ' open' : ' lock') + '" style="background-image:url(' + c.map + ')"><span class="cmist"></span>' +
+      (done ? '<span class="cdone">★ COMPLETE</span>' : '') + (isHere ? '<span class="chere">YOU ARE HERE</span>' : '') +
+      '<b class="outl">' + esc(c.big) + '</b><small>' + esc(c.name) + '</small>' +
+      '<span class="cbl">' + range(0, 4).map(function (k) { return '<svg viewBox="0 0 40 40"><use href="#' + (k < Math.floor(n / 3) ? 'i-blossom' : 'i-blossom0') + '"/></svg>'; }).join('') + '<em>' + n + '/12</em></span>' +
+      (isHere ? '<span class="cstay">Playing here</span>' : open ? '<button class="b3 gold shine" data-fly="' + id + '">✈ Fly to ' + esc(c.name) + '</button>' : '<span class="clock">🔒 Finish ' + esc(CITIES[c.prev || 'paris'].name) + ' to unlock</span>') + '</div>';
+  }).join('') + '<div class="ccard soon"><span class="cmist"></span><b class="outl">?</b><small>Next city</small><span class="clock">Coming soon…</span></div></div>', 'cities', function (v) {
+    v.querySelectorAll('[data-fly]').forEach(function (b) { b.onclick = function () { SFX.tap(); closeVeil(); travelTo(b.dataset.fly); }; });
+    v.querySelectorAll('.ccard.lock').forEach(function (c) { c.onclick = function () { SFX.no && SFX.no(); toast('Finish every room of ' + CITY.name + ' (12 blossoms) to fly on!', 3200); }; });
+  });
+}
+function featPicker() {
+  var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city; }), hot = hotRoom();
+  panel('<h3>Featured Rooms</h3><p class="csub">Special ways to play. Every room pays petals, coins and cards!</p><div class="rgrid">' + feat.map(function (r) {
+    var th = FEAT_THEME[r.id] || FEAT_THEME.garden;
+    return '<button class="rcard' + (r.id === hot ? ' is-hot' : '') + '" data-r="' + ROOMS.indexOf(r) + '" style="--c1:' + th[0] + ';--c2:' + th[1] + '"><span class="rpic" style="background-image:url(' + r.img + ');background-position:' + r.pos + ' center"></span>' +
+      '<span class="frib">' + MODE_INFO[r.mode].tag + '</span>' + (r.id === hot ? '<span class="fhot">🔥 HOT · 2× petals</span>' : '') +
+      '<span class="rtx"><b>' + esc(r.name) + '</b><small>' + esc(MODE_INFO[r.mode].foot) + '</small></span>' +
+      '<span class="rpu">' + roomFeat(r).map(function (id) { return icon(pupById(id).icon); }).join('') + '<small>2×</small></span><span class="rplay">PLAY ▶</span></button>';
+  }).join('') + '</div>', 'rooms', function (v) {
+    v.querySelectorAll('.rcard').forEach(function (b) { b.onclick = function () { SFX.tap(); closeVeil(); roomScreen(ROOMS[+b.dataset.r]); }; });
+  });
 }
 
 function buildSheet(i, after) {
@@ -3980,7 +4123,7 @@ function roomScreen(room) {
   if (!S.seen[room.id] && STORIES[room.id]) { S.seen[room.id] = 1; save(); roomStory(room, function () { roomScreen(room); }); return; }
   var arm = {}, fair = S.dry >= 3, mi = MODE_INFO[room.mode], featured = room.mode !== 'multi';
   var top = featured ? '<div class="bake"><span class="dish" style="background-image:url(' + room.img + ')"></span><div class="bk"><b>' + (MODE_INFO[room.mode].how) + '</b><small>Garden Path bonus ' + bonusPct(room.id) + '%</small><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div></div>' : bakeBar(room);
-  show('<div class="screen" id="room" style="background-image:linear-gradient(180deg, rgba(40,15,70,.15), rgba(40,15,70,.45)), url(' + room.img + ');background-position:center, ' + room.pos + ' center">' +
+  show('<div class="screen" id="room" style="background-image:linear-gradient(180deg, rgba(255,235,200,.06), rgba(40,15,70,.28)), url(' + room.img + ');background-position:center, ' + room.pos + ' center">' +
     roomTop('Map', esc(room.name)) +
     '<button class="rnav l" id="rPrev" aria-label="Previous room">‹</button><button class="rnav r" id="rNext" aria-label="Next room">›</button>' +
     '<div class="rtopband">' + top + (featured ? '' : roomGrow(room)) + '<div class="jack"><span class="jrays"></span><small>GRAND JACKPOT</small><b id="jackN">0</b><span>' + icon('i-ticket') + 'tickets</span></div></div>' +
