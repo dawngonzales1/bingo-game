@@ -3734,7 +3734,7 @@ function fmovHtml(id) {
 }
 // the same room effects, full size, behind the room screen and the bingo screen
 // living room backgrounds: Dawn's Firefly videos loop behind the cards; the still picture stays underneath, and Battery saver, Calm mode and Reduce Motion keep the still
-var ROOM_VIDEO = { market: 'art/room-lantern-market', beach: 'art/room-rio-beach' };
+var ROOM_VIDEO = {}; // rooms are still, blurred pictures behind the cards (the Frenzy look); motion lives in the UI
 function roomVideo(id) {
   var v = ROOM_VIDEO[id]; if (!v || reduceMotion || (S.settings && (S.settings.lite || S.settings.calm))) return '';
   return '<video class="rvid" autoplay muted loop playsinline disablepictureinpicture preload="auto"><source src="' + v + '.webm" type="video/webm"><source src="' + v + '.mp4" type="video/mp4"></video>';
