@@ -1010,3 +1010,54 @@ Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gol
 ```
 Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a small golden crown with pink and purple gems on a plum velvet cushion, single object, plain cream background, soft shadow underneath.
 ```
+
+## 10. Rio de Janeiro, the second city (Oct 15)
+Eight generations: map, four rooms (plus an Image-to-video of each, camera still), a Cordie carnival character sheet, a daub sheet and a landmark sheet. Prompts are on the art-list page.
+
+**Rio lobby map (Widescreen 16:9)** (save as `lobby-rio-map.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a wide sunny storybook map of Rio de Janeiro seen from above at an angle, Sugarloaf mountain and the bay, a golden beach with a wavy mosaic promenade, palm trees, colorful hillside houses, a carnival parade avenue with bunting, a cable car line, empty building plots along the streets, lots of space between places, hot pink, turquoise, yellow and lime colors
+```
+
+**Copacabana Beach room (Widescreen 16:9)** (save as `room-rio-beach.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a bright Copacabana beach scene, turquoise waves, golden sand, striped umbrellas and a juice kiosk, the wavy black and white mosaic promenade, palm trees, soft blurred background, calm open space in the center
+```
+
+**Carnival Parade room (Widescreen 16:9)** (save as `room-rio-parade.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a joyful carnival parade avenue at golden hour, a huge feathered float in hot pink and gold, confetti in the air, drums and bunting, grandstands with crowds, soft blurred background, calm open space in the center
+```
+
+**Sugarloaf Cable Car room (Widescreen 16:9)** (save as `room-rio-cablecar.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a sunny view from Sugarloaf mountain, a cute glass cable car gliding on its cable, the bay and the city far below, tropical flowers in the foreground, soft blurred background, calm open space in the center
+```
+
+**Samba Stage room (Widescreen 16:9)** (save as `room-rio-samba.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. a festive night samba stage with warm spotlights, a glittering backdrop of palm leaves and gold, colorful stage lights, confetti, soft blurred background, calm open space in the center
+```
+
+**Cordie in Rio (Square 1:1, character sheet)** (save as `mascot-rio.png`)
+
+```
+Character sheet of a cute 3D cartoon mobile game mascot, shown four times in a 2 by 2 grid: a small cream-white bunny with long ears with pink insides, big sparkling violet eyes, wearing a tiny carnival feather headdress in hot pink and turquoise and a gold sequin top. Poses: waving, pointing to the side, cheering with arms up, holding a maraca. Glossy soft Pixar-style render, pastel colors with plum and gold accents. Plain solid mint-green background, no text, no shadows on the background.
+```
+
+**Rio daubs (Square 1:1, 2 by 2 sheet)** (save as `daub-rio-sheet.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. four small round glossy game stamps arranged in a 2 by 2 grid, each a single object: a pink feather mask, a yellow maraca, a turquoise beach ball, a gold samba drum; plain cream background, soft shadow under each
+```
+
+**Rio landmarks (Square 1:1, 2 by 2 sheet)** (save as `landmark-rio-sheet.png`)
+
+```
+Glossy 3D cartoon mobile game art, soft rounded shapes, plum purple and warm gold accents, cream highlights, bright cheerful sunlight, rich detail, clean edges, centered, no text, no logos. four cute small buildings arranged in a 2 by 2 grid, each seen from a 3/4 angle above, single objects on a plain cream background: a striped beach kiosk with umbrellas, a carnival grandstand with a feathered float, a cable car station on a rock, a samba stage with lights
+```

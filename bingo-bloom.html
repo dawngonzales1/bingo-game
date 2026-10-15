@@ -335,6 +335,55 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #play .ptop .ball { filter: saturate(1.2) brightness(1.06); }
 #play .strip .b3d { filter: saturate(1.15); }
 .clearview #play::before { background: rgba(30,8,50,.2) !important; }
+/* ===== closer to the big bingo apps (Dawn's new-city recordings, Oct 15) ===== */
+/* the room is a bright blurred backdrop; the cards and controls sit sharp on top */
+#play.m-multi, #play.m-blackout, #play.m-butterfly, #play.m-recipe, #play.m-shape, #play.m-mystery { background: #cfe9ff !important; }
+#play .rbg { position: absolute; inset: -16px; z-index: -2; background: center / cover no-repeat; filter: blur(7px) saturate(1.25) brightness(1.12); pointer-events: none; }
+#play .rbg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.04) 40%, rgba(255,255,255,.12)); }
+#play .rlife .rvid { filter: blur(5px) saturate(1.2) brightness(1.1); }
+.lite #play .rbg, .calm #play .rbg { filter: saturate(1.1) brightness(1.08); }
+/* cards: peach frame, rainbow letter strip, white tiles, brown numbers */
+#play .bcard { border: 0 !important; border-radius: 14px !important; padding: 0 !important; background: linear-gradient(180deg, #ffe9cf, #f7cfa6) !important; box-shadow: 0 0 0 2.5px #e6a86a, 0 8px 0 2.5px #c9823f, 0 14px 26px rgba(60,20,20,.3) !important; }
+#play .bcard .hdr { gap: 0 !important; padding: 2cqw 2cqw 1.2cqw !important; background: none !important; border: 0 !important; }
+#play .bcard .hdr span { width: 100% !important; aspect-ratio: auto !important; height: 7.6cqw; border-radius: 0 !important; background: var(--hc) !important; color: #fff !important; font-size: 6.4cqw !important; text-shadow: 0 1px 0 rgba(0,0,0,.35) !important; box-shadow: none !important; }
+#play .bcard .hdr span:first-child { border-radius: 3cqw 0 0 3cqw !important; } #play .bcard .hdr span:last-child { border-radius: 0 3cqw 3cqw 0 !important; }
+#play .bcard .hdr span:nth-child(1) { --hc: #ff4d5f; } #play .bcard .hdr span:nth-child(2) { --hc: #ff9b1f; } #play .bcard .hdr span:nth-child(3) { --hc: #3cc24a; } #play .bcard .hdr span:nth-child(4) { --hc: #2f8df5; } #play .bcard .hdr span:nth-child(5) { --hc: #a04ff0; }
+#play .bcard .grid { gap: 1.4cqw !important; padding: 0 2cqw 2.4cqw !important; }
+#play .cell { border-radius: 2.4cqw !important; background: #fff !important; box-shadow: inset 0 -1cqw 0 #efe4d4, 0 .5cqw 0 rgba(120,70,30,.18) !important; color: #4a2410 !important; font-weight: 800 !important; font-size: 8.4cqw !important; }
+#play .cell .tr { top: 10% !important; left: 10% !important; width: 80% !important; height: 80% !important; opacity: 1 !important; animation: none !important; filter: drop-shadow(0 1px 1px rgba(0,0,0,.25)) !important; }
+#play .cell:has(.tr):not(.d) > span { color: #4a2410 !important; text-shadow: 0 0 .6cqw #fff, 0 0 1.4cqw #fff, 0 0 2cqw #fff !important; }
+/* a daub slams down and covers the square, like the coin stamps in the recordings */
+#play .cell.d { background: #fff !important; }
+#play .cell.d .rdaub { inset: 4% !important; opacity: 1; animation: stampSlam .32s cubic-bezier(.2,1.4,.4,1) both !important; }
+@keyframes stampSlam { 0% { transform: scale(1.9) rotate(-25deg); opacity: 0; } 55% { transform: scale(.92) rotate(3deg); opacity: 1; } 100% { transform: none; } }
+#play .cell.d > span { opacity: 0; }
+.clearview #play .cell.d > span { opacity: 1; color: #fff !important; text-shadow: 0 1px 0 #3d1a4f, 0 0 4px #3d1a4f !important; }
+#play.m-blackout .cell.d { background: #fff !important; } #play.m-blackout .cell.d .rdaub { opacity: 1; filter: drop-shadow(0 2px 2px rgba(40,10,60,.45)); }
+#play.m-blackout .bcard.done .grid::after { color: rgba(74,36,16,.35); text-shadow: none; }
+#play .cell.free { background: radial-gradient(circle at 35% 30%, #fff8d6, #ffd45c 50%, #e9a81c) !important; color: #5b2a00 !important; }
+#play.m-blackout .cell.free { background: radial-gradient(circle at 35% 30%, #fff8d6, #ffd45c 50%, #e9a81c) !important; color: #5b2a00 !important; }
+/* bingo count badge top-left, rainbow glow once a card has bingos */
+#play .bcount { top: -2cqw !important; left: -2cqw !important; right: auto !important; width: 9cqw; height: 9cqw; padding: 0 !important; border-radius: 50% !important; display: grid; place-items: center; font-size: 5cqw !important; color: #fff !important; background: radial-gradient(circle at 40% 30%, #8fc4ff, #2f8df5 60%, #1b5bb8) !important; border: 2px solid #fff !important; box-shadow: 0 0 0 1.5px #1b5bb8, 0 2px 4px rgba(0,0,0,.35) !important; }
+#play .bcard:not(.has-bingo) .bcount { display: none !important; }
+#play .bcard.has-bingo { box-shadow: 0 0 0 2.5px #e6a86a, 0 0 0 5px #fff, 0 0 0 8px transparent, 0 8px 0 2.5px #c9823f, 0 0 26px 8px rgba(255,120,220,.55), 0 14px 26px rgba(60,20,20,.3) !important; background: linear-gradient(135deg, #ff8fb1, #ffd45c 30%, #7dff9a 55%, #7fbfff 78%, #c99bff) !important; }
+#play .bcard.has-bingo .cell.win { box-shadow: 0 0 0 2.5px #ffd45c, 0 0 10px 3px rgba(255,214,92,.9) !important; }
+/* the next power-up wears a charge ring; the others wait beside it */
+#play .pqslots .pqo:first-child { position: relative; }
+#play .pqslots .pqo:first-child::before { content: ''; position: absolute; inset: -5px; border-radius: 50%; background: conic-gradient(#7dff9a calc(var(--p, 0) * 1%), rgba(255,255,255,.15) 0); -webkit-mask: radial-gradient(circle, transparent 60%, #000 62%); mask: radial-gradient(circle, transparent 60%, #000 62%); z-index: -1; }
+#play .pqbar.full .pqslots .pqo:first-child::before { background: conic-gradient(#ffe58f 100%, #ffe58f 0); animation: pulse .8s ease-in-out infinite; }
+/* players keep their names */
+#play .pcol .ppl small { display: block; position: static; margin-top: 1px; font-size: 7px; max-width: 48px; }
+#play .pcol .ppl { width: 48px; }
+#play .pcol .ppl.won::after { content: 'BINGO'; }
+/* entering a room: the room's picture, its name and a green bar for a beat */
+.rload { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; align-content: end; padding-bottom: 8vh; background: center / cover no-repeat #000; animation: fade .25s both; }
+.rload.out { opacity: 0; transition: opacity .35s; }
+.rload b { position: absolute; left: 16px; top: 12px; font: 800 clamp(18px, 6vh, 26px) var(--ui); color: #fff; text-shadow: 0 2px 0 #3d1a4f, 0 0 10px rgba(0,0,0,.6); }
+.rload .rlbar { width: min(60vw, 360px); height: 18px; border-radius: 9px; background: rgba(40,20,60,.85); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #3d1a4f; overflow: hidden; position: relative; }
+.rload .rlbar i { display: block; height: 100%; width: 0; background: linear-gradient(180deg, #b5ff9a, #4fd85a 55%, #2fae55); transition: width .9s cubic-bezier(.2,.8,.3,1); }
+.rload .rlbar em { position: absolute; inset: 0; display: grid; place-items: center; font: 800 12px var(--ui); color: #fff; text-shadow: 0 1px 0 #1d5a20; font-style: normal; }
+.rload small { margin-top: 8px; display: flex; align-items: center; gap: 6px; font: 700 13px var(--ui); color: #fff; text-shadow: 0 1px 0 #3d1a4f, 0 0 6px rgba(0,0,0,.6); }
+.rload small svg { width: 24px; height: 24px; }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
@@ -2272,7 +2321,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .rlife .fmov { position: absolute; inset: 0; }
 .rlife .rvid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: fade 1.2s .2s both reverse; }
 .rlife .rvid.on { opacity: 1; animation: none; transition: opacity 1.2s; }
-#play > .rlife, #room > .rlife { grid-area: 1 / 1 / -1 / -1; position: absolute; inset: 0; width: auto; height: auto; margin: 0; padding: 0; }
+#play > .rlife, #room > .rlife, #play > .rbg { grid-area: 1 / 1 / -1 / -1; position: absolute; inset: 0; width: auto; height: auto; margin: 0; padding: 0; }
 #play .rlife { opacity: .85; }
 .rlife .ff { width: 8px; height: 8px; box-shadow: 0 0 10px 5px rgba(255,236,120,.8); }
 .rlife .bloomup { width: clamp(70px, 22vh, 120px); right: 3%; bottom: 6%; }
@@ -3637,7 +3686,7 @@ function roomVideo(id) {
   var v = ROOM_VIDEO[id]; if (!v || reduceMotion || (S.settings && (S.settings.lite || S.settings.calm))) return '';
   return '<video class="rvid" autoplay muted loop playsinline disablepictureinpicture preload="auto"><source src="' + v + '.webm" type="video/webm"><source src="' + v + '.mp4" type="video/mp4"></video>';
 }
-function roomLife(room) { return room ? '<div class="rlife" aria-hidden="true">' + roomVideo(room.id) + fmovHtml(room.id) + '</div>' : ''; }
+function roomLife(room) { return room ? '<div class="rbg" style="background-image:url(' + room.img + ')"></div><div class="rlife" aria-hidden="true">' + roomVideo(room.id) + fmovHtml(room.id) + '</div>' : ''; }
 function featSpotlight() {
   clearInterval(FEAT_T);
   var tiles = [].slice.call(app.querySelectorAll('.ftile.ft2')); if (!tiles.length) return;
@@ -3911,7 +3960,7 @@ function roomScreen(room) {
     b.onclick = function () {
       S.cards = +b.dataset.play; save();
       if (S.tickets < S.cards * CARD_COST * S.bet) { S.tickets += 100; save(); SFX.coin(); toast('100 practice tickets added. In the full game, bake treats in the Kitchen to earn tickets.', 3600); roomScreen(room); return; }
-      S.lastRoom = room.id; startRound(arm, room);
+      S.lastRoom = room.id; roomLoad(room, roomFeat(room), function () { startRound(arm, room); });
     };
   });
   upd();
@@ -4005,6 +4054,16 @@ function kindSeq(len, oneCard, p) {
   var fav = shuffle(range(1, 75).filter(function (n) { return mine[n]; })), rest = shuffle(range(1, 75).filter(function (n) { return !mine[n]; })), out = [];
   while (out.length < len && (fav.length || rest.length)) out.push((fav.length && (Math.random() < p || !rest.length) ? fav : rest).pop());
   return out;
+}
+function roomLoad(room, feat, then) {
+  if (document.querySelector('.rload')) { then(); return; }
+  var d = document.createElement('div'); d.className = 'rload'; d.style.backgroundImage = 'url(' + room.img + ')';
+  var pp = feat && feat[0] ? pupById(feat[0]) : null;
+  d.innerHTML = '<b>' + esc(room.name) + '</b><div class="rlbar"><i></i><em>0%</em></div>' + (pp ? '<small>' + icon(pp.icon) + esc(pp.name) + ': ' + esc(pp.desc || pp.how || '') + '</small>' : '');
+  document.body.appendChild(d); var bar = d.querySelector('i'), em = d.querySelector('em'), t0 = performance.now(), dur = reduceMotion ? 200 : 1100;
+  requestAnimationFrame(function () { bar.style.width = '100%'; });
+  (function tick(now) { var k = Math.min(1, (now - t0) / dur); em.textContent = Math.round(k * 100) + '%'; if (k < 1) requestAnimationFrame(tick); })(t0);
+  setTimeout(function () { then(); d.classList.add('out'); setTimeout(function () { d.remove(); }, 400); }, dur + 150);
 }
 function startRound(arm, room) {
   arm = arm || {}; room = room || ROOMS[0];
@@ -4290,7 +4349,7 @@ function collect(c, cell) {
 }
 function meterUi() {
   var bb = $('#bBoost'); bb.style.setProperty('--p', Math.round(R.meter / R.boostAt * 100)); bb.disabled = R.meter < R.boostAt || !R.active; bb.classList.toggle('full', R.meter >= R.boostAt);
-  var pf = $('#pqFill'); if (pf) pf.style.width = Math.round(R.meter / R.boostAt * 100) + '%'; var pb = $('#pq'); if (pb) pb.classList.toggle('full', R.meter >= R.boostAt);
+  var pf = $('#pqFill'); if (pf) pf.style.width = Math.round(R.meter / R.boostAt * 100) + '%'; var po = $('#pqSlots .pqo'); if (po) po.style.setProperty('--p', Math.round(R.meter / R.boostAt * 100)); var pb = $('#pq'); if (pb) pb.classList.toggle('full', R.meter >= R.boostAt);
   if (R.meter >= R.boostAt && R.active && autoPups() && !R.autoT) R.autoT = setTimeout(function () { if (R) { R.autoT = null; useBoost(); } }, 700);
 }
 function statsUi() { var w = $('#sCoins'); if (w) w.textContent = R.earned.coins; var p = $('#sPetals'); if (p) p.textContent = R.earned.petals; }
