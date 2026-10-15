@@ -2064,6 +2064,8 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 #room, #play { isolation: isolate; }
 .rlife { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 .rlife .fmov { position: absolute; inset: 0; }
+.rlife .rvid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: fade 1.2s .2s both reverse; }
+.rlife .rvid.on { opacity: 1; animation: none; transition: opacity 1.2s; }
 #play > .rlife, #room > .rlife { grid-area: 1 / 1 / -1 / -1; position: absolute; inset: 0; width: auto; height: auto; margin: 0; padding: 0; }
 #play .rlife { opacity: .85; }
 .rlife .ff { width: 8px; height: 8px; box-shadow: 0 0 10px 5px rgba(255,236,120,.8); }
@@ -3408,7 +3410,13 @@ function fmovHtml(id) {
   return '<span class="fmov">' + h + '</span>';
 }
 // the same room effects, full size, behind the room screen and the bingo screen
-function roomLife(room) { return room ? '<div class="rlife" aria-hidden="true">' + fmovHtml(room.id) + '</div>' : ''; }
+// living room backgrounds: Dawn's Firefly videos loop behind the cards; the still picture stays underneath, and Battery saver, Calm mode and Reduce Motion keep the still
+var ROOM_VIDEO = { market: 'art/room-lantern-market' };
+function roomVideo(id) {
+  var v = ROOM_VIDEO[id]; if (!v || reduceMotion || (S.settings && (S.settings.lite || S.settings.calm))) return '';
+  return '<video class="rvid" autoplay muted loop playsinline disablepictureinpicture preload="auto"><source src="' + v + '.webm" type="video/webm"><source src="' + v + '.mp4" type="video/mp4"></video>';
+}
+function roomLife(room) { return room ? '<div class="rlife" aria-hidden="true">' + roomVideo(room.id) + fmovHtml(room.id) + '</div>' : ''; }
 function featSpotlight() {
   clearInterval(FEAT_T);
   var tiles = [].slice.call(app.querySelectorAll('.ftile.ft2')); if (!tiles.length) return;
@@ -3845,7 +3853,8 @@ function renderPlay() {
   $('#bAutoB').onclick = function () { S.settings.autoBoost = !autoPups(); save(); this.setAttribute('aria-pressed', autoPups()); SFX.tap(); toast(autoPups() ? 'Auto power-ups on: when Boost fills, your power-ups fire by themselves' : 'Auto power-ups off: tap the glowing Boost to fire them', 3000); meterUi(); };
   R.pq = []; pqFill(true);
   $('#pq').onclick = function (e) { if (e.target.closest('#bAutoB') || !R) return; if (R.meter >= R.boostAt && R.active) useBoost(); else { SFX.tap(); toast(R.pq.length ? 'Your power-ups fire when the glow line under them is full. Keep marking numbers!' : 'No power-ups loaded. Get more in the Shop between rounds.', 2800); } };
-  $('#bSwap').onclick = swapCards; playersRow(); if (R.room && ROOM_DAUB[R.room]) daubReady(ROOM_DAUB[R.room]);
+  $('#bSwap').onclick = swapCards; playersRow();
+  var rv = $('#play .rvid'); if (rv) { rv.addEventListener('playing', function () { rv.classList.add('on'); }, { once: true }); rv.play && rv.play().catch(function () {}); } if (R.room && ROOM_DAUB[R.room]) daubReady(ROOM_DAUB[R.room]);
   $('#bView4').onclick = function () { S.settings.view4 = !S.settings.view4; save(); SFX.tap(); placeCards(); };
   $('#bAlert').onclick = useAlert;
   $('#bMore').onclick = pupTray;
