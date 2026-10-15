@@ -386,7 +386,9 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .rload .rlbar em { position: absolute; inset: 0; display: grid; place-items: center; font: 800 12px var(--ui); color: #fff; text-shadow: 0 1px 0 #1d5a20; font-style: normal; }
 .rload small { margin-top: 8px; display: flex; align-items: center; gap: 6px; font: 700 13px var(--ui); color: #fff; text-shadow: 0 1px 0 #3d1a4f, 0 0 6px rgba(0,0,0,.6); }
 .rload small svg { width: 24px; height: 24px; }
-#play .cell.need { box-shadow: inset 0 0 0 .9cqw #ff3b4a, inset 0 -1cqw 0 #efe4d4, 0 .5cqw 0 rgba(120,70,30,.18), 0 0 2cqw rgba(255,60,80,.6) !important; }
+#play .cell.need { z-index: 2; box-shadow: 0 0 0 1.2cqw #ff3b4a, 0 0 0 1.8cqw #fff, 0 0 3cqw 1cqw rgba(255,60,80,.7) !important; animation: needPulse 1.2s ease-in-out infinite; }
+@keyframes needPulse { 50% { box-shadow: 0 0 0 1.2cqw #ff3b4a, 0 0 0 1.8cqw #fff, 0 0 5cqw 2cqw rgba(255,60,80,.95); } }
+.calm #play .cell.need { animation: none; }
 #play .cell.need.hint { box-shadow: inset 0 0 0 .9cqw #ff3b4a, 0 0 0 .8cqw #ffd45c, 0 0 3cqw 1cqw rgba(255,214,92,.95) !important; }
 #play #cards.has-minis { grid-template-columns: auto minmax(0, 1fr) !important; }
 #play #cards.has-minis .minis { order: -1; }
@@ -4166,7 +4168,7 @@ function renderPlay() {
     $('#nBalls').textContent = S.items.balls5; $('#sBalls').textContent = R.idx + '/' + R.seq.length; $('#nCalled').textContent = R.idx + '/' + R.seq.length; SFX.boost();
     pupFx('i-plus5', '+5 Balls!', 'Five more balls this round');
     var tb = $('#strip'); if (tb) { tb.classList.remove('plus5'); void tb.offsetWidth; tb.classList.add('plus5'); }
-    if (R.lastBall) { clearTimeout(R.timer); R.lastBall = false; if (!R.paused) R.timer = setTimeout(callNext, 1200); }
+    if (R.lastBall) { clearTimeout(R.timer); R.lastBall = false; var fc = $('#play .fcount'); if (fc) fc.remove(); if (!R.paused) R.timer = setTimeout(callNext, 1200); }
   };
   var armed = false;
   $('#bQuit').onclick = function () {
@@ -4256,6 +4258,7 @@ function callNext() {
   if (R.idx >= R.seq.length) return;
   var n = R.seq[R.idx++];
   while (R.called[n] && R.idx < R.seq.length) n = R.seq[R.idx++];
+  if (R.called[n]) { if (R.idx >= R.seq.length) { R.lastBall = true; R.timer = setTimeout(function () { finalCount(3); }, 1000); } return; }
   if (R.called[n]) return;
   R.called[n] = true; R.lastCall = Date.now();
   var onCards = 0, covered = 0; R.cards.forEach(function (k) { k.cells.forEach(function (c) { if (c.n === n) { onCards++; if (c.d) covered++; } }); });
@@ -4941,6 +4944,7 @@ function stopRound() { if (R) { clearTimeout(R.timer); R.active = false; } try {
 function finalCount(n) {
   if (!R || R.ended) return;
   var old = $('#play .fcount'); if (old) old.remove();
+  if (R.idx < R.seq.length || !R.lastBall) return;
   if (n <= 0) { endRound('balls'); return; }
   var d = document.createElement('div'); d.className = 'fcount'; d.innerHTML = '<b class="outl">' + n + '</b><small class="outl">last bingos!</small>'; $('#play').appendChild(d);
   tone(660 + (3 - n) * 120, 0, .25, 'sine', .08); say(String(n));
@@ -4987,7 +4991,7 @@ var BLOOM_WHEEL = [{ lbl: '5', n: 5, w: 30 }, { lbl: 'PETITE', n: 25, w: 12, tie
 var WHEEL_COLS = ['#2fbf9f', '#5fd68a', '#8a4cf0', '#4f8cf0', '#2fbf9f', '#ff6fa3', '#8a4cf0', '#ffc533'];
 var TIERS = [['Petite', '#7fe0a8', '#2f9a3a'], ['Bouquet', '#7fbfff', '#3a52c4'], ['Grand', '#ff8fb1', '#c2416b'], ['Royal', '#ffe58f', '#e9940f']];
 function results() {
-  var E = R.earned, spins = R.bingos ? 1 + (R.jp || 0) : 0, bet = R.bet, room = R.roomObj;
+  var E = R.earned, spins = R.bingos ? 1 : 0, bet = R.bet, room = R.roomObj;
   var head = R.bingos ? (R.mode === 'blackout' ? 'Blackout!' : R.bingos > 1 ? R.bingos + ' Bingos!' : 'Bingo!') : 'Round over';
   var ingCount = {}; E.ings.forEach(function (g) { ingCount[g] = (ingCount[g] || 0) + 1; });
   var tiles = BAKES[R.room] ? bakeNeed(R.room).map(function (nd) { var g = ingById(nd[0]), h = Math.min(nd[1], bakeState(R.room).have[nd[0]] || 0), full = h >= nd[1]; return '<div class="stile' + (full ? ' full' : '') + '">' + ingDot(nd[0]) + '<small>' + g.name + '</small><span class="ibar"><i style="width:' + (h / nd[1] * 100) + '%"></i><em>' + h + '/' + nd[1] + '</em></span>' + (full ? '<span class="sok">✓</span>' : '') + (ingCount[nd[0]] ? '<span class="sbadge">' + ingCount[nd[0]] + '</span>' : '') + '</div>'; }).join('')
@@ -5006,7 +5010,7 @@ function results() {
     '</div>' +
     '<div class="sumR"><div class="tiers4">' + TIERS.map(function (t, i) { var amt = BLOOM_WHEEL.filter(function (w) { return w.tier === i; })[0].n * bet; return '<div class="t4" id="tier' + i + '" style="--a:' + t[1] + ';--b:' + t[2] + '"><em class="outl">' + t[0] + '</em><b>' + icon('i-ticket') + amt + '</b></div>'; }).join('') + '</div>' +
       '<div class="wwrap"><canvas id="bwCv" aria-label="Bloom Wheel"></canvas><button class="wspin" id="bwGo"' + (spins ? '' : ' disabled') + '><span>' + (spins ? 'SPIN' : '🔒') + '</span></button></div>' +
-      '<p class="wnote" id="bwMsg">' + (spins ? (spins > 1 ? spins + ' spins won: a Full Bouquet or Blackout adds extra spins!' : 'Your bingo won a spin of the Bloom Wheel!') : 'Win a bingo to spin the Bloom Wheel.') + '</p>' +
+      '<p class="wnote" id="bwMsg">' + (spins ? 'Your bingo won a spin of the Bloom Wheel!' : 'Win a bingo to spin the Bloom Wheel.') + '</p>' +
       '<button class="wodds" id="bwOdds">See the odds</button></div>' +
   '</div>');
   if (R.bingos) setTimeout(function () { sparkle(innerWidth * .25, 80, 70); }, 250);
