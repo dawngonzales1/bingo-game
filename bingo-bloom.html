@@ -3341,7 +3341,25 @@ function merge(saved) {
   return s;
 }
 var S = fresh();
-function load() { try { var raw = localStorage.getItem(KEY); if (raw) S = merge(JSON.parse(raw)); } catch (e) { /* storage blocked: play without saving */ } }
+/* anti-cheat, client side: a save edited by hand (or a tampered cloud copy) gets clamped back to what play could have earned, and the account is flagged.
+   The caps grow with rounds played, level, tester boosts and real purchases, so honest players never hit them. */
+function iapTotals() { var t = { coins: 0, tickets: 0, gems: 0 }; (S.iap || []).forEach(function (x) { var it = IAP_ITEMS.filter(function (i) { return i.id === x.id; })[0]; if (!it) return; t.coins += it.give.coins || 0; t.tickets += it.give.tickets || 0; t.gems += it.give.gems || 0; }); return t; }
+function sanity(why) {
+  var r = (S.stats && S.stats.rounds) || 0, b = S.boosts || 0, iap = iapTotals(), hits = [];
+  function cap(key, max) { if (typeof S[key] !== 'number' || isNaN(S[key])) { S[key] = 0; hits.push(key); } if (S[key] < 0) { S[key] = 0; hits.push(key); } if (S[key] > max) { S[key] = Math.floor(max); hits.push(key); } }
+  S.level = Math.max(1, Math.min(300, Math.floor(+S.level || 1)));
+  cap('coins', 6000 + r * 3000 + S.level * 200 + b * 6000 + iap.coins);
+  cap('tickets', 2000 + r * 700 + S.level * 50 + b * 2500 + iap.tickets);
+  cap('petals', 300 + r * 90 + b * 80);
+  cap('gems', 60 + r * 15 + S.level * 8 + b * 120 + iap.gems);
+  cap('drops', 60 + b * 10); cap('scratch', 30 + b * 3); cap('seeds', 400 + r * 20); cap('stars', 200 + r * 5); cap('alertMin', 6000 + b * 600); cap('spins', 10);
+  if (S.xp >= xpNeed() * 2 || S.xp < 0) { S.xp = 0; hits.push('xp'); }
+  Object.keys(S.items || {}).forEach(function (k) { if (S.items[k] > 99 + b * 10 || S.items[k] < 0) { S.items[k] = Math.max(0, Math.min(99 + b * 10, S.items[k] | 0)); hits.push('item:' + k); } });
+  Object.keys(S.build || {}).forEach(function (k) { if (S.build[k] > 3) { S.build[k] = 3; hits.push('build'); } });
+  if (hits.length) { S.flags = (S.flags || 0) + 1; S.flagLast = { at: Date.now(), why: why || '', hits: hits.slice(0, 8) }; logEvent({ t: 'clamp', hits: hits.slice(0, 8), why: why || '' }); }
+  return hits;
+}
+function load() { try { var raw = localStorage.getItem(KEY); if (raw) { S = merge(JSON.parse(raw)); sanity('load'); } } catch (e) { /* storage blocked: play without saving */ } }
 function save(noCloud) { S.savedAt = Date.now(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ignore */ } if (!noCloud && typeof cloudSaveSoon === 'function') cloudSaveSoon(); }
 function logEvent(e) { e.at = Date.now(); S.events.push(e); if (S.events.length > 100) S.events = S.events.slice(-100); }
 
@@ -4475,7 +4493,7 @@ function settings() {
     '<div class="res-btns"><button class="b3 gold" id="bAcct">' + (ON.user ? 'Account: ' + esc(myName()) : 'Sign In / Account') + '</button><button class="b3 plum" id="bFb2">Send Feedback</button>' + (ON.admin ? '<button class="b3 plum" id="bFbIn">Feedback Inbox</button>' : '') + '</div><div class="res-btns"><button class="b3 gold" id="bTour" style="padding:6px 12px">Show Me Around</button><button class="b3 plum" id="bHow" style="padding:6px 12px">How to Play</button><button class="b3 plum" id="bFair" style="padding:6px 12px">Fair Play Promise</button></div>' +
     '<button class="b3 gold" id="bBoostT" style="padding:8px">Tester Boost: +2,000 tickets, coins and power-ups</button>' +
     '<div class="resetbox"><small>Want a clean slate? This erases all of your progress:</small><button class="b3 cream" id="bReset">Start Over (clear my progress)</button></div>', 'small', function (v) {
-      $('#bBoostT', v).onclick = function () { S.travel = 1; S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; give('alert', 5); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
+      $('#bBoostT', v).onclick = function () { S.travel = 1; S.boosts = (S.boosts || 0) + 1; S.tickets += 2000; S.coins += 5000; S.petals += 60; S.gems += 100; S.drops += 10; S.scratch += 3; give('alert', 5); PUP_IDS.forEach(function (k) { S.items[k] = (S.items[k] || 0) + 5; }); save(); refreshTop(); SFX.set(); sparkle(innerWidth / 2, innerHeight / 2, 80); toast('Tester boost added. Have fun testing!'); };
       $('#swSound', v).onclick = function () { st.sound = !st.sound; this.setAttribute('aria-pressed', st.sound); save(); SFX.daub(); };
       $('#swAA', v).onclick = function () { st.autoAlert = st.autoAlert === false; this.setAttribute('aria-pressed', st.autoAlert); save(); };
       v.querySelectorAll('[data-lng]').forEach(function (b) { b.onclick = function () { if ((st.lang || 'auto') === b.dataset.lng) return; st.lang = b.dataset.lng; save(); SFX.tap(); setTimeout(function () { location.reload(); }, 150); }; });
@@ -5790,7 +5808,7 @@ function sendIngredient(id) {
       $('#igGo', v).onclick = function () {
         var to = $('#igTo', v).value, f = ON.friends.filter(function (x) { return x.id === to; })[0] || {}; SOC.tradeTo = to; this.disabled = true;
         S.ing[id]--; save();
-        uref(to).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'ing', ing: id, n: 1, at: Date.now() })
+        uref(to).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'ing', ing: id, n: 1, at: Date.now(), day: dayKey() })
           .then(function () { return dailyRef().set({ ingSent: FV().increment(1) }, { merge: true }); })
           .then(function () { SFX.set(); toast(g.name + ' sent to ' + (f.name || 'your friend') + '!'); kitchen(); })
           .catch(function () { S.ing[id]++; save(); toast('Couldn\'t send it right now. It\'s still in your pantry.'); kitchen(); });
@@ -7075,7 +7093,7 @@ function onSignedIn(u) {
       var cloud = null; try { cloud = JSON.parse(sv.data().data); } catch (e) { cloud = null; }
       if (cloud) {
         var cs = (cloud.level || 1) * 1000 + ((cloud.stats || {}).rounds || 0), ls = S.level * 1000 + S.stats.rounds;
-        if (cs >= ls) { S = merge(cloud); S.name = myName(); save(true); toast('Welcome back, ' + myName() + '! Your saved progress is loaded.', 3200); if ($('#lobby')) lobby(); }
+        if (cs >= ls) { S = merge(cloud); sanity('cloud'); S.name = myName(); save(true); toast('Welcome back, ' + myName() + '! Your saved progress is loaded.', 3200); if ($('#lobby')) lobby(); }
         else { cloudSaveNow(); toast('Signed in as ' + myName() + '. This phone has newer progress, so it was saved to your account.', 3600); }
       }
     } else { cloudSaveNow(); toast((myName() === 'Player' ? 'Signed in!' : 'Signed in as ' + myName() + '.') + ' Your progress now saves to your account.', 3200); }
@@ -7107,8 +7125,9 @@ function cloudSaveSoon() { if (!ON.user) return; clearTimeout(ON.saveT); ON.save
 function cloudSaveNow() {
   if (!ON.user) return; clearTimeout(ON.saveT);
   try {
+    sanity('save');
     uref().collection('private').doc('save').set({ data: JSON.stringify(S), at: Date.now() });
-    uref().set({ name: myName(), nameLower: slugName(myName()), level: S.level, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, seen: Date.now() }, { merge: true });
+    uref().set({ name: myName(), nameLower: slugName(myName()), level: S.level, rounds: (S.stats && S.stats.rounds) || 0, flags: S.flags || 0, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, seen: Date.now() }, { merge: true });
   } catch (e) { /* offline: tries again on the next save */ }
 }
 document.addEventListener('visibilitychange', function () { if (document.hidden && ON.user && ON.saveT) cloudSaveNow(); });
@@ -7432,7 +7451,7 @@ function sendGift(id, btn) {
   if (g.length >= GIFT_SEND_MAX) { toast('You\'ve sent today\'s ' + GIFT_SEND_MAX + ' gifts. More unlock at the 8:00 AM Central reset.', 3200); return; }
   if (g.indexOf(id) >= 0) return;
   btn.disabled = true;
-  uref(id).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'tickets', n: GIFT_TIX, at: Date.now() })
+  uref(id).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'tickets', n: GIFT_TIX, at: Date.now(), day: dayKey() })
     .then(function () { return dailyRef().set({ giftTo: FV().arrayUnion(id) }, { merge: true }); })
     .then(function () { SFX.coin(); var r = btn.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top, 30); toast('Gift sent! They get ' + GIFT_TIX + ' tickets.'); })
     .catch(function () { btn.disabled = false; toast('Couldn\'t send the gift. Try again.'); });
@@ -7447,7 +7466,7 @@ function sendCard(id, to) {
   panel('<div class="sendc">' + cardFace(id) + '<div><h3>Send ' + esc(ci.name) + '?</h3><p>To <b>' + esc(f.name || 'your friend') + '</b>. You\'ll keep ' + (S.album[id] - 1) + ' cop' + (S.album[id] - 1 === 1 ? 'y' : 'ies') + '.</p><div class="res-btns"><button class="b3 gold" id="scGo">Send</button><button class="b3 cream" data-x>Cancel</button></div></div></div>', 'small', function (v) {
     $('#scGo', v).onclick = function () {
       this.disabled = true; S.album[id]--; save();
-      uref(to).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'card', card: id, gold: !!ci.gold, at: Date.now() })
+      uref(to).collection('inbox').add({ from: ON.user.uid, fromName: myName(), type: 'card', card: id, gold: !!ci.gold, at: Date.now(), day: dayKey() })
         .then(function () { var u = { cardsSent: FV().increment(1) }; if (ci.gold) u.goldSent = FV().increment(1); return dailyRef().set(u, { merge: true }); })
         .then(function () {
           var face = v.querySelector('.cf'), r = face && face.getBoundingClientRect();

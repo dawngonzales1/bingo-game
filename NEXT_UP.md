@@ -67,3 +67,8 @@ Ideas: Bee power-up like Bingo Frenzy's boomerang (Crystal). Unique game names (
 - Sapphire: themes that change with the seasons, plus seasonal side games (autumn leaves, winter lights, spring blossom, summer beach). Good fit for the second city plan.
 - Done: fireworks stuck on after a Shop purchase (fixed); caller voice livelier; Clear view ball numbers now really bigger; white text gets a crisp outline in Clear view; tour Cordie layered above the shade; wheel hub flush.
 - Open: 'ghostly bunnies' on tutorial panels (one player, Chrome) - need a screenshot to see it.
+
+## Anti-cheat (added Oct 15)
+- `firestore.rules` in the repo is the full rules file. Paste it whole into Firebase console → Firestore Database → Rules, replace `REPLACE_WITH_DAWN_UID` with your own uid (Settings → Sign In / Account shows it), then Publish. It replaces the earlier two edits (requests allow update, teams ≤ 40): both are included.
+- What the rules stop: gifting beyond the daily caps (10 ticket gifts, 5 cards, 2 gold cards, 10 ingredients) even from an edited client; fake gifts "from" someone else; profile levels above 300 or jumping more than 10 at once; oversized saves; teams over 40; chat over 200 characters; anyone but you reading feedback.
+- What the game itself does: every time a save is loaded (phone or cloud) or sent to the cloud, impossible values are clamped back to what play could have earned (caps grow with rounds, level, tester boosts and purchases). Each clamp adds 1 to `flags` on the player's public profile, so a cheater shows up as `flags > 0` in the users collection in the console.

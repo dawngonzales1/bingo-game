@@ -1,0 +1,101 @@
+rules_version = '2';
+// Bingo Bloom · Firestore rules with anti-cheat caps.
+// Paste the whole file into Firebase console → Firestore → Rules, put your own uid in isAdmin(), then Publish.
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function signedIn() { return request.auth != null; }
+    function me() { return request.auth.uid; }
+    function isAdmin() { return signedIn() && me() in ['REPLACE_WITH_DAWN_UID']; }
+    function now() { return request.time.toMillis(); }
+    function recent(t) { return t is number && t > now() - 10 * 60 * 1000 && t < now() + 10 * 60 * 1000; }
+    function dailyOf(uid, day) { return get(/databases/$(db)/documents/users/$(uid)/daily/$(day)).data; }
+    function dailyExists(uid, day) { return exists(/databases/$(db)/documents/users/$(uid)/daily/$(day)); }
+
+    // public profile: anyone signed in may read; only the owner writes, within sane bounds
+    match /users/{uid} {
+      allow read: if signedIn();
+      allow create, update: if signedIn() && me() == uid
+        && request.resource.data.keys().hasOnly(['name', 'nameLower', 'named', 'level', 'rounds', 'flags', 'frame', 'avatar', 'seen', 'lastSeen', 'team', 'photo'])
+        && (!('name' in request.resource.data) || (request.resource.data.name is string && request.resource.data.name.size() <= 14))
+        && (!('level' in request.resource.data) || (request.resource.data.level is int && request.resource.data.level >= 1 && request.resource.data.level <= 300))
+        && (!('rounds' in request.resource.data) || (request.resource.data.rounds is int && request.resource.data.rounds >= 0))
+        && (!('level' in request.resource.data) || resource == null || !('level' in resource.data) || request.resource.data.level <= resource.data.level + 10);
+
+      // the save blob: owner only, bounded size
+      match /private/{doc} {
+        allow read, write: if signedIn() && me() == uid
+          && (!(request.method in ['create', 'update']) || (request.resource.data.data is string && request.resource.data.data.size() < 500000));
+      }
+
+      // daily counters: owner only, every counter small and never decreasing
+      match /daily/{day} {
+        allow read: if signedIn();
+        allow create, update: if signedIn() && me() == uid
+          && request.resource.data.keys().hasOnly(['giftTo', 'giftsRecv', 'cardsSent', 'cardsRecv', 'goldSent', 'goldRecv', 'ingSent', 'ingRecv'])
+          && (!('giftTo' in request.resource.data) || (request.resource.data.giftTo is list && request.resource.data.giftTo.size() <= 12))
+          && (!('cardsSent' in request.resource.data) || (request.resource.data.cardsSent is int && request.resource.data.cardsSent <= 12))
+          && (!('ingSent' in request.resource.data) || (request.resource.data.ingSent is int && request.resource.data.ingSent <= 12))
+          && (!('goldSent' in request.resource.data) || (request.resource.data.goldSent is int && request.resource.data.goldSent <= 4))
+          && (!('giftsRecv' in request.resource.data) || (request.resource.data.giftsRecv is int && request.resource.data.giftsRecv <= 12))
+          && (!('cardsRecv' in request.resource.data) || (request.resource.data.cardsRecv is int && request.resource.data.cardsRecv <= 12))
+          && (!('ingRecv' in request.resource.data) || (request.resource.data.ingRecv is int && request.resource.data.ingRecv <= 12))
+          && (!('goldRecv' in request.resource.data) || (request.resource.data.goldRecv is int && request.resource.data.goldRecv <= 4));
+      }
+
+      // gifts: a signed-in player may drop a gift in someone's inbox, signed with their own uid, small amounts, under the sender's daily caps
+      match /inbox/{gift} {
+        allow read, delete: if signedIn() && me() == uid;
+        allow create: if signedIn() && request.resource.data.from == me() && uid != me()
+          && request.resource.data.type in ['tickets', 'card', 'ing']
+          && request.resource.data.day is string && recent(request.resource.data.at)
+          && (request.resource.data.type != 'tickets' || (request.resource.data.n == 10
+              && (!dailyExists(me(), request.resource.data.day) || !('giftTo' in dailyOf(me(), request.resource.data.day)) || dailyOf(me(), request.resource.data.day).giftTo.size() < 10)))
+          && (request.resource.data.type != 'card' || (request.resource.data.card is string
+              && (!dailyExists(me(), request.resource.data.day) || !('cardsSent' in dailyOf(me(), request.resource.data.day)) || dailyOf(me(), request.resource.data.day).cardsSent < 5)
+              && (request.resource.data.gold != true || !dailyExists(me(), request.resource.data.day) || !('goldSent' in dailyOf(me(), request.resource.data.day)) || dailyOf(me(), request.resource.data.day).goldSent < 2)))
+          && (request.resource.data.type != 'ing' || (request.resource.data.n == 1
+              && (!dailyExists(me(), request.resource.data.day) || !('ingSent' in dailyOf(me(), request.resource.data.day)) || dailyOf(me(), request.resource.data.day).ingSent < 10)));
+      }
+
+      // friends: the owner manages their list; a friend may add or remove only their own entry (accept and unfriend write both sides)
+      match /friends/{fid} {
+        allow read: if signedIn() && me() == uid;
+        allow create, update, delete: if signedIn() && (me() == uid || me() == fid);
+      }
+
+      // friend requests: the sender creates or updates their own request; either side may delete it
+      match /requests/{fromId} {
+        allow read: if signedIn() && me() == uid;
+        allow create, update: if signedIn() && me() == fromId && uid != me()
+          && request.resource.data.name is string && request.resource.data.name.size() <= 14 && recent(request.resource.data.at);
+        allow delete: if signedIn() && (me() == uid || me() == fromId);
+      }
+    }
+
+    // teams: up to 40 members; anyone signed in may create one they own, join or leave themselves; the owner may edit
+    match /teams/{tid} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.owner == me()
+        && request.resource.data.name is string && request.resource.data.name.size() >= 3 && request.resource.data.name.size() <= 24
+        && request.resource.data.members is list && request.resource.data.members.size() <= 40;
+      allow update: if signedIn() && request.resource.data.members is list && request.resource.data.members.size() <= 40
+        && (resource.data.owner == me()
+            || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members'])
+               && (request.resource.data.members.toSet().difference(resource.data.members.toSet()) == [me()].toSet()
+                   || resource.data.members.toSet().difference(request.resource.data.members.toSet()) == [me()].toSet()));
+      allow delete: if signedIn() && resource.data.owner == me();
+
+      match /chat/{msg} {
+        allow read: if signedIn();
+        allow create: if signedIn() && request.resource.data.uid == me()
+          && request.resource.data.text is string && request.resource.data.text.size() <= 200 && recent(request.resource.data.at);
+      }
+    }
+
+    // feedback: anyone signed in may send; only Dawn reads and marks done
+    match /feedback/{id} {
+      allow create: if signedIn() && request.resource.data.uid == me();
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
