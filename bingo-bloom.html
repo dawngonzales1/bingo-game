@@ -246,6 +246,33 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .cardrv .crvrib { position: relative; top: 0; left: 0; transform: none; }
 .cardrv .got { max-width: 92vw; }
 .crvset { margin: 0; font-weight: 700; color: #ffe58f; }
+/* Blackout rooms (Dawn's Frenzy room): a marked square turns to glass and the moonflower shows through, so the card visibly empties; a finished card fills with a BLACKOUT watermark */
+#play.m-blackout .cell.d { background: rgba(255,255,255,.07) !important; box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.3) !important; }
+#play.m-blackout .cell.d::after { display: none; }
+#play.m-blackout .cell.d .rdaub { opacity: .38; filter: none; animation: glassIn .4s ease-out; }
+@keyframes glassIn { from { opacity: 1; transform: scale(1.3); } }
+#play.m-blackout .cell.d > span { color: rgba(255,255,255,.4); text-shadow: none; font-size: 80%; }
+#play.m-blackout .bcard.done .grid { opacity: 1; }
+#play.m-blackout .bcard.done .grid::after { content: 'BLACKOUT'; position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%) rotate(-12deg); font: 900 14cqw/1 var(--ui); letter-spacing: .04em; color: rgba(255,229,143,.55); text-shadow: 0 0 12px rgba(255,214,92,.6); pointer-events: none; animation: popIn .5s cubic-bezier(.2,.9,.3,1.4) both; }
+#play.m-blackout .bcard .grid { position: relative; }
+/* the top three players in the column wear rank badges */
+.pcol .ppl { position: relative; }
+.pcol .ppl:nth-child(2)::after, .pcol .ppl:nth-child(3)::after, .pcol .ppl:nth-child(4)::after { position: absolute; left: -3px; top: -4px; width: 13px; height: 13px; border-radius: 50%; display: grid; place-items: center; font: 800 8px var(--ui); color: #3d1a4f; box-shadow: 0 0 0 1.5px #3d1a4f; }
+.pcol .ppl:nth-child(2)::after { content: '1'; background: linear-gradient(180deg, #fff3b8, #e9a81c); }
+.pcol .ppl:nth-child(3)::after { content: '2'; background: linear-gradient(180deg, #fff, #b9c4d6); }
+.pcol .ppl:nth-child(4)::after { content: '3'; background: linear-gradient(180deg, #ffd1a8, #c77a3a); }
+/* Full Bouquet meter: four blooms in the corner that light up with the bingos on your best card */
+.bqm { display: grid; justify-items: center; gap: 1px; padding: 4px 3px; border-radius: 12px; background: linear-gradient(180deg, rgba(118,56,182,.9), rgba(56,20,90,.92)); box-shadow: 0 0 0 1.5px #f6c64a, 0 0 0 3px var(--ol); }
+.bqm small { font: 800 6.5px var(--ui); letter-spacing: .04em; color: #ffd6ec; }
+.bqm .bqf { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.bqm .bqf img { width: 15px; height: 15px; filter: grayscale(1) opacity(.35); transition: filter .4s, transform .4s; }
+.bqm .bqf img.on { filter: drop-shadow(0 0 4px #ff8fc0); animation: bump .5s; }
+.bqm.full { box-shadow: 0 0 0 1.5px #fff3b8, 0 0 0 3px var(--ol), 0 0 14px rgba(255,214,92,.9); animation: pulse 1.2s ease-in-out infinite; }
+.calm .bqm.full { animation: none; }
+/* called balls roll into the strip; the summary ticks the ingredients you completed */
+.strip .b3d.new { animation: ballRoll .45s cubic-bezier(.2,.9,.3,1.3); }
+@keyframes ballRoll { from { transform: translateX(-40px) rotate(-160deg) scale(.6); opacity: 0; } }
+.stile.full::after { content: '✓'; position: absolute; right: -5px; bottom: -5px; width: 17px; height: 17px; border-radius: 50%; display: grid; place-items: center; font: 900 11px var(--ui); color: #fff; background: #2fae55; box-shadow: 0 0 0 1.5px #fff; }
 .resetbox { margin-top: 22px; padding: 10px 12px 12px; border-top: 2px dashed rgba(61,26,79,.25); display: grid; justify-items: center; gap: 6px; text-align: center; }
 .resetbox small { color: var(--mist); font-weight: 600; }
 .resetbox .b3 { padding: 6px 14px; font-size: 13px; opacity: .85; }
@@ -3970,7 +3997,7 @@ function renderPlay() {
   $('#bAutoB').onclick = function () { S.settings.autoBoost = !autoPups(); save(); this.setAttribute('aria-pressed', autoPups()); SFX.tap(); toast(autoPups() ? 'Auto power-ups on: when Boost fills, your power-ups fire by themselves' : 'Auto power-ups off: tap the glowing Boost to fire them', 3000); meterUi(); };
   R.pq = []; pqFill(true);
   $('#pq').onclick = function (e) { if (e.target.closest('#bAutoB') || !R) return; if (R.meter >= R.boostAt && R.active) useBoost(); else { SFX.tap(); toast(R.pq.length ? 'Your power-ups fire when the glow line under them is full. Keep marking numbers!' : 'No power-ups loaded. Get more in the Shop between rounds.', 2800); } };
-  if (!$('#play .pcol')) $('#play').insertAdjacentHTML('beforeend', '<div class="pcol" id="pcol"><div class="pavs" id="pavs"></div></div>');
+  if (!$('#play .pcol')) $('#play').insertAdjacentHTML('beforeend', '<div class="pcol" id="pcol"><div class="pavs" id="pavs"></div>' + (R.mode === 'multi' ? '<div class="bqm" id="bqm" title="Full Bouquet: 4 bingos on one card"><small>BOUQUET</small><div class="bqf"><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""><img src="art/icon-petal.webp" alt=""></div></div>' : '') + '</div>');
   $('#bSwap').onclick = swapCards; playersRow();
   var rv = $('#play .rvid'); if (rv) { rv.addEventListener('playing', function () { rv.classList.add('on'); }, { once: true }); rv.play && rv.play().catch(function () {}); } if (R.room && ROOM_DAUB[R.room]) daubReady(ROOM_DAUB[R.room]);
   $('#bView4').onclick = function () { S.settings.view4 = S.settings.view4 === false; save(); SFX.tap(); placeCards(); };
@@ -4689,6 +4716,7 @@ function claimLine(ci, line) {
   if (blackout || k.n >= MULTI_MAX) { k.won = true; R.jp = (R.jp || 0) + 1; }
   line.forEach(function (i) { var c = el.querySelector('[data-i="' + i + '"]'); if (c) c.classList.add('win'); });
   el.classList.add('has-bingo'); el.querySelector('.bcount').textContent = k.n > 1 ? '×' + k.n : 'BINGO';
+  var bqm = $('#bqm'); if (bqm) { var best = Math.max.apply(null, R.cards.map(function (x) { return x.n || 0; })); bqm.querySelectorAll('img').forEach(function (im, i) { im.classList.toggle('on', i < best); }); bqm.classList.toggle('full', best >= MULTI_MAX); if (best >= MULTI_MAX && !reduceMotion) { var br = bqm.getBoundingClientRect(); petalBurst(br.left + br.width / 2, br.top + br.height / 2, 24); } }
   var me = $('#play .ppl.you'); if (me) { me.classList.remove('won'); void me.offsetWidth; me.classList.add('won'); }
   var name = blackout ? 'Blackout!' : BLOOM_NAMES[Math.min(k.n, 4)];
   var burst = document.createElement('div'); burst.className = 'won';
