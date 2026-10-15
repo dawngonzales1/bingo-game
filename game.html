@@ -3454,7 +3454,7 @@ var CITIES = {
   paris: { id: 'paris', name: 'Paris', big: 'PARIS', map: 'art/lobby-paris-map.webp', landmarks: LANDMARKS, plot: PLOT, lmImg: LM_IMG, footc: FOOTC, rooms: CITY_ROOMS, water: MAP_WATER, next: 'rio', blurb: 'finish all 4 rooms for a big prize' },
   rio: { id: 'rio', name: 'Rio de Janeiro', big: 'RIO', map: 'art/lobby-rio-map.webp',
     landmarks: [{ id: 'beach', name: 'Copacabana Beach' }, { id: 'cablecar', name: 'Sugarloaf Cable Car' }, { id: 'parade', name: 'Carnival Parade' }, { id: 'samba', name: 'Samba Stage' }],
-    plot: { beach: [470, 560], cablecar: [690, 360], parade: [1010, 500], samba: [190, 560] }, lmImg: {}, footc: { beach: [0, 40, 40], cablecar: [0, 40, 40], parade: [0, 40, 40], samba: [0, 40, 40] },
+    plot: { beach: [470, 560], cablecar: [690, 360], parade: [1010, 500], samba: [190, 560] }, lmImg: { beach: ['art/landmark-beach.webp', 200, 1], cablecar: ['art/landmark-cablecar.webp', 190, 1], parade: ['art/landmark-parade.webp', 210, 1], samba: ['art/landmark-samba.webp', 210, 1] }, footc: { beach: [0, 40, 40], cablecar: [0, 40, 40], parade: [0, 40, 40], samba: [0, 40, 40] },
     rooms: ['beach', 'cablecar', 'parade', 'samba'], water: [[1150, 250], [1250, 470], [930, 110], [1080, 620]], next: null, blurb: 'finish all 4 rooms for a big prize' }
 };
 var CITY = CITIES.paris;
@@ -3690,7 +3690,7 @@ function cordieSay(pose, msg, ms, side) {
   if (reduceMotion) ms = ms || 3500;
   var old = document.querySelector('.cordie-pop'); if (old) old.remove();
   var d = document.createElement('div'); d.className = 'cordie-pop ' + (side || 'left');
-  d.innerHTML = '<img src="art/mascot-' + pose + '.webp" alt="Cordie"><div class="cbub">' + msg + '</div>';
+  d.innerHTML = '<img src="' + cordieArt(pose) + '" alt="Cordie"><div class="cbub">' + msg + '</div>';
   document.body.appendChild(d); SFX.tap && SFX.tap();
   d.onclick = function () { d.classList.add('out'); setTimeout(function () { d.remove(); }, 400); };
   // she never blocks a tap: any tap anywhere, or a new screen, sends her off
@@ -3714,7 +3714,7 @@ function rewardNext() {
   var cp = document.querySelector('.cordie-pop'); if (cp) cp.remove();
   var r = REWQ.shift(), o = document.createElement('div'); o.className = 'rwd';
   o.innerHTML = '<div class="prays"></div><div class="rwin"><img class="rwart" src="art/' + r[0] + '.webp" alt=""><b class="rwt outl">' + r[1] + '</b><span class="rws">' + r[2] + '</span><button class="b3 gold" id="rwGo">Yay!</button></div>' +
-    (r[3] ? '<img class="rwcordie" src="art/mascot-' + r[3] + '.webp" alt="">' : '');
+    (r[3] ? '<img class="rwcordie" src="' + cordieArt(r[3]) + '" alt="">' : '');
   document.body.appendChild(o); SFX.set && SFX.set(); setTimeout(function () { sparkle(innerWidth / 2, innerHeight * .4, 70); petalBurst(innerWidth / 2, innerHeight * .4, 26); coinBurst(innerWidth / 2, innerHeight * .5, 14); fireworks && fireworks(1600); }, 250);
   $('#rwGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (r[4]) r[4](); setTimeout(rewardNext, 300); }, 300); };
 }
@@ -5056,7 +5056,7 @@ function results() {
   var chips = [['i-ticket', E.tickets], ['i-coin', E.coins], ['i-petal', E.petals], ['i-card', E.cards.length], ['i-drop', E.drops], ['i-seed', E.seeds], ['i-bulb', E.alerts ? alertText(E.alerts) : 0]].filter(function (c) { return c[1]; })
     .map(function (c, i) { return '<span class="schip" style="animation-delay:' + (.4 + i * .1) + 's">' + icon(c[0]) + '<b>' + c[1] + '</b></span>'; }).join('');
   show('<div class="screen" id="summary" style="--rbg:url(' + room.img + ')">' +
-    '<div class="sumL"><i class="srays"></i><div class="sribbon"><span class="outl">' + head + '</span></div><img class="scordie" src="art/mascot-' + (R.bingos ? 'cheer' : 'point') + '.webp" alt="">' +
+    '<div class="sumL"><i class="srays"></i><div class="sribbon"><span class="outl">' + head + '</span></div><img class="scordie" src="' + cordieArt(R.bingos ? 'cheer' : 'point') + '" alt="">' +
       '<div class="sscroll"><div class="slvl"><span>LV ' + S.level + '</span><div class="pbar"><i style="width:' + Math.round(S.xp / xpNeed() * 100) + '%"></i></div></div>' +
       '<div class="sbox"><span class="slab">From your bingos</span><div class="schips">' + (chips || '<span class="snone">No prizes this round. More cards give more chances!</span>') + '</div></div>' +
       (E.cards.length ? '<div class="sbox"><span class="slab">New album cards (' + E.cards.length + ')</span><div class="scards">' + E.cards.map(function (d, i) { return '<span style="animation-delay:' + (.5 + i * .12) + 's">' + cardFace(d.id, { isNew: d.isNew, hideCount: true }) + '</span>'; }).join('') + '</div></div>' : '') +
@@ -6469,13 +6469,15 @@ var STORIES = {
   coast: ['The Gold Coast sparkles in the sun!', 'Finish the bonus shape for a big extra prize!'],
   market: ['Lanterns, music and mystery gifts at Lantern Market!', 'Open the gift squares to see what is inside!']
 };
+var RIO_POSE = { point: 'rio-point', wow: 'rio-cheer', cheer: 'rio-cheer', wave: 'rio-wave', stand: 'rio-wave', gift: 'rio-maraca' };
+function cordieArt(pose) { return 'art/mascot-' + ((S.city === 'rio' && RIO_POSE[pose]) ? RIO_POSE[pose] : pose) + '.webp'; }
 function roomStory(room, done) {
   var st = STORIES[room.id]; if (!st) { done(); return; }
   var how = (MODE_INFO[room.mode] || {}).how || '';
   var frames = [['point', st[0], '20%'], ['wow', 'How it works: ' + how + '.', '50%'], ['cheer', st[1], '80%']];
   var d = document.createElement('div'); d.className = 'story';
   d.innerHTML = '<div class="stframes">' + frames.map(function (f, i) {
-    return '<div class="stf" style="--d:' + i + ';background-image:url(' + room.img + ');background-position:' + f[2] + ' center"><img src="art/mascot-' + f[0] + '.webp" alt=""><p>' + esc(f[1]) + '</p></div>';
+    return '<div class="stf" style="--d:' + i + ';background-image:url(' + room.img + ');background-position:' + f[2] + ' center"><img src="' + cordieArt(f[0]) + '" alt=""><p>' + esc(f[1]) + '</p></div>';
   }).join('') + '</div><div class="stbar"><b class="outl">' + esc(room.name) + '</b><button class="b3 plum" id="stSkip">Skip</button><button class="b3 gold shine" id="stGo">Let\'s Bingo!</button></div>';
   document.body.appendChild(d); SFX.tap && SFX.tap();
   function close() { d.classList.add('out'); setTimeout(function () { d.remove(); }, 300); done(); }
@@ -6503,7 +6505,7 @@ function coach(steps, done) {
     var st = steps[i], t = el(st);
     bub.querySelector('p').innerHTML = tl(st.text); o.querySelector('.cstep').textContent = (i + 1) + ' of ' + steps.length;
     o.querySelector('[data-cn]').textContent = i === steps.length - 1 ? (st.last || 'Let\'s play!') : 'Next ›';
-    cor.src = 'art/mascot-' + (st.pose || (t ? 'point' : 'cheer')) + '.webp';
+    cor.src = cordieArt(st.pose || (t ? 'point' : 'cheer'));
     o.classList.toggle('nohole', !t);
     var bw = Math.min(360, innerWidth - 40);
     if (t) {
