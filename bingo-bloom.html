@@ -3163,6 +3163,9 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .rptb .tcards.n4 i { margin: 0 -7px; }
 .rpt.sel .tcards i { animation: none; }
 @media (max-height: 420px) { .rptb .tcards { height: clamp(34px, 11vh, 48px) !important; } }
+.rptrophy { width: clamp(42px, 14vh, 60px); height: auto; margin: -16px 4px -16px -12px; filter: drop-shadow(0 3px 3px rgba(20,5,30,.4)); animation: hudBob 2.6s ease-in-out infinite; }
+.rpjack { padding-left: 14px; }
+@media (max-height: 420px) { .rptrophy { width: 30px; margin: -6px 0 -6px -6px; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4379,7 +4382,7 @@ function roomScreen(room) {
   var MULT = { 1: 2, 2: 6, 4: 10 }, TC = { 1: 'teal', 2: 'pink', 4: 'gold' };
   panel('<div class="rp" style="--c1:' + th[0] + ';--c2:' + th[1] + '">' +
     '<button class="rnav l" id="rPrev" aria-label="Previous room">‹</button><button class="rnav r" id="rNext" aria-label="Next room">›</button>' +
-    '<div class="rphead"><span class="rprib outl">' + esc(room.name) + '</span><span class="rpmode">' + MODE_INFO[room.mode].tag + '</span><span class="rpjack"><small>GRAND JACKPOT</small><b id="jackN">0</b>' + icon('i-ticket') + '</span></div>' +
+    '<div class="rphead"><span class="rprib outl">' + esc(room.name) + '</span><span class="rpmode">' + MODE_INFO[room.mode].tag + '</span><span class="rpjack"><img class="rptrophy" src="art/icon-jackpot.webp" alt=""><small>GRAND JACKPOT</small><b id="jackN">0</b>' + icon('i-ticket') + '</span></div>' +
     info +
     '<div class="rpmain"><div class="rptiers">' + [1, 2, 4].map(function (n, i) {
       return '<div class="rpt ' + TC[n] + (S.cards === n ? ' sel' : '') + '" data-n="' + n + '" style="animation-delay:' + (i * .07) + 's">' + (n === 2 ? '<span class="tflag">POPULAR</span>' : n === 4 ? '<span class="tflag best">BEST VALUE</span>' : '') +
