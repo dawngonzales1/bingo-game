@@ -2964,6 +2964,56 @@ body:has(#lobby) .cordie-pop .cbub { margin-bottom: clamp(120px, 37vh, 170px); }
 .panel .tabs { order: -2; }
 #room .rbottom { margin-bottom: 14px; }
 @media (max-height: 300px) { #room .rbottom { margin-bottom: 0; } }
+/* ===== colour pass: bold rainbow pops everywhere (Dawn: "more pops of color instead of the same drab pastels and blues") ===== */
+.panel { background: radial-gradient(circle at 8% 0%, rgba(255,80,170,.55), transparent 42%), radial-gradient(circle at 100% 100%, rgba(30,210,230,.45), transparent 42%), radial-gradient(circle at 90% 5%, rgba(255,214,92,.3), transparent 30%), linear-gradient(180deg, #5a22a8, #3d1278 55%, #2a0c46) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; }
+.panel::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 7px; border-radius: 24px 24px 0 0; background: linear-gradient(90deg, #ff4d6d, #ff9a3c, #ffe058, #5fe08a, #29c6d8, #7b3fe0, #ff4d6d); background-size: 200% 100%; animation: rainbowSlide 6s linear infinite; pointer-events: none; z-index: 4; }
+@keyframes rainbowSlide { to { background-position: 200% 0; } }
+.calm .panel::before { animation: none; }
+.panel .x { background: radial-gradient(circle at 40% 30%, #ff9a9a, #e5383b 60%, #a3121c); box-shadow: 0 0 0 2.5px #fff3b8, 0 0 0 4.5px var(--ol), 0 4px 8px rgba(10,2,20,.45); }
+.panel .opt, .panel .oven, .panel .recipe, .panel .sitem, .panel .pack, .panel .bed, .panel .res-stats div { background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06)); border: 1.5px solid rgba(255,255,255,.35); }
+.panel .opt { border-left: 6px solid var(--oc, #ff4d6d); }
+.panel .opt:nth-child(5n+1) { --oc: #ff4d6d; } .panel .opt:nth-child(5n+2) { --oc: #ff9a3c; } .panel .opt:nth-child(5n+3) { --oc: #ffe058; } .panel .opt:nth-child(5n+4) { --oc: #5fe08a; } .panel .opt:nth-child(5n+5) { --oc: #29c6d8; }
+.panel .sw[aria-pressed="true"] { background: linear-gradient(180deg, #8dff9a, #2fae55); }
+.panel .seg button[aria-pressed="true"] { background: linear-gradient(180deg, #ff9cc4, #e0478c); color: #fff; text-shadow: 0 1px 0 rgba(60,10,40,.6); }
+.panel .tabs button { background: linear-gradient(180deg, #4fc3f7, #1b7fb8); color: #fff; }
+.panel .tabs button[aria-pressed="true"] { background: linear-gradient(180deg, #ff9cc4, #e0478c); color: #fff; text-shadow: 0 1px 0 rgba(60,10,40,.6); }
+.b3.plum, .panel .b3.plum { background: linear-gradient(180deg, #ff7ab8, #d6338a 60%, #a3186a); }
+.panel .pill2 { background: linear-gradient(180deg, #29c6d8, #1b7fb8); }
+.panel .chip { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.45); }
+/* currencies: each its own colour */
+.hud-top .cur[title^="Tickets"] { background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0) 50%), linear-gradient(180deg, #ff5fa0, #b8155f); }
+.hud-top .cur[title^="Coins"] { background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0) 50%), linear-gradient(180deg, #ffb300, #c9560f); }
+.hud-top .cur[title^="Petals"] { background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0) 50%), linear-gradient(180deg, #ff7a59, #c42650); }
+.hud-top .cur.gem { background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0) 50%), linear-gradient(180deg, #9d5cff, #4e18b8); }
+.lvl .xp { background: linear-gradient(180deg, #1b7fb8, #29c6d8); } .lvl .xp i { background: linear-gradient(180deg, #ffe58f, #ff9a3c); }
+.lvl .badge { background: radial-gradient(circle at 38% 28%, #7fe3ff, #1b7fb8 60%, #0d4a7a); }
+/* side games: four colours */
+.panel .gtile[data-g="drop"] { background: linear-gradient(180deg, #ff8fb1, #e0478c 70%, #a3186a); }
+.panel .gtile[data-g="wheel"] { background: linear-gradient(180deg, #ffb347, #f07a1c 70%, #b84a0a); }
+.panel .gtile[data-g="scratch"] { background: linear-gradient(180deg, #5fe3e8, #1fa5b8 70%, #0f6f85); }
+.panel .gtile[data-g="match"] { background: linear-gradient(180deg, #c58cff, #7b3fc4 70%, #4e1f8a); }
+/* shop packs: a different header colour each */
+.bund:nth-child(5n+1) .bhd { background: linear-gradient(180deg, #ff9cc4, #e0578f); } .bund:nth-child(5n+2) .bhd { background: linear-gradient(180deg, #5fe3e8, #1fa5b8); } .bund:nth-child(5n+3) .bhd { background: linear-gradient(180deg, #ffb347, #f07a1c); } .bund:nth-child(5n+4) .bhd { background: linear-gradient(180deg, #8dff9a, #2fae55); } .bund:nth-child(5n+5) .bhd { background: linear-gradient(180deg, #b98cff, #6a32d0); }
+.bund.hero .bhd { background: linear-gradient(180deg, #ffe58f, #f7b924) !important; } .bund.hero .bhd b, .bund.hero .bhd span { color: #3d1a4f; text-shadow: none; }
+/* kitchen: recipes and ovens get colour */
+.panel .recipe { border-left: 6px solid var(--rc, #ff9a3c); } .panel .recipe:nth-child(4n+1) { --rc: #ff4d6d; } .panel .recipe:nth-child(4n+2) { --rc: #ffb300; } .panel .recipe:nth-child(4n+3) { --rc: #5fe08a; } .panel .recipe:nth-child(4n+4) { --rc: #29c6d8; }
+.panel .oven { background: linear-gradient(180deg, rgba(41,198,216,.3), rgba(41,198,216,.08)); border-color: #5fe3e8; }
+.panel .oven.oready { background: linear-gradient(180deg, rgba(95,224,138,.35), rgba(95,224,138,.1)); border-color: #8dff9a; }
+.panel .fgift { background: linear-gradient(90deg, rgba(95,224,138,.3), rgba(41,198,216,.18)); border-color: #8dff9a; }
+.panel .pstore h4.pick { color: #ffe58f; }
+/* room screen bands */
+.bake { background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 45%), linear-gradient(90deg, #d6338a, #7b3fe0 60%, #29c6d8) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; }
+.bk b { color: #fff; } .bk small { color: #fff3b8; }
+.betsl { background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 45%), linear-gradient(180deg, #1fa5b8, #0f6f85); }
+.bsteps button[aria-pressed="true"] { background: linear-gradient(180deg, #ffe58f, #f7b924); }
+/* events and results */
+#results { background: radial-gradient(circle at 10% 0%, rgba(255,80,170,.5), transparent 45%), radial-gradient(circle at 100% 100%, rgba(30,210,230,.45), transparent 45%), linear-gradient(180deg, #5a22a8, #3d1278 55%, #2a0c46); }
+.res-stats div { background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06)); border: 1.5px solid rgba(255,255,255,.35); }
+/* featured rooms sheet and cities keep their own colours; the lobby side buttons get rainbow label pills */
+#lobby .round .lb { padding: 1px 9px 2px; border-radius: 999px; background: linear-gradient(180deg, var(--lc1, #ff9cc4), var(--lc2, #e0478c)); text-shadow: 0 1px 0 rgba(60,10,40,.6); box-shadow: 0 0 0 2px var(--ol); }
+#lobby #bGift .lb { --lc1: #ff9cc4; --lc2: #e0478c; } #lobby #bAlbum .lb { --lc1: #b98cff; --lc2: #6a32d0; } #lobby #bKitchen .lb { --lc1: #ffb347; --lc2: #f07a1c; }
+#lobby #bShop .lb { --lc1: #ff8fb1; --lc2: #d6338a; } #lobby #bGames .lb { --lc1: #5fe3e8; --lc2: #1fa5b8; } #lobby #bTeam .lb { --lc1: #8dff9a; --lc2: #2fae55; }
+#album { background: radial-gradient(circle at 10% 0%, rgba(255,80,170,.45), transparent 45%), radial-gradient(circle at 100% 100%, rgba(30,210,230,.4), transparent 45%), linear-gradient(180deg, #5a22a8, #3d1278 55%, #2a0c46) !important; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
