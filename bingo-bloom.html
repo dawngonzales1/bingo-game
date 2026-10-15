@@ -3068,7 +3068,7 @@ body:has(#lobby) .cordie-pop .cbub { margin-bottom: clamp(120px, 37vh, 170px); }
 .citypill { display: none; }
 #summary.nowheel { grid-template-columns: minmax(0, 1fr); justify-items: center; }
 #summary.nowheel .sumL { width: min(100%, 560px); }
-.wmeter { display: flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.5); font: 800 12px var(--ui); color: #ffe58f; }
+.wmeter { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1.5px rgba(255,229,143,.5); font: 800 12px var(--ui); color: #ffe58f; }
 .wmeter i { flex: 1; height: 10px; border-radius: 5px; background: rgba(10,2,20,.5); overflow: hidden; } .wmeter i b { display: block; height: 100%; background: linear-gradient(90deg, #ff8fb1, #ffd45c); }
 .wmeter small { font: 700 11px var(--ui); color: #fff; }
 </style>
@@ -5351,13 +5351,15 @@ function bloomShow(perfect, done) {
   function finish() { if (gone) return; gone = true; clearInterval(tm); o.classList.add('out'); setTimeout(function () { o.remove(); done(); }, 300); }
   $('#bsGo').onclick = finish; o.onclick = finish;
 }
-var WHEEL_NEED = 3; // bingos per Bloom Wheel spin (the wheel is earned, not handed out)
+var WHEEL_LUCK = .3; // chance of a Bloom Wheel spin in a featured room with bingos on 2+ cards (bingos on every card always earn it)
 var BLOOM_WHEEL = [{ lbl: '5', n: 5, w: 30 }, { lbl: 'PETITE', n: 25, w: 12, tier: 0 }, { lbl: '8', n: 8, w: 13 }, { lbl: 'BOUQUET', n: 50, w: 8, tier: 1 }, { lbl: '10', n: 10, w: 20 }, { lbl: 'GRAND', n: 120, w: 4, tier: 2 }, { lbl: '8', n: 8, w: 12 }, { lbl: 'ROYAL', n: 300, w: 1, tier: 3 }];
 var WHEEL_COLS = ['#1fd1b2', '#4ed35a', '#8a3ff0', '#3b8cff', '#1fd1b2', '#ff4fa3', '#8a3ff0', '#ffc12e'];
 var TIERS = [['Petite', '#7ef07a', '#1f9a3a'], ['Bouquet', '#7fbfff', '#2456d6'], ['Grand', '#ff8fc8', '#d6338a'], ['Royal', '#ffe58f', '#f0870f']];
 function results() {
   var E = R.earned, bet = R.bet, room = R.roomObj;
-  S.wheelMeter = (S.wheelMeter || 0) + R.bingos; var spins = Math.floor(S.wheelMeter / WHEEL_NEED); S.wheelMeter -= spins * WHEEL_NEED; save();
+  // the Bloom Wheel is earned in featured rooms only: a bingo on every card you play, or a 30% chance once at least 2 cards have a bingo; city rooms earn the Bouquet Jackpot wheel with a Full Bouquet instead
+  var cardsHit = R.cards.filter(function (k) { return k.n > 0 || k.won; }).length, spins = 0;
+  if (R.mode !== 'multi' && cardsHit >= 2 && (cardsHit === R.cards.length || Math.random() < WHEEL_LUCK)) spins = 1;
   var head = R.bingos ? (R.mode === 'blackout' ? 'Blackout!' : R.bingos > 1 ? R.bingos + ' Bingos!' : 'Bingo!') : 'Round Over';
   var ingCount = {}; E.ings.forEach(function (g) { ingCount[g] = (ingCount[g] || 0) + 1; });
   var tiles = BAKES[R.room] ? bakeNeed(R.room).map(function (nd) { var g = ingById(nd[0]), h = Math.min(nd[1], bakeState(R.room).have[nd[0]] || 0), full = h >= nd[1]; return '<div class="stile' + (full ? ' full' : '') + '">' + ingDot(nd[0]) + '<small>' + g.name + '</small><span class="ibar"><i style="width:' + (h / nd[1] * 100) + '%"></i><em>' + h + '/' + nd[1] + '</em></span>' + (full ? '<span class="sok">✓</span>' : '') + (ingCount[nd[0]] ? '<span class="sbadge">' + ingCount[nd[0]] + '</span>' : '') + '</div>'; }).join('')
@@ -5370,14 +5372,14 @@ function results() {
       '<div class="sscroll"><div class="slvl"><span>LV ' + S.level + '</span><div class="pbar"><i style="width:' + Math.round(S.xp / xpNeed() * 100) + '%"></i></div></div>' +
       '<div class="sbox"><span class="slab">From your bingos</span><div class="schips">' + (chips || '<span class="snone">No prizes this round. More cards give more chances!</span>') + '</div></div>' +
       (E.cards.length ? '<div class="sbox"><span class="slab">New Album Cards (' + E.cards.length + ')</span><div class="scards">' + E.cards.map(function (d, i) { return '<span style="animation-delay:' + (.5 + i * .12) + 's">' + cardFace(d.id, { isNew: d.isNew, hideCount: true }) + '</span>'; }).join('') + '</div></div>' : '') +
-      (hasWheel ? '<div class="sbox swheel"><span class="slab">From the Bloom Wheel</span><div class="sbig">' + icon('i-ticket') + '<b id="sumWheel">0</b><small>tickets</small></div></div>' : '<div class="wmeter"><span>Bloom Wheel</span><i><b style="width:' + Math.round(S.wheelMeter / WHEEL_NEED * 100) + '%"></b></i><small>' + S.wheelMeter + '/' + WHEEL_NEED + ' bingos</small></div>') +
+      (hasWheel ? '<div class="sbox swheel"><span class="slab">From the Bloom Wheel</span><div class="sbig">' + icon('i-ticket') + '<b id="sumWheel">0</b><small>tickets</small></div></div>' : '<div class="wmeter"><span>Bloom Wheel</span><small>' + (R.mode === 'multi' ? '4 bingos on one card earns the Bouquet Jackpot wheel' : 'a bingo on every card earns a spin · bingos on 2 cards might') + '</small></div>') +
       (tiles ? '<div class="sbox"><span class="slab">' + (BAKES[R.room] ? 'Bake to Win Ingredients' : 'Ingredients for the Kitchen') + '</span><div class="stiles">' + tiles + '</div></div>' : '') +
       '<div class="stotal">Round total: <b id="sumTot"></b></div></div>' +
       '<div class="sbtns">' + (R.pathReady ? '<button class="b3 green" id="bPath">Garden Path!</button>' : '') + '<button class="b3 gold" id="bAgain">Play Again</button><button class="b3 plum" id="bLobby">Map</button><button class="b3 plum" id="bAlb">Album</button></div>' +
     '</div>' +
     (hasWheel ?     '<div class="sumR"><div class="tiers4">' + TIERS.map(function (t, i) { var amt = BLOOM_WHEEL.filter(function (w) { return w.tier === i; })[0].n * bet; return '<div class="t4" id="tier' + i + '" style="--a:' + t[1] + ';--b:' + t[2] + '"><em class="outl">' + t[0] + '</em><b>' + icon('i-ticket') + amt + '</b></div>'; }).join('') + '</div>' +
       '<div class="wwrap"><canvas id="bwCv" aria-label="Bloom Wheel"></canvas><button class="wspin" id="bwGo"' + (spins ? '' : ' disabled') + '><span>' + (spins ? 'SPIN' : '🔒') + '</span></button></div>' +
-      '<div class="wfoot"><p class="wnote" id="bwMsg">' + (spins ? 'Your bingos earned ' + (spins > 1 ? spins + ' spins' : 'a spin') + ' of the Bloom Wheel!' : 'Bloom Wheel meter: ' + S.wheelMeter + '/' + WHEEL_NEED + ' bingos. ' + (WHEEL_NEED - S.wheelMeter) + ' more for a spin.') + '</p>' +
+      '<div class="wfoot"><p class="wnote" id="bwMsg">' + (spins ? (cardsHit === R.cards.length ? 'A bingo on every card! You earned a spin of the Bloom Wheel.' : 'Lucky! Your bingos earned a spin of the Bloom Wheel.') : 'A bingo on every card earns a spin.') + '</p>' +
       '<button class="wskip" id="bwSkip" hidden>SKIP ▶▶ <b>4s</b></button><button class="wodds" id="bwOdds">See the Odds</button></div></div>' : '') +
   '</div>');
   if (R.bingos) setTimeout(function () { sparkle(innerWidth * .25, 80, 70); }, 250);
