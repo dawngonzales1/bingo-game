@@ -578,7 +578,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .scell.hit { background: #fff3c4; border-color: var(--gold2); box-shadow: 0 0 12px var(--gold2); }
 #scCv { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: pointer; }
 .mmboard { position: relative; flex: none; border-radius: 16px; border: 4px solid var(--ol); box-shadow: 0 5px 0 var(--ol); background: repeating-conic-gradient(#fff4f7 0 25%, #ffe3ec 0 50%) 0 0 / calc(var(--s) * 2) calc(var(--s) * 2); overflow: hidden; touch-action: none; box-sizing: content-box; }
-.mac { position: absolute; left: 0; top: 0; width: var(--s); height: var(--s); transition: transform .2s ease-in; display: grid; place-items: center; cursor: pointer; }
+.mac { position: absolute; left: 0; top: 0; width: var(--s); height: var(--s); touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; transition: transform .2s ease-in; display: grid; place-items: center; cursor: pointer; }
 .mac::before { content: ''; width: 78%; height: 66%; border-radius: 44%; border: 2.5px solid var(--ol); background: linear-gradient(180deg, var(--c) 0 38%, #fff7e6 38% 58%, var(--c) 58%); box-shadow: inset 0 3px 0 rgba(255,255,255,.55), 0 2px 0 var(--ol); box-sizing: border-box; }
 .mac.sel::before { outline: 3px solid var(--gold2); outline-offset: 2px; }
 .mac { transition: transform .4s cubic-bezier(.35,0,.55,1.25); }
@@ -3721,8 +3721,9 @@ function panel(inner, cls, onReady) {
   closeVeil();
   veil = document.createElement('div'); veil.className = 'veil';
   veil.innerHTML = '<div class="panel ' + (cls || '') + '" role="dialog" aria-modal="true"><button class="x" data-x aria-label="Close">✕</button>' + inner + '</div>';
-  var downOut = false; veil.addEventListener('pointerdown', function (e) { downOut = e.target === veil; });
-  veil.onclick = function (e) { if ((e.target === veil && downOut) || e.target.closest('[data-x]')) closeVeil(); };
+  var downOut = false, dx0 = 0, dy0 = 0; veil.addEventListener('pointerdown', function (e) { downOut = e.target === veil; dx0 = e.clientX; dy0 = e.clientY; });
+  veil.addEventListener('pointerup', function (e) { if (downOut && e.target === veil && Math.abs(e.clientX - dx0) < 12 && Math.abs(e.clientY - dy0) < 12 && !veil.querySelector('.mmboard')) closeVeil(); downOut = false; });
+  veil.onclick = function (e) { if (e.target.closest('[data-x]')) closeVeil(); };
   document.body.appendChild(veil); if (onReady) onReady(veil); return veil;
 }
 
@@ -5692,7 +5693,10 @@ function macaronMatch() {
         $('#mmAgain', v).onclick = macaronMatch;
       }
       var start = null;
-      board.addEventListener('pointerdown', function (e) { var t = e.target.closest('.mac'); if (!t || G.busy || G.over) return; start = { x: +t.dataset.x, y: +t.dataset.y, cx: e.clientX, cy: e.clientY }; });
+      board.addEventListener('touchstart', function (e) { e.preventDefault(); }, { passive: false });
+      board.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
+      board.addEventListener('pointerdown', function (e) { var t = e.target.closest('.mac'); if (!t || G.busy || G.over) return; try { board.setPointerCapture(e.pointerId); } catch (x) { /* fine */ } start = { x: +t.dataset.x, y: +t.dataset.y, cx: e.clientX, cy: e.clientY }; });
+      board.addEventListener('pointercancel', function () { start = null; });
       board.addEventListener('pointerup', function (e) {
         if (!start || G.busy || G.over) { start = null; return; }
         var dx = e.clientX - start.cx, dy = e.clientY - start.cy, a = [start.x, start.y]; start = null;
