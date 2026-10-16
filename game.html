@@ -7378,7 +7378,7 @@ var STORIES = {
 };
 var RIO_POSE = { point: 'rio-point', wow: 'rio-cheer', cheer: 'rio-cheer', wave: 'rio-wave', stand: 'rio-wave', gift: 'rio-maraca' };
 // poses drawn in the new Cordie design; anything else falls back to a new-design pose until its art arrives
-var CORDIE_NEW = { stand: 1, gift: 1, wow: 1, point: 1, cheer: 1, sad: 1, think: 1, wave: 1, face: 1, 'rio-cheer': 1, 'rio-point': 1, 'rio-wave': 1, 'rio-maraca': 1 }, CORDIE_FALLBACK = { sleep: 'think' };
+var CORDIE_NEW = { stand: 1, gift: 1, wow: 1, point: 1, cheer: 1, sad: 1, think: 1, wave: 1, face: 1, 'rio-cheer': 1, 'rio-point': 1, 'rio-wave': 1, 'rio-maraca': 1, sleep: 1 }, CORDIE_FALLBACK = {};
 function cordieArt(pose) {
   var p = (S.city === 'rio' && RIO_POSE[pose] && CORDIE_NEW[RIO_POSE[pose]]) ? RIO_POSE[pose] : pose;
   if (!CORDIE_NEW[p]) p = CORDIE_FALLBACK[p] || 'stand';
