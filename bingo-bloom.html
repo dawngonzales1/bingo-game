@@ -3266,6 +3266,52 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 @keyframes cloudX { from { left: -90px; } to { left: 110%; } }
 .mscball { position: absolute; left: 14%; bottom: calc(8% + var(--p, 0) * 0.7%); width: 46px; transition: bottom .5s cubic-bezier(.3,1.3,.5,1); animation: hudBob 2.4s ease-in-out infinite; filter: drop-shadow(0 4px 6px rgba(20,5,35,.4)); }
 .mscene.balloon .mcordie { height: 56%; left: 62%; }
+/* ===== Cordie's Balloon: timing lane ===== */
+.mlane { position: relative; height: clamp(110px, 32vh, 150px); border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, #2456d6, #7fd1ff 70%, #e8f7ff); box-shadow: inset 0 0 0 2px rgba(255,255,255,.6), 0 0 0 2px var(--ol); }
+.mgate { position: absolute; top: 8px; width: 18%; height: 30px; transform: translateX(-50%); transition: left .35s cubic-bezier(.3,1.3,.5,1); }
+.mgate i { position: absolute; top: 0; width: 42%; height: 100%; border-radius: 14px; background: #fff; box-shadow: 0 3px 0 rgba(20,60,120,.25); } .mgate i:first-child { left: -8%; } .mgate i:last-child { right: -8%; }
+.mgate::after { content: ''; position: absolute; left: 34%; right: 34%; top: 100%; height: 300px; background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0)); }
+.mtrack { position: absolute; left: 0; right: 0; bottom: 26px; height: 60px; }
+.mlane .mballoon { position: absolute; left: 50%; bottom: 0; width: clamp(40px, 11vh, 56px); margin: 0; transform: translateX(-50%); filter: drop-shadow(0 4px 6px rgba(20,5,35,.4)); animation: none; transition: none; }
+.mlane .mballoon.lift { animation: mLift .5s cubic-bezier(.2,1.4,.4,1); }
+@keyframes mLift { 40% { bottom: 34px; } }
+.mlane.miss { animation: mShake .4s; } @keyframes mShake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.mrungs { position: absolute; left: 8px; right: 8px; bottom: 8px; display: flex; gap: 3px; }
+.mrungs i { flex: 1; height: 10px; border-radius: 5px; background: rgba(255,255,255,.35); box-shadow: inset 0 0 0 1px rgba(0,40,100,.2); }
+.mrungs i.up { background: linear-gradient(180deg, #ffe058, #ff9a3c); box-shadow: 0 0 0 1px rgba(120,60,0,.4); }
+.mrungs i.anc { box-shadow: 0 0 0 2px #ff4d6d, 0 0 8px rgba(255,77,109,.9); }
+.mrungn { position: absolute; right: 10px; top: 8px; padding: 2px 10px; border-radius: 999px; font: 800 11px var(--ui); color: #3d1a4f; background: rgba(255,255,255,.85); box-shadow: 0 0 0 1.5px var(--ol); }
+/* ===== Album complete: the show ===== */
+.acel { overflow: hidden; }
+.acel.out { opacity: 0; transition: opacity .4s; }
+.acring { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+.acring > span { position: absolute; left: 0; top: 0; width: clamp(40px, 11vh, 64px); margin: calc(clamp(40px, 11vh, 64px) * -0.7) 0 0 calc(clamp(40px, 11vh, 64px) * -0.5); transform-origin: 50% 50%; animation: acFly 1.6s cubic-bezier(.2,.9,.3,1.2) both, acOrbit 14s linear 1.6s infinite; animation-delay: calc(var(--i) * .07s), 1.6s; --a: calc(var(--i) * 360deg / var(--n)); }
+.acring .cf { width: 100%; pointer-events: none; }
+@keyframes acFly { 0% { transform: rotate(var(--a)) translateY(-120vh) rotate(calc(var(--a) * -1)); opacity: 0; } 100% { transform: rotate(var(--a)) translateY(clamp(-110px, -19vh, -72px)) rotate(calc(var(--a) * -1)); opacity: 1; } }
+@keyframes acOrbit { from { transform: rotate(var(--a)) translateY(clamp(-110px, -19vh, -72px)) rotate(calc(var(--a) * -1)); } to { transform: rotate(calc(var(--a) + 360deg)) translateY(clamp(-110px, -19vh, -72px)) rotate(calc(var(--a) * -1 - 360deg)); } }
+.acel .acbook { position: relative; width: clamp(70px, 26vh, 130px); height: clamp(70px, 26vh, 130px); animation: none; }
+.acel .acbookimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; animation: acBook 2.2s cubic-bezier(.3,1.4,.5,1) both; filter: drop-shadow(0 0 20px rgba(255,214,92,.9)); }
+@keyframes acBook { 0% { transform: scale(.2) rotate(-30deg); opacity: 0; } 35% { transform: scale(1.25) rotate(6deg); opacity: 1; } 55% { transform: scale(1) rotate(0); } 80% { transform: scale(1.3) rotate(-8deg); opacity: 1; } 100% { transform: scale(0) rotate(40deg); opacity: 0; } }
+.acel .actrophy { position: absolute; inset: 0; width: 100%; height: 100% !important; object-fit: contain; opacity: 0; animation: acTrophy .9s 2.1s cubic-bezier(.2,1.5,.4,1) both, rwBounce 2.2s 3s ease-in-out infinite; }
+@keyframes acFlyS { 0% { transform: rotate(var(--a)) translateY(-120vh) rotate(calc(var(--a) * -1)); opacity: 0; } 100% { transform: rotate(var(--a)) translateY(-62px) rotate(calc(var(--a) * -1)); opacity: 1; } }
+@keyframes acOrbitS { from { transform: rotate(var(--a)) translateY(-62px) rotate(calc(var(--a) * -1)); } to { transform: rotate(calc(var(--a) + 360deg)) translateY(-62px) rotate(calc(var(--a) * -1 - 360deg)); } }
+@keyframes acTrophy { 0% { transform: scale(0) rotate(-40deg); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.acel { place-items: end center; }
+.acel .acin { padding-bottom: max(10px, 2vh); gap: 4px; }
+.acel .acin { position: static; }
+.acel .acbook { position: absolute; left: 50%; top: 31%; transform: translate(-50%, -50%); }
+.acrow .acall i { display: flex; align-items: center; height: clamp(28px, 10vh, 48px); }
+.acrow .acall i svg { width: clamp(24px, 8vh, 38px); height: clamp(24px, 8vh, 38px); margin-left: -10px; }
+.acrow .acall i svg:first-child { margin-left: 0; }
+.acring { top: 31%; }
+.acel .actitle { opacity: 0; animation: acTitle .7s 2.3s cubic-bezier(.2,.9,.3,1.4) both; }
+@keyframes acTitle { from { opacity: 0; transform: scale(2.2); } to { opacity: 1; transform: scale(1); } }
+.acel .acin > small, .acel .acnote, .acel .acbtns { opacity: 0; animation: acShow .5s 2.8s both; }
+@keyframes acShow { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+.acel .acrow span { opacity: 0; animation: acShow .45s both; }
+@media (max-height: 420px) { .acel .acbook { top: 27%; width: clamp(60px, 20vh, 90px); height: clamp(60px, 20vh, 90px); } .acring { top: 27%; } .acring > span { width: 40px; margin: -28px 0 0 -20px; animation-name: acFlyS, acOrbitS; } .acel .acin { gap: 2px; } .acel .actitle { font-size: clamp(22px, 9vh, 40px); } .acel .acrow svg { width: 24px; height: 24px; } .acel .acrow { gap: 2px 6px; } .acbtns .b3 { padding: 4px 14px; font-size: 14px; } }
+.acel.stage2 .prays { animation-duration: 6s; }
+.acel .accordie { animation: cpIn .7s 2.4s both; }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4017,16 +4063,24 @@ function albumComplete(delay) {
   setTimeout(function () { albumCelebrate(t); }, delay || 0);
 }
 function albumCelebrate(t) {
-  var prizes = [['i-ticket', t.tickets], ['i-coin', t.coins], ['i-gem', t.gems]].concat(PUP_IDS.map(function (k) { return [pupById(k).icon, t.pups]; })).concat([['i-bulb', t.pups]]);
+  var prizes = [['i-ticket', t.tickets], ['i-coin', t.coins], ['i-gem', t.gems]];
+  var ids = Object.keys(S.album).slice(0, 72), ring = shuffle(ids).slice(0, 16);
   var o = document.createElement('div'); o.className = 'acel';
-  o.innerHTML = '<div class="prays"></div><div class="acin"><b class="actitle outl">Album complete!</b><small class="outl">' + ['First', 'Second', 'Third', 'Fourth', 'Fifth'][Math.min(4, S.albumTimes - 1)] + (S.albumTimes > 5 ? ' (' + S.albumTimes + 'th)' : '') + ' time · ' + (S.albumTimes >= 3 ? 'top-tier rewards' : 'rewards grow next time') + '</small>' +
-    '<div class="acbook"><img class="actrophy" src="art/art-trophy.webp" alt=""></div><img class="accordie" src="art/mascot-wow.webp" alt=""><div class="acrow">' + prizes.map(function (p, i) { return '<span style="animation-delay:' + (.5 + i * .07) + 's">' + icon(p[0]) + '<b>' + p[1].toLocaleString() + '</b></span>'; }).join('') + '</div>' +
-    (S.albumTimes === 1 ? '<p class="acnote">Plus the Golden Bloom frame and dauber in your Style Studio</p>' : '') +
-    '<div class="acbtns"><button class="b3 gold" id="acAgain">Collect &amp; Start Again</button><button class="b3 plum" id="acLater">Later</button></div></div>';
-  document.body.appendChild(o); SFX.set(); fireworks(3200); refreshTop();
-  function close() { o.remove(); }
-  $('#acAgain').onclick = function () { restartAlbum(); close(); if ($('#album')) album(null); toast('Fresh album started. Your spare cards became stars for the Star Exchange.', 3600); };
-  $('#acLater').onclick = function () { close(); toast('You can restart the album any time from the Album screen.', 3000); };
+  o.innerHTML = '<div class="prays"></div><div class="acring">' + ring.map(function (id, i) { return '<span style="--i:' + i + ';--n:' + ring.length + '">' + cardFace(id, { show: true, hideCount: true }) + '</span>'; }).join('') + '</div>' +
+    '<div class="acin"><div class="acbook"><img class="acbookimg" src="art/icon-album.webp" alt=""><img class="actrophy" src="art/art-trophy.webp" alt=""></div>' +
+      '<b class="actitle outl">Album Complete!</b><small class="outl">' + ['First', 'Second', 'Third', 'Fourth', 'Fifth'][Math.min(4, S.albumTimes - 1)] + (S.albumTimes > 5 ? ' (' + S.albumTimes + 'th)' : '') + ' time · all 72 cards collected</small>' +
+      '<div class="acrow">' + prizes.map(function (p, i) { return '<span style="animation-delay:' + (2.2 + i * .08) + 's">' + icon(p[0]) + '<b>' + p[1].toLocaleString() + '</b></span>'; }).join('') + '<span class="acall" style="animation-delay:2.5s"><i>' + PUP_IDS.slice(0, 4).map(function (k) { return icon(pupById(k).icon); }).join('') + icon('i-bulb') + '</i><b>' + t.pups + '× every power-up</b></span></div>' +
+      (S.albumTimes === 1 ? '<p class="acnote">Plus the Golden Bloom frame and dauber in your Style Studio</p>' : '') +
+      '<div class="acbtns"><button class="b3 gold" id="acAgain">Collect &amp; Start Again</button><button class="b3 plum" id="acLater">Collect</button></div></div>' +
+    '<img class="accordie" src="art/mascot-wow.webp" alt="">';
+  document.body.appendChild(o); SFX.set(); refreshTop();
+  // the show: cards fly in and circle, the album slams shut into a trophy, fireworks, then the prizes rain in
+  setTimeout(function () { SFX.bingo && SFX.bingo(); fireworks(3600); coinBurst(innerWidth / 2, innerHeight * .4, 30); }, 1500);
+  setTimeout(function () { o.classList.add('stage2'); prizeRain(40, 'coin'); petalBurst(innerWidth / 2, innerHeight * .45, 30); buzz([40, 50, 40, 50, 120]); }, 2100);
+  setTimeout(function () { fireworks(2800); }, 3600);
+  function close() { o.classList.add('out'); setTimeout(function () { o.remove(); }, 400); }
+  $('#acAgain').onclick = function () { SFX.coin(); restartAlbum(); close(); if ($('#album')) album(null); toast('Fresh album started. Your spare cards became stars for the Star Exchange.', 3600); };
+  $('#acLater').onclick = function () { SFX.coin(); close(); toast('You can restart the album any time from the Album screen.', 3000); };
 }
 function restartAlbum() {
   S.stars += extraStars();
@@ -6993,7 +7047,7 @@ var MISSION_N = 25, MISSION_PRIZE = { coins: 1000, gems: 15, alertMin: 30 };
 var MISSIONS = {
   greenhouse: { name: 'Bloom the Greenhouse', unit: 'Drops', icon: 'i-drop', scene: 'art/scene-greenhouse.webp', pose: 'point', blurb: 'Water the seed pots. A pot next to a sprout costs 1 Drop, anywhere else costs 2. Three golden pots hide bonuses. Grow all 25 before the reset!', done: 'Every pot has bloomed. The greenhouse is glorious!', fx: 'bloom' },
   lanterns: { name: 'Lantern Lane', unit: 'Lanterns', icon: 'i-bulb', scene: 'art/scene-lanterns.webp', pose: 'cheer', blurb: 'Every number you daub in a bingo round lights its lantern on the lane, live while you play. Light all 25 before the reset!', done: 'The whole lane is glowing. What a night!', fx: 'glow' },
-  balloon: { name: "Cordie's Balloon", unit: 'Drops', icon: 'i-drop', scene: 'art/scene-sky.webp', pose: 'cheer', blurb: 'Fire Drops to push the balloon up the sky ladder. A gust can knock it down a rung, but every bingo you win pins an anchor it can never fall below. Reach the top before the reset!', done: 'Cordie made it above the clouds!', fx: 'sky' }
+  balloon: { name: "Cordie's Balloon", unit: 'Drops', icon: 'i-drop', scene: 'art/scene-sky.webp', pose: 'cheer', blurb: 'The wind swings the balloon left and right. Tap LIFT the moment it lines up under the cloud gate to climb a rung. Miss and it drops one. The wind gets faster the higher you go, and every bingo you win pins an anchor it can never fall below. Reach rung 25 before the reset!', done: 'Cordie made it above the clouds!', fx: 'sky' }
 };
 var MISSION_ORDER = ['greenhouse', 'lanterns', 'balloon'];
 function missionId() { var d = Math.floor(tradeDayStart(Date.now()) / 86400000); return MISSION_ORDER[((d % 3) + 3) % 3]; }
@@ -7006,7 +7060,7 @@ function missionEnsure() {
   return S.mission;
 }
 function missionIs(id) { return missionEnsure().id === id; }
-function missionEarn(marks, bet) { var m = missionEnsure(); if (m.done || m.id === 'lanterns') return 0; var n = Math.max(1, Math.ceil(marks * bet / 6)); m.drops += n; m.earned += n; save(); return n; }
+function missionEarn(marks, bet) { var m = missionEnsure(); if (m.done || m.id === 'lanterns') return 0; var n = Math.max(1, Math.ceil(marks * bet / (m.id === 'balloon' ? 4 : 6))); m.drops += n; m.earned += n; save(); return n; }
 function missionDaub(n) { // Lantern Lane: a daubed number lights its lantern during the round
   var m = missionEnsure(); if (m.id !== 'lanterns' || m.done) return; var i = m.board.indexOf(n); if (i < 0 || m.hit.indexOf(i) >= 0) return;
   m.hit.push(i); m.earned++; if (m.hit.length >= MISSION_N) m.done = true; save();
@@ -7018,7 +7072,8 @@ function missionHot() { var m = missionEnsure(); return (m.done && !m.claimed) |
 function missionPanel() {
   var m = missionEnsure(), M = MISSIONS[m.id], busy = false;
   function board() {
-    if (m.id === 'balloon') return '<div class="msky"><div class="mladder">' + range(0, MISSION_N - 1).map(function (i) { var k = MISSION_N - 1 - i; return '<span class="mrung' + (k < m.rung ? ' up' : '') + (k === m.anchor && m.anchor > 0 ? ' anc' : '') + '" data-k="' + k + '">' + m.board[k] + '</span>'; }).join('') + '</div><img class="mballoon" id="mBalloon" src="art/icon-bingo-ball.webp" alt="" style="--r:' + m.rung + '"></div>';
+    if (m.id === 'balloon') return '<div class="mlane" id="mLane"><div class="mgate" id="mGate"><i></i><i></i></div><div class="mtrack"><img class="mballoon" id="mBalloon" src="art/icon-bingo-ball.webp" alt=""></div>' +
+      '<div class="mrungs">' + range(0, MISSION_N - 1).map(function (k) { return '<i class="' + (k < m.rung ? 'up' : '') + (k === m.anchor - 1 && m.anchor > 0 ? ' anc' : '') + '" data-k="' + k + '"></i>'; }).join('') + '</div><span class="mrungn" id="mRungN">Rung ' + m.rung + '/' + MISSION_N + '</span></div>';
     return '<div class="mgrid ' + m.id + '" id="mGrid">' + m.board.map(function (n, i) { var hit = m.hit.indexOf(i) >= 0, gold = m.gold.indexOf(i) >= 0; return '<button class="mc' + (hit ? ' hit' : '') + (gold && hit ? ' gold' : '') + '" data-i="' + i + '"' + (m.id === 'lanterns' || hit || m.done ? ' disabled' : '') + '><em>' + n + '</em>' + (m.id === 'greenhouse' && !hit ? '<small>' + cost(i) + '</small>' : '') + '</button>'; }).join('') + '</div>';
   }
   function near(i) { var r = Math.floor(i / 5), c = i % 5; return m.hit.some(function (h) { var hr = Math.floor(h / 5), hc = h % 5; return Math.abs(hr - r) + Math.abs(hc - c) === 1; }); }
@@ -7061,13 +7116,22 @@ function missionPanel() {
         upd(); busy = false; if (m.hit.length >= MISSION_N) finish();
       });
     }; });
+    var wind = null;
+    if (m.id === 'balloon' && !m.done) (function () { // the balloon swings with the wind; faster the higher you are
+      var lane = $('#mLane', v), bl = $('#mBalloon', v), gate = $('#mGate', v), t0 = performance.now(), gx = 50;
+      function speed() { return 0.9 + m.rung * 0.09; }
+      function placeGate() { gx = 18 + rand(65); gate.style.left = gx + '%'; }
+      placeGate();
+      wind = { x: 50, gx: function () { return gx; }, placeGate: placeGate };
+      (function tick(now) { if (!lane.isConnected) return; var t = (now - t0) / 1000; wind.x = 50 + 42 * Math.sin(t * speed() * 1.9); bl.style.left = wind.x + '%'; bl.style.transform = 'translateX(-50%) rotate(' + (Math.cos(t * speed() * 1.9) * 10) + 'deg)'; requestAnimationFrame(tick); })(t0);
+    })();
+    function rungsUi() { v.querySelectorAll('.mrungs i').forEach(function (x) { var k = +x.dataset.k; x.classList.toggle('up', k < m.rung); x.classList.toggle('anc', k === m.anchor - 1 && m.anchor > 0); }); var rn = $('#mRungN', v); if (rn) rn.textContent = 'Rung ' + m.rung + '/' + MISSION_N; }
     if ($('#mFire', v)) $('#mFire', v).onclick = function () {
-      if (busy || m.done || m.drops < 1) return; busy = true; m.drops--; SFX.tap(); act();
-      var gust = m.rung > m.anchor && Math.random() < .18;
-      if (gust) { m.rung = Math.max(m.anchor, m.rung - 1); save(); var bl = $('#mBalloon', v); bl.classList.remove('gust'); void bl.offsetWidth; bl.classList.add('gust'); bl.style.setProperty('--r', m.rung); SFX.no(); toast('A gust! The balloon dropped a rung.'); }
-      else { m.rung++; save(); var bl2 = $('#mBalloon', v); bl2.style.setProperty('--r', m.rung); SFX.daub(); var rg = v.querySelector('.mrung[data-k="' + (m.rung - 1) + '"]'); if (rg) { rg.classList.add('up', 'pop'); var rr = rg.getBoundingClientRect(); sparkle(rr.left + rr.width / 2, rr.top + rr.height / 2, 18); } }
-      v.querySelectorAll('.mrung').forEach(function (x) { x.classList.toggle('anc', +x.dataset.k === m.anchor && m.anchor > 0); });
-      upd(); setTimeout(function () { busy = false; if (m.rung >= MISSION_N) finish(); else if (!m.drops) $('#mFire', v).disabled = true; }, 420);
+      if (busy || m.done || m.drops < 1 || !wind) return; busy = true; m.drops--; SFX.tap(); act();
+      var lane = $('#mLane', v), bl = $('#mBalloon', v), hit = Math.abs(wind.x - wind.gx()) <= 9;
+      if (hit) { m.rung++; save(); SFX.daub(); lane.classList.remove('miss'); bl.classList.remove('lift'); void bl.offsetWidth; bl.classList.add('lift'); var gr = $('#mGate', v).getBoundingClientRect(); sparkle(gr.left + gr.width / 2, gr.top + gr.height / 2, 26); floatText(lane, '+1 rung!'); wind.placeGate(); var sb = $('#mScBall', v); if (sb) sb.style.setProperty('--p', missionPct(m)); }
+      else { m.rung = Math.max(m.anchor, m.rung - 1); save(); SFX.no(); lane.classList.remove('miss'); void lane.offsetWidth; lane.classList.add('miss'); floatText(lane, m.rung > m.anchor || m.anchor === 0 ? 'Missed the gate!' : 'Missed! The anchor held.'); }
+      rungsUi(); upd(); setTimeout(function () { busy = false; if (m.rung >= MISSION_N) finish(); else if (!m.drops) $('#mFire', v).disabled = true; }, 380);
     };
     if ($('#mClaim', v)) $('#mClaim', v).onclick = function () {
       if (m.claimed) return; m.claimed = true; S.coins += MISSION_PRIZE.coins; S.gems += MISSION_PRIZE.gems; S.alertMin = (S.alertMin || 0) + MISSION_PRIZE.alertMin; save(); refreshTop(); logEvent({ t: 'mission', id: m.id });
