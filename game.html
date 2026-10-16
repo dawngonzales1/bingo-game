@@ -2188,7 +2188,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .cordie-pop .cbub { position: relative; margin-bottom: min(26vh, 130px); max-width: min(300px, 44vw); padding: 10px 14px; border-radius: 18px; font: 700 14px/1.3 var(--ui); color: #3d1a4f; background: #fffaf0; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4px var(--ol), 0 6px 14px rgba(20,5,35,.35); }
 .cordie-pop .cbub::before { content: ''; position: absolute; left: -12px; bottom: 16px; border: 8px solid transparent; border-right: 12px solid #fffaf0; }
 .cordie-pop .cbub b { color: #8a2fc7; }
-@media (max-height: 300px) { .cordie-pop img { height: 38vh; } .cordie-pop .cbub { max-width: 32vw; margin-bottom: 18vh; padding: 6px 10px; font-size: 11px; } }
+@media (max-height: 300px) { .cordie-pop .cordie { height: 38vh; } .cordie-pop .cbub { max-width: 32vw; margin-bottom: 18vh; padding: 6px 10px; font-size: 11px; } }
 .cordie-pop.out { animation: cpOut .4s ease-in forwards; }
 @keyframes cpIn { from { transform: translateY(110%) scale(.7); opacity: 0; } }
 @keyframes cpOut { to { transform: translateY(110%) scale(.7); opacity: 0; } }
@@ -2959,7 +2959,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 @media (max-height: 300px) { .fsq { --fs: 46px; } .fsq .fnm { font-size: 9px; } .fmorep { padding: 3px 12px 4px; } .fmorep b { font-size: 12px; } .fmorep small { display: none; } }
 .citysec { min-height: 100%; box-sizing: border-box; display: grid; align-content: center; padding-bottom: clamp(90px, 26vh, 120px); }
 #worldWrap { background: #1b3f74; }
-body:has(#lobby) .cordie-pop img { height: min(34vh, 160px); }
+body:has(#lobby) .cordie-pop .cordie { height: min(34vh, 160px); }
 .citypill small svg { width: 16px; height: 16px; vertical-align: -4px; }
 
 /* ===== nothing overlaps: Cordie sits under pop-ups and clear of the side buttons; shop tabs sit in the flow; room screen keeps its labels ===== */
@@ -3286,20 +3286,20 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .mrungs i.anc { box-shadow: 0 0 0 2px #ff4d6d, 0 0 8px rgba(255,77,109,.9); }
 .mrungn { position: absolute; right: 10px; top: 8px; padding: 2px 10px; border-radius: 999px; font: 800 11px var(--ui); color: #3d1a4f; background: rgba(255,255,255,.85); box-shadow: 0 0 0 1.5px var(--ol); }
 /* ===== Cordie engine: crossfade poses, breathing idle, reactions ===== */
-.cordie { display: grid; justify-items: center; align-items: end; perspective: 600px; -webkit-user-select: none; user-select: none; }
+.cordie { display: grid; grid-template-rows: 100%; justify-items: center; align-items: end; perspective: 600px; -webkit-user-select: none; user-select: none; }
 .cordie .cp { grid-area: 1 / 1; height: 100%; width: auto; max-width: 100%; object-fit: contain; object-position: 50% 100%; opacity: 0; transition: opacity .22s; transform-origin: 50% 100%; animation: cordieIdle 3.4s ease-in-out infinite; pointer-events: none; }
 .cordie .cp.on { opacity: 1; }
 .cordie.quiet .cp { animation: cordieIdle 3.4s ease-in-out infinite; }
 @keyframes cordieIdle { 0%, 100% { transform: none; } 50% { transform: scale(.99, 1.03) rotate(-1deg); } }
-.cordie.hop .cp { animation: cordieHop .62s cubic-bezier(.2,.9,.3,1.25), cordieIdle 3.4s ease-in-out .62s infinite; }
+.cordie.hop .cp, .cordie.hop .pcanvas { animation: cordieHop .62s cubic-bezier(.2,.9,.3,1.25), cordieIdle 3.4s ease-in-out .62s infinite; }
 @keyframes cordieHop { 0% { transform: none; } 28% { transform: translateY(-16%) scale(1.06, .95) rotate(-4deg); } 56% { transform: translateY(0) scale(.95, 1.06); } 78% { transform: scale(1.02, .99); } 100% { transform: none; } }
-.cordie.jump .cp { animation: cordieJump .8s cubic-bezier(.2,.9,.3,1.2), cordieIdle 3.4s ease-in-out .8s infinite; }
+.cordie.jump .cp, .cordie.jump .pcanvas { animation: cordieJump .8s cubic-bezier(.2,.9,.3,1.2), cordieIdle 3.4s ease-in-out .8s infinite; }
 @keyframes cordieJump { 0% { transform: none; } 15% { transform: scale(1.1, .85); } 45% { transform: translateY(-30%) scale(.94, 1.1) rotate(6deg); } 70% { transform: translateY(0) scale(1.06, .92); } 85% { transform: scale(.98, 1.03); } 100% { transform: none; } }
-.cordie.wiggle .cp { animation: cordieWiggle .7s ease-in-out, cordieIdle 3.4s ease-in-out .7s infinite; }
+.cordie.wiggle .cp, .cordie.wiggle .pcanvas { animation: cordieWiggle .7s ease-in-out, cordieIdle 3.4s ease-in-out .7s infinite; }
 @keyframes cordieWiggle { 0%, 100% { transform: none; } 20% { transform: rotate(-7deg) scaleX(1.03); } 50% { transform: rotate(6deg); } 80% { transform: rotate(-3deg); } }
-.cordie.spin .cp { animation: cordieSpin .75s cubic-bezier(.3,.7,.3,1), cordieIdle 3.4s ease-in-out .75s infinite; }
+.cordie.spin .cp, .cordie.spin .pcanvas { animation: cordieSpin .75s cubic-bezier(.3,.7,.3,1), cordieIdle 3.4s ease-in-out .75s infinite; }
 @keyframes cordieSpin { 0% { transform: rotateY(0); } 50% { transform: rotateY(180deg) translateY(-8%); } 100% { transform: rotateY(360deg); } }
-.cordie.sad .cp { animation: cordieSad .9s ease-in-out, cordieIdle 3.4s ease-in-out .9s infinite; }
+.cordie.sad .cp, .cordie.sad .pcanvas { animation: cordieSad .9s ease-in-out, cordieIdle 3.4s ease-in-out .9s infinite; }
 @keyframes cordieSad { 0%, 100% { transform: none; } 30% { transform: scale(1.04, .9) rotate(4deg); } 70% { transform: scale(1.02, .94) rotate(3deg); } }
 .cordie-pop .cordie { pointer-events: auto; cursor: pointer; }
 .cordie-pop .cbub.pop { animation: popIn .35s cubic-bezier(.2,.9,.3,1.4); }
@@ -3307,7 +3307,31 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .khcordie { height: 64px; margin: -10px 0 -6px; }
 .fgcordie { height: 52px; margin: -8px 0; }
 .gpcordie .cp { width: 100%; height: auto; }
-@media (prefers-reduced-motion: reduce) { .cordie .cp { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .cordie .cp, .pcanvas, .pcanvas * { animation: none !important; } }
+/* puppet layers */
+.cordie .pcanvas { grid-area: 1 / 1; position: relative; height: 100%; aspect-ratio: 448 / 576; transform-origin: 50% 100%; animation: cordieIdle 3.4s ease-in-out infinite; pointer-events: none; }
+.cordie.pup:not(.posed) .cp { opacity: 0 !important; }
+.cordie.pup.posed .pcanvas { display: none; }
+.pcanvas .pl, .pcanvas .parm, .pcanvas .phead { position: absolute; display: block; }
+.pcanvas .parm img, .pcanvas .phead > img:first-child { display: block; width: 100%; position: relative !important; }
+.pcanvas .phead img { position: absolute; left: 0; top: 0; width: 100%; }
+.pcanvas .phead .pblink, .pcanvas .phead .ptalk { opacity: 0; transition: opacity .06s; }
+.pcanvas .phead.blink .pblink { opacity: 1; }
+.pcanvas .phead.talk .ptalk { opacity: 1; }
+.pcanvas .phead { animation: pHead 5.2s ease-in-out infinite; }
+@keyframes pHead { 0%, 100% { transform: rotate(0) translateY(0); } 30% { transform: rotate(-2.5deg) translateY(1%); } 65% { transform: rotate(2deg) translateY(-.5%); } }
+.pcanvas .parm.l { animation: pArmL 4.4s ease-in-out infinite; }
+.pcanvas .parm.r { animation: pArmR 4.4s ease-in-out .9s infinite; }
+@keyframes pArmL { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(5deg); } }
+@keyframes pArmR { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-5deg); } }
+.cordie.wave .parm.r { animation: pWave 1.1s ease-in-out; }
+@keyframes pWave { 0% { transform: rotate(0); } 25% { transform: rotate(-150deg); } 40% { transform: rotate(-120deg); } 55% { transform: rotate(-155deg); } 70% { transform: rotate(-125deg); } 85% { transform: rotate(-150deg); } 100% { transform: rotate(0); } }
+.cordie.wave .phead { animation: pHeadWave 1.1s ease-in-out; }
+@keyframes pHeadWave { 0%, 100% { transform: rotate(0); } 40% { transform: rotate(-7deg); } }
+.cordie.jump .parm { animation: pArmsUp .8s ease-in-out; }
+@keyframes pArmsUp { 0%, 100% { transform: rotate(0); } 40% { transform: rotate(var(--up, 160deg)); } }
+.pcanvas .parm.l { --up: 160deg; } .pcanvas .parm.r { --up: -160deg; }
+.gpcordie .pcanvas { width: 100%; height: auto; }
 /* ===== Album complete: the show ===== */
 .acel { overflow: hidden; }
 .acel.out { opacity: 0; transition: opacity .4s; }
@@ -4237,11 +4261,38 @@ function calendar() {
 var CORDIE_HI = false;
 /* ---------- Cordie: pose swaps with motion (art-agnostic; new Cordie art drops in by filename) ---------- */
 var CORDIE_TAP_LINES = ['Hi there!', 'Ready to bloom?', 'Ooh, that tickles!', 'Daub, daub, daub!', 'You\'ve got this!', 'Let\'s win something big!', 'Pick a room and let\'s play!', 'I believe in you!'];
+/* ---------- Cordie puppet: body, arms and head are separate layers so she breathes, blinks, talks and waves ---------- */
+var PUP = { size: [448, 576], body: { x: 140, y: 215, w: 172, h: 355 }, head: { x: 126, y: 0, w: 213, h: 234 }, armL: { x: 108, y: 280, w: 70, h: 163 }, armR: { x: 272, y: 280, w: 72, h: 163 }, blink: { x: 138, y: 108, w: 166, h: 88 }, talk: { x: 168, y: 172, w: 106, h: 74 }, pivots: { armR: [291, 294], armL: [159, 294], head: [220, 232.5] } };
+function puppetHtml() {
+  var W = PUP.size[0], H = PUP.size[1];
+  function box(k, rel) { var p = PUP[k], bw = rel ? PUP[rel].w : W, bh = rel ? PUP[rel].h : H, ox = rel ? PUP[rel].x : 0, oy = rel ? PUP[rel].y : 0; return 'left:' + ((p.x - ox) / bw * 100).toFixed(2) + '%;top:' + ((p.y - oy) / bh * 100).toFixed(2) + '%;width:' + (p.w / bw * 100).toFixed(2) + '%'; }
+  function piv(k) { var p = PUP[k], v = PUP.pivots[k]; return 'transform-origin:' + ((v[0] - p.x) / p.w * 100).toFixed(1) + '% ' + ((v[1] - p.y) / p.h * 100).toFixed(1) + '%'; }
+  return '<div class="pcanvas"><img class="pl" src="art/pup-body.webp" alt="" style="' + box('body') + '" draggable="false">' +
+    '<div class="parm l" style="' + box('armL') + ';' + piv('armL') + '"><img src="art/pup-armL.webp" alt="" draggable="false"></div>' +
+    '<div class="parm r" style="' + box('armR') + ';' + piv('armR') + '"><img src="art/pup-armR.webp" alt="" draggable="false"></div>' +
+    '<div class="phead" style="' + box('head') + ';' + piv('head') + '"><img src="art/pup-head.webp" alt="" draggable="false"><img class="pblink" src="art/pup-blink.webp" alt="" style="' + box('blink', 'head') + '" draggable="false"><img class="ptalk" src="art/pup-talk.webp" alt="" style="' + box('talk', 'head') + '" draggable="false"></div></div>';
+}
+function cordieTalk(el, ms) {
+  el = typeof el === 'string' ? document.querySelector(el) : el; var h = el && el.querySelector('.phead'); if (!h || reduceMotion) return;
+  clearInterval(h._talk); var end = Date.now() + Math.min(2800, Math.max(600, ms || 1200)), on = false;
+  h._talk = setInterval(function () { if (!h.isConnected || Date.now() > end) { clearInterval(h._talk); h.classList.remove('talk'); return; } on = !on; h.classList.toggle('talk', on && Math.random() < .85); }, 110);
+}
+// blinks: every head on screen blinks on its own clock, now and then twice
+setInterval(function () {
+  if (document.hidden) return; var now = Date.now();
+  [].forEach.call(document.querySelectorAll('.phead'), function (h) {
+    if (!h._nb) { h._nb = now + 1200 + Math.random() * 3000; return; }
+    if (now < h._nb) return; h._nb = now + 2200 + Math.random() * 3800;
+    h.classList.add('blink'); setTimeout(function () { h.classList.remove('blink'); if (Math.random() < .25) setTimeout(function () { h.classList.add('blink'); setTimeout(function () { h.classList.remove('blink'); }, 120); }, 160); }, 130);
+  });
+}, 250);
 function cordieHtml(pose, cls, id, quiet) {
-  return '<div class="cordie ' + (cls || '') + (quiet ? ' quiet' : '') + '"' + (id ? ' id="' + id + '"' : '') + ' data-pose="' + pose + '" data-base="' + pose + '"><img class="cp on" src="' + cordieArt(pose) + '" alt="Cordie" draggable="false"><img class="cp" src="' + cordieArt(pose) + '" alt="" draggable="false"></div>';
+  var pup = pose === 'stand' && cordieArt('stand').indexOf('mascot-stand') >= 0;
+  return '<div class="cordie ' + (cls || '') + (quiet ? ' quiet' : '') + (pup ? ' pup' : '') + '"' + (id ? ' id="' + id + '"' : '') + ' data-pose="' + pose + '" data-base="' + pose + '">' + (pup ? puppetHtml() : '') + '<img class="cp on" src="' + cordieArt(pose) + '" alt="Cordie" draggable="false"><img class="cp" src="' + cordieArt(pose) + '" alt="" draggable="false"></div>';
 }
 function cordiePose(el, pose, fx) {
   el = typeof el === 'string' ? document.querySelector(el) : el; if (!el || !el.classList.contains('cordie')) return;
+  if (pose && el.classList.contains('pup')) { el.classList.toggle('posed', pose !== 'stand'); if (pose === 'stand') el.dataset.pose = 'stand'; }
   if (pose && el.dataset.pose !== pose) {
     var imgs = el.querySelectorAll('.cp'), on = el.querySelector('.cp.on'), off = imgs[0] === on ? imgs[1] : imgs[0], src = cordieArt(pose);
     el.dataset.pose = pose;
@@ -4249,7 +4300,7 @@ function cordiePose(el, pose, fx) {
     if (off.complete && off.src.slice(-src.length) === src) go(); else { off.onload = go; off.src = src; }
   }
   if (fx && !reduceMotion) {
-    el.classList.remove('hop', 'wiggle', 'spin', 'sad', 'jump'); void el.offsetWidth; el.classList.add(fx);
+    el.classList.remove('hop', 'wiggle', 'spin', 'sad', 'jump', 'wave', 'look'); void el.offsetWidth; el.classList.add(fx);
     clearTimeout(el._cfx); el._cfx = setTimeout(function () { el.classList.remove(fx); }, 1000);
   }
 }
@@ -4263,7 +4314,8 @@ function cordieBase(el, pose) { el = typeof el === 'string' ? document.querySele
 document.addEventListener('pointerdown', function (e) {
   var c = e.target.closest && e.target.closest('.cordie'); if (!c || c.classList.contains('quiet')) return;
   var r = c.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height * .35, 10); SFX.tap && SFX.tap();
-  cordieReact(c, ['cheer', 'wow', 'point', 'wave', 'think'][rand(5)], ['hop', 'wiggle', 'spin', 'jump'][rand(4)], 1400);
+  if (c.classList.contains('pup') && !c.classList.contains('posed') && Math.random() < .55) { cordiePose(c, null, Math.random() < .6 ? 'wave' : 'jump'); cordieTalk(c, 700); }
+  else cordieReact(c, ['cheer', 'wow', 'point', 'wave', 'think'][rand(5)], ['hop', 'wiggle', 'spin', 'jump'][rand(4)], 1400);
   var pop = c.closest('.cordie-pop'); if (pop) { var b = pop.querySelector('.cbub'); if (b) { b.textContent = CORDIE_TAP_LINES[rand(CORDIE_TAP_LINES.length)]; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); } clearTimeout(pop._bye); pop._bye = setTimeout(function () { if (pop.isConnected && pop.onclick) pop.onclick(null); }, 4000); }
 }, true);
 // a little life: every few seconds one visible Cordie wiggles or glances
@@ -4278,6 +4330,7 @@ function cordieSay(pose, msg, ms, side) {
   var d = document.createElement('div'); d.className = 'cordie-pop ' + (side || 'left');
   d.innerHTML = cordieHtml(pose, 'cpc') + '<div class="cbub">' + msg + '</div>';
   document.body.appendChild(d); SFX.tap && SFX.tap();
+  var pc = d.querySelector('.cordie.pup'); if (pc) { cordieTalk(pc, String(msg).replace(/<[^>]+>/g, '').length * 55); setTimeout(function () { if (pc.isConnected) cordiePose(pc, null, 'wave'); }, 350); }
   d.onclick = function (e) { if (e && e.target.closest && e.target.closest('.cordie')) return; d.classList.add('out'); setTimeout(function () { d.remove(); }, 400); };
   // she never blocks a tap: any tap anywhere, or a new screen, sends her off
   var bye = function (e) { if (e && e.target.closest && e.target.closest('.cordie-pop .cordie')) return; document.removeEventListener('pointerdown', bye, true); if (d.isConnected && !d.classList.contains('out')) d.onclick(); };
@@ -4288,7 +4341,7 @@ function cordieHello() {
   if (CORDIE_HI) return; CORDIE_HI = true;
   var h = new Date().getHours(), part = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening', nm = myName();
   var lines = [part + (nm && nm !== 'Player' ? ', <b>' + esc(nm) + '</b>' : '') + '. The cards are ready whenever you are.', 'Welcome back' + (nm && nm !== 'Player' ? ', <b>' + esc(nm) + '</b>' : '') + '. The ovens are warm and the balls are rolling.', 'Bonjour! I saved you the best seat in the house.'];
-  setTimeout(function () { if ($('#lobby') && !veil && !$('.csweep')) cordieSay(['wave', 'point', 'cheer'][rand(3)], lines[rand(lines.length)], 3000); }, $('.csweep') ? 3500 : 700);
+  setTimeout(function () { if ($('#lobby') && !veil && !$('.csweep')) cordieSay('stand', lines[rand(lines.length)], 3000); }, $('.csweep') ? 3500 : 700);
 }
 
 /* ---------- reward celebrations: queued so they never interrupt a round or another pop-up ---------- */
@@ -7109,9 +7162,9 @@ function raffleToken() {
    Cordie's Balloon: Drops push the balloon up a 25-rung ladder, gusts can knock it down, each bingo pins an anchor it can never fall below. */
 var MISSION_N = 25, MISSION_PRIZE = { coins: 1000, gems: 15, alertMin: 30 };
 var MISSIONS = {
-  greenhouse: { name: 'Bloom the Greenhouse', unit: 'Drops', icon: 'i-drop', scene: 'art/scene-greenhouse.webp', pose: 'point', blurb: 'Water the seed pots. A pot next to a sprout costs 1 Drop, anywhere else costs 2. Three golden pots hide bonuses. Grow all 25 before the reset!', done: 'Every pot has bloomed. The greenhouse is glorious!', fx: 'bloom' },
-  lanterns: { name: 'Lantern Lane', unit: 'Lanterns', icon: 'i-bulb', scene: 'art/scene-lanterns.webp', pose: 'cheer', blurb: 'Every number you daub in a bingo round lights its lantern on the lane, live while you play. Light all 25 before the reset!', done: 'The whole lane is glowing. What a night!', fx: 'glow' },
-  balloon: { name: "Cordie's Balloon", unit: 'Drops', icon: 'i-drop', scene: 'art/scene-sky.webp', pose: 'cheer', blurb: 'The wind swings the balloon left and right. Tap LIFT the moment it lines up under the cloud gate to climb a rung. Miss and it drops one. The wind gets faster the higher you go, and every bingo you win pins an anchor it can never fall below. Reach rung 25 before the reset!', done: 'Cordie made it above the clouds!', fx: 'sky' }
+  greenhouse: { name: 'Bloom the Greenhouse', unit: 'Drops', icon: 'i-drop', scene: 'art/scene-greenhouse.webp', pose: 'stand', blurb: 'Water the seed pots. A pot next to a sprout costs 1 Drop, anywhere else costs 2. Three golden pots hide bonuses. Grow all 25 before the reset!', done: 'Every pot has bloomed. The greenhouse is glorious!', fx: 'bloom' },
+  lanterns: { name: 'Lantern Lane', unit: 'Lanterns', icon: 'i-bulb', scene: 'art/scene-lanterns.webp', pose: 'stand', blurb: 'Every number you daub in a bingo round lights its lantern on the lane, live while you play. Light all 25 before the reset!', done: 'The whole lane is glowing. What a night!', fx: 'glow' },
+  balloon: { name: "Cordie's Balloon", unit: 'Drops', icon: 'i-drop', scene: 'art/scene-sky.webp', pose: 'stand', blurb: 'The wind swings the balloon left and right. Tap LIFT the moment it lines up under the cloud gate to climb a rung. Miss and it drops one. The wind gets faster the higher you go, and every bingo you win pins an anchor it can never fall below. Reach rung 25 before the reset!', done: 'Cordie made it above the clouds!', fx: 'sky' }
 };
 var MISSION_ORDER = ['greenhouse', 'lanterns', 'balloon'];
 function missionId() { var d = Math.floor(tradeDayStart(Date.now()) / 86400000); return MISSION_ORDER[((d % 3) + 3) % 3]; }
