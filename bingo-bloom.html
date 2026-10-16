@@ -4159,7 +4159,7 @@ function lobby() {
   var ovenReady = S.ovens.some(function (o) { return o && o.done <= Date.now(); });
   var gamesHot = S.wheelDay !== today() || S.drops > 0 || S.scratch > 0;
   var feat = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city && roomOpen(r); });
-  var featAll = feat.slice().sort(function (a, b) { return (b.id === hotRoom()) - (a.id === hotRoom()); }), featShow = featAll.slice(0, 2), featRest = featAll.slice(2);
+  var featAll = feat.slice().sort(function (a, b) { return ((b.season ? 2 : 0) + (b.id === hotRoom() ? 1 : 0)) - ((a.season ? 2 : 0) + (a.id === hotRoom() ? 1 : 0)); }), featShow = featAll.slice(0, 2), featRest = featAll.slice(2);
   var sky = '<span class="flyer2">' + icon('i-bfly') + '</span><span class="flyer2 b2">' + icon('i-bfly') + '</span>' + [0, 1, 2].map(function (k) { return '<span class="gull g' + k + '"><svg viewBox="0 0 40 16"><path d="M2 10 Q11 0 20 10 Q29 0 38 10" /></svg></span>'; }).join('') + '<span class="cloudz" style="top:12%"></span><span class="cloudz c2"></span>';
   show('<div class="screen" id="lobby"><div id="worldWrap">' + CITY_ORDER.map(function (id) {
       var c = CITIES[id], open = canTravel(id), here = id === cityId();
@@ -6584,7 +6584,7 @@ function goalUi() {
 }
 
 /* ---------- Garden Path: the featured rooms' bonus game ---------- */
-function hotRoom() { var f = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city && roomOpen(r); }), d = Math.floor(Date.now() / 86400000); return f[d % f.length].id; }
+function hotRoom() { var f = ROOMS.filter(function (r) { return r.mode !== 'multi' && !r.city && roomOpen(r); }), se = f.filter(function (r) { return r.season; })[0]; if (se) return se.id; /* the holiday room is HOT all season */ var d = Math.floor(Date.now() / 86400000); return f[d % f.length].id; }
 function bonusPct(room) { return Math.min(100, Math.round((S.bonus && S.bonus[room]) || 0)); }
 function gardenPath(bet, room) {
   S.bonus[room] = 0; save();
