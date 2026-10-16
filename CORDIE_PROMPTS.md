@@ -14,7 +14,7 @@ Use these prompts word for word. The character block (between the ▶ marks) is 
 
 ## The character block
 
-▶ Cordie, an adorable chubby cartoon bunny mascot, high-quality 3D render in the style of a modern animated movie, smooth soft cream-white fur, big round bright turquoise eyes with sparkling highlights, small rounded nose, friendly open smile with two small buck teeth, tall upright ears with peach inner ears, wearing a bold color-blocked hoodie in electric teal, sunshine yellow and tangerine orange with a round bingo-ball badge on the chest, white chunky sneakers with violet laces, no bow, no flower, no dress, no eyelashes, gender neutral, cheerful and energetic, clean glossy toy-like finish, studio lighting, bright saturated colors, full body, isolated on a plain pure white background, no shadow, no text ◀
+▶ Cordie, a charming slim athletic cartoon bunny mascot with a long lean body and long legs, high-quality 3D render in the style of a Pixar or DreamWorks animated movie, soft fluffy cream-white fur with visible fur texture, large expressive almond-shaped bright turquoise eyes with sparkling highlights and a hint of mischief, small rounded nose, warm confident smile with two small buck teeth, tall upright ears with peach inner ears, one ear playfully bent, wearing a fitted color-blocked zip hoodie in electric teal, sunshine yellow and tangerine orange with a round bingo-ball badge on the chest, slim white sneakers with violet laces, no bow, no flower, no dress, no eyelashes, gender neutral, friendly and full of personality, soft cinematic lighting, bright saturated colors, full body, isolated on a plain pure white background, no shadow, no text ◀
 
 ## Poses (file name → prompt)
 
