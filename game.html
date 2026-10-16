@@ -4263,7 +4263,7 @@ function cordieBase(el, pose) { el = typeof el === 'string' ? document.querySele
 document.addEventListener('pointerdown', function (e) {
   var c = e.target.closest && e.target.closest('.cordie'); if (!c || c.classList.contains('quiet')) return;
   var r = c.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height * .35, 10); SFX.tap && SFX.tap();
-  cordieReact(c, ['cheer', 'wow', 'point'][rand(3)], ['hop', 'wiggle', 'spin', 'jump'][rand(4)], 1400);
+  cordieReact(c, ['cheer', 'wow', 'point', 'wave', 'think'][rand(5)], ['hop', 'wiggle', 'spin', 'jump'][rand(4)], 1400);
   var pop = c.closest('.cordie-pop'); if (pop) { var b = pop.querySelector('.cbub'); if (b) { b.textContent = CORDIE_TAP_LINES[rand(CORDIE_TAP_LINES.length)]; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); } clearTimeout(pop._bye); pop._bye = setTimeout(function () { if (pop.isConnected && pop.onclick) pop.onclick(null); }, 4000); }
 }, true);
 // a little life: every few seconds one visible Cordie wiggles or glances
@@ -4288,7 +4288,7 @@ function cordieHello() {
   if (CORDIE_HI) return; CORDIE_HI = true;
   var h = new Date().getHours(), part = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening', nm = myName();
   var lines = [part + (nm && nm !== 'Player' ? ', <b>' + esc(nm) + '</b>' : '') + '. The cards are ready whenever you are.', 'Welcome back' + (nm && nm !== 'Player' ? ', <b>' + esc(nm) + '</b>' : '') + '. The ovens are warm and the balls are rolling.', 'Bonjour! I saved you the best seat in the house.'];
-  setTimeout(function () { if ($('#lobby') && !veil && !$('.csweep')) cordieSay(Math.random() < .5 ? 'point' : 'cheer', lines[rand(lines.length)], 3000); }, $('.csweep') ? 3500 : 700);
+  setTimeout(function () { if ($('#lobby') && !veil && !$('.csweep')) cordieSay(['wave', 'point', 'cheer'][rand(3)], lines[rand(lines.length)], 3000); }, $('.csweep') ? 3500 : 700);
 }
 
 /* ---------- reward celebrations: queued so they never interrupt a round or another pop-up ---------- */
@@ -7163,7 +7163,7 @@ function missionPanel() {
       ['#mVineL', '#mVineR', '#mScBall'].forEach(function (id) { var e = $(id, v); if (e) e.style.setProperty('--p', pc); });
       var L = $('#mLights', v); if (L) [].forEach.call(L.children, function (x, i) { x.classList.toggle('on', i < Math.round(pc / 100 * 12)); });
     }
-    function act(bad) { var c = $('#mCordie', v); if (!c) return; cordieReact(c, bad ? 'wow' : 'cheer', bad ? 'sad' : 'hop', 1300); }
+    function act(bad) { var c = $('#mCordie', v); if (!c) return; cordieReact(c, bad ? 'sad' : 'cheer', bad ? 'sad' : 'hop', 1300); }
     function stream(toEl, ic, n) { var c = $('#mCordie', v); for (var k = 0; k < n; k++) (function (k) { setTimeout(function () { flyTo(c, toEl, ic, function () {}); }, k * 90); })(k); }
     function goldBonus(cell) {
       var opts = [{ t: 'coins', n: 150 }, { t: 'scratch', n: 1 }, { t: 'card', n: 1 }, { t: 'tickets', n: 25 }], pk = opts[rand(opts.length)], tx = grant(pk); m.bonus.push(pk.t); save(); refreshTop();
@@ -7325,7 +7325,7 @@ var STORIES = {
 };
 var RIO_POSE = { point: 'rio-point', wow: 'rio-cheer', cheer: 'rio-cheer', wave: 'rio-wave', stand: 'rio-wave', gift: 'rio-maraca' };
 // poses drawn in the new Cordie design; anything else falls back to a new-design pose until its art arrives
-var CORDIE_NEW = { stand: 1, gift: 1, wow: 1, point: 1, cheer: 1 }, CORDIE_FALLBACK = { sleep: 'stand', face: 'stand', wave: 'point', think: 'wow', sad: 'wow' };
+var CORDIE_NEW = { stand: 1, gift: 1, wow: 1, point: 1, cheer: 1, sad: 1, think: 1, wave: 1, face: 1 }, CORDIE_FALLBACK = { sleep: 'think' };
 function cordieArt(pose) {
   var p = (S.city === 'rio' && RIO_POSE[pose] && CORDIE_NEW[RIO_POSE[pose]]) ? RIO_POSE[pose] : pose;
   if (!CORDIE_NEW[p]) p = CORDIE_FALLBACK[p] || 'stand';
