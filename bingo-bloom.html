@@ -7129,8 +7129,9 @@ function onSignedIn(u) {
     if (sv && sv.exists) {
       var cloud = null; try { cloud = JSON.parse(sv.data().data); } catch (e) { cloud = null; }
       if (cloud) {
-        var cs = (cloud.level || 1) * 1000 + ((cloud.stats || {}).rounds || 0), ls = S.level * 1000 + S.stats.rounds;
-        if (cs >= ls) { S = merge(cloud); sanity('cloud'); S.name = myName(); save(true); toast('Welcome back, ' + myName() + '! Your saved progress is loaded.', 3200); if ($('#lobby')) lobby(); }
+        // the save that was written most recently wins (Sapphire: tickets reverted after sign-in when level and rounds matched)
+        var fresh = !S.savedAt || (S.stats.rounds === 0 && S.level === 1), cs = cloud.savedAt || sv.data().at || 0, ls = S.savedAt || 0;
+        if (fresh || cs >= ls) { S = merge(cloud); sanity('cloud'); S.name = myName(); save(true); toast('Welcome back, ' + myName() + '! Your saved progress is loaded.', 3200); if ($('#lobby')) lobby(); }
         else { cloudSaveNow(); toast('Signed in as ' + myName() + '. This phone has newer progress, so it was saved to your account.', 3600); }
       }
     } else { cloudSaveNow(); toast((myName() === 'Player' ? 'Signed in!' : 'Signed in as ' + myName() + '.') + ' Your progress now saves to your account.', 3200); }
