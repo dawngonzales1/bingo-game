@@ -652,7 +652,8 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .odds th { text-align: left; color: var(--mist); font-weight: 600; padding: 2px 6px; }
 .odds td { padding: 3px 6px; border-top: 1px solid #f0e2c6; font-variant-numeric: tabular-nums; }
 .odds td i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--ol); margin-right: 6px; vertical-align: -1px; }
-.scard { position: relative; flex: none; border-radius: 18px; border: 4px solid var(--ol); box-shadow: 0 5px 0 var(--ol); overflow: hidden; background: linear-gradient(160deg, #fff7e8, #ffe3ec); }
+.scard { position: relative; flex: none; border-radius: 18px; border: 4px solid var(--ol); box-shadow: 0 5px 0 var(--ol); overflow: hidden; background: linear-gradient(160deg, #fff7e8, #ffe3ec); animation: scDeal .6s cubic-bezier(.2,.9,.3,1.25) both; }
+@keyframes scDeal { 0% { transform: translateX(-120%) rotate(-14deg); opacity: 0; } 60% { transform: translateX(4%) rotate(2deg); opacity: 1; } 100% { transform: none; } }
 .sgrid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 10px; }
 .scell { display: grid; place-items: center; border-radius: 12px; background: #fff; border: 2px solid #ead6b2; }
 .scell svg { width: 62%; height: 62%; }
@@ -1589,7 +1590,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .b3:not(:disabled):hover { filter: brightness(1.06); }
 .b3.gold:not(:disabled)::after, .b3.green:not(:disabled)::after { content: ''; position: absolute; top: -20%; bottom: -20%; width: 34%; left: -60%; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255,255,255,.75), transparent); transform: skewX(-20deg); animation: sweep 3.2s ease-in-out infinite; }
 .b3.gold:not(:disabled) { animation: goldBreath 2.6s ease-in-out infinite; }
-@keyframes goldBreath { 50% { box-shadow: 0 5px 0 var(--ol), 0 0 18px 2px rgba(255,214,92,.55), inset 0 3px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(0,0,0,.12); } }
+@keyframes goldBreath { 50% { box-shadow: 0 0 0 2.5px var(--ol), 0 5px 0 2.5px var(--ol), 0 0 22px 4px rgba(255,214,92,.6), inset 0 3px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(0,0,0,.14), 0 8px 14px rgba(20,5,30,.35); } }
 .tier .tplay, #title #bStart { animation-name: playPulse, goldBreath; animation-duration: 1.8s, 2.6s; animation-iteration-count: infinite; }
 #title #bStart { animation: tierIn .6s .55s cubic-bezier(.2,.9,.3,1.3) both, playPulse 1.6s 1.2s ease-in-out infinite; }
 /* jewel toggles everywhere */
@@ -3179,11 +3180,16 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .rp3 .av { --av: 30px; } .rp3 em { font: 800 10px var(--ui); font-style: normal; color: #ffe58f; margin-top: -2px; }
 .rp3.me small { color: #ffe58f; } .rp3wait { font: 600 10px/1.3 var(--ui); color: #e6d4ff; text-align: center; max-width: 72px; }
 /* ===== one chunky glossy button style everywhere inside panels (Dawn: "these buttons look cheap") ===== */
-.panel .b3 { border: 0; border-radius: 16px; font-weight: 800; letter-spacing: .03em; box-shadow: 0 0 0 2.5px var(--ol), 0 5px 0 2.5px var(--ol), inset 0 3px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(0,0,0,.14), 0 8px 14px rgba(20,5,30,.35); }
-.panel .b3:active { transform: translateY(3px); box-shadow: 0 0 0 2.5px var(--ol), 0 2px 0 2.5px var(--ol), inset 0 3px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(0,0,0,.14); }
-.panel .b3.green { background: linear-gradient(180deg, #b4ff8a, #4fd14a 55%, #27903a) !important; }
-.panel .b3.gold { background: linear-gradient(180deg, #fff3b8, #ffd45c 55%, #f0a40f) !important; }
-.panel .b3.plum { background: linear-gradient(180deg, #ff8fc8, #e0478c 55%, #a3186a) !important; color: #fff; }
+.b3, .panel .b3 { border: 0; border-radius: 16px; font-weight: 800; letter-spacing: .03em; box-shadow: 0 0 0 2.5px var(--ol), 0 5px 0 2.5px var(--ol), inset 0 3px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(0,0,0,.14), 0 8px 14px rgba(20,5,30,.35); }
+.b3:active, .panel .b3:active { transform: translateY(3px); box-shadow: 0 0 0 2.5px var(--ol), 0 2px 0 2.5px var(--ol), inset 0 3px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(0,0,0,.14); }
+.b3.green, .panel .b3.green { background: linear-gradient(180deg, #b4ff8a, #4fd14a 55%, #27903a) !important; }
+.b3.gold, .panel .b3.gold { background: linear-gradient(180deg, #fff3b8, #ffd45c 55%, #f0a40f) !important; }
+.b3.plum, .panel .b3.plum { background: linear-gradient(180deg, #ff8fc8, #e0478c 55%, #a3186a) !important; color: #fff; }
+.b3.cream { background: linear-gradient(180deg, #fffdf6, #f6e7cc) !important; }
+/* Collect buttons: the moment that pays out gets the biggest, brightest button on the screen */
+.gpbar .b3, #rvGo, #mClaim, #calGo, #brOk, #ibAll, .oven .b3, .acbtns .b3, #gpDone { padding: 9px 24px; font-size: 17px; min-width: 128px; }
+.gpbar { padding-right: 10px; }
+@media (max-height: 420px) { .gpbar .b3, #rvGo, #mClaim, #calGo, #brOk, #ibAll, .oven .b3, .acbtns .b3 { padding: 7px 18px; font-size: 15px; min-width: 108px; } }
 .panel .b3.cream { background: linear-gradient(180deg, #7fe3ff, #29c6d8 55%, #1b7fb8) !important; color: #fff; box-shadow: 0 0 0 2.5px var(--ol), 0 5px 0 2.5px var(--ol), inset 0 3px 0 rgba(255,255,255,.55), inset 0 -4px 0 rgba(0,0,0,.14), 0 8px 14px rgba(20,5,30,.35); }
 .panel .b3.cream, .panel .b3.cream * { color: #fff; text-shadow: 0 1.5px 0 #0f4f7a; }
 .panel .b3:disabled { filter: saturate(.35) brightness(.85); box-shadow: 0 0 0 2.5px var(--ol), 0 3px 0 2.5px var(--ol); }
@@ -3308,6 +3314,12 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .fgcordie { height: 52px; margin: -8px 0; }
 .gpcordie .cp { width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) { .cordie .cp, .pcanvas, .pcanvas * { animation: none !important; } }
+/* Cordie peeking over a panel */
+.veil > .peekwrap { position: absolute; z-index: 0; pointer-events: none; background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; border-radius: 0; animation: peekIn .5s .15s cubic-bezier(.2,.9,.3,1.3) both; }
+.peekwrap.side .pkcordie { height: 160px; transform: rotate(-9deg); }
+.peekwrap .pkcordie { height: 150px; pointer-events: auto; filter: drop-shadow(0 4px 6px rgba(20,5,35,.45)); }
+@keyframes peekIn { from { transform: translateY(40px); opacity: 0; } }
+.veil .panel { z-index: 1; }
 /* puppet layers */
 .cordie .pcanvas { grid-area: 1 / 1; position: relative; height: 100%; aspect-ratio: 448 / 576; transform-origin: 50% 100%; animation: cordieIdle 3.4s ease-in-out infinite; pointer-events: none; }
 .cordie.pup:not(.posed) .cp { opacity: 0 !important; }
@@ -4501,12 +4513,27 @@ var veil = null;
 function closeVeil() { if (veil) { var wasM = !!veil.querySelector('.panel.missionp'); veil.remove(); veil = null; if (wasM) setTimeout(flushCards, 350); } }
 function panel(inner, cls, onReady) {
   closeVeil();
+  var lp = document.querySelector('.cordie-pop'); if (lp && lp.onclick) lp.onclick(null); // one Cordie at a time: the lobby bubble leaves when a panel opens
   veil = document.createElement('div'); veil.className = 'veil';
   veil.innerHTML = '<div class="panel ' + (cls || '') + '" role="dialog" aria-modal="true"><button class="x" data-x aria-label="Close">✕</button>' + inner + '</div>';
   var downOut = false, dx0 = 0, dy0 = 0; veil.addEventListener('pointerdown', function (e) { downOut = e.target === veil; dx0 = e.clientX; dy0 = e.clientY; });
   veil.addEventListener('pointerup', function (e) { if (downOut && e.target === veil && Math.abs(e.clientX - dx0) < 12 && Math.abs(e.clientY - dy0) < 12 && !veil.querySelector('.mmboard')) closeVeil(); downOut = false; });
   veil.onclick = function (e) { if (e.target.closest('[data-x]')) closeVeil(); };
-  document.body.appendChild(veil); if (onReady) onReady(veil); return veil;
+  document.body.appendChild(veil); if (onReady) onReady(veil); peekCordie(veil); return veil;
+}
+// Cordie peeks over the top-left corner of every panel that does not already have her in it, and reacts when tapped
+var PEEK_SKIP = /roomp|missionp|legalp/;
+function peekCordie(v) {
+  var p = v.querySelector('.panel'); if (!p || PEEK_SKIP.test(p.className) || v.querySelector('.cordie')) return;
+  var c = document.createElement('div'); c.className = 'peekwrap'; c.innerHTML = cordieHtml('stand', 'pkcordie'); v.appendChild(c);
+  function place() {
+    if (!p.isConnected) return; var r = p.getBoundingClientRect(); c.hidden = false; c.classList.remove('side');
+    if (r.top >= 64) { c.style.left = Math.max(4, r.left - 6) + 'px'; c.style.top = (r.top - 72) + 'px'; }           // room above: she peeks over the top edge
+    else if (r.left >= 70) { c.classList.add('side'); c.style.left = Math.max(2, r.left - 92) + 'px'; c.style.top = Math.max(4, r.bottom - 172) + 'px'; } // tall panel: she leans in from the left edge
+    else c.hidden = true;
+  }
+  requestAnimationFrame(function () { requestAnimationFrame(place); }); setTimeout(place, 480); c._place = place; addEventListener('resize', place);
+  var cl = v.querySelector('[data-x]'); if (cl) cl.addEventListener('click', function () { removeEventListener('resize', place); });
 }
 
 function cityBlossoms(c) { return c.rooms.reduce(function (a, id) { return a + Math.min(3, S.build[id] || 0); }, 0); }
@@ -6487,7 +6514,7 @@ function scratchCard() {
     }).join('') + '</div></div>' +
     '<div class="scrail"><div class="sribbon scrib"><span class="outl">Golden Scratch</span></div><p class="schint" id="scHint">Scratch the gold. Find 3 matching pictures to win that prize.</p>' +
     '<div class="scprizes">' + SCR.map(function (x) { return '<div class="scpz' + (x.p.t === 'gcard' ? ' jack' : '') + '"><img src="art/' + PRIZE_PIC[x.p.t] + '.webp" alt=""><b>' + (x.p.t === 'gcard' ? 'GOLD card' : x.p.t === 'alert' ? '1 hr Alert' : prizeText(x.p)) + '</b></div>'; }).join('') + '<div class="scpz note"><b>about half<br>of cards win</b></div></div>' +
-    '<div class="sccount" id="scMsg"><b>' + S.scratch + '</b> more card' + (S.scratch === 1 ? '' : 's') + ' after this one</div>' +
+    '<div class="sccount" id="scMsg">' + (S.scratch > 0 ? 'Next card deals itself · ' + S.scratch + ' more' : 'Last card') + '</div>' +
     '<div class="res-btns"><button class="b3 gold shine" id="scAll">Reveal All</button><button class="b3 cream" data-games>‹ Side Games</button></div></div></div>', 'scp', function (v) {
       backToGames(v);
       var card = $('#scCard', v), cells = [].slice.call(v.querySelectorAll('.scell')), d = Math.min(2, window.devicePixelRatio || 1);
@@ -6529,6 +6556,8 @@ function scratchCard() {
         if (found[s] === 2) { cells.forEach(function (k) { if (+k.dataset.s === s && k.classList.contains('open')) k.classList.add('warm'); }); if (!quick) { SFX.boost(); $('#scHint', v).innerHTML = '<b>Two matching!</b> One more for ' + (SCR[s].p.t === 'gcard' ? 'a GOLD card' : prizeText(SCR[s].p)) + '…'; } }
         if (revealed >= 9) setTimeout(reveal, quick ? 0 : 250);
       }
+      // the next card deals itself the moment the prize is collected: no button to hunt for
+      function nextCard() { if (S.scratch > 0 && v.isConnected) scratchCard(); }
       function reveal() {
         if (done) return; done = true;
         cells.forEach(function (c) { if (!c.classList.contains('open')) { c.classList.add('open'); } c.classList.remove('warm'); });
@@ -6538,11 +6567,10 @@ function scratchCard() {
           var p = SCR[pick].p, wtxt = grant(p).replace(/^\+/, ''), gold = p.t === 'gcard' || p.n >= 100; msg = 'You won ' + wtxt + '!';
           SFX.set(); wc.forEach(function (c, i) { setTimeout(function () { var r = c.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height / 2, 30); }, i * 120); });
           var cr = card.getBoundingClientRect(); setTimeout(function () { coinBurst(cr.left + cr.width / 2, cr.top + cr.height * .6, gold ? 40 : 18, p.t === 'tickets' ? 'ticket' : p.t === 'petals' ? 'petal' : 'coin'); if (gold) prizeRain(30, 'coin'); }, 300);
-          setTimeout(function () { bigWin([PRIZE_PIC[p.t]], gold ? 'Jackpot!' : 'You won!', [wtxt], 'cheer', null); }, gold ? 1100 : 800);
-        } else { msg = 'No match this time.'; SFX.no(); setTimeout(function () { bigWin([], 'So close!', ['No match this time.', S.scratch > 0 ? 'Try your next card!' : 'Win more scratch cards from the Daily Wheel and the Kitchen.'], 'point', null); }, 600); }
+          setTimeout(function () { bigWin([PRIZE_PIC[p.t]], gold ? 'Jackpot!' : 'You won!', [wtxt], 'cheer', nextCard); }, gold ? 1100 : 800);
+        } else { msg = 'No match this time.'; SFX.no(); setTimeout(function () { bigWin([], 'So close!', ['No match this time.', S.scratch > 0 ? 'Your next card is coming up.' : 'Win more scratch cards from the Daily Wheel and the Kitchen.'], 'point', nextCard); }, 600); }
         $('#scHint', v).innerHTML = '<b>' + msg + '</b>';
-        $('#scMsg', v).innerHTML = S.scratch > 0 ? '<button class="b3 gold shine" id="scNext">Next Card (' + S.scratch + ')</button>' : '<b>0</b> cards left. Win more from the Daily Wheel and the Kitchen.';
-        var nx = $('#scNext', v); if (nx) nx.onclick = scratchCard;
+        $('#scMsg', v).innerHTML = S.scratch > 0 ? 'Next card deals itself' + (S.scratch > 1 ? ' · ' + S.scratch + ' left' : ' · last one') : '<b>0</b> cards left. Win more from the Daily Wheel and the Kitchen.';
         $('#scAll', v).disabled = true;
       }
       card.addEventListener('pointerdown', function (e) { down = true; last = null; card.setPointerCapture(e.pointerId); scratchAt(e); });
