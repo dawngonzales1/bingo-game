@@ -2179,7 +2179,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 @keyframes zz { 0% { opacity: 0; transform: translate(0, 4px) scale(.6); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(10px, -18px) scale(1.2); } }
 .cordie-pop { position: fixed; z-index: 70; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: flex-end; gap: 4px; pointer-events: none; animation: cpIn .6s cubic-bezier(.2,.9,.3,1.4) both; }
 .cordie-pop.left { left: calc(14px + env(safe-area-inset-left, 0px)); }
-.cordie-pop img { height: min(46vh, 220px); filter: drop-shadow(0 6px 10px rgba(20,5,35,.5)); animation: cordBob2 2.4s ease-in-out infinite; }
+.cordie-pop .cordie { height: min(46vh, 220px); filter: drop-shadow(0 6px 10px rgba(20,5,35,.5)); }
 @keyframes cordBob2 { 50% { transform: translateY(-6px) rotate(2deg); } }
 .cordie-pop .cbub { position: relative; margin-bottom: min(26vh, 130px); max-width: min(300px, 44vw); padding: 10px 14px; border-radius: 18px; font: 700 14px/1.3 var(--ui); color: #3d1a4f; background: #fffaf0; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4px var(--ol), 0 6px 14px rgba(20,5,35,.35); }
 .cordie-pop .cbub::before { content: ''; position: absolute; left: -12px; bottom: 16px; border: 8px solid transparent; border-right: 12px solid #fffaf0; }
@@ -2188,7 +2188,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .cordie-pop.out { animation: cpOut .4s ease-in forwards; }
 @keyframes cpIn { from { transform: translateY(110%) scale(.7); opacity: 0; } }
 @keyframes cpOut { to { transform: translateY(110%) scale(.7); opacity: 0; } }
-.calcordie { position: absolute; left: 4px; top: -18px; height: 46%; max-height: 190px; z-index: 3; pointer-events: none; filter: drop-shadow(0 6px 8px rgba(20,5,35,.5)); animation: cordBob2 2.4s ease-in-out infinite; }
+.calcordie { position: absolute; left: 4px; top: -18px; height: 46%; max-height: 190px; z-index: 3; filter: drop-shadow(0 6px 8px rgba(20,5,35,.5)); }
 .cal { position: relative; }
 .ingdot.pic { background-color: transparent !important; background-position: center !important; background-size: contain !important; background-repeat: no-repeat !important; width: 26px; height: 26px; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; filter: drop-shadow(0 2px 2px rgba(40,10,60,.35)); }
 .ingdot.pic::before, .ingdot.pic::after { display: none !important; }
@@ -2213,7 +2213,7 @@ button.city { text-align: left; color: var(--ink); font: inherit; }
 .rwt { font-size: clamp(26px, 9vh, 44px); color: #ffe58f; }
 .rws { max-width: 80vw; color: #fff; font-weight: 700; font-size: 15px; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
 .rwd .b3 { padding: 6px 34px; font-size: 20px; margin-top: 4px; }
-.rwcordie { position: absolute; left: 4%; bottom: 0; height: min(58vh, 280px); filter: drop-shadow(0 8px 12px rgba(0,0,0,.5)); animation: cpIn .7s .2s cubic-bezier(.2,.9,.3,1.4) both, cordBob2 2.4s 1s ease-in-out infinite; }
+.rwcordie { position: absolute; left: 4%; bottom: 0; height: min(58vh, 280px); filter: drop-shadow(0 8px 12px rgba(0,0,0,.5)); animation: cpIn .7s .2s cubic-bezier(.2,.9,.3,1.4) both; }
 .rwd.out { opacity: 0; transition: opacity .3s; }
 .acbook .actrophy { height: min(30vh, 150px); filter: drop-shadow(0 8px 12px rgba(0,0,0,.45)) drop-shadow(0 0 20px rgba(255,214,92,.7)); animation: rwBounce 2.2s ease-in-out infinite; }
 .acel .accordie { position: absolute; left: 3%; bottom: 0; height: min(50vh, 240px); filter: drop-shadow(0 8px 12px rgba(0,0,0,.5)); animation: cpIn .7s .3s both; }
@@ -2528,7 +2528,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 
 /* free Shop gift, Gift Collected / Treat Served reveal, room stories */
 .fgift { display: flex; align-items: center; gap: 10px; margin: 2px 0 8px; padding: 6px 12px 6px 6px; border-radius: 18px; background: linear-gradient(90deg, rgba(255,255,255,.12), rgba(255,255,255,.04)); border: 2px solid rgba(255,243,184,.35); }
-.fgift img { height: 52px; margin: -8px 0; }
+
 .fgift b { font-size: 17px; color: #fff3b8; } .fgift small { display: block; font-size: 12px; opacity: .9; }
 .fgift > :last-child { margin-left: auto; }
 .fgift.fgon { background: linear-gradient(90deg, rgba(125,255,154,.35), rgba(255,214,92,.18)); border-color: #7dff9a; box-shadow: 0 0 16px rgba(125,255,154,.45); }
@@ -2718,7 +2718,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 /* kitchen, rebuilt: your Firefly treats on gold plates, ingredient pictures, a pantry you can share from */
 .panel.kitchen { background: radial-gradient(ellipse at 50% 0, rgba(255,214,92,.16), transparent 55%), linear-gradient(180deg, #24386a, #14203f) !important; }
 .khead { display: flex; align-items: center; gap: 12px; margin-right: 46px; }
-.khead img { height: 64px; margin: -10px 0 -6px; animation: hudBob 3s ease-in-out infinite; }
+
 .khead h3 { margin: 0; } .khead p { margin: 2px 0 0; font-size: 13px; opacity: .9; }
 .kplate { position: relative; flex: none; display: grid; place-items: center; width: 56px; aspect-ratio: 1; border-radius: 50%; background: center 40% / 125% no-repeat, radial-gradient(circle at 40% 35%, #fffaf0, #f3e3c0); box-shadow: 0 0 0 3px #f6c64a, 0 0 0 5px #2a1640, 0 4px 8px rgba(0,0,0,.4); }
 .kplate { height: 56px; } .kplate.big { width: 66px; height: 66px; } .kplate.empty { background: radial-gradient(circle at 40% 35%, #2c3d63, #121a33); } .kplate.empty svg { width: 60%; height: 60%; opacity: .45; }
@@ -2829,7 +2829,7 @@ body:has(.veil) .screen *, body:has(.veil) .screen *::before, body:has(.veil) .s
 @media (max-height: 300px) { .tcards { height: 20px !important; } #room .tier { padding-top: 14px !important; gap: 2px !important; } #room .twin { gap: 3px; font-size: 10px; } #room .twin span { padding: 0 5px 0 2px; } #room .twin svg { width: 13px; height: 13px; } .tcards i em { display: none; }
   #room .rpups .pul, .betl, #room .rnote { display: none; } #room .rpups { gap: 6px; } #room .rpups button { width: 32px !important; height: 32px !important; } .bsteps button { min-width: 26px; padding: 2px 4px; font-size: 11px; } .betsl { gap: 4px; padding: 2px 6px; } .betsl .bstep { width: 26px; height: 26px; } #room .tier .b3 { padding: 2px 8px; font-size: 14px; } }
 
-.leavebox { display: flex; align-items: center; gap: 14px; } .leavebox img { height: 120px; } .leavebox h3 { margin: 0 0 4px; }
+.leavebox { display: flex; align-items: center; gap: 14px; }  .leavebox h3 { margin: 0 0 4px; }
 /* in-round power-up bar: bigger, glowing slots */
 #play .pqbar { background: linear-gradient(180deg, rgba(36,56,106,.95), rgba(18,28,58,.97)) !important; box-shadow: 0 0 0 2.5px #f6c64a, 0 0 0 4px #1a1030, 0 4px 10px rgba(0,0,0,.4) !important; }
 #play .pqo { --z: calc(var(--tb) - 14px) !important; box-shadow: 0 0 0 2px #f6c64a, 0 0 10px rgba(255,214,92,.45) !important; }
@@ -3215,7 +3215,7 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .mscene.lanterns .msbg { background-color: #2a0c46; background-image: var(--scene), radial-gradient(circle at 50% 100%, rgba(255,170,70,.45), transparent 55%), linear-gradient(180deg, #1b1040, #4a1c78); }
 .mscene.balloon .msbg { background-color: #7fd1ff; background-image: var(--scene), radial-gradient(circle at 50% 120%, #fff, transparent 50%), linear-gradient(180deg, #3b8cff, #9fd8ff 70%, #fff); }
 .mscene.done .msbg::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 60%, rgba(255,230,120,.55), transparent 60%); }
-.mcordie { position: absolute; left: 50%; bottom: 0; height: 74%; transform: translateX(-50%); filter: drop-shadow(0 6px 8px rgba(20,5,35,.5)); animation: hudBob 2.6s ease-in-out infinite; }
+.mcordie { position: absolute; left: 50%; bottom: 0; height: 74%; transform: translateX(-50%); filter: drop-shadow(0 6px 8px rgba(20,5,35,.5)); }
 .mmeter { position: absolute; right: 10px; top: 46px; bottom: 12px; width: 18px; border-radius: 9px; background: rgba(10,20,50,.55); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--ol); overflow: hidden; }
 .mmeter i { position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, #ffe058, #4ed35a); transition: height .5s cubic-bezier(.3,1.3,.5,1); }
 .mmeter em { position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%) rotate(-90deg); font: 800 11px var(--ui); color: #fff; font-style: normal; text-shadow: 0 1px 0 var(--ol); white-space: nowrap; }
@@ -3281,6 +3281,29 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .mrungs i.up { background: linear-gradient(180deg, #ffe058, #ff9a3c); box-shadow: 0 0 0 1px rgba(120,60,0,.4); }
 .mrungs i.anc { box-shadow: 0 0 0 2px #ff4d6d, 0 0 8px rgba(255,77,109,.9); }
 .mrungn { position: absolute; right: 10px; top: 8px; padding: 2px 10px; border-radius: 999px; font: 800 11px var(--ui); color: #3d1a4f; background: rgba(255,255,255,.85); box-shadow: 0 0 0 1.5px var(--ol); }
+/* ===== Cordie engine: crossfade poses, breathing idle, reactions ===== */
+.cordie { display: grid; justify-items: center; align-items: end; perspective: 600px; -webkit-user-select: none; user-select: none; }
+.cordie .cp { grid-area: 1 / 1; height: 100%; width: auto; max-width: 100%; object-fit: contain; object-position: 50% 100%; opacity: 0; transition: opacity .22s; transform-origin: 50% 100%; animation: cordieIdle 3.4s ease-in-out infinite; pointer-events: none; }
+.cordie .cp.on { opacity: 1; }
+.cordie.quiet .cp { animation: cordieIdle 3.4s ease-in-out infinite; }
+@keyframes cordieIdle { 0%, 100% { transform: none; } 50% { transform: scale(.99, 1.03) rotate(-1deg); } }
+.cordie.hop .cp { animation: cordieHop .62s cubic-bezier(.2,.9,.3,1.25), cordieIdle 3.4s ease-in-out .62s infinite; }
+@keyframes cordieHop { 0% { transform: none; } 28% { transform: translateY(-16%) scale(1.06, .95) rotate(-4deg); } 56% { transform: translateY(0) scale(.95, 1.06); } 78% { transform: scale(1.02, .99); } 100% { transform: none; } }
+.cordie.jump .cp { animation: cordieJump .8s cubic-bezier(.2,.9,.3,1.2), cordieIdle 3.4s ease-in-out .8s infinite; }
+@keyframes cordieJump { 0% { transform: none; } 15% { transform: scale(1.1, .85); } 45% { transform: translateY(-30%) scale(.94, 1.1) rotate(6deg); } 70% { transform: translateY(0) scale(1.06, .92); } 85% { transform: scale(.98, 1.03); } 100% { transform: none; } }
+.cordie.wiggle .cp { animation: cordieWiggle .7s ease-in-out, cordieIdle 3.4s ease-in-out .7s infinite; }
+@keyframes cordieWiggle { 0%, 100% { transform: none; } 20% { transform: rotate(-7deg) scaleX(1.03); } 50% { transform: rotate(6deg); } 80% { transform: rotate(-3deg); } }
+.cordie.spin .cp { animation: cordieSpin .75s cubic-bezier(.3,.7,.3,1), cordieIdle 3.4s ease-in-out .75s infinite; }
+@keyframes cordieSpin { 0% { transform: rotateY(0); } 50% { transform: rotateY(180deg) translateY(-8%); } 100% { transform: rotateY(360deg); } }
+.cordie.sad .cp { animation: cordieSad .9s ease-in-out, cordieIdle 3.4s ease-in-out .9s infinite; }
+@keyframes cordieSad { 0%, 100% { transform: none; } 30% { transform: scale(1.04, .9) rotate(4deg); } 70% { transform: scale(1.02, .94) rotate(3deg); } }
+.cordie-pop .cordie { pointer-events: auto; cursor: pointer; }
+.cordie-pop .cbub.pop { animation: popIn .35s cubic-bezier(.2,.9,.3,1.4); }
+.lvcordie { height: 120px; flex: none; }
+.khcordie { height: 64px; margin: -10px 0 -6px; }
+.fgcordie { height: 52px; margin: -8px 0; }
+.gpcordie .cp { width: 100%; height: auto; }
+@media (prefers-reduced-motion: reduce) { .cordie .cp { animation: none !important; } }
 /* ===== Album complete: the show ===== */
 .acel { overflow: hidden; }
 .acel.out { opacity: 0; transition: opacity .4s; }
@@ -4072,11 +4095,11 @@ function albumCelebrate(t) {
       '<div class="acrow">' + prizes.map(function (p, i) { return '<span style="animation-delay:' + (2.2 + i * .08) + 's">' + icon(p[0]) + '<b>' + p[1].toLocaleString() + '</b></span>'; }).join('') + '<span class="acall" style="animation-delay:2.5s"><i>' + PUP_IDS.slice(0, 4).map(function (k) { return icon(pupById(k).icon); }).join('') + icon('i-bulb') + '</i><b>' + t.pups + '× every power-up</b></span></div>' +
       (S.albumTimes === 1 ? '<p class="acnote">Plus the Golden Bloom frame and dauber in your Style Studio</p>' : '') +
       '<div class="acbtns"><button class="b3 gold" id="acAgain">Collect &amp; Start Again</button><button class="b3 plum" id="acLater">Collect</button></div></div>' +
-    '<img class="accordie" src="art/mascot-wow.webp" alt="">';
+    cordieHtml('wow', 'accordie', 'acCordie');
   document.body.appendChild(o); SFX.set(); refreshTop();
   // the show: cards fly in and circle, the album slams shut into a trophy, fireworks, then the prizes rain in
   setTimeout(function () { SFX.bingo && SFX.bingo(); fireworks(3600); coinBurst(innerWidth / 2, innerHeight * .4, 30); }, 1500);
-  setTimeout(function () { o.classList.add('stage2'); prizeRain(40, 'coin'); petalBurst(innerWidth / 2, innerHeight * .45, 30); buzz([40, 50, 40, 50, 120]); }, 2100);
+  setTimeout(function () { o.classList.add('stage2'); cordieBase('#acCordie', 'cheer'); cordiePose('#acCordie', 'cheer', 'jump'); prizeRain(40, 'coin'); petalBurst(innerWidth / 2, innerHeight * .45, 30); buzz([40, 50, 40, 50, 120]); }, 2100);
   setTimeout(function () { fireworks(2800); }, 3600);
   function close() { o.classList.add('out'); setTimeout(function () { o.remove(); }, 400); }
   $('#acAgain').onclick = function () { SFX.coin(); restartAlbum(); close(); if ($('#album')) album(null); toast('Fresh album started. Your spare cards became stars for the Star Exchange.', 3600); };
@@ -4182,7 +4205,7 @@ function calendar() {
       '<div class="cdi">' + calItems(d).map(function (it) { return '<span>' + icon(it[0]) + '<b>' + (it[1] === 'pack' ? 'Pack' : it[1]) + '</b></span>'; }).join('') + '</div>' +
       (state === 'done' ? '<span class="cdok">✓</span>' : '') + (state === 'now' ? '<i class="tw t1"></i><i class="tw t2"></i>' : '') + '</div>';
   }).join('');
-  panel('<div class="cal"><img class="calcordie" src="art/mascot-' + (ready ? 'gift' : 'sleep') + '.webp" alt="Cordie"><h3 class="caltitle"><span class="outl">Bloom Calendar</span></h3><p class="calsub">' + st.total + ' day' + (st.total === 1 ? '' : 's') + ' collected · miss a day and your progress still stands</p>' + miles +
+  panel('<div class="cal">' + cordieHtml(ready ? 'gift' : 'sleep', 'calcordie') + '<h3 class="caltitle"><span class="outl">Bloom Calendar</span></h3><p class="calsub">' + st.total + ' day' + (st.total === 1 ? '' : 's') + ' collected · miss a day and your progress still stands</p>' + miles +
     '<div class="cdays">' + cards + '</div>' +
     '<div class="res-btns">' + (ready ? '<button class="b3 gold shine" id="calGo">Collect Day ' + (cur + 1) + '</button>' : '<span class="calnext">Next gift in <b>' + untilText(nextReset()) + '</b> · ' + localTime(nextReset()) + '</span>') + '</div></div>', 'cpanel', function (v) {
       v.classList.add('vcal');
@@ -4208,17 +4231,54 @@ function calendar() {
 
 /* ---------- Cordie, the Bingo Bloom bunny ---------- */
 var CORDIE_HI = false;
+/* ---------- Cordie: pose swaps with motion (art-agnostic; new Cordie art drops in by filename) ---------- */
+var CORDIE_TAP_LINES = ['Hi there!', 'Ready to bloom?', 'Ooh, that tickles!', 'Daub, daub, daub!', 'You\'ve got this!', 'Let\'s win something big!', 'Pick a room and let\'s play!', 'I believe in you!'];
+function cordieHtml(pose, cls, id, quiet) {
+  return '<div class="cordie ' + (cls || '') + (quiet ? ' quiet' : '') + '"' + (id ? ' id="' + id + '"' : '') + ' data-pose="' + pose + '" data-base="' + pose + '"><img class="cp on" src="' + cordieArt(pose) + '" alt="Cordie" draggable="false"><img class="cp" src="' + cordieArt(pose) + '" alt="" draggable="false"></div>';
+}
+function cordiePose(el, pose, fx) {
+  el = typeof el === 'string' ? document.querySelector(el) : el; if (!el || !el.classList.contains('cordie')) return;
+  if (pose && el.dataset.pose !== pose) {
+    var imgs = el.querySelectorAll('.cp'), on = el.querySelector('.cp.on'), off = imgs[0] === on ? imgs[1] : imgs[0], src = cordieArt(pose);
+    el.dataset.pose = pose;
+    var go = function () { if (el.dataset.pose !== pose || !el.isConnected) return; off.classList.add('on'); on.classList.remove('on'); };
+    if (off.complete && off.src.slice(-src.length) === src) go(); else { off.onload = go; off.src = src; }
+  }
+  if (fx && !reduceMotion) {
+    el.classList.remove('hop', 'wiggle', 'spin', 'sad', 'jump'); void el.offsetWidth; el.classList.add(fx);
+    clearTimeout(el._cfx); el._cfx = setTimeout(function () { el.classList.remove(fx); }, 1000);
+  }
+}
+function cordieReact(el, pose, fx, ms) {
+  el = typeof el === 'string' ? document.querySelector(el) : el; if (!el) return;
+  cordiePose(el, pose, fx); clearTimeout(el._cback);
+  el._cback = setTimeout(function () { if (el.isConnected) cordiePose(el, el.dataset.base || pose); }, ms || 1500);
+}
+function cordieBase(el, pose) { el = typeof el === 'string' ? document.querySelector(el) : el; if (!el) return; el.dataset.base = pose; cordiePose(el, pose); }
+// tap Cordie anywhere: a hop, a sparkle and a happy pose for a beat
+document.addEventListener('pointerdown', function (e) {
+  var c = e.target.closest && e.target.closest('.cordie'); if (!c || c.classList.contains('quiet')) return;
+  var r = c.getBoundingClientRect(); sparkle(r.left + r.width / 2, r.top + r.height * .35, 10); SFX.tap && SFX.tap();
+  cordieReact(c, ['cheer', 'wow', 'point'][rand(3)], ['hop', 'wiggle', 'spin', 'jump'][rand(4)], 1400);
+  var pop = c.closest('.cordie-pop'); if (pop) { var b = pop.querySelector('.cbub'); if (b) { b.textContent = CORDIE_TAP_LINES[rand(CORDIE_TAP_LINES.length)]; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); } clearTimeout(pop._bye); pop._bye = setTimeout(function () { if (pop.isConnected && pop.onclick) pop.onclick(null); }, 4000); }
+}, true);
+// a little life: every few seconds one visible Cordie wiggles or glances
+setInterval(function () {
+  if (reduceMotion || document.hidden) return;
+  var all = [].filter.call(document.querySelectorAll('.cordie:not(.quiet)'), function (c) { var r = c.getBoundingClientRect(); return r.width > 20 && r.bottom > 0 && r.top < innerHeight; });
+  if (!all.length) return; cordiePose(all[rand(all.length)], null, Math.random() < .7 ? 'wiggle' : 'hop');
+}, 4200);
 function cordieSay(pose, msg, ms, side) {
   if (reduceMotion) ms = ms || 3500;
   var old = document.querySelector('.cordie-pop'); if (old) old.remove();
   var d = document.createElement('div'); d.className = 'cordie-pop ' + (side || 'left');
-  d.innerHTML = '<img src="' + cordieArt(pose) + '" alt="Cordie"><div class="cbub">' + msg + '</div>';
+  d.innerHTML = cordieHtml(pose, 'cpc') + '<div class="cbub">' + msg + '</div>';
   document.body.appendChild(d); SFX.tap && SFX.tap();
-  d.onclick = function () { d.classList.add('out'); setTimeout(function () { d.remove(); }, 400); };
+  d.onclick = function (e) { if (e && e.target.closest && e.target.closest('.cordie')) return; d.classList.add('out'); setTimeout(function () { d.remove(); }, 400); };
   // she never blocks a tap: any tap anywhere, or a new screen, sends her off
-  var bye = function () { document.removeEventListener('pointerdown', bye, true); if (d.isConnected && !d.classList.contains('out')) d.onclick(); };
+  var bye = function (e) { if (e && e.target.closest && e.target.closest('.cordie-pop .cordie')) return; document.removeEventListener('pointerdown', bye, true); if (d.isConnected && !d.classList.contains('out')) d.onclick(); };
   setTimeout(function () { document.addEventListener('pointerdown', bye, true); }, 300);
-  setTimeout(bye, ms || 3600);
+  d._bye = setTimeout(bye, ms || 3600);
 }
 function cordieHello() {
   if (CORDIE_HI) return; CORDIE_HI = true;
@@ -4236,7 +4296,7 @@ function rewardNext() {
   var cp = document.querySelector('.cordie-pop'); if (cp) cp.remove();
   var r = REWQ.shift(), o = document.createElement('div'); o.className = 'rwd';
   o.innerHTML = '<div class="prays"></div><div class="rwin"><img class="rwart" src="art/' + r[0] + '.webp" alt=""><b class="rwt outl">' + r[1] + '</b><span class="rws">' + r[2] + '</span><button class="b3 gold" id="rwGo">Collect</button></div>' +
-    (r[3] ? '<img class="rwcordie" src="' + cordieArt(r[3]) + '" alt="">' : '');
+    (r[3] ? cordieHtml(r[3], 'rwcordie') : '');
   document.body.appendChild(o); SFX.set && SFX.set(); setTimeout(function () { sparkle(innerWidth / 2, innerHeight * .4, 70); petalBurst(innerWidth / 2, innerHeight * .4, 26); coinBurst(innerWidth / 2, innerHeight * .5, 14); fireworks && fireworks(1600); }, 250);
   $('#rwGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (r[4]) r[4](); setTimeout(rewardNext, 300); }, 300); };
 }
@@ -4266,7 +4326,7 @@ function featSpotlight() {
   clearInterval(FEAT_T);
   var tiles = [].slice.call(app.querySelectorAll('.ftile.ft2')); if (!tiles.length) return;
   var bar = app.querySelector('.hud-feat'), i = Math.max(0, tiles.findIndex(function (t) { return t.classList.contains('is-hot'); }));
-  if (!bar.querySelector('.fcordie')) bar.insertAdjacentHTML('beforeend', '<img class="fcordie" src="art/mascot-point.webp" alt="">');
+  if (!bar.querySelector('.fcordie')) bar.insertAdjacentHTML('beforeend', cordieHtml('point', 'fcordie', null, true));
   // the HOT room stays the big spotlight; a soft glow visits the others in turn (no resizing, so nothing jumps or lags)
   tiles.forEach(function (t, k) { t.classList.toggle('hero', k === i); });
   var j = i;
@@ -4817,7 +4877,7 @@ function renderPlay() {
     if (!R || R.ended) return;
     var wasP = R.paused; if (!wasP) { R.paused = true; clearTimeout(R.timer); }
     function resume() { if (R && !wasP && R.paused) { R.paused = false; if (R.active && !R.frozen && R.idx < R.seq.length) R.timer = setTimeout(callNext, 700); } }
-    panel('<div class="leavebox"><img src="art/mascot-wow.webp" alt=""><div><h3>Leave this round?</h3><p>The round is paused. Leaving now forfeits these cards' + (R.bingos ? ', but you keep the ' + R.bingos + ' bingo' + (R.bingos > 1 ? 's' : '') + ' you have already won' : '') + '.</p>' +
+    panel('<div class="leavebox">' + cordieHtml('wow', 'lvcordie') + '<div><h3>Leave this round?</h3><p>The round is paused. Leaving now forfeits these cards' + (R.bingos ? ', but you keep the ' + R.bingos + ' bingo' + (R.bingos > 1 ? 's' : '') + ' you have already won' : '') + '.</p>' +
       '<div class="res-btns"><button class="b3 green" id="lvStay">Keep playing</button><button class="b3 cream" id="lvGo">Leave</button></div></div></div>', 'small', function (v) {
         $('#lvStay', v).onclick = function () { SFX.tap(); closeVeil(); resume(); };
         $('#lvGo', v).onclick = function () { closeVeil(); endRound('quit'); };
@@ -5463,8 +5523,8 @@ function buzz(pat) { try { if (S.settings.sound && !S.settings.calm && navigator
 // Full Bouquet: the bouquet bursts open over the screen for two seconds and never blocks a tap
 function bouquetShow(card, coins, petals) {
   var o = document.createElement('div'); o.className = 'bqshow';
-  o.innerHTML = '<i class="bsrays"></i><div class="bqin"><img class="bqart" src="art/art-mega-bouquet.webp" alt=""><div class="sribbon bqrib"><span class="outl">FULL BOUQUET!</span></div><small class="outl">4 bingos on one card · +' + coins + ' coins · +' + petals + ' petals · a Jackpot Wheel spin</small></div><img class="bqcordie" src="art/mascot-cheer.webp" alt="">';
-  document.body.appendChild(o);
+  o.innerHTML = '<i class="bsrays"></i><div class="bqin"><img class="bqart" src="art/art-mega-bouquet.webp" alt=""><div class="sribbon bqrib"><span class="outl">FULL BOUQUET!</span></div><small class="outl">4 bingos on one card · +' + coins + ' coins · +' + petals + ' petals · a Jackpot Wheel spin</small></div>' + cordieHtml('cheer', 'bqcordie', 'bqCordie') + '';
+  document.body.appendChild(o); setTimeout(function () { cordiePose('#bqCordie', null, 'jump'); }, 900);
   if (!reduceMotion) { setTimeout(function () { prizeRain(36, 'petal'); sparkle(innerWidth / 2, innerHeight * .4, 120); }, 150); setTimeout(function () { coinBurst(innerWidth / 2, innerHeight * .55, 30); }, 500); }
   setTimeout(function () { o.remove(); }, 2600);
 }
@@ -5481,8 +5541,8 @@ function bingoSlam(name, sub, card, tier) {
   var old = host.querySelector('.bslam'); if (old) old.remove();
   var d = document.createElement('div'); d.className = 'bslam';
   d.innerHTML = '<i class="bsrays"></i><div class="bswrap"><div class="bsl">' + big.split('').map(function (ch, i) { return '<b class="outl" style="--k:' + i + '">' + ch + '</b>'; }).join('') + '</div>' +
-    (big === 'BINGO' && !/^bingo!?$/i.test(name) ? '<em class="outl">' + esc(name) + '</em>' : '') + '<small>' + esc(sub) + '</small></div><img class="bscordie" src="art/mascot-cheer.webp" alt="">';
-  host.appendChild(d); setTimeout(function () { d.remove(); }, 2000);
+    (big === 'BINGO' && !/^bingo!?$/i.test(name) ? '<em class="outl">' + esc(name) + '</em>' : '') + '<small>' + esc(sub) + '</small></div>' + cordieHtml('cheer', 'bscordie', 'bsCordie') + '';
+  host.appendChild(d); setTimeout(function () { cordiePose('#bsCordie', null, 'jump'); }, 800); setTimeout(function () { d.remove(); }, 2000);
 }
 // a card one number away from a bingo glows and says so
 function oneToGo(ci) {
@@ -5940,7 +6000,7 @@ function kitchen() {
   }
   function pantry() { var tr = tradeIngs(); return INGS.map(function (g) { var n = S.ing[g.id] || 0; return '<button class="kpan' + (tr.indexOf(g.id) >= 0 ? ' trade' : '') + '" data-ing="' + g.id + '">' + (tr.indexOf(g.id) >= 0 ? '<span class="ktag">SEND TODAY</span>' : '') + '<i class="kip" style="background-image:url(art/ing-' + g.id + '.webp)"></i><b>' + n + '</b><small>' + g.name + '</small></button>'; }).join(''); }
   function draw(v) { $('#kOv', v).innerHTML = ovens(); $('#kRec', v).innerHTML = recipes(); $('#kPan', v).innerHTML = pantry(); }
-  panel('<div class="khead"><img src="art/mascot-gift.webp" alt=""><div><h3>Kitchen</h3><p>Bake treats with the ingredients you win in bingo. Every treat turns into tickets.</p></div></div>' +
+  panel('<div class="khead">' + cordieHtml('gift', 'khcordie') + '<div><h3>Kitchen</h3><p>Bake treats with the ingredients you win in bingo. Every treat turns into tickets.</p></div></div>' +
     '<div class="kpantry"><span class="ksub">Your pantry · today you can send ' + tradeIngs().map(function (x) { return ingById(x).name; }).join(' and ') + ' to friends (changes daily)</span><div class="kpans" id="kPan"></div></div>' +
     '<div class="ovens" id="kOv"></div><div class="recipes" id="kRec"></div>', 'kitchen', function (v) {
       draw(v); if (!guideDone('kitchen')) setTimeout(function () { if (v.isConnected) kitchenTour(); }, 500);
@@ -6747,12 +6807,12 @@ function gardenPath(bet, room) {
     '<path d="M60 6 L112 48 L8 48 Z" fill="url(#gzr)" stroke="#5a3e12" stroke-width="2.5" stroke-linejoin="round"/><path d="M60 14 L100 46 L20 46 Z" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2"/><circle cx="60" cy="6" r="4" fill="#fff3b8" stroke="#5a3e12" stroke-width="1.5"/>' +
     '<rect x="14" y="46" width="92" height="7" rx="3" fill="#f6c64a" stroke="#5a3e12" stroke-width="2"/></svg>' +
     '<div class="gzprize"><b class="outl">GRAND PRIZE</b><span><img src="art/icon-ticket.webp" alt=""><strong>' + grand + '</strong></span><span><img src="art/icon-card-pack.webp" alt=""><strong>Gold card</strong></span></div></div>' +
-    '<img class="gpcordie" id="gpCor" src="art/mascot-stand.webp" alt=""></div>' +
+    cordieHtml('stand', 'gpcordie', 'gpCor', true) + '</div>' +
     '<div class="gpbar"><span class="pill2 gpwon">' + icon('i-ticket') + '<b id="gpWon">0</b></span><span id="gpMsg">Tap a glowing stone to start your walk.</span><button class="b3 gold shine" id="gpDone" hidden>Collect</button></div>';
   document.body.appendChild(o); SFX.tap && SFX.tap();
   var cor = $('#gpCor', o), scene = o.querySelector('.gpscene'), colEls = o.querySelectorAll('.gpcol');
   function placeCordie(pose) {
-    if (pose) cor.src = 'art/mascot-' + pose + '.webp';
+    if (pose) cordiePose(cor, pose);
     var t = pos >= cols ? $('#gpGaz', o) : colEls[pos], r = t.getBoundingClientRect(), sr = scene.getBoundingClientRect();
     cor.style.left = (r.left - sr.left + scene.scrollLeft + r.width / 2 - (pose === 'wow' ? r.width * .95 : 0)) + 'px';
     cor.style.top = Math.max(0, r.top - sr.top - (cor.getBoundingClientRect().height || 64) + 6) + 'px';
@@ -6867,7 +6927,7 @@ var PRIZE_PIC = { tickets: 'icon-ticket', coins: 'icon-coin', petals: 'icon-peta
 function bigWin(pics, title, lines, pose, done) {
   var o = document.createElement('div'); o.className = 'reveal bigwin';
   o.innerHTML = '<div class="rays"></div><div class="rv"><b class="rvt outl">' + esc(title) + '</b><div class="bwpics">' + pics.map(function (p, i) { return '<span class="bwp" style="--d:' + i + '"><img src="art/' + p + '.webp" alt=""></span>'; }).join('') + '</div>' +
-    '<div class="bwlines">' + lines.map(function (l) { return '<span class="outl">' + esc(l) + '</span>'; }).join('') + '</div><button class="b3 gold" id="rvGo">' + (pics.length ? 'Collect' : 'OK') + '</button></div>' + (pose ? '<img class="bwcordie" src="art/mascot-' + pose + '.webp" alt="">' : '');
+    '<div class="bwlines">' + lines.map(function (l) { return '<span class="outl">' + esc(l) + '</span>'; }).join('') + '</div><button class="b3 gold" id="rvGo">' + (pics.length ? 'Collect' : 'OK') + '</button></div>' + (pose ? cordieHtml(pose, 'bwcordie') : '');
   document.body.appendChild(o); if (pics.length) { SFX.set(); setTimeout(function () { sparkle(innerWidth / 2, innerHeight * .45, 70); coinBurst(innerWidth / 2, innerHeight * .55, 16); }, 250); } else SFX.no();
   $('#rvGo', o).onclick = function () { SFX.coin(); o.classList.add('out'); setTimeout(function () { o.remove(); if (done) done(); flushCards(); }, 250); };
 }
@@ -7084,7 +7144,7 @@ function missionPanel() {
     return '<i class="mcloud c1"></i><i class="mcloud c2"></i><i class="mcloud c3"></i><img class="mscball" id="mScBall" src="art/icon-bingo-ball.webp" alt="" style="--p:' + missionPct(m) + '">';
   }
   panel('<div class="mq"><div class="mscene ' + m.id + (m.done ? ' done' : '') + '" style="--scene:url(' + M.scene + ')"><i class="msbg"></i>' + sceneLife() +
-      '<img class="mcordie" id="mCordie" src="' + cordieArt(m.done ? 'cheer' : M.pose) + '" alt="Cordie">' +
+      cordieHtml(m.done ? 'cheer' : M.pose, 'mcordie', 'mCordie') +
       '<div class="mmeter"><i id="mFill" style="height:' + missionPct(m) + '%"></i><em id="mPct">' + missionPct(m) + '%</em></div>' +
       '<div class="mtimer' + (m.done ? ' ok' : '') + '"><small>' + (m.done ? 'DONE!' : 'ENDS IN') + '</small><b id="mLeft">' + untilText(nextReset()) + '</b></div></div>' +
     '<div class="mside"><h3>' + M.name + '</h3><p class="mdesc">' + (m.done ? M.done : M.blurb) + '</p>' + board() +
@@ -7099,7 +7159,7 @@ function missionPanel() {
       ['#mVineL', '#mVineR', '#mScBall'].forEach(function (id) { var e = $(id, v); if (e) e.style.setProperty('--p', pc); });
       var L = $('#mLights', v); if (L) [].forEach.call(L.children, function (x, i) { x.classList.toggle('on', i < Math.round(pc / 100 * 12)); });
     }
-    function act() { var c = $('#mCordie', v); if (!c) return; c.classList.remove('act'); void c.offsetWidth; c.classList.add('act'); }
+    function act(bad) { var c = $('#mCordie', v); if (!c) return; cordieReact(c, bad ? 'wow' : 'cheer', bad ? 'sad' : 'hop', 1300); }
     function stream(toEl, ic, n) { var c = $('#mCordie', v); for (var k = 0; k < n; k++) (function (k) { setTimeout(function () { flyTo(c, toEl, ic, function () {}); }, k * 90); })(k); }
     function goldBonus(cell) {
       var opts = [{ t: 'coins', n: 150 }, { t: 'scratch', n: 1 }, { t: 'card', n: 1 }, { t: 'tickets', n: 25 }], pk = opts[rand(opts.length)], tx = grant(pk); m.bonus.push(pk.t); save(); refreshTop();
@@ -7130,7 +7190,7 @@ function missionPanel() {
       if (busy || m.done || m.drops < 1 || !wind) return; busy = true; m.drops--; SFX.tap(); act();
       var lane = $('#mLane', v), bl = $('#mBalloon', v), hit = Math.abs(wind.x - wind.gx()) <= 9;
       if (hit) { m.rung++; save(); SFX.daub(); lane.classList.remove('miss'); bl.classList.remove('lift'); void bl.offsetWidth; bl.classList.add('lift'); var gr = $('#mGate', v).getBoundingClientRect(); sparkle(gr.left + gr.width / 2, gr.top + gr.height / 2, 26); floatText(lane, '+1 rung!'); wind.placeGate(); var sb = $('#mScBall', v); if (sb) sb.style.setProperty('--p', missionPct(m)); }
-      else { m.rung = Math.max(m.anchor, m.rung - 1); save(); SFX.no(); lane.classList.remove('miss'); void lane.offsetWidth; lane.classList.add('miss'); floatText(lane, m.rung > m.anchor || m.anchor === 0 ? 'Missed the gate!' : 'Missed! The anchor held.'); }
+      else { m.rung = Math.max(m.anchor, m.rung - 1); save(); SFX.no(); act(true); lane.classList.remove('miss'); void lane.offsetWidth; lane.classList.add('miss'); floatText(lane, m.rung > m.anchor || m.anchor === 0 ? 'Missed the gate!' : 'Missed! The anchor held.'); }
       rungsUi(); upd(); setTimeout(function () { busy = false; if (m.rung >= MISSION_N) finish(); else if (!m.drops) $('#mFire', v).disabled = true; }, 380);
     };
     if ($('#mClaim', v)) $('#mClaim', v).onclick = function () {
@@ -7220,7 +7280,7 @@ var GIFT_EVERY = 3 * 3600e3;
 function freeGiftReady() { return Date.now() >= (S.freeGift || 0); }
 function freeGiftRow() {
   var ok = freeGiftReady();
-  return '<div class="fgift' + (ok ? ' fgon' : '') + '"><img src="art/mascot-gift.webp" alt=""><div><b class="outl">' + (ok ? 'Free gift!' : 'Next free gift') + '</b><small>' + (ok ? 'A little something from Cordie, every 3 hours' : 'Ready in ' + untilText(S.freeGift)) + '</small></div>' +
+  return '<div class="fgift' + (ok ? ' fgon' : '') + '">' + cordieHtml('gift', 'fgcordie', null, true) + '<div><b class="outl">' + (ok ? 'Free gift!' : 'Next free gift') + '</b><small>' + (ok ? 'A little something from Cordie, every 3 hours' : 'Ready in ' + untilText(S.freeGift)) + '</small></div>' +
     (ok ? '<button class="b3 green" id="fgGo">Open</button>' : '<span class="fgtime">' + icon('i-gift') + '</span>') + '</div>';
 }
 function openFreeGift(tab) {
