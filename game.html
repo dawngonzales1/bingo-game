@@ -3189,7 +3189,13 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .fgift .b3::after { content: ''; position: absolute; top: -20%; bottom: -20%; width: 34%; left: -60%; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255,255,255,.75), transparent); transform: skewX(-20deg); animation: sweep 3.2s ease-in-out infinite; }
 /* ===== six cards: all on screen in a 3 by 2 grid, the Frenzy room ===== */
 .rpt.purple { --t1: #c58cff; --t2: #7b3fc4; }
-.rptiers { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.rptiers { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; min-width: 0; }
+.rpt { min-width: 0; overflow: visible; }
+.rptb { overflow: hidden; }
+.rptb .tcards { max-width: 100%; justify-content: center; }
+.rptb .tcards.n6 i { margin: 0 -9px; } .rptb .tcards.n6 i:nth-child(1) { transform: rotate(-14deg) translateY(5px); } .rptb .tcards.n6 i:nth-child(2) { transform: rotate(-8deg) translateY(2px); } .rptb .tcards.n6 i:nth-child(3) { transform: rotate(-3deg); } .rptb .tcards.n6 i:nth-child(4) { transform: rotate(3deg); } .rptb .tcards.n6 i:nth-child(5) { transform: rotate(8deg) translateY(2px); } .rptb .tcards.n6 i:nth-child(6) { transform: rotate(14deg) translateY(5px); }
+.rptb .twin { flex-wrap: wrap; justify-content: center; }
+.rpt .tflag { right: -4px; top: -9px; }
 #cards.all6 { grid-template-columns: 1fr; }
 #cards.all6 .bigs.six { display: grid; grid-template-columns: repeat(3, auto); justify-content: center; align-content: center; gap: 8px; }
 #cards.all6 .bigs.six .cell { aspect-ratio: 1.5; }
