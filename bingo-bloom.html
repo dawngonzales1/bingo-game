@@ -3201,6 +3201,45 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 #cards.all6 .bigs.six .bcard .hdr { padding: 2px 4px; } #cards.all6 .bigs.six .bcard .hdr span { width: 70%; font-size: 80%; }
 #cards.all6 .bigs.six .cell > span { font-size: 92%; }
 @media (max-height: 420px) { .rptiers { gap: 6px; } .rpt .tflag { font-size: 8px; } }
+/* ===== Warm Up Cordie, the daily rescue ===== */
+.evhub { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.ev-rescue { background: linear-gradient(180deg, #7fe3ff, #1b7fb8 70%, #0d4a7a); }
+.ev-rescue .evart img { height: 66px; }
+@media (max-width: 700px) { .evhub { grid-template-columns: repeat(2, 1fr); } }
+.panel.rescuep { width: min(96vw, 820px); max-height: 96vh; padding: 10px 14px 12px; }
+.rsq { display: grid; grid-template-columns: minmax(200px, 38%) minmax(0, 1fr); gap: 12px; align-items: stretch; }
+.rsscene { position: relative; overflow: hidden; border-radius: 18px; min-height: 230px; background: radial-gradient(circle at 50% 100%, #9fd8ff, transparent 55%), linear-gradient(180deg, #1b3c6e, #2d5e9c 60%, #6fb4e8); box-shadow: 0 0 0 2.5px #bfe8ff, 0 0 0 4.5px var(--ol), inset 0 0 40px rgba(255,255,255,.25); }
+.rsscene.warm { background: radial-gradient(circle at 50% 100%, #ffd27a, transparent 55%), linear-gradient(180deg, #ff9a3c, #ffcf5c 60%, #fff0b8); box-shadow: 0 0 0 2.5px #ffe58f, 0 0 0 4.5px var(--ol); }
+.rsice { position: absolute; top: -6px; width: 26px; height: 70px; background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(200,235,255,.4)); clip-path: polygon(0 0, 100% 0, 50% 100%); filter: drop-shadow(0 2px 2px rgba(0,40,80,.3)); }
+.rsice.i1 { left: 10%; } .rsice.i2 { left: 44%; height: 50px; } .rsice.i3 { left: 76%; height: 84px; }
+.rsscene.warm .rsice { opacity: .15; }
+.rssnow { position: absolute; inset: 0; background: radial-gradient(circle, #fff 1.5px, transparent 2px) 0 0 / 28px 28px, radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1.5px) 14px 14px / 36px 36px; opacity: .5; animation: rsSnow 8s linear infinite; }
+@keyframes rsSnow { to { background-position: 0 200px, 14px 214px; } }
+.rsscene.warm .rssnow { display: none; }
+.rscordie { position: absolute; left: 50%; bottom: 0; height: 78%; transform: translateX(-50%); filter: drop-shadow(0 6px 8px rgba(0,20,60,.5)); animation: rsShiver .25s ease-in-out infinite; }
+.rsscene.warm .rscordie { animation: hudBob 2.4s ease-in-out infinite; filter: drop-shadow(0 6px 8px rgba(80,40,0,.4)); }
+@keyframes rsShiver { 0%, 100% { transform: translateX(-50%) rotate(-1.5deg); } 50% { transform: translateX(-49%) rotate(1.5deg); } }
+.calm .rscordie { animation: none; }
+.rsheat { position: absolute; right: 10px; top: 46px; bottom: 12px; width: 18px; border-radius: 9px; background: rgba(10,20,50,.6); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--ol); overflow: hidden; }
+.rsheat i { position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, #ffe058, #ff6b2c); transition: height .5s cubic-bezier(.3,1.3,.5,1); }
+.rsheat em { position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%) rotate(-90deg); transform-origin: center; font: 800 11px var(--ui); color: #fff; font-style: normal; text-shadow: 0 1px 0 var(--ol); white-space: nowrap; }
+.rstimer { position: absolute; left: 10px; top: 10px; display: grid; padding: 3px 12px 4px; border-radius: 999px; background: linear-gradient(180deg, #ff6b6b, #c8102e); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--ol); color: #fff; text-align: center; }
+.rstimer small { font: 800 9px var(--ui); letter-spacing: .08em; } .rstimer b { font-size: 15px; }
+.rsscene.warm .rstimer { background: linear-gradient(180deg, #8dff9a, #2fae55); }
+.rsside { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.rsside h3 { margin: 0; } .rsdesc { margin: 0; font-size: 12.5px; line-height: 1.3; }
+.rsboard { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 6px; border-radius: 14px; background: linear-gradient(180deg, #bfe8ff, #7fc0ea); box-shadow: inset 0 0 0 2px rgba(255,255,255,.7), 0 0 0 2px var(--ol); }
+.rsc { display: grid; place-items: center; height: clamp(26px, 7.5vh, 40px); border-radius: 8px; font: 800 clamp(12px, 3.6vh, 17px) var(--ui); color: #1b3c6e; background: linear-gradient(180deg, #fff, #d8f0ff); box-shadow: 0 2px 0 rgba(20,60,100,.35); }
+.rsc.hit { color: #fff; background: linear-gradient(180deg, #ffb347, #ff6b2c); box-shadow: 0 0 0 1.5px #fff, 0 0 10px rgba(255,120,40,.8); }
+.rsc.pop { animation: popIn .35s cubic-bezier(.2,1.4,.4,1); }
+.rsrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.rsballs { display: inline-flex; align-items: center; gap: 4px; padding: 3px 12px 3px 4px; border-radius: 999px; font: 700 13px var(--ui); color: #fff; background: rgba(10,20,50,.45); box-shadow: inset 0 0 0 1.5px rgba(191,232,255,.6); }
+.rsballs svg { width: 26px; height: 26px; } .rsballs b { font-size: 17px; color: #ffe58f; }
+.rsrow .b3 { padding: 6px 26px 7px; font-size: 19px; letter-spacing: .06em; }
+.rsrow .b3.green:not(:disabled) { animation: playPulse 1.4s ease-in-out infinite; }
+.rsdone { font: 800 13px var(--ui); color: #8dff9a; }
+.rsprize { margin: 0; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font: 700 12.5px var(--ui); color: #ffe58f; } .rsprize svg { width: 20px; height: 20px; } .rsprize span { color: #fff; }
+@media (max-height: 420px) { .rsq { gap: 8px; } .rsscene { min-height: 180px; } .rsside { gap: 4px; } .rsdesc { font-size: 11px; } .rsboard { gap: 3px; padding: 4px; } .rsrow .b3 { padding: 4px 18px 5px; font-size: 16px; } .panel.rescuep .note { display: none; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -3238,6 +3277,7 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
   <symbol id="i-allx2" viewBox="0 0 40 40"><image href="art/pup-allx2.webp" x="-1" y="-1" width="42" height="42"/></symbol>
   <symbol id="i-ticket" viewBox="0 0 40 40"><image href="art/icon-ticket.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-seed" viewBox="0 0 40 40"><image href="art/icon-seed.webp" x="1" y="1" width="38" height="38"/></symbol>
+  <symbol id="i-warm" viewBox="0 0 40 40"><image href="art/icon-bingo-ball.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-drop" viewBox="0 0 40 40"><image href="art/icon-drop-ball.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-chef" viewBox="0 0 40 40"><image href="art/icon-kitchen.webp" x="1" y="1" width="38" height="38"/></symbol>
   <symbol id="i-bag" viewBox="0 0 40 40"><image href="art/icon-shop.webp" x="1" y="1" width="38" height="38"/></symbol>
@@ -5499,7 +5539,7 @@ function endRound(why) {
   if (why !== 'quit') { if (R.bingos) S.dry = 0; else S.dry++; }
   if (why !== 'quit' && R.mode !== 'multi') { S.bonus[R.room] = Math.min(100, (S.bonus[R.room] || 0) + R.marks * 1.5); R.pathReady = S.bonus[R.room] >= 100; }
   logEvent({ t: 'round', room: R.room, mode: R.mode, cards: R.cards.length, bingos: R.bingos, coins: R.earned.coins, petals: R.earned.petals });
-  save(); if (why !== 'quit') boardPost(R.room, R.bingos);
+  save(); if (why !== 'quit') { boardPost(R.room, R.bingos); var wb = rescueEarn(R.cards.reduce(function (a, k) { return a + k.cells.filter(function (c) { return c.d; }).length; }, 0), R.bet); if (wb && !rescueEnsure().done) R.earned.warm = wb; }
   if (why === 'quit') { var qr = R.roomObj; R = null; roomScreen(qr); return; }
   var perfect = !R.usedAuto && R.idx >= 10 && R.cards.every(function (k) { return k.won || k.cells.every(function (c) { return c.d || !R.called[c.n]; }); });
   if (perfect) { R.perfect = Math.round(50 * R.bet); S.coins += R.perfect; S.drops += 1; R.earned.coins += R.perfect; R.earned.drops += 1; save(); }
@@ -5541,7 +5581,7 @@ function results() {
   var ingCount = {}; E.ings.forEach(function (g) { ingCount[g] = (ingCount[g] || 0) + 1; });
   var tiles = BAKES[R.room] ? bakeNeed(R.room).map(function (nd) { var g = ingById(nd[0]), h = Math.min(nd[1], bakeState(R.room).have[nd[0]] || 0), full = h >= nd[1]; return '<div class="stile' + (full ? ' full' : '') + '">' + ingDot(nd[0]) + '<small>' + g.name + '</small><span class="ibar"><i style="width:' + (h / nd[1] * 100) + '%"></i><em>' + h + '/' + nd[1] + '</em></span>' + (full ? '<span class="sok">✓</span>' : '') + (ingCount[nd[0]] ? '<span class="sbadge">' + ingCount[nd[0]] + '</span>' : '') + '</div>'; }).join('')
     : Object.keys(ingCount).map(function (id) { var g = ingById(id); return '<div class="stile">' + ingDot(id) + '<small>' + g.name + '</small><span class="sbadge">' + ingCount[id] + '</span></div>'; }).join('');
-  var chips = [['i-ticket', E.tickets], ['i-coin', E.coins], ['i-petal', E.petals], ['i-card', E.cards.length], ['i-drop', E.drops], ['i-seed', E.seeds], ['i-bulb', E.alerts ? alertText(E.alerts) : 0]].filter(function (c) { return c[1]; })
+  var chips = [['i-ticket', E.tickets], ['i-coin', E.coins], ['i-petal', E.petals], ['i-warm', E.warm || 0], ['i-card', E.cards.length], ['i-drop', E.drops], ['i-seed', E.seeds], ['i-bulb', E.alerts ? alertText(E.alerts) : 0]].filter(function (c) { return c[1]; })
     .map(function (c, i) { return '<span class="schip" style="animation-delay:' + (.4 + i * .1) + 's">' + icon(c[0]) + '<b>' + c[1] + '</b></span>'; }).join('');
   var jpEarned = (E.jackpots || 0) > 0, hasWheel = spins > 0 || jpEarned;
   show('<div class="screen" id="summary' + (hasWheel ? '' : ' nowheel') + '" style="--rbg:url(' + room.img + ')">' +
@@ -6916,7 +6956,56 @@ function raffleToken() {
   var t; do { t = 1 + rand(RAFFLE_TOP); } while (F.toks.indexOf(t) >= 0);
   F.toks.push(t); toast('Raffle ball #' + t + '! Tomorrow\'s draw could pay out big. (' + F.toks.length + '/' + RAFFLE_MAX + ' today)', 2600);
 }
-function eventsHot() { var q = qEnsure(), F = raffleEnsure(), L = leagueEnsure(); return !!(F.res || L.prize || seasonClaimable()); }
+
+/* ---------- Warm Up Cordie: the daily rescue (the Frenzy "rescue granny" format, ours) ----------
+   Daubs in any bingo round earn Warm Balls (higher bet earns more). Fire them at the frozen pipe board; every hit melts a number.
+   Melt all 25 before the 8:00 AM Central reset and Cordie is warm: a big prize. The board, balls and progress reset with the day. */
+var RESCUE_N = 25, RESCUE_PRIZE = { coins: 1000, gems: 15, alertMin: 30 };
+function rescueEnsure() {
+  var k = dayKey();
+  if (!S.rescue || S.rescue.day !== k) S.rescue = { day: k, balls: 0, board: shuffle(range(1, 75)).slice(0, RESCUE_N), hit: [], done: false, claimed: false, earned: 0 };
+  return S.rescue;
+}
+function rescueEarn(marks, bet) {
+  var r = rescueEnsure(); if (r.done) return 0;
+  var n = Math.max(1, Math.ceil(marks * bet / 6)); r.balls += n; r.earned += n; save(); return n;
+}
+function rescueHot() { var r = rescueEnsure(); return (r.done && !r.claimed) || (r.balls > 0 && !r.done); }
+function rescuePanel() {
+  var r = rescueEnsure(), busy = false;
+  function pct() { return Math.round(r.hit.length / RESCUE_N * 100); }
+  panel('<div class="rsq"><div class="rsscene' + (r.done ? ' warm' : '') + '"><i class="rsice i1"></i><i class="rsice i2"></i><i class="rsice i3"></i><i class="rssnow"></i>' +
+      '<img class="rscordie" src="' + (r.done ? 'art/mascot-cheer.webp' : 'art/mascot-stand.webp') + '" alt="Cordie">' +
+      '<div class="rsheat"><i id="rsFill" style="height:' + pct() + '%"></i><em id="rsPct">' + pct() + '%</em></div>' +
+      '<div class="rstimer"><small>' + (r.done ? 'WARM!' : 'FAILS IN') + '</small><b id="rsLeft">' + untilText(nextReset()) + '</b></div></div>' +
+    '<div class="rsside"><h3>Warm Up Cordie</h3><p class="rsdesc">' + (r.done ? 'You melted every pipe. Cordie is toasty warm!' : 'Cordie is stuck in the frozen greenhouse. Daub numbers in bingo to earn Warm Balls, then fire them at the pipes. Melt all 25 before the reset!') + '</p>' +
+      '<div class="rsboard" id="rsBoard">' + r.board.map(function (n, i) { return '<span class="rsc' + (r.hit.indexOf(i) >= 0 ? ' hit' : '') + '" data-i="' + i + '">' + n + '</span>'; }).join('') + '</div>' +
+      '<div class="rsrow"><span class="rsballs">' + icon('i-warm') + '<b id="rsBalls">' + r.balls + '</b> Warm Balls</span>' +
+      (r.done ? (r.claimed ? '<span class="rsdone">Prize collected</span>' : '<button class="b3 gold" id="rsClaim">Collect Prize</button>') : '<button class="b3 green" id="rsFire"' + (r.balls ? '' : ' disabled') + '>FIRE!</button>') + '</div>' +
+      '<p class="rsprize"><span>Prize:</span> ' + icon('i-coin') + RESCUE_PRIZE.coins.toLocaleString() + ' · ' + icon('i-gem') + RESCUE_PRIZE.gems + ' · ' + icon('i-bulb') + RESCUE_PRIZE.alertMin + ' min Bloom Alert</p>' +
+      '<p class="note">' + (r.balls || r.done ? 'Higher bet = more Warm Balls per round.' : 'Play a bingo round to earn Warm Balls. Higher bet = more balls.') + '</p></div></div>', 'rescuep', function (v) {
+    var tick = setInterval(function () { var e = $('#rsLeft', v); if (!e || !v.isConnected) { clearInterval(tick); return; } e.textContent = untilText(nextReset()); }, 30000);
+    function fire() {
+      if (busy || r.done || r.balls < 1) return;
+      var open = r.board.map(function (_, i) { return i; }).filter(function (i) { return r.hit.indexOf(i) < 0; }); if (!open.length) return;
+      busy = true; r.balls--; var i = open[rand(open.length)]; r.hit.push(i); save();
+      var cell = v.querySelector('.rsc[data-i="' + i + '"]'), from = $('#rsFire', v).getBoundingClientRect(), to = cell.getBoundingClientRect();
+      flyTo({ getBoundingClientRect: function () { return from; } }, cell, 'i-warm', function () {
+        cell.classList.add('hit', 'pop'); SFX.daub(); sparkle(to.left + to.width / 2, to.top + to.height / 2, 24);
+        $('#rsBalls', v).textContent = r.balls; $('#rsFill', v).style.height = pct() + '%'; $('#rsPct', v).textContent = pct() + '%';
+        busy = false;
+        if (r.hit.length >= RESCUE_N) { r.done = true; save(); SFX.set(); fireworks(2400); setTimeout(function () { rescuePanel(); }, 900); }
+        else if (!r.balls) $('#rsFire', v).disabled = true;
+      });
+    }
+    if ($('#rsFire', v)) $('#rsFire', v).onclick = function () { SFX.tap(); fire(); };
+    if ($('#rsClaim', v)) $('#rsClaim', v).onclick = function () {
+      if (r.claimed) return; r.claimed = true; S.coins += RESCUE_PRIZE.coins; S.gems += RESCUE_PRIZE.gems; S.alertMin = (S.alertMin || 0) + RESCUE_PRIZE.alertMin; save(); refreshTop(); logEvent({ t: 'rescue' });
+      closeVeil(); reward('art-levelup', 'Cordie is warm!', '+' + RESCUE_PRIZE.coins.toLocaleString() + ' coins · ' + RESCUE_PRIZE.gems + ' amethysts · ' + RESCUE_PRIZE.alertMin + ' min of Bloom Alert', 'cheer');
+    };
+  });
+}
+function eventsHot() { var q = qEnsure(), F = raffleEnsure(), L = leagueEnsure(); return !!(F.res || L.prize || seasonClaimable() || rescueHot()); }
 function seasonClaimable() { var q = qEnsure(), t = seasonTier(); for (var i = 0; i < t; i++) if (!q.claimed[i]) return true; return false; }
 
 /* the Events hub */
@@ -6928,12 +7017,15 @@ function eventsHub() {
       '<span class="evbar"><i style="width:' + Math.round((q.pts % SEASON_STEP) / SEASON_STEP * 100) + '%"></i></span><em>Tier ' + t + '/' + SEASON_TIERS + ' · today ' + dn + '/' + dl.length + ' challenges</em>' + (seasonClaimable() ? '<span class="dot"></span>' : '') + '</button>' +
     '<button class="evcard ev-league" id="evL" style="--d:1"><span class="evart"><img src="art/art-trophy.webp" alt=""></span><b class="outl">Bloom League</b><small>Ends in ' + untilText(nextWeekReset()) + '</small>' +
       '<span class="evrank outl">#' + rank + '</span><em>' + L.pts + ' league points</em>' + (L.prize ? '<span class="dot"></span>' : '') + '</button>' +
-    '<button class="evcard ev-raffle" id="evR" style="--d:2"><span class="evart rballs">' + range(0, RAFFLE_MAX - 1).map(function (i) { var tk = F.toks[i]; return '<i class="' + (tk ? 'on' : '') + '">' + (tk || '?') + '</i>'; }).join('') + '</span><b class="outl">Daily Raffle</b><small>Draw in ' + untilText(nextReset()) + '</small>' +
+    (function () { var r = rescueEnsure(); return '<button class="evcard ev-rescue" id="evC" style="--d:2"><span class="evart"><img src="' + (r.done ? 'art/mascot-cheer.webp' : 'art/mascot-stand.webp') + '" alt=""></span><b class="outl">Warm Up Cordie</b><small>' + (r.done ? 'Rescued!' : 'Fails in ' + untilText(nextReset())) + '</small>' +
+      '<span class="evbar"><i style="width:' + Math.round(r.hit.length / RESCUE_N * 100) + '%"></i></span><em>' + r.hit.length + '/' + RESCUE_N + ' melted · ' + r.balls + ' Warm Balls</em>' + (rescueHot() ? '<span class="dot"></span>' : '') + '</button>'; })() +
+    '<button class="evcard ev-raffle" id="evR" style="--d:3"><span class="evart rballs">' + range(0, RAFFLE_MAX - 1).map(function (i) { var tk = F.toks[i]; return '<i class="' + (tk ? 'on' : '') + '">' + (tk || '?') + '</i>'; }).join('') + '</span><b class="outl">Daily Raffle</b><small>Draw in ' + untilText(nextReset()) + '</small>' +
       '<em>' + F.toks.length + '/' + RAFFLE_MAX + ' balls today · 1 per bingo</em>' + (F.res ? '<span class="dot"></span>' : '') + '</button>' +
     '</div><p class="note">Everything in Events is free. Play bingo to fill them up.</p>', 'evpanel', function (v) {
       $('#evS', v).onclick = function () { SFX.tap(); seasonPanel('ch'); };
       $('#evL', v).onclick = function () { SFX.tap(); leaguePanel(); };
       $('#evR', v).onclick = function () { SFX.tap(); rafflePanel(); };
+      $('#evC', v).onclick = function () { SFX.tap(); rescuePanel(); };
     });
 }
 function seasonPanel(tab) {
