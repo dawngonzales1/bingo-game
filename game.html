@@ -3147,14 +3147,14 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 @media (max-height: 420px) { .rptb .tcards { height: 22px; } .rpth b { font-size: 14px; } .rptb .twin span { font-size: 11px; } .rpfoot { flex-wrap: nowrap; gap: 6px; } .betsl { transform: scale(.9); transform-origin: right center; } .rpinfo { min-height: 0; } .rpbk .pbar { height: 6px; } .rpinfo.two .bake .ings { display: none; } .rprib { font-size: 18px; } .rpjack b { font-size: 14px; } .rpjack svg { width: 16px; height: 16px; } .panel.roomp { width: min(98vw, 820px); } .rp .rnav { width: 26px; height: 44px; font-size: 22px; } }
 .rptb .twin b, .panel .rptb .twin b { color: #3d1a4f; }
 /* ===== Bloom Alert, the Frenzy way: a soft ghost of the dauber breathes behind the number, no glow, no flashing ===== */
-#play .cell.hint { background: #fff !important; box-shadow: 0 .9cqw 0 rgba(20,5,30,.55) !important; animation: none !important; }
+#play .cell.hint { background: linear-gradient(180deg, #fff6d6, #ffe9a8) !important; box-shadow: 0 0 0 .7cqw #f7b924, 0 .9cqw 0 rgba(20,5,30,.55) !important; animation: none !important; }
 #play .cell.hint > span:not(.ghost) { position: relative; z-index: 1; }
-#play .cell > span.ghost, .cell .ghost { position: absolute !important; inset: 6% !important; width: auto !important; height: auto !important; z-index: 0; pointer-events: none; opacity: .4; animation: ghostPulse 1.4s ease-in-out infinite; }
+#play .cell > span.ghost, .cell .ghost { position: absolute !important; inset: 6% !important; width: auto !important; height: auto !important; z-index: 0; pointer-events: none; opacity: .7; animation: ghostPulse 2.2s ease-in-out infinite; }
 .cell .ghost .rdaub { position: absolute; inset: 0; opacity: 1; animation: none; filter: none; }
 .cell .ghost svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-@keyframes ghostPulse { 0%, 100% { opacity: .2; transform: scale(.94); } 50% { opacity: .62; transform: scale(1); } }
+@keyframes ghostPulse { 0%, 100% { opacity: .55; transform: scale(.96); } 50% { opacity: .8; transform: scale(1); } }
 .cell.d .ghost { display: none; }
-.calm .cell .ghost, .lite .cell .ghost { animation: none; opacity: .4; }
+.calm .cell .ghost, .lite .cell .ghost { animation: none; opacity: .7; }
 /* ===== tier card stacks drawn from the real card look: five-colour B I N G O header, white squares, gold free star ===== */
 .rptb .tcards { height: clamp(44px, 15vh, 66px) !important; gap: 0 !important; }
 .rptb .tcards i { aspect-ratio: .86; border-radius: 7px; overflow: hidden;
