@@ -3089,12 +3089,12 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .panel.legalp .b3 { justify-self: center; min-width: 160px; }
 .clearview .fsq .fnm, .clearview .fmorep, .clearview .fmorep *, .clearview .cityname small { -webkit-text-stroke: 0; }
 /* ===== the room panel over the map (Dawn: "ours looks boring and uninviting", Frenzy comparison) ===== */
-.panel.roomp { width: min(96vw, 820px); max-height: 96vh; padding: 10px 14px 12px; gap: 8px; overflow: visible; background: radial-gradient(circle at 10% 0%, rgba(255,120,200,.45), transparent 40%), radial-gradient(circle at 95% 100%, rgba(60,220,230,.4), transparent 40%), linear-gradient(180deg, #8a3ff0, #5a22a8 60%, #3d1278) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; }
+.panel.roomp { width: min(calc(100vw - 92px), 820px); max-height: 96vh; padding: 10px 14px 12px; gap: 8px; overflow: visible; background: radial-gradient(circle at 10% 0%, rgba(255,120,200,.45), transparent 40%), radial-gradient(circle at 95% 100%, rgba(60,220,230,.4), transparent 40%), linear-gradient(180deg, #8a3ff0, #5a22a8 60%, #3d1278) padding-box, linear-gradient(160deg, #fff3b8, #e9a81c 40%, #ffe58f 60%, #b8780a) border-box; }
 .panel.roomp::before { display: none; }
-.panel.roomp .x { top: -14px; right: -14px; }
+.panel.roomp .x { top: -10px; right: -10px; }
 .rp { position: relative; display: grid; gap: 8px; }
 .rp .rnav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 34px; height: 56px; border: 0; border-radius: 14px; font: 900 30px/1 var(--ui); color: #fff; background: linear-gradient(180deg, #ff9cc4, #e0478c); box-shadow: 0 0 0 2.5px #fff3b8, 0 0 0 4.5px var(--ol), 0 4px 0 4.5px var(--ol); }
-.rp .rnav.l { left: -34px; } .rp .rnav.r { right: -34px; }
+.rp .rnav.l { left: -44px; } .rp .rnav.r { right: -44px; }
 .rphead { display: flex; align-items: center; gap: 10px; min-height: 36px; }
 .rprib { font-size: clamp(20px, 6.5vh, 28px); letter-spacing: .03em; }
 .rpmode { padding: 2px 10px; border-radius: 999px; font: 800 10px var(--ui); letter-spacing: .08em; color: #fff; background: linear-gradient(180deg, var(--c1), var(--c2)); box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--ol); }
@@ -3134,7 +3134,7 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .rpups button:disabled { opacity: .45; }
 .rpfoot .rnote { font-size: 12px; color: #fff; }
 @media (max-height: 420px) { .panel.roomp { padding: 6px 12px 8px; gap: 5px; } .rp { gap: 5px; } .rpinfo { padding: 3px 8px; } .rpbk b { font-size: 12px; } .rptb { padding: 4px 4px 5px; gap: 2px; } .rptb .tplay { font-size: 15px; padding: 3px 4px 4px; } .rpups button { width: 32px; height: 32px; } .rpfoot .rnote, .betl { display: none; } .rptop3 { min-width: 64px; } .rp3 b { width: 24px; height: 24px; font-size: 12px; } .rphead { min-height: 30px; } }
-@media (max-width: 700px) { .rptop3 { display: none; } .rp .rnav.l { left: -22px; } .rp .rnav.r { right: -22px; } }
+@media (max-width: 700px) { .rptop3 { display: none; } .rp .rnav.l { left: -36px; } .rp .rnav.r { right: -36px; } }
 .veil:has(.roomp) { background: rgba(40,14,52,.35); backdrop-filter: blur(6px) saturate(1.2); -webkit-backdrop-filter: blur(6px) saturate(1.2); }
 .rptb .tplay, .panel .rptb .tplay { background: linear-gradient(180deg, #9dff7a, #3fb43a 60%, #1f7a2a) !important; color: #fff !important; }
 .panel .rptb .tplay * { color: #fff !important; }
@@ -4810,7 +4810,7 @@ function rivals() {
     R.left--; $('#sLeft').textContent = R.left; bumpLeft(); floatText($('#sLeftW'), '-1');
     $('#sLeftW').classList.toggle('hot', R.left <= 3);
     rivalWin();
-    if (R.left === 0) { toast('All bingos have been claimed'); R.active = false; clearTimeout(R.timer); setTimeout(function () { endRound('claimed'); }, 1600); }
+    if (R.left === 0) { toast('All bingos have been claimed. Last chance to daub!'); R.active = false; clearTimeout(R.timer); R.timer = setTimeout(function () { finalCount(3, 'claimed'); }, 900); }
   }
 }
 function onCardTap(e) {
@@ -5389,8 +5389,8 @@ function claimLine(ci, line) {
   SFX.bingo(); if (tier >= 3) setTimeout(function () { SFX.set(); }, 350); say(name.replace('!', ''));
   var r = el.getBoundingClientRect(); if (r.width) { sparkle(r.left + r.width / 2, r.top + r.height / 2, 24 + tier * 12); coinBurst(r.left + r.width / 2, r.top + r.height * .45, 14 + tier * 8); petalBurst(r.left + r.width / 2, r.top + r.height * .45, 8 + tier * 5); }
   if (blackout) { prizeRain(40, 'coin'); setTimeout(function () { prizeRain(24, 'gem'); }, 400); }
-  if (R.cards.every(function (x) { return x.won; })) { R.active = false; clearTimeout(R.timer); setTimeout(function () { endRound('done'); }, 1800); }
-  else if (R.left === 0) { R.active = false; clearTimeout(R.timer); toast('All bingos have been claimed'); setTimeout(function () { endRound('claimed'); }, 1800); }
+  if (R.cards.every(function (x) { return x.won; })) { R.active = false; clearTimeout(R.timer); R.timer = setTimeout(function () { finalCount(3, 'done'); }, 900); }
+  else if (R.left === 0) { R.active = false; clearTimeout(R.timer); toast('All bingos have been claimed. Last chance to daub!'); R.timer = setTimeout(function () { finalCount(3, 'claimed'); }, 900); }
 }
 function togglePause() {
   if (!R) return;
@@ -5433,14 +5433,15 @@ setTimeout(checkUpdate, 8000); setInterval(checkUpdate, 5 * 60000);
 document.addEventListener('visibilitychange', function () { if (!document.hidden) checkUpdate(); });
 function stopRound() { if (R) { clearTimeout(R.timer); R.active = false; } try { if (wake) wake.release(); } catch (e) { /* fine */ } wake = null; }
 // 3, 2, 1 before the round closes: time to mark the numbers that were called and claim a last bingo
-function finalCount(n) {
+function finalCount(n, why) {
   if (!R || R.ended) return;
+  why = why || 'balls';
   var old = $('#play .fclock'); if (old) old.remove();
-  if (R.idx < R.seq.length || !R.lastBall) return;
-  if (n <= 0) { roundOverSlam(function () { endRound('balls'); }); return; }
+  if (why === 'balls' && (R.idx < R.seq.length || !R.lastBall)) return;
+  if (n <= 0) { roundOverSlam(function () { endRound(why); }); return; }
   var bw = $('#play .ballwrap') || $('#play'), d = document.createElement('div'); d.className = 'fclock'; d.innerHTML = '<i>⏰</i><b>' + n + '</b>'; bw.appendChild(d);
   tone(660 + (3 - n) * 120, 0, .25, 'sine', .08); say(String(n));
-  R.timer = setTimeout(function () { finalCount(n - 1); }, 1000);
+  R.timer = setTimeout(function () { finalCount(n - 1, why); }, 1000);
 }
 function roundOverSlam(then) {
   var d = document.createElement('div'); d.className = 'rover'; d.innerHTML = '<b class="outl">ROUND</b><b class="outl">OVER</b>'; document.body.appendChild(d); SFX.set(); buzz([60, 40, 60]);
@@ -5470,7 +5471,7 @@ function endRound(why) {
   var perfect = !R.usedAuto && R.idx >= 10 && R.cards.every(function (k) { return k.won || k.cells.every(function (c) { return c.d || !R.called[c.n]; }); });
   if (perfect) { R.perfect = Math.round(50 * R.bet); S.coins += R.perfect; S.drops += 1; R.earned.coins += R.perfect; R.earned.drops += 1; save(); }
   var go = function () { if (!R) return; if (R.bingos) bloomShow(perfect, results); else results(); };
-  if (why === 'balls') setTimeout(go, 250); else roundOverSlam(go); // the ROUND OVER slam already ran when the balls ran out
+  setTimeout(go, 250); // the ROUND OVER slam already ran at the end of the countdown // the ROUND OVER slam already ran when the balls ran out
 }
 
 /* ---------- end of round: Perfect Bloom card show, then the Bloom Summary with the Bloom Wheel ---------- */
