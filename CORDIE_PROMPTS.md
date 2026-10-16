@@ -14,7 +14,7 @@ Use these prompts word for word. The character block (between the ▶ marks) is 
 
 ## The character block
 
-▶ Cordie, a charming slim athletic cartoon bunny mascot with a long lean body and long legs, high-quality 3D render in the style of a Pixar or DreamWorks animated movie, soft fluffy cream-white fur with visible fur texture, LARGE EXPRESSIVE ALMOND-SHAPED BRIGHT TURQUOISE EYES WIDE OPEN WITH SPARKLING HIGHLIGHTS and a hint of mischief, small rounded nose, warm confident smile with two small buck teeth, tall upright ears with peach inner ears, one ear playfully bent, wearing a fitted color-blocked zip hoodie in electric teal, sunshine yellow and tangerine orange with a round bingo-ball badge on the chest, LONG TANGERINE ORANGE JOGGER PANTS DOWN TO THE ANKLES, slim white sneakers with violet laces, no bow, no flower, no dress, no eyelashes, gender neutral, friendly and full of personality, soft cinematic lighting, bright saturated colors, full body, isolated on a plain pure white background, no shadow, no text ◀
+▶ Cordie, slim athletic cartoon bunny mascot, long lean body, Pixar-style 3D render, fluffy cream-white fur, LARGE ALMOND-SHAPED TURQUOISE EYES WIDE OPEN with sparkling highlights, small nose, confident smile with two buck teeth, tall ears with peach inner ears, one ear bent, fitted teal, yellow and orange color-blocked zip hoodie with a round bingo-ball chest badge, LONG ORANGE JOGGER PANTS TO THE ANKLES, white sneakers with violet laces, no bow, no flower, no eyelashes, gender neutral, bright saturated colors, full body, plain white background, no shadow, no text ◀
 
 ## Poses (file name → prompt)
 
@@ -27,7 +27,7 @@ Send me each finished image and tell me which file it is. I cut the background a
 | mascot-point.webp | ▶character block◀ standing and pointing forward toward the viewer with one hand, other hand on hip, confident playful smile, one eyebrow raised |
 | mascot-wow.webp | ▶character block◀ standing with both hands on the cheeks, mouth open in a big round O of surprise, wide eyes, ears straight up, amazed expression |
 | mascot-gift.webp | ▶character block◀ standing and holding out a shiny wrapped gift box with a glossy ribbon toward the viewer with both hands, delighted smile |
-| mascot-sleep.webp | ▶character block, but with LARGE EXPRESSIVE ALMOND-SHAPED EYES FULLY CLOSED◀ sitting and dozing with eyes closed, head tilted, one ear flopped down, a small floating Z, peaceful sleepy smile |
+| mascot-sleep.webp | ▶character block, but with LARGE ALMOND-SHAPED EYES FULLY CLOSED◀ sitting and dozing with eyes closed, head tilted, one ear flopped down, a small floating Z, peaceful sleepy smile |
 | mascot-face.webp | ▶character block◀ close-up portrait of the head and shoulders only, smiling warmly straight at the camera, centered, square crop |
 | mascot-wave.webp | ▶character block◀ standing and waving hello with one raised hand, friendly open-mouth smile, slight lean forward |
 | mascot-think.webp | ▶character block◀ standing with one finger tapping the chin, eyes looking up and to the side, thoughtful curious expression, one ear bent |
@@ -57,7 +57,7 @@ Use your best mascot-stand image as the **Composition reference** so the pieces 
 | File | Prompt |
 |---|---|
 | puppet-head.webp | ▶character block◀ head only, front view, eyes open looking straight ahead, closed-mouth smile, no body, no neck, no ears, centered, isolated |
-| puppet-head-blink.webp | ▶character block, but with LARGE EXPRESSIVE ALMOND-SHAPED EYES FULLY CLOSED◀ head only, front view, exactly the same head as before but with both eyes fully closed in a happy blink, closed-mouth smile, no body, no neck, no ears, centered, isolated |
+| puppet-head-blink.webp | ▶character block, but with LARGE ALMOND-SHAPED EYES FULLY CLOSED◀ head only, front view, exactly the same head as before but with both eyes fully closed in a happy blink, closed-mouth smile, no body, no neck, no ears, centered, isolated |
 | puppet-head-talk.webp | ▶character block◀ head only, front view, exactly the same head as before but with the mouth wide open mid-cheer showing two small buck teeth, eyes open, no body, no neck, no ears, centered, isolated |
 | puppet-ear-left.webp | ▶character block◀ one tall upright bunny ear only, left ear, cream-white fur with peach inner ear, slight bend at the tip, isolated, centered, no head |
 | puppet-ear-right.webp | ▶character block◀ one tall upright bunny ear only, right ear, cream-white fur with peach inner ear, slight bend at the tip, isolated, centered, no head |
