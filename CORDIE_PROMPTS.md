@@ -14,7 +14,7 @@ Use these prompts word for word. The character block (between the ▶ marks) is 
 
 ## The character block
 
-▶ Cordie, a charming slim athletic cartoon bunny mascot with a long lean body and long legs, high-quality 3D render in the style of a Pixar or DreamWorks animated movie, soft fluffy cream-white fur with visible fur texture, large expressive almond-shaped bright turquoise eyes with sparkling highlights and a hint of mischief, small rounded nose, warm confident smile with two small buck teeth, tall upright ears with peach inner ears, one ear playfully bent, wearing a fitted color-blocked zip hoodie in electric teal, sunshine yellow and tangerine orange with a round bingo-ball badge on the chest, slim white sneakers with violet laces, no bow, no flower, no dress, no eyelashes, gender neutral, friendly and full of personality, soft cinematic lighting, bright saturated colors, full body, isolated on a plain pure white background, no shadow, no text ◀
+▶ Cordie, a charming slim athletic cartoon bunny mascot with a long lean body and long legs, high-quality 3D render in the style of a Pixar or DreamWorks animated movie, soft fluffy cream-white fur with visible fur texture, LARGE EXPRESSIVE ALMOND-SHAPED BRIGHT TURQUOISE EYES WIDE OPEN WITH SPARKLING HIGHLIGHTS and a hint of mischief, small rounded nose, warm confident smile with two small buck teeth, tall upright ears with peach inner ears, one ear playfully bent, wearing a fitted color-blocked zip hoodie in electric teal, sunshine yellow and tangerine orange with a round bingo-ball badge on the chest, slim white sneakers with violet laces, no bow, no flower, no dress, no eyelashes, gender neutral, friendly and full of personality, soft cinematic lighting, bright saturated colors, full body, isolated on a plain pure white background, no shadow, no text ◀
 
 ## Poses (file name → prompt)
 
@@ -23,7 +23,7 @@ Send me each finished image and tell me which file it is. I cut the background a
 | File | Prompt |
 |---|---|
 | mascot-stand.webp | ▶character block◀ standing straight facing the camera, arms relaxed at the sides, happy neutral expression |
-| mascot-cheer.webp | ▶character block◀ jumping in the air with both arms raised high in celebration, huge excited grin, eyes squeezed happy, ears flying up |
+| mascot-cheer.webp | ▶character block◀ jumping in the air with both arms raised high in celebration, huge excited grin, EYES WIDE OPEN, ears flying up |
 | mascot-point.webp | ▶character block◀ standing and pointing forward toward the viewer with one hand, other hand on hip, confident playful smile, one eyebrow raised |
 | mascot-wow.webp | ▶character block◀ standing with both hands on the cheeks, mouth open in a big round O of surprise, wide eyes, ears straight up, amazed expression |
 | mascot-gift.webp | ▶character block◀ standing and holding out a shiny wrapped gift box with a glossy ribbon toward the viewer with both hands, delighted smile |
