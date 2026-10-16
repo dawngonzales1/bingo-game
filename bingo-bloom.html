@@ -7527,10 +7527,31 @@ function onSignedIn(u) {
         var fresh = !S.savedAt || (S.stats.rounds === 0 && S.level === 1), cs = cloud.savedAt || sv.data().at || 0, ls = S.savedAt || 0;
         if (fresh || cs >= ls) { S = merge(cloud); sanity('cloud'); S.name = myName(); save(true); toast('Welcome back, ' + myName() + '! Your saved progress is loaded.', 3200); if ($('#lobby')) lobby(); }
         else { cloudSaveNow(); toast('Signed in as ' + myName() + '. This phone has newer progress, so it was saved to your account.', 3600); }
+        if (cs && !ON.cloudAt) ON.cloudAt = cs;
       }
     } else { cloudSaveNow(); toast((myName() === 'Player' ? 'Signed in!' : 'Signed in as ' + myName() + '.') + ' Your progress now saves to your account.', 3200); }
-    listenSocial(); fbAdminCheck(); fbFlush();
+    listenSocial(); watchCloudSave(); fbAdminCheck(); fbFlush();
   }).catch(function (e) { toast('Could not reach your account right now. Your game still saves on this phone.', 3400); });
+}
+// Two devices on one account (Sherri: Day 3 rewards "not collecting"): the second device used to keep its older save and
+// overwrite the newer one on its next action. Now every device listens for a newer save and adopts it, so rewards stick.
+function watchCloudSave() {
+  if (!ON.user) return;
+  ON.subs.push(uref().collection('private').doc('save').onSnapshot(function (sv) {
+    if (!sv.exists || sv.metadata.hasPendingWrites) return;
+    var at = sv.data().at || 0; if (at <= (ON.cloudAt || 0)) return;
+    var cloud = null; try { cloud = JSON.parse(sv.data().data); } catch (e) { return; }
+    if (!cloud || (cloud.savedAt || 0) <= (S.savedAt || 0)) { ON.cloudAt = at; return; }
+    ON.pendingCloud = { at: at, data: cloud }; adoptCloudSoon();
+  }, function () {}));
+}
+function adoptCloudSoon() {
+  var pc = ON.pendingCloud; if (!pc) return;
+  if ((R && !R.ended) || $('#play') || WHEEL_BUSY) { clearTimeout(ON.adoptT); ON.adoptT = setTimeout(adoptCloudSoon, 4000); return; } // never mid-round
+  ON.pendingCloud = null; ON.cloudAt = pc.at; clearTimeout(ON.saveT);
+  S = merge(pc.data); sanity('cloud'); S.name = myName(); save(true); refreshTop();
+  if ($('#lobby') && !veil) lobby();
+  toast('Progress synced from your other device.', 3000);
 }
 function onSignedOut() { ON.subs.forEach(function (f) { f(); }); ON.subs = []; clearInterval(ON.beatT); if (ON.chatW) { ON.chatW(); ON.chatW = null; } ON.lastChat = null; ON.profile = null; ON.inbox = []; ON.friends = []; ON.requests = []; ON.team = null; teamDot(); }
 // you show as online to your team while the game is open; a quiet heartbeat every 2 minutes
@@ -7557,8 +7578,8 @@ function cloudSaveSoon() { if (!ON.user) return; clearTimeout(ON.saveT); ON.save
 function cloudSaveNow() {
   if (!ON.user) return; clearTimeout(ON.saveT);
   try {
-    sanity('save');
-    uref().collection('private').doc('save').set({ data: JSON.stringify(S), at: Date.now() });
+    sanity('save'); ON.cloudAt = Date.now();
+    uref().collection('private').doc('save').set({ data: JSON.stringify(S), at: ON.cloudAt });
     uref().set({ name: myName(), nameLower: slugName(myName()), level: S.level, rounds: (S.stats && S.stats.rounds) || 0, flags: S.flags || 0, frame: S.style.frame, avatar: S.style.avatar === 'photo' ? 'initial' : S.style.avatar, seen: Date.now() }, { merge: true });
   } catch (e) { /* offline: tries again on the next save */ }
 }
@@ -7667,6 +7688,15 @@ function fbSend(doc, ok, fail) {
   function go() { doc.uid = ON.auth.currentUser.uid; ON.db.collection('feedback').add(doc).then(ok).catch(function (e) { fail(e && e.code || 'error'); }); }
   if (ON.auth.currentUser) go(); else { ON.quietGuest = true; ON.auth.signInAnonymously().then(go).catch(function (e) { fail(e && e.code || 'error'); }); } // a guest pass is enough to send feedback
 }
+// a compact picture of the save that rides along with every note, so a report can be diagnosed from the inbox
+function stateSnap() {
+  try {
+    var b = S.build || {}, c = S.cal || {};
+    return ['v' + BUILD, 'L' + S.level, 'city:' + cityId(), 'paris:' + (S.cityDone ? 'done' : 'open'), 'build:' + Object.keys(b).filter(function (k) { return b[k]; }).map(function (k) { return k + b[k]; }).join(','),
+      'cal:d' + (c.day || 0) + '/t' + (c.total || 0) + '/' + (c.last || '-'), 'shown:' + (S.calShown || '-'), 'tix:' + S.tickets, 'coins:' + S.coins, 'petals:' + S.petals, 'gems:' + S.gems, 'rounds:' + ((S.stats && S.stats.rounds) || 0),
+      'flags:' + (S.flags || 0), 'saved:' + new Date(S.savedAt || 0).toISOString().slice(0, 16), 'cloud:' + (ON.cloudAt ? new Date(ON.cloudAt).toISOString().slice(0, 16) : '-')].join(' ');
+  } catch (e) { return ''; }
+}
 function fbFlush() { // feedback written while offline goes out on the next visit
   if (!ON.ok || !S.fbQueue || !S.fbQueue.length) return;
   var q = S.fbQueue.slice(); S.fbQueue = []; save();
@@ -7690,7 +7720,7 @@ function feedback(from, keep) {
       $('#fbGo', v).onclick = function () {
         var text = $('#fbText', v).value.trim(), msg = $('#fbMsg', v), btn = this;
         if (text.length < 3) { msg.textContent = L.short; return; }
-        var doc = { uid: ON.user ? ON.user.uid : null, name: myName(), type: type, text: text.slice(0, 2000), screen: where.slice(0, 120), device: deviceText().slice(0, 120), size: innerWidth + '×' + innerHeight, version: BUILD, level: S.level, lang: fbLang, at: Date.now(), done: false };
+        var doc = { uid: ON.user ? ON.user.uid : null, name: myName(), type: type, text: text.slice(0, 2000), screen: where.slice(0, 120), device: deviceText().slice(0, 120), size: innerWidth + '×' + innerHeight, version: BUILD, level: S.level, lang: fbLang, at: Date.now(), done: false, state: stateSnap() };
         if (shot && shot.length < 650000) doc.shot = shot;
         btn.disabled = true; msg.textContent = L.sending;
         fbSend(doc, function () { closeVeil(); SFX.set(); fireworks(1200); toast(L.thanks, 3000); },
@@ -7730,7 +7760,7 @@ function feedbackInbox(filter) {
         btn.disabled = true; b.commit().then(function () { SFX.set(); toast('Marked ' + items.length + ' notes as read. New notes will show up in New.', 3000); feedbackInbox('open'); }).catch(function () { btn.disabled = false; toast('Couldn\'t mark them right now. Try again.'); });
       };
       $('#fbCopy', v).onclick = function () {
-        var txt = items.map(function (x) { return '[' + x.type + (FB_LANG_TAG[x.lang] ? ', in ' + FB_LANG_TAG[x.lang][1] : '') + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text + (x.shot ? '  [📷 has a screenshot in the inbox]' : ''); }).join('\n');
+        var txt = items.map(function (x) { return '[' + x.type + (FB_LANG_TAG[x.lang] ? ', in ' + FB_LANG_TAG[x.lang][1] : '') + '] ' + (x.name || 'Player') + ' (' + new Date(x.at).toLocaleDateString() + ', ' + (x.screen || '') + ', ' + (x.device || '') + '): ' + x.text + (x.shot ? '  [📷 has a screenshot in the inbox]' : '') + (x.state ? '  {' + x.state + '}' : ''); }).join('\n');
         try { navigator.clipboard.writeText(txt).then(function () { $('#fbMsg', v).textContent = 'Copied ' + items.length + ' notes. Paste them to Claude, then mark them as read so next time only new ones are copied.'; var rb2 = $('#fbRead', v); if (rb2 && items.some(function (x) { return !x.done; })) rb2.hidden = false; }); } catch (e) { $('#fbMsg', v).textContent = 'Copy is not available here.'; }
       };
     });
