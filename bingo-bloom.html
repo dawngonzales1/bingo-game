@@ -3137,7 +3137,8 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .rpups button:disabled { opacity: .45; }
 .rpfoot .rnote { font-size: 12px; color: #fff; }
 @media (max-height: 420px) { .panel.roomp { padding: 6px 12px 8px; gap: 5px; } .rp { gap: 5px; } .rpinfo { padding: 3px 8px; } .rpbk b { font-size: 12px; } .rptb { padding: 4px 4px 5px; gap: 2px; } .rptb .tplay { font-size: 15px; padding: 3px 4px 4px; } .rpups button { width: 32px; height: 32px; } .rpfoot .rnote, .betl { display: none; } .rptop3 { min-width: 64px; } .rp3 b { width: 24px; height: 24px; font-size: 12px; } .rphead { min-height: 30px; } }
-@media (max-width: 700px) { .rptop3 { display: none; } .rp .rnav.l { left: -36px; } .rp .rnav.r { right: -36px; } }
+@media (max-width: 1000px) { .rptop3 { display: none; } }
+@media (max-width: 700px) { .rp .rnav.l { left: -36px; } .rp .rnav.r { right: -36px; } }
 .veil:has(.roomp) { background: rgba(40,14,52,.35); backdrop-filter: blur(6px) saturate(1.2); -webkit-backdrop-filter: blur(6px) saturate(1.2); }
 .rptb .tplay, .panel .rptb .tplay { background: linear-gradient(180deg, #9dff7a, #3fb43a 60%, #1f7a2a) !important; color: #fff !important; }
 .panel .rptb .tplay * { color: #fff !important; }
@@ -3184,6 +3185,16 @@ body:has(#lobby) .cordie-pop .cbub::before { left: 22px; bottom: -12px; border: 
 .panel .b3:disabled { filter: saturate(.35) brightness(.85); box-shadow: 0 0 0 2.5px var(--ol), 0 3px 0 2.5px var(--ol); }
 .fgift .b3 { padding: 6px 22px 7px; font-size: 18px; min-width: 110px; }
 .fgift .b3::after { content: ''; position: absolute; top: -20%; bottom: -20%; width: 34%; left: -60%; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255,255,255,.75), transparent); transform: skewX(-20deg); animation: sweep 3.2s ease-in-out infinite; }
+/* ===== six cards: all on screen in a 3 by 2 grid, the Frenzy room ===== */
+.rpt.purple { --t1: #c58cff; --t2: #7b3fc4; }
+.rptiers { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+#cards.all6 { grid-template-columns: 1fr; }
+#cards.all6 .bigs.six { display: grid; grid-template-columns: repeat(3, auto); justify-content: center; align-content: center; gap: 8px; }
+#cards.all6 .bigs.six .cell { aspect-ratio: 1.5; }
+#cards.all6 .bigs.six .bcard .grid { gap: 2px; padding: 2px 3px 3px; }
+#cards.all6 .bigs.six .bcard .hdr { padding: 2px 4px; } #cards.all6 .bigs.six .bcard .hdr span { width: 70%; font-size: 80%; }
+#cards.all6 .bigs.six .cell > span { font-size: 92%; }
+@media (max-height: 420px) { .rptiers { gap: 6px; } .rpt .tflag { font-size: 8px; } }
 </style>
 
 <!-- drawn pictures, reused everywhere -->
@@ -4095,7 +4106,7 @@ var REWQ = [], WHEEL_BUSY = false;
 function reward(art, title, sub, pose, then) { REWQ.push([art, title, sub, pose, then]); setTimeout(rewardNext, 300); }
 function rewardNext() {
   if (!REWQ.length || document.querySelector('.rwd')) return;
-  if (veil || WHEEL_BUSY || (R && R.active && !R.ended) || document.querySelector('.reveal, .acel, .pfx, .rload, .fcount, .fclock, .rover')) { setTimeout(rewardNext, 1200); return; }
+  if (veil || WHEEL_BUSY || (R && !R.ended) || document.querySelector('.reveal, .acel, .pfx, .rload, .fcount, .fclock, .rover')) { setTimeout(rewardNext, 1200); return; }
   var cp = document.querySelector('.cordie-pop'); if (cp) cp.remove();
   var r = REWQ.shift(), o = document.createElement('div'); o.className = 'rwd';
   o.innerHTML = '<div class="prays"></div><div class="rwin"><img class="rwart" src="art/' + r[0] + '.webp" alt=""><b class="rwt outl">' + r[1] + '</b><span class="rws">' + r[2] + '</span><button class="b3 gold" id="rwGo">Collect</button></div>' +
@@ -4418,13 +4429,13 @@ function roomScreen(room) {
   var arm = {}, fair = S.dry >= 3, featured = room.mode !== 'multi', th = FEAT_THEME[room.id] || ['#b98cff', '#6a32d0'];
   var info = featured ? '<div class="rpinfo"><span class="rpdish" style="background-image:url(' + room.img + ');background-position:' + room.pos + ' center"></span><div class="rpbk"><b>' + tl(MODE_INFO[room.mode].how) + '</b><small>' + tl('Garden Path bonus') + ' ' + bonusPct(room.id) + '%</small><div class="pbar"><i style="width:' + bonusPct(room.id) + '%"></i></div></div></div>' : '<div class="rpinfo two">' + bakeBar(room) + roomGrow(room) + '</div>';
   var top3 = [];
-  var MULT = { 1: 2, 2: 6, 4: 10 }, TC = { 1: 'teal', 2: 'pink', 4: 'gold' };
+  var MULT = { 1: 2, 2: 6, 4: 10, 6: 14 }, TC = { 1: 'teal', 2: 'pink', 4: 'gold', 6: 'purple' };
   panel('<div class="rp" style="--c1:' + th[0] + ';--c2:' + th[1] + '">' +
     '<button class="rnav l" id="rPrev" aria-label="Previous room">‹</button><button class="rnav r" id="rNext" aria-label="Next room">›</button>' +
     '<div class="rphead"><span class="rprib outl">' + esc(room.name) + '</span><span class="rpmode">' + MODE_INFO[room.mode].tag + '</span><span class="rpjack"><img class="rptrophy" src="art/icon-jackpot.webp" alt=""><small>GRAND JACKPOT</small><b id="jackN">0</b>' + icon('i-ticket') + '</span></div>' +
     info +
-    '<div class="rpmain"><div class="rptiers">' + [1, 2, 4].map(function (n, i) {
-      return '<div class="rpt ' + TC[n] + (S.cards === n ? ' sel' : '') + '" data-n="' + n + '" style="animation-delay:' + (i * .07) + 's">' + (n === 2 ? '<span class="tflag">POPULAR</span>' : n === 4 ? '<span class="tflag best">BEST VALUE</span>' : '') +
+    '<div class="rpmain"><div class="rptiers">' + [1, 2, 4, 6].map(function (n, i) {
+      return '<div class="rpt ' + TC[n] + (S.cards === n ? ' sel' : '') + '" data-n="' + n + '" style="animation-delay:' + (i * .07) + 's">' + (n === 2 ? '<span class="tflag">POPULAR</span>' : n === 6 ? '<span class="tflag best">BEST VALUE</span>' : '') +
         '<div class="rpth"><b>' + n + ' card' + (n > 1 ? 's' : '') + '</b><span class="rpmul">×' + MULT[n] + '</span></div>' +
         '<div class="rptb"><span class="tcards n' + n + '">' + '<i><em>BINGO</em></i>'.repeat(n) + '</span>' +
         '<span class="twin"><span>' + icon('i-coin') + '<b data-tc="' + n + '"></b></span><span>' + icon('i-petal') + '<b data-tp="' + n + '"></b></span><span>' + icon('i-card') + '<b>×' + n + '</b></span></span>' +
@@ -4479,7 +4490,7 @@ function pantry() {
 }
 function howTo() {
   panel('<h3>How to Play</h3><ul>' +
-    '<li>Tap a room on the map to enter it. Choose 1, 2 or 4 cards and a bet, then press <b>PLAY</b>. Each card costs tickets.</li>' +
+    '<li>Tap a room on the map to enter it. Choose 1, 2, 4 or 6 cards and a bet, then press <b>PLAY</b>. Each card costs tickets.</li>' +
     '<li><b>Tickets</b> play bingo. <b>Coins</b> buy power-ups and card packs in the Shop. <b>Petals</b> grow blossoms across the city.</li>' +
     '<li>Bake treats in the <b>Kitchen</b> with the ingredients you win to earn tickets.</li>' +
     '<li>A ball is called every few seconds. If the number is on your card, tap it to mark it with a bloom.</li>' +
@@ -4697,7 +4708,9 @@ function calledBoard() {
 function placeCards() {
   var big = $('.bigs'), mini = $('.minis'), swap = $('#bSwap'), v4 = $('#bView4'), cards = $('#cards');
   big.classList.remove('four'); cards.classList.remove('all4');
+  big.classList.remove('six'); cards.classList.remove('all6');
   if (R.els.length <= 2) { R.els.forEach(function (e) { big.appendChild(e); }); cards.classList.remove('has-minis'); }
+  else if (R.els.length === 6) { cards.classList.remove('has-minis'); cards.classList.add('all6'); big.classList.add('six'); R.els.forEach(function (e) { big.appendChild(e); }); }
   else if (S.settings.view4) {
     cards.classList.remove('has-minis'); cards.classList.add('all4'); big.classList.add('four');
     R.els.forEach(function (e) { big.appendChild(e); }); big.appendChild(v4); v4.innerHTML = '⊟<span> 2 big</span>';
@@ -4708,7 +4721,7 @@ function placeCards() {
   }
   fitCards(); updateMinis(); requestAnimationFrame(fitCards);
 }
-function swapCards() { if (!R || R.els.length <= 2) return; R.focus = 1 - R.focus; SFX.tap(); placeCards(); R.els.forEach(function (e) { e.classList.remove('in'); void e.offsetWidth; e.classList.add('in'); }); }
+function swapCards() { if (!R || R.els.length <= 2 || R.els.length === 6) return; R.focus = 1 - R.focus; SFX.tap(); placeCards(); R.els.forEach(function (e) { e.classList.remove('in'); void e.offsetWidth; e.classList.add('in'); }); }
 function bingoReady(k) { return LINES.some(function (L) { return L.every(function (i) { return k.cells[i].d; }); }); }
 function updateMinis() { /* bingos are called automatically, so small cards need no reminder */ }
 function hintUi() {
@@ -4745,7 +4758,7 @@ function fitCards() {
     var extra = mc ? Math.max(0, mc.offsetWidth - (parseFloat(getComputedStyle(c).getPropertyValue('--mw')) || mc.offsetWidth)) : 0;
     c.style.setProperty('--mw', Math.floor(Math.max(44, Math.min(110, avail / 2 / ratio - extra))) + 'px');
   }
-  var four = area.classList.contains('four'), n = four ? 2 : Math.min(2, R.cards.length), gap = 12, W = area.clientWidth, H = (four ? (area.clientHeight - 8 - gap) / 2 : area.clientHeight - 8);
+  var six = area.classList.contains('six'), four = area.classList.contains('four'), n = six ? 3 : four ? 2 : Math.min(2, R.cards.length), gap = six ? 8 : 12, W = area.clientWidth, H = (six || four ? (area.clientHeight - 8 - gap) / 2 : area.clientHeight - 8);
   var cw = Math.floor((W - gap * (n - 1)) / n);
   area.style.setProperty('--cw', cw + 'px');
   var one = area.querySelector('.bcard'); // fill the width, then shrink until the card fits the height
@@ -4948,7 +4961,7 @@ function autoWild() {
   });
   if (!best || !spend('wild')) return;
   pupFx('i-wild', 'Wild Petal!', 'Marked your best square');
-  if (R.els.length > 2 && !S.settings.view4 && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
+  if (R.els.length > 2 && R.els.length !== 6 && !S.settings.view4 && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
   setTimeout(function () {
     if (!R || R.ended) return; var k = R.cards[best.ci]; if (k.cells[best.i].d) return;
     var el = R.els[best.ci].querySelector('[data-i="' + best.i + '"]');
@@ -5289,7 +5302,7 @@ function useInstant() {
   if (!best) { toast('No line left to finish.'); return; }
   if (R.mode === 'blackout') best.cells = shuffle(best.cells).slice(0, 6);
   S.items.instant--; save(); $('#nInstant').textContent = S.items.instant;
-  if (R.els.length > 2 && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
+  if (R.els.length > 2 && R.els.length !== 6 && Math.floor(best.ci / 2) !== R.focus) { R.focus = Math.floor(best.ci / 2); placeCards(); }
   pupFx('i-instant', R.mode === 'blackout' ? 'Instant Bloom!' : 'Instant Bingo!', R.mode === 'blackout' ? '6 squares marked' : 'Your closest line is complete');
   setTimeout(function () {
     best.cells.forEach(function (i, j) {
