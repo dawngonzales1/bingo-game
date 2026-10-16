@@ -4174,15 +4174,16 @@ function lobby() {
   '</div>');
   (function () { // the world is one long strip of cities: swipe sideways to travel, no buttons needed
     var ww = $('#worldWrap'), lob = $('#lobby'), idx = Math.max(0, CITY_ORDER.indexOf(cityId())), scrollT = null;
-    ww.scrollLeft = idx * ww.clientWidth;
+    ww.scrollLeft = idx * ww.clientWidth; var settled = false; setTimeout(function () { settled = true; }, 400);
     function nav() { var i = Math.round(ww.scrollLeft / ww.clientWidth); $('#cPrev').hidden = i <= 0; $('#cNext').hidden = i >= CITY_ORDER.length - 1; }
     nav();
     ww.addEventListener('scroll', function () {
+      if (!settled) return; // the first positioning is not a swipe
       lob.classList.add('scrolling'); clearTimeout(scrollT);
       scrollT = setTimeout(function () {
         if (!lob.isConnected) return; lob.classList.remove('scrolling'); nav();
         var i = Math.round(ww.scrollLeft / ww.clientWidth), id = CITY_ORDER[i] || 'paris', cn = ww.children[i] && ww.children[i].querySelector('.cityname');
-        if (cn) { cn.classList.add('show'); setTimeout(function () { cn.classList.remove('show'); }, 2200); }
+        if (cn && !$('.csweep')) { cn.classList.add('show'); setTimeout(function () { cn.classList.remove('show'); }, 2200); }
         if (id !== cityId() && canTravel(id)) { S.city = id; S.lastRoom = ''; if (!S.visited) S.visited = {}; S.visited[id] = 1; save(); setCity(id); SFX.set(); }
       }, 160);
     }, { passive: true });
