@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BHS Baseball Sponsorships</title>
+  <meta name="description" content="Submit your sponsor information and high-resolution logo for BHS Baseball.">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="BHS Sponsors">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <img src="icons/logo.png" alt="BHS Baseball logo" class="hero-logo">
+    <h1>BHS Baseball Sponsorships</h1>
+    <p>Thank you for supporting BHS Baseball! Please fill out the form below and upload your logo so we can create your sponsor sign / ad.</p>
+  </header>
+
+  <main>
+    <div id="config-warning" class="notice notice-error" hidden>
+      This form is not connected yet. The organizer needs to paste the Google Apps Script URL into <code>config.js</code> (see SETUP.md).
+    </div>
+
+    <form id="sponsor-form" novalidate>
+      <div class="field">
+        <label for="businessName">Business Name <span class="req">*</span></label>
+        <input id="businessName" name="businessName" type="text" autocomplete="organization" maxlength="150" required>
+      </div>
+
+      <div class="field">
+        <label for="contactName">Contact Name for Sign/Ad Approval <span class="req">*</span></label>
+        <input id="contactName" name="contactName" type="text" autocomplete="name" maxlength="150" required>
+      </div>
+
+      <div class="field">
+        <label for="contactPhone">Contact Phone Number <span class="req">*</span></label>
+        <input id="contactPhone" name="contactPhone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="(228) 555-0123" required>
+      </div>
+
+      <div class="field">
+        <label for="logo">Upload Logo <span class="req">*</span></label>
+        <p class="hint">Please upload the <strong>highest quality</strong> version you have — it will be printed on sponsor signs and posters. Best: vector files (PDF, SVG, AI, EPS) or a large PNG at least 1500&nbsp;pixels wide. Max 25&nbsp;MB.</p>
+        <label class="dropzone" for="logo" id="dropzone">
+          <span id="dropzone-text">Tap to choose a file, or drag it here</span>
+          <input id="logo" name="logo" type="file" accept=".png,.jpg,.jpeg,.svg,.pdf,.ai,.eps,.psd,.tif,.tiff,.webp,image/*,application/pdf" required>
+        </label>
+        <div id="file-info" class="file-info" hidden>
+          <img id="preview" alt="Logo preview" hidden>
+          <div>
+            <div id="file-name" class="file-name"></div>
+            <div id="file-meta" class="file-meta"></div>
+          </div>
+        </div>
+        <div id="quality-warning" class="notice notice-warn" hidden></div>
+      </div>
+
+      <div class="field">
+        <label for="notes">Additional Notes <span class="opt">(optional)</span></label>
+        <textarea id="notes" name="notes" rows="4" maxlength="2000" placeholder="Anything we should know about your sign or ad?"></textarea>
+      </div>
+
+      <div id="form-error" class="notice notice-error" role="alert" hidden></div>
+
+      <button type="submit" id="submit-btn" class="btn">Submit Sponsorship Info</button>
+      <div id="progress" class="progress" hidden><div class="progress-bar"></div><span>Uploading… please keep this page open.</span></div>
+    </form>
+
+    <section id="success" class="success" hidden>
+      <h2>Thank you!</h2>
+      <p>Your information and logo were received. We'll reach out to <strong id="success-contact"></strong> for sign/ad approval.</p>
+      <button type="button" id="another-btn" class="btn btn-secondary">Submit another sponsor</button>
+    </section>
+  </main>
+
+  <footer>BHS Baseball &middot; Sponsor Program</footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
